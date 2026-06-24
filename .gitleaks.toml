@@ -1,0 +1,11 @@
+# gitleaks config for My Second Country.
+# Extends the default ruleset; see SECRETS.md for the threat model.
+title = "My Second Country gitleaks config"
+
+[extend]
+useDefault = true
+
+# Project-specific allowlist: the committed example env file holds only empty placeholders.
+[[allowlists]]
+description = "Allow placeholder example env file"
+paths = ['''\.env\.example$''']

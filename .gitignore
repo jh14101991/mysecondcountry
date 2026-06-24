@@ -1,0 +1,37 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# secrets , never commit
+.env
+.env.*
+!.env.example
+
+# build output
+dist/
+build/
+.astro/
+.wrangler/
+.output/
+
+# remotion renders
+out/
+*.mp4
+
+# test + coverage
+coverage/
+.vitest/
+
+# os / editor
+.DS_Store
+*.log
+.idea/
+.vscode/
+
+# local claude overrides (project settings.json IS committed)
+.claude/settings.local.json
+
+# data pipeline caches
+packages/*/cache/
+.cache/
+.vercel/
