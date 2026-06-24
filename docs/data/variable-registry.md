@@ -252,6 +252,8 @@ no dataset. TEMIS Europe UV files are ~130-190 MB NetCDF, free, no login.
 | vaccination_mmr | MMR immunisation coverage | WHO Immunization Data | country | yes | high |
 | ivf_access | IVF/ART access score | Fertility Europe Atlas 2024 | country | manual | medium |
 | ltc_beds_per_100k | Long-term care beds per 100k | Eurostat hlth_rs_bdltc | country | yes | high |
+| ltc_quality | Elder-care quality (infections, pressure ulcers, benzodiazepines) | OECD Health at a Glance, Safe long-term care | country | manual | medium |
+| english_for_health | English usable for healthcare (population proxy) | EF English Proficiency Index | country | partial | medium |
 | intl_schools_count | International schools count | ISC Research / CIS directory | country | partial | medium |
 | intl_school_tuition | Median intl-school tuition | International Schools Database | city | manual | medium |
 | montessori_presence | Montessori presence | AMI country directory | country | manual | medium |
@@ -273,10 +275,10 @@ no dataset. TEMIS Europe UV files are ~130-190 MB NetCDF, free, no login.
 | dentist_density | Dentist density | OSM amenity=dentist | town | yes | medium |
 
 ### DROP
-- English-speaking-doctor availability: no open per-country dataset (IAMAT paywalled).
+- English-speaking-doctor availability as a distinct figure: no per-country dataset (IAMAT is a city directory). Use the English-proficiency proxy above, labelled as population-level.
 - Health-system rank: WHO abandoned the ranking after 2000; no current comparable list.
 - Mental-health (psychiatric) bed density: WHO-EURO series too gappy for auto-pull.
-- Elder-care quality / nursing-home rating: only bed counts exist, no quality score.
+- Private/expat health-insurance cost for older movers: no age-accurate per-country table (the Pacific Prime report benchmarks age ~36). Becomes a computed field only with a live quote API, which is also an affiliate surface; defer to monetization.
 - Bilingual-school city count, SEN numeric score, pan-EU dental price series: no source.
 
 ## 8. Safety, rights, culture, community and services  (COMPLETE)

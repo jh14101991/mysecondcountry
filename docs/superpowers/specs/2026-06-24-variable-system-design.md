@@ -167,9 +167,11 @@ The geospatial build lands in slice 1 only for the handful of raster variables i
 
 ## 10. Open items and risks
 
-- **Retiree healthcare gaps** (English-speaking doctors, elder-care quality, private-insurance
-  cost): unsourced. Either a further controlled source-hunt finds something citable, or they stay
-  dropped and the profile is honest about the gap.
+- **Retiree healthcare gaps**: mostly closed by a follow-up hunt. Elder-care quality now has a
+  source (OECD Health at a Glance, Safe long-term care). English-speaking-doctor availability uses
+  the EF English Proficiency Index as a labelled population proxy. Private-insurance cost stays out
+  for now (no age-accurate per-country table) and becomes a computed field only with a live quote
+  API, which doubles as an affiliate surface, so it is deferred to monetization.
 - **Live direct flights** are paid data; v1 uses the stale OpenFlights skeleton with a staleness
   note, or treats it relationally with a caveat.
 - **Geospatial build** is the main new engineering dependency and the main schedule risk; keep it
