@@ -16,7 +16,7 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "format": "biome format --write .",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks || true"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged && node scripts/secret-scan.mjs --staged"
