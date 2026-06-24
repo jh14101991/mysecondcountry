@@ -1,0 +1,134 @@
+{
+  "id": "gr",
+  "slug": "greece",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Greece",
+  "country": "Greece",
+  "coordinates": { "lat": 37.9838, "lon": 23.7275 },
+  "ancestry": [],
+  "description": "Greece is a southern European country on the Mediterranean and Aegean, drawing remote earners and retirees for its climate, cost, and residence routes. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 87.4,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 13.3,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens, the capital, shown as representative for Greece: mean daily maximum 13.3 C in January."
+    },
+    "averageJulyHighC": {
+      "value": 34.3,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens, the capital: mean daily maximum 34.3 C in July."
+    },
+    "averageAnnualSunHours": {
+      "value": 2773,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals (Elliniko), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens: about 2,773 mean annual sunshine hours (Elliniko station)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, dominant across coastal and southern Greece."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Migration Code, Law 5038/2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 60,
+      "excerpt": "Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child."
+    },
+    "goldenVisa": {
+      "value": "Tiered since 31 Aug 2024: 800,000 euros in high-demand zones (Attica, Thessaloniki, Mykonos, Santorini, islands over 3,100 residents); 400,000 euros elsewhere; 250,000 euros only for converting a commercial building to residential or restoring a listed building.",
+      "sourceUrl": "https://migration.gov.gr/en/golden-visa/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, investor residence permit (Golden Visa)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "Official Greek investor residence permit page; the 250,000 euro tier remains only for commercial-to-residential conversion or listed-building restoration."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 44,
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top marginal personal income tax rate 44 percent on income above 60,000 euros (scale 9, 20, 26, 34, 39, 44 percent)."
+    },
+    "specialRegime": {
+      "value": "Non-dom (Article 5A): 100,000 euros per year flat on all foreign income, up to 15 years, requires a 500,000 euro Greek investment. Foreign pensioners (Article 5B): 7 percent flat on foreign-source income, up to 15 years.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Lump-sum tax of 100,000 euros per tax year on foreign income (Art 5A); 7 percent on foreign-sourced income (Art 5B), each for up to 15 fiscal years."
+    }
+  },
+  "healthcare": {
+    "physiciansPer1000": {
+      "value": 6.37,
+      "sourceUrl": "https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians",
+      "sourceName": "WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "healthcare",
+      "excerpt": "Greece: 63.7 medical doctors per 10,000 (about 6.4 per 1,000), WHO 2021. Counts doctors licensed to practise, which overstates practising doctors."
+    }
+  },
+  "safety": {
+    "peaceIndexScore": {
+      "value": 1.793,
+      "sourceUrl": "https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf",
+      "sourceName": "Institute for Economics and Peace, Global Peace Index 2024",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "safety",
+      "excerpt": "Greece 2024 Global Peace Index score 1.793 (rank 40 of 163). Lower is more peaceful."
+    }
+  }
+}

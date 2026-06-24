@@ -5,7 +5,7 @@ import Base from "../layouts/Base.astro";
 
 const SITE = "https://mysecondcountry.com";
 const description =
-  "A cited, dated answer to where to live. Cost, climate, residency, and tax facts for each place, every figure linked to its source. Screening intelligence, not advice.";
+  "A cited, dated answer to where to live. Cost, tax, residency, climate, healthcare, and safety for each place, every figure linked to its source. Screening intelligence, not advice.";
 const featured = places;
 ---
 
@@ -21,6 +21,27 @@ const featured = places;
 
   <FenceBlock hasLegalClaims={true} />
 
+  <section class="cards" aria-label="Start here">
+    <a class="card card-primary" href="/compare/greece-portugal-spain">
+      <span class="card-kicker">Comparison</span>
+      <span class="card-title">Greece vs Portugal vs Spain</span>
+      <span class="card-body">
+        Eleven sourced dimensions side by side: cost, tax regimes, visas, golden visa, climate,
+        healthcare, safety. Every figure cited and dated.
+      </span>
+      <span class="card-go">See the comparison →</span>
+    </a>
+    <a class="card" href="/screener">
+      <span class="card-kicker">Free tool</span>
+      <span class="card-title">Where should I live? screener</span>
+      <span class="card-body">
+        Enter your budget, climate, visa, and tax constraints; get a cited, ranked shortlist.
+        It shows how each country's rules match what you entered, never what to do.
+      </span>
+      <span class="card-go">Open the screener →</span>
+    </a>
+  </section>
+
   <section aria-labelledby="places-h">
     <h2 id="places-h">Published places</h2>
     <ul class="place-list">
@@ -30,7 +51,9 @@ const featured = places;
             <a href={placePath(place)}>
               <span class="place-name">{place.name}</span>
               <span class="place-where">
-                {place.ancestry.map((a) => a.name).join(", ")}
+                {place.granularity === "country"
+                  ? "Country profile"
+                  : place.ancestry.map((a) => a.name).join(", ")}
               </span>
             </a>
           </li>
@@ -41,7 +64,7 @@ const featured = places;
 
   <style>
     .hero {
-      padding: 1.5rem 0 0.5rem;
+      padding: 1.5rem 0 0;
     }
     .hero h1 {
       max-width: 18ch;
@@ -52,11 +75,62 @@ const featured = places;
       line-height: 1.55;
       color: var(--ink-soft);
     }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0 2.5rem;
+    }
+    @media (max-width: 44rem) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 1.4rem 1.5rem 1.5rem;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: var(--paper-2);
+      text-decoration: none;
+    }
+    .card:hover {
+      border-color: var(--terracotta);
+    }
+    .card-primary {
+      border-top: 3px solid var(--terracotta);
+    }
+    .card-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta-dark);
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .card-body {
+      color: var(--ink-soft);
+      font-size: 0.97rem;
+      line-height: 1.5;
+    }
+    .card-go {
+      margin-top: 0.3rem;
+      font-weight: 600;
+      color: var(--terracotta-dark);
+    }
     .place-list {
       list-style: none;
       padding: 0;
       margin: 1rem 0 0;
       display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 0.75rem;
     }
     .place-list a {
@@ -67,19 +141,19 @@ const featured = places;
       border: 1px solid var(--rule);
       border-radius: 6px;
       text-decoration: none;
-      background: var(--paper-2);
+      background: var(--paper);
     }
     .place-list a:hover {
       border-color: var(--terracotta);
     }
     .place-name {
       font-family: var(--serif);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: var(--ink);
     }
     .place-where {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--ink-soft);
     }
   </style>

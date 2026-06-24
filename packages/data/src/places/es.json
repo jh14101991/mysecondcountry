@@ -1,0 +1,134 @@
+{
+  "id": "es",
+  "slug": "spain",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Spain",
+  "country": "Spain",
+  "coordinates": { "lat": 40.4168, "lon": -3.7038 },
+  "ancestry": [],
+  "description": "Spain is a large western European country spanning Atlantic and Mediterranean coasts and a dry interior, a major destination for remote workers and retirees. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 91.6,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Spain price level index for actual individual consumption (EU27 = 100): 91.6 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 10.0,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Madrid",
+      "sourceName": "Madrid climate normals (AEMET 1991-2020, Retiro), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Madrid, the capital, shown as representative for Spain: mean daily maximum 10.0 C in January (1991 to 2020 normals)."
+    },
+    "averageJulyHighC": {
+      "value": 32.8,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Madrid",
+      "sourceName": "Madrid climate normals (AEMET 1991-2020, Retiro), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Madrid: mean daily maximum 32.8 C in July (1991 to 2020 normals)."
+    },
+    "averageAnnualSunHours": {
+      "value": 2744,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Madrid",
+      "sourceName": "Madrid climate normals (AEMET), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Madrid: about 2,744 mean annual sunshine hours."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, across central Spain; coastal and northern areas differ."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 2763,
+      "sourceUrl": "https://www.exteriores.gob.es/Consulados/washington/en/ServiciosConsulares/Paginas/Consular/Telework-visa.aspx",
+      "sourceName": "Spain Ministry of Foreign Affairs, telework (digital nomad) visa; floor is 200 percent of the SMI",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 90,
+      "excerpt": "Spain telework (digital nomad) visa: minimum income of 200 percent of the minimum interprofessional wage, about 2,763 euros per month in 2025."
+    },
+    "goldenVisa": {
+      "value": "Abolished on 3 April 2025 under Organic Law 1/2025. Investor residence permits tied to real estate investment over 500,000 euros no longer exist.",
+      "sourceUrl": "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/vivienda-agenda-urbana/paginas/2025/020425-fin-golden-visa.aspx",
+      "sourceName": "La Moncloa (Government of Spain press office), end of the golden visa",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "The government ends, on 3 April 2025, residence permits linked to real estate investment over 500,000 euros, known as the golden visa."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 47,
+      "sourceUrl": "https://taxsummaries.pwc.com/spain/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Spain, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "State top rate 47 percent on income above 300,000 euros; combined state and regional top rates typically range from 47 to 54 percent by autonomous community."
+    },
+    "specialRegime": {
+      "value": "Beckham regime (Article 93 LIRPF): 24 percent flat on Spanish employment income up to 600,000 euros (47 percent above), for the arrival year plus five years.",
+      "sourceUrl": "https://taxsummaries.pwc.com/spain/individual/other-issues",
+      "sourceName": "PwC Worldwide Tax Summaries, Spain, other issues",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "24 percent for the first 600,000 euros of taxable income and 47 percent on any excess; the regime applies in the year of the option and the following five years."
+    }
+  },
+  "healthcare": {
+    "physiciansPer1000": {
+      "value": 4.48,
+      "sourceUrl": "https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians",
+      "sourceName": "WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "healthcare",
+      "excerpt": "Spain: 44.8 medical doctors per 10,000 (about 4.5 per 1,000), WHO 2021."
+    }
+  },
+  "safety": {
+    "peaceIndexScore": {
+      "value": 1.597,
+      "sourceUrl": "https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf",
+      "sourceName": "Institute for Economics and Peace, Global Peace Index 2024",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "safety",
+      "excerpt": "Spain 2024 Global Peace Index score 1.597 (rank 23 of 163). Lower is more peaceful."
+    }
+  }
+}

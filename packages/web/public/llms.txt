@@ -8,7 +8,13 @@
 
 ## Coverage
 
-- v1 is Europe, Greece-first. Published places are listed in the sitemap.
+- Country profiles with cited cost, tax (headline rate + special regime), residency and visa
+  (digital nomad income floor, golden visa status), climate, healthcare, and safety for
+  Greece (/places/greece), Portugal (/places/portugal), and Spain (/places/spain).
+- A side-by-side cited comparison at /compare/greece-portugal-spain (11 sourced dimensions).
+- A free screener at /screener: constraints in, cited ranked shortlist out.
+- Town depth begins with Chania, Crete (/places/greece/crete/chania). More town and region
+  pages follow, demand-led.
 - Granularity is country, region, or town. A country-level figure shown on a town page is
   labelled "national figure shown for [town]"; it is not presented as a local figure.
 

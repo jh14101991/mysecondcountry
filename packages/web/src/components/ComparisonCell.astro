@@ -1,0 +1,118 @@
+---
+import type { CitedValue } from "@where/data";
+
+interface Props {
+  cited: CitedValue;
+  unit?: string;
+  prose?: boolean;
+  /** Neutral factual marker, e.g. "lowest" or "highest". Never a recommendation. */
+  leaderLabel?: string | null;
+}
+const { cited, unit, prose = false, leaderLabel = null } = Astro.props;
+
+const BADGE: Record<CitedValue["confidence"], { icon: string; label: string }> = {
+  high: { icon: "●", label: "verified" },
+  medium: { icon: "◐", label: "good" },
+  low: { icon: "○", label: "low" },
+};
+const badge = BADGE[cited.confidence];
+const valueText = unit ? `${cited.value} ${unit}` : `${cited.value}`;
+---
+
+<td class="ccell">
+  <div class="ccell-head">
+    <span class={prose ? "cval cval-prose" : "cval"}>{valueText}</span>
+    {leaderLabel && <span class="leader">{leaderLabel}</span>}
+  </div>
+  <span class={`cbadge cbadge-${cited.confidence}`}>
+    <span aria-hidden="true">{badge.icon}</span> <span>{badge.label}</span>
+  </span>
+  <a
+    class="csrc"
+    href={cited.sourceUrl}
+    rel="noopener nofollow"
+    target="_blank"
+    data-source-click
+    title={cited.excerpt ?? cited.sourceName}
+  >
+    {cited.sourceName}
+  </a>
+  <span class="cdate">Verified {cited.verifiedDate}</span>
+</td>
+
+<style>
+  .ccell {
+    padding: 0.85rem 0.9rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .ccell-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .cval {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .cval-prose {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .leader {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #1f5132;
+    background: #eef6f0;
+    border: 1px solid #9ec9ac;
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+    white-space: nowrap;
+  }
+  .cbadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+  }
+  .cbadge-high {
+    color: #1f5132;
+    border-color: #9ec9ac;
+    background: #eef6f0;
+  }
+  .cbadge-medium {
+    color: #6b4a12;
+    border-color: #d9c08a;
+    background: #f8f1de;
+  }
+  .cbadge-low {
+    color: #7a1f1f;
+    border-color: #d9a3a3;
+    background: #f8e9e9;
+  }
+  .csrc {
+    display: block;
+    margin-top: 0.45rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+  .cdate {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+</style>

@@ -6,8 +6,10 @@ interface Props {
   unit?: string;
   placeGranularity: Granularity;
   placeName: string;
+  /** Render the value as normal-size prose (for long string claims like a tax regime). */
+  prose?: boolean;
 }
-const { cited, unit, placeGranularity, placeName } = Astro.props;
+const { cited, unit, placeGranularity, placeName, prose = false } = Astro.props;
 
 // Confidence renders as icon PLUS text so it never depends on colour alone (DOD j).
 const BADGE: Record<CitedValue["confidence"], { icon: string; label: string }> = {
@@ -29,7 +31,7 @@ const valueText = unit ? `${cited.value} ${unit}` : `${cited.value}`;
 ---
 
 <td class="cited">
-  <span class="value">{valueText}</span>
+  <span class={prose ? "value value-prose" : "value"}>{valueText}</span>
   <span class={`badge badge-${cited.confidence}`}>
     <span class="badge-icon" aria-hidden="true">{badge.icon}</span>
     <span class="badge-text">{badge.label}</span>
@@ -54,6 +56,12 @@ const valueText = unit ? `${cited.value} ${unit}` : `${cited.value}`;
     font-size: 1.35rem;
     font-weight: 600;
     color: var(--ink);
+  }
+  .value-prose {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
   }
   .badge {
     display: inline-flex;

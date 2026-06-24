@@ -1,0 +1,134 @@
+{
+  "id": "pt",
+  "slug": "portugal",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Portugal",
+  "country": "Portugal",
+  "coordinates": { "lat": 38.7223, "lon": -9.1393 },
+  "ancestry": [],
+  "description": "Portugal is a western European country on the Atlantic, long favoured by remote workers and retirees for its mild coast, English-friendly cities, and residence routes. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 86.6,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Portugal price level index for actual individual consumption (EU27 = 100): 86.6 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 14.8,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Lisbon",
+      "sourceName": "Lisbon climate normals (IPMA 1981-2010), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Lisbon, the capital, shown as representative for Portugal: mean daily maximum 14.8 C in January (1981 to 2010 normals)."
+    },
+    "averageJulyHighC": {
+      "value": 27.9,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Lisbon",
+      "sourceName": "Lisbon climate normals (IPMA 1981-2010), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Lisbon: mean daily maximum 27.9 C in July (1981 to 2010 normals)."
+    },
+    "averageAnnualSunHours": {
+      "value": 2874.9,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Lisbon",
+      "sourceName": "Lisbon climate normals, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Lisbon: about 2,874.9 mean annual sunshine hours."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, across much of central and southern Portugal."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3680,
+      "sourceUrl": "https://citizenremote.com/visas/portugal-digital-nomad-visa/",
+      "sourceName": "Portugal D8 visa income floor: 4x the national minimum wage (920 euros/month in 2026), applied by AIMA",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 90,
+      "excerpt": "Portugal D8 digital nomad visa: minimum income of 4 times the national minimum wage, about 3,680 euros per month in 2026, assessed by AIMA at the appointment date."
+    },
+    "goldenVisa": {
+      "value": "Real estate and capital-transfer routes removed in October 2023 (Mais Habitacao, Law 56/2023). Remaining routes include 500,000 euros into qualifying Portuguese investment funds, 250,000 euros cultural support (200,000 in low-density areas), 500,000 euros scientific research, and job creation.",
+      "sourceUrl": "https://www.globalcitizensolutions.com/portugal-golden-visa/",
+      "sourceName": "Portugal golden visa (ARI) after the 2023 Mais Habitacao reform",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "Real estate purchases and capital transfers no longer qualify; investment funds (minimum 500,000 euros) and cultural support (from 250,000 euros) remain."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 48,
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top personal income tax rate 48 percent on taxable income above about 86,634 euros, plus a solidarity rate of 2.5 to 5 percent on higher incomes."
+    },
+    "specialRegime": {
+      "value": "IFICI (the NHR successor, from 2024): 20 percent flat on eligible Portuguese employment and professional income, plus exemptions on certain foreign income. The old NHR regime closed to new entrants at the end of 2023.",
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, significant developments",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "IFICI provides a special 20 percent rate on category A and B income from eligible activities; applicants must not have benefited from the NHR regime."
+    }
+  },
+  "healthcare": {
+    "physiciansPer1000": {
+      "value": 5.77,
+      "sourceUrl": "https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians",
+      "sourceName": "WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "healthcare",
+      "excerpt": "Portugal: 57.7 medical doctors per 10,000 (about 5.8 per 1,000), WHO 2021."
+    }
+  },
+  "safety": {
+    "peaceIndexScore": {
+      "value": 1.372,
+      "sourceUrl": "https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf",
+      "sourceName": "Institute for Economics and Peace, Global Peace Index 2024",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "safety",
+      "excerpt": "Portugal 2024 Global Peace Index score 1.372 (rank 7 of 163), one of the most peaceful countries. Lower is more peaceful."
+    }
+  }
+}

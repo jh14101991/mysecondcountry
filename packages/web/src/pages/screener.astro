@@ -1,0 +1,334 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const title = "Where should I live? A free, cited relocation screener";
+const description =
+  "Enter your budget, climate, visa, and tax constraints and get a cited, ranked shortlist of Greece, Portugal, and Spain. Every figure is sourced and dated. It shows how each country's published rules match what you entered; it never tells you what to do.";
+const canonical = `${SITE}/screener`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "My Second Country relocation screener",
+  applicationCategory: "Lifestyle",
+  operatingSystem: "Web",
+  url: canonical,
+  isAccessibleForFree: true,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  description,
+};
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article data-page="screener">
+    <p class="kicker">Free screener</p>
+    <h1>Where should you live?</h1>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <p class="lede">{description}</p>
+
+    <div class="screener">
+      <form id="screener-form" aria-label="Screening constraints">
+        <fieldset>
+          <legend>Your constraints</legend>
+
+          <div class="field">
+            <label for="income">Provable net monthly income (EUR)</label>
+            <input
+              type="number"
+              id="income"
+              name="income"
+              min="0"
+              step="100"
+              placeholder="e.g. 4000 (leave blank to skip the visa check)"
+            />
+            <p class="hint">Used only to compare against each country's published digital nomad visa income floor.</p>
+          </div>
+
+          <div class="field">
+            <label for="cost">Max acceptable cost level <output id="cost-out">100</output></label>
+            <input type="range" id="cost" name="cost" min="70" max="110" value="100" step="1" />
+            <p class="hint">Eurostat price level index, EU27 = 100. Lower is cheaper.</p>
+          </div>
+
+          <div class="field">
+            <label for="winter">Min comfortable winter day high <output id="winter-out">10</output> °C</label>
+            <input type="range" id="winter" name="winter" min="5" max="20" value="10" step="1" />
+          </div>
+
+          <div class="field">
+            <label for="summer">Max comfortable summer day high <output id="summer-out">35</output> °C</label>
+            <input type="range" id="summer" name="summer" min="25" max="40" value="35" step="1" />
+          </div>
+
+          <div class="field">
+            <label for="sun">Min annual sunshine <output id="sun-out">2500</output> hours</label>
+            <input type="range" id="sun" name="sun" min="2000" max="3500" value="2500" step="50" />
+          </div>
+
+          <div class="field">
+            <label for="tax">Max acceptable top income tax rate <output id="tax-out">50</output> %</label>
+            <input type="range" id="tax" name="tax" min="30" max="55" value="50" step="1" />
+          </div>
+        </fieldset>
+      </form>
+
+      <section class="results" aria-live="polite" aria-label="Screening results">
+        <div id="results"></div>
+      </section>
+    </div>
+
+    <p class="method">
+      How it works: each country's published figures are matched against your constraints, then
+      weighted by source confidence (a low-confidence input counts for less). The score is the
+      confidence-weighted share of your stated criteria that match. It is a screening signal, not
+      a recommendation. Open any country's <a href="/compare/greece-portugal-spain">full cited
+      comparison</a> to check every source yourself.
+    </p>
+  </article>
+
+  <style>
+    .kicker {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta-dark);
+      margin: 0 0 0.3rem;
+    }
+    .lede {
+      max-width: var(--measure);
+      font-size: 1.12rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0 0 1.5rem;
+    }
+    .screener {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 46rem) {
+      .screener {
+        grid-template-columns: 1fr;
+      }
+    }
+    fieldset {
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 1.2rem 1.3rem 1.4rem;
+      background: var(--paper-2);
+    }
+    legend {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 0 0.4rem;
+    }
+    .field {
+      margin-top: 1rem;
+    }
+    .field label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .field input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--paper);
+    }
+    .field input[type="range"] {
+      width: 100%;
+      accent-color: var(--terracotta);
+    }
+    .field output {
+      font-weight: 700;
+      color: var(--terracotta-dark);
+    }
+    .hint {
+      margin: 0.3rem 0 0;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+    .method {
+      max-width: var(--measure);
+      margin-top: 2.5rem;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .rank-card {
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--terracotta);
+      border-radius: 8px;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+      background: var(--paper);
+    }
+    .rank-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .rank-name {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 600;
+    }
+    .rank-name a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .rank-score {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--terracotta-dark);
+    }
+    .rank-sub {
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+      margin: 0.2rem 0 0.8rem;
+    }
+    .rank-dims {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.35rem;
+    }
+    .rank-dims li {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .mark {
+      flex: none;
+      font-weight: 700;
+    }
+    .mark-yes {
+      color: #1f5132;
+    }
+    .mark-no {
+      color: #7a1f1f;
+    }
+    .warn {
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      color: #7a1f1f;
+    }
+  </style>
+
+  <script>
+    import { places } from "@where/data";
+    import { screenPlace, type ScreeningCriteria } from "@where/engine";
+
+    const countries = places.filter((p) => p.granularity === "country");
+
+    const form = document.getElementById("screener-form") as HTMLFormElement;
+    const resultsEl = document.getElementById("results") as HTMLElement;
+
+    const outs: Record<string, string> = {
+      cost: "cost-out",
+      winter: "winter-out",
+      summer: "summer-out",
+      sun: "sun-out",
+      tax: "tax-out",
+    };
+
+    function num(id: string): number | undefined {
+      const el = document.getElementById(id) as HTMLInputElement | null;
+      if (!el || el.value === "") return undefined;
+      const n = Number(el.value);
+      return Number.isFinite(n) ? n : undefined;
+    }
+
+    function readCriteria(): ScreeningCriteria {
+      const income = num("income");
+      const criteria: ScreeningCriteria = {
+        maxPriceLevelIndexEU27: num("cost"),
+        minJanuaryHighC: num("winter"),
+        maxJulyHighC: num("summer"),
+        minAnnualSunHours: num("sun"),
+        maxIncomeTaxRate: num("tax"),
+      };
+      if (income && income > 0) criteria.provableMonthlyIncomeEUR = income;
+      return criteria;
+    }
+
+    function esc(s: string): string {
+      return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
+    }
+
+    function placeHref(p: (typeof countries)[number]): string {
+      return `/places/${[...p.ancestry.map((a) => a.slug), p.slug].join("/")}`;
+    }
+
+    function render() {
+      const criteria = readCriteria();
+      const ranked = countries
+        .map((place) => ({ place, result: screenPlace(place, criteria) }))
+        .sort((a, b) => b.result.score - a.result.score);
+
+      resultsEl.innerHTML = ranked
+        .map(({ place, result }, i) => {
+          const dims = result.breakdown
+            .filter((d) => d.applicable)
+            .map((d) => {
+              const mark = d.matched ? '<span class="mark mark-yes">match</span>' : '<span class="mark mark-no">no</span>';
+              return `<li>${mark}<span>${esc(d.detail)}</span></li>`;
+            })
+            .join("");
+          const warn = result.fenceWarnings.length
+            ? `<p class="warn">${result.fenceWarnings.length} figure(s) are low-confidence or past their verify-by window; check the source.</p>`
+            : "";
+          return `
+            <div class="rank-card">
+              <div class="rank-head">
+                <span class="rank-name">#${i + 1} <a href="${placeHref(place)}">${esc(place.name)}</a></span>
+                <span class="rank-score">${result.score}</span>
+              </div>
+              <p class="rank-sub">Matches ${result.matchedCount} of ${result.applicableCount} of your stated criteria. Score is the confidence-weighted share. Not a recommendation.</p>
+              <ul class="rank-dims">${dims}</ul>
+              ${warn}
+            </div>`;
+        })
+        .join("");
+
+      // Demand signal: fire once per settled interaction (debounced by the caller).
+      const w = window as unknown as { plausible?: (e: string, o?: { props?: Record<string, unknown> }) => void };
+      w.plausible?.("Screener Run", {
+        props: { criteria: Object.keys(criteria).length, top: ranked[0]?.place.id ?? "none" },
+      });
+    }
+
+    // Live slider value labels.
+    for (const [id, outId] of Object.entries(outs)) {
+      const input = document.getElementById(id) as HTMLInputElement | null;
+      const out = document.getElementById(outId);
+      if (input && out) {
+        const sync = () => {
+          out.textContent = input.value;
+        };
+        input.addEventListener("input", sync);
+        sync();
+      }
+    }
+
+    let t: ReturnType<typeof setTimeout> | undefined;
+    form.addEventListener("input", () => {
+      window.clearTimeout(t);
+      t = setTimeout(render, 250);
+    });
+
+    render();
+  </script>
+</Base>

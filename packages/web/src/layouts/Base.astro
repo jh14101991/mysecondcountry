@@ -27,13 +27,31 @@ const year = 2026;
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
       )
     }
+    {/* Plausible: cookieless, no consent banner needed (FENCE.md). Auto pageviews +
+        outbound-link (source citation) clicks + tagged custom events. */}
+    <script
+      defer
+      data-domain="mysecondcountry.com"
+      src="https://plausible.io/js/script.outbound-links.tagged-events.js"
+      is:inline
+    />
+    <script is:inline>
+      window.plausible =
+        window.plausible ||
+        function () {
+          (window.plausible.q = window.plausible.q || []).push(arguments);
+        };
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
         <a class="wordmark" href="/">My&nbsp;Second&nbsp;Country</a>
-        <span class="tagline">cited relocation intelligence</span>
+        <div class="nav-links">
+          <a href="/compare/greece-portugal-spain">Compare</a>
+          <a href="/screener">Screener</a>
+        </div>
       </nav>
     </header>
     <main id="main">
@@ -46,6 +64,31 @@ const year = 2026;
       </p>
       <p class="fineprint">&copy; {year} My Second Country. mysecondcountry.com</p>
     </footer>
+
+    <script is:inline>
+      // Demand-sensor events. Pageviews and outbound (source) clicks are auto-tracked.
+      (function () {
+        var p = function (e, o) {
+          if (window.plausible) window.plausible(e, o);
+        };
+        var page = document.querySelector("[data-page]");
+        if (page && page.getAttribute("data-page") === "comparison") {
+          p("Comparison Viewed", { props: { set: page.getAttribute("data-compare") || "" } });
+        }
+        var fence = document.querySelector(".fence");
+        if (fence && "IntersectionObserver" in window) {
+          var seen = false;
+          var io = new IntersectionObserver(function (entries) {
+            if (!seen && entries.some(function (en) { return en.isIntersecting; })) {
+              seen = true;
+              p("Fence Seen");
+              io.disconnect();
+            }
+          });
+          io.observe(fence);
+        }
+      })();
+    </script>
 
     <style is:global>
       :root {
@@ -114,6 +157,7 @@ const year = 2026;
         padding: 1.1rem 1.5rem;
         display: flex;
         align-items: baseline;
+        justify-content: space-between;
         gap: 1rem;
         flex-wrap: wrap;
       }
@@ -125,11 +169,18 @@ const year = 2026;
         color: var(--ink);
         text-decoration: none;
       }
-      .tagline {
-        font-size: 0.82rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+      .nav-links {
+        display: flex;
+        gap: 1.25rem;
+      }
+      .nav-links a {
+        font-size: 0.95rem;
+        font-weight: 600;
         color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .nav-links a:hover {
+        color: var(--terracotta-dark);
       }
 
       main {

@@ -88,6 +88,9 @@ function highLiabilityValue<T extends z.ZodTypeAny>(
 export const VisaValueSchema = highLiabilityValue(z.number().positive(), "visa");
 export const TaxValueSchema = highLiabilityValue(z.number(), "tax");
 export const ResidencyValueSchema = highLiabilityValue(z.number(), "residency");
+// String-valued high-liability claims (a regime or status described in words).
+export const TaxRegimeValueSchema = highLiabilityValue(z.string().min(1), "tax");
+export const GoldenVisaValueSchema = highLiabilityValue(z.string().min(1), "residency");
 
 /**
  * Ergonomic TS view of a CitedValue. The Zod factory is the runtime source of truth;
@@ -154,11 +157,23 @@ export const PlaceSchema = z.object({
   residency: z
     .object({
       digitalNomadVisa: VisaValueSchema,
+      goldenVisa: GoldenVisaValueSchema.optional(),
     })
     .optional(),
   tax: z
     .object({
       headlinePersonalIncomeTaxRate: TaxValueSchema,
+      specialRegime: TaxRegimeValueSchema.optional(),
+    })
+    .optional(),
+  healthcare: z
+    .object({
+      physiciansPer1000: citedValue(z.number().nonnegative()),
+    })
+    .optional(),
+  safety: z
+    .object({
+      peaceIndexScore: citedValue(z.number()),
     })
     .optional(),
 });
@@ -188,6 +203,8 @@ export function collectCitedValues(place: Place): { path: string; cited: CitedVa
   visit(place.climate, "climate");
   if (place.residency) visit(place.residency, "residency");
   if (place.tax) visit(place.tax, "tax");
+  if (place.healthcare) visit(place.healthcare, "healthcare");
+  if (place.safety) visit(place.safety, "safety");
   return out;
 }
 

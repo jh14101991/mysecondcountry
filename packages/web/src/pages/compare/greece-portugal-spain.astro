@@ -1,0 +1,294 @@
+---
+import { type CitedValue, type Place, placeById, placePath } from "@where/data";
+import ComparisonCell from "../../components/ComparisonCell.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const gr = placeById("gr");
+const pt = placeById("pt");
+const es = placeById("es");
+if (!gr || !pt || !es) throw new Error("Comparison needs gr, pt, es places");
+const countries: Place[] = [gr, pt, es];
+
+interface Dim {
+  label: string;
+  unit?: string;
+  prose?: boolean;
+  direction?: "min" | "max";
+  leaderWord?: string;
+  get: (p: Place) => CitedValue | undefined;
+}
+
+const dims: Dim[] = [
+  {
+    label: "Cost of living (price level index, EU27=100)",
+    direction: "min",
+    leaderWord: "lowest",
+    get: (p) => p.costOfLiving.priceLevelIndexEU27,
+  },
+  {
+    label: "Top income tax rate",
+    unit: "%",
+    direction: "min",
+    leaderWord: "lowest",
+    get: (p) => p.tax?.headlinePersonalIncomeTaxRate,
+  },
+  { label: "Special tax regime for movers", prose: true, get: (p) => p.tax?.specialRegime },
+  {
+    label: "Digital nomad visa, min net income",
+    unit: "EUR/mo",
+    direction: "min",
+    leaderWord: "lowest",
+    get: (p) => p.residency?.digitalNomadVisa,
+  },
+  { label: "Golden visa / investor residency", prose: true, get: (p) => p.residency?.goldenVisa },
+  { label: "Average July high", unit: "°C", get: (p) => p.climate.averageJulyHighC },
+  {
+    label: "Average January high",
+    unit: "°C",
+    direction: "max",
+    leaderWord: "warmest",
+    get: (p) => p.climate.averageJanuaryHighC,
+  },
+  {
+    label: "Annual sunshine",
+    unit: "hours",
+    direction: "max",
+    leaderWord: "sunniest",
+    get: (p) => p.climate.averageAnnualSunHours,
+  },
+  { label: "Climate classification", prose: true, get: (p) => p.climate.koppenClass },
+  {
+    label: "Physicians per 1,000 people",
+    direction: "max",
+    leaderWord: "most",
+    get: (p) => p.healthcare?.physiciansPer1000,
+  },
+  {
+    label: "Global Peace Index (lower is safer)",
+    direction: "min",
+    leaderWord: "safest",
+    get: (p) => p.safety?.peaceIndexScore,
+  },
+];
+
+function leaderIndex(dim: Dim): number | null {
+  if (!dim.direction) return null;
+  let best: number | null = null;
+  let bestI: number | null = null;
+  countries.forEach((c, i) => {
+    const cv = dim.get(c);
+    const v = typeof cv?.value === "number" ? (cv.value as number) : null;
+    if (v === null) return;
+    if (best === null || (dim.direction === "min" ? v < best : v > best)) {
+      best = v;
+      bestI = i;
+    }
+  });
+  return bestI;
+}
+
+const title = "Greece vs Portugal vs Spain: a cited relocation comparison";
+const description =
+  "Cost, tax, residency, climate, healthcare, and safety for Greece, Portugal, and Spain, every figure linked to its source with a verified date and a confidence mark. Screening intelligence, not advice.";
+const canonical = `${SITE}/compare/greece-portugal-spain`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: title,
+  description,
+  url: canonical,
+  isAccessibleForFree: true,
+  creator: { "@type": "Organization", name: "My Second Country", url: SITE },
+  about: countries.map((c) => ({ "@type": "Place", name: c.name, url: `${SITE}${placePath(c)}` })),
+};
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article data-page="comparison" data-compare="greece-portugal-spain">
+    <p class="kicker">Comparison</p>
+    <h1>Greece vs Portugal vs Spain</h1>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <p class="lede">{description}</p>
+    <p class="how">
+      Every figure links to its source and shows a confidence mark and the date we last
+      verified it. The neutral tags (lowest, sunniest, safest) just name which country leads a
+      row on that number. We do not pick a winner for you. For a shortlist tuned to your own
+      constraints, use the <a href="/screener">screener</a>.
+    </p>
+
+    <div class="table-scroll">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th scope="col" class="dim-head">Dimension</th>
+            {
+              countries.map((c) => (
+                <th scope="col" class="country-head">
+                  <a href={placePath(c)}>{c.name}</a>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            dims.map((dim) => {
+              const lead = leaderIndex(dim);
+              return (
+                <tr>
+                  <th scope="row">{dim.label}</th>
+                  {countries.map((c, i) => {
+                    const cited = dim.get(c);
+                    return cited ? (
+                      <ComparisonCell
+                        cited={cited}
+                        unit={dim.unit}
+                        prose={dim.prose}
+                        leaderLabel={lead === i ? (dim.leaderWord ?? null) : null}
+                      />
+                    ) : (
+                      <td class="empty">not available</td>
+                    );
+                  })}
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="full-links">
+      Full cited pages:
+      {
+        countries.map((c, i) => (
+          <>
+            {i > 0 ? " · " : " "}
+            <a href={placePath(c)}>{c.name}</a>
+          </>
+        ))
+      }
+    </p>
+
+    <section class="screener-cta">
+      <h2>Not sure which fits your situation?</h2>
+      <p>
+        The free screener takes your budget, climate, visa, and tax constraints and returns a
+        cited, ranked shortlist across these countries, with every figure sourced and the same
+        fence. It never tells you what to do; it shows how each country's published rules match
+        what you entered.
+      </p>
+      <a class="cta" href="/screener">Open the screener</a>
+    </section>
+  </article>
+
+  <style>
+    .kicker {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta-dark);
+      margin: 0 0 0.3rem;
+    }
+    .lede {
+      max-width: var(--measure);
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0 0 0.8rem;
+    }
+    .how {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      margin: 0 0 1.5rem;
+    }
+    .table-scroll {
+      overflow-x: auto;
+      border-top: 2px solid var(--ink);
+    }
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+    .compare thead th {
+      text-align: left;
+      padding: 0.7rem 0.9rem;
+      border-bottom: 2px solid var(--ink);
+      vertical-align: bottom;
+    }
+    .country-head {
+      border-left: 1px solid var(--rule);
+    }
+    .country-head a {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .country-head a:hover {
+      color: var(--terracotta-dark);
+    }
+    .dim-head {
+      width: 22%;
+      color: var(--ink-soft);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .compare tbody th[scope="row"] {
+      text-align: left;
+      vertical-align: top;
+      padding: 0.85rem 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      border-bottom: 1px solid var(--rule);
+      width: 22%;
+    }
+    .empty {
+      padding: 0.85rem 0.9rem;
+      border-bottom: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    .full-links {
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+    }
+    .screener-cta {
+      margin-top: 3rem;
+      padding: 1.6rem 1.6rem 1.8rem;
+      background: var(--paper-2);
+      border-radius: 8px;
+    }
+    .screener-cta h2 {
+      margin-top: 0;
+    }
+    .screener-cta p {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      margin: 0 0 1.1rem;
+    }
+    .cta {
+      display: inline-block;
+      background: var(--terracotta);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.3rem;
+      border-radius: 6px;
+    }
+    .cta:hover {
+      background: var(--terracotta-dark);
+      color: #fff;
+    }
+  </style>
+</Base>

@@ -48,6 +48,7 @@ interface Row {
   label: string;
   cited: CitedValue;
   unit?: string;
+  prose?: boolean;
 }
 
 const costClimate: Row[] = [
@@ -65,12 +66,40 @@ if (place.residency) {
     cited: place.residency.digitalNomadVisa,
     unit: "EUR/month",
   });
+  if (place.residency.goldenVisa) {
+    residencyTax.push({
+      label: "Golden visa / investor residency",
+      cited: place.residency.goldenVisa,
+      prose: true,
+    });
+  }
 }
 if (place.tax) {
   residencyTax.push({
     label: "Top personal income tax rate",
     cited: place.tax.headlinePersonalIncomeTaxRate,
     unit: "%",
+  });
+  if (place.tax.specialRegime) {
+    residencyTax.push({
+      label: "Special tax regime for movers",
+      cited: place.tax.specialRegime,
+      prose: true,
+    });
+  }
+}
+
+const healthSafety: Row[] = [];
+if (place.healthcare) {
+  healthSafety.push({
+    label: "Physicians per 1,000 people",
+    cited: place.healthcare.physiciansPer1000,
+  });
+}
+if (place.safety) {
+  healthSafety.push({
+    label: "Global Peace Index score (lower is safer)",
+    cited: place.safety.peaceIndexScore,
   });
 }
 ---
@@ -134,6 +163,32 @@ if (place.tax) {
                   <CitedValueCell
                     cited={row.cited}
                     unit={row.unit}
+                    prose={row.prose}
+                    placeGranularity={place.granularity}
+                    placeName={place.name}
+                  />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )
+    }
+
+    {
+      healthSafety.length > 0 && (
+        <section aria-labelledby="health-safety-h">
+          <h2 id="health-safety-h">Healthcare and safety</h2>
+          <table class="facts">
+            <caption class="visually-hidden">Cited healthcare and safety facts for {place.name}</caption>
+            <tbody>
+              {healthSafety.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  <CitedValueCell
+                    cited={row.cited}
+                    unit={row.unit}
+                    prose={row.prose}
                     placeGranularity={place.granularity}
                     placeName={place.name}
                   />
