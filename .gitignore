@@ -35,3 +35,5 @@ coverage/
 packages/*/cache/
 .cache/
 .vercel/
+.vercel
+.env*.local
