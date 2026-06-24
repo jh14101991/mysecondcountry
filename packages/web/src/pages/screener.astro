@@ -163,7 +163,9 @@ const jsonLd = {
       color: var(--ink-soft);
       font-size: 0.95rem;
     }
-    .rank-card {
+    /* Result cards are injected client-side via innerHTML, so they do not carry Astro's
+       scoped style hash. These selectors must be :global to reach them. */
+    :global(.rank-card) {
       border: 1px solid var(--rule);
       border-top: 3px solid var(--terracotta);
       border-radius: 8px;
@@ -171,56 +173,57 @@ const jsonLd = {
       margin-bottom: 1rem;
       background: var(--paper);
     }
-    .rank-head {
+    :global(.rank-head) {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
     }
-    .rank-name {
+    :global(.rank-name) {
       font-family: var(--serif);
       font-size: 1.45rem;
       font-weight: 600;
     }
-    .rank-name a {
+    :global(.rank-name a) {
       color: var(--ink);
       text-decoration: none;
     }
-    .rank-score {
+    :global(.rank-score) {
       font-family: var(--serif);
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--terracotta-dark);
     }
-    .rank-sub {
+    :global(.rank-sub) {
       color: var(--ink-soft);
       font-size: 0.92rem;
       margin: 0.2rem 0 0.8rem;
     }
-    .rank-dims {
+    :global(.rank-dims) {
       list-style: none;
       padding: 0;
       margin: 0;
       display: grid;
       gap: 0.35rem;
     }
-    .rank-dims li {
+    :global(.rank-dims li) {
       display: flex;
       gap: 0.5rem;
       font-size: 0.92rem;
       line-height: 1.4;
     }
-    .mark {
+    :global(.rank-dims .mark) {
       flex: none;
       font-weight: 700;
+      min-width: 3.2rem;
     }
-    .mark-yes {
+    :global(.mark-yes) {
       color: #1f5132;
     }
-    .mark-no {
+    :global(.mark-no) {
       color: #7a1f1f;
     }
-    .warn {
+    :global(.warn) {
       margin-top: 0.7rem;
       font-size: 0.85rem;
       color: #7a1f1f;
