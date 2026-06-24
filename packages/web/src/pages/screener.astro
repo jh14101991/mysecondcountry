@@ -390,6 +390,9 @@ const jsonLd = {
       // Build activeFilters from dealBreakers + checked boolean controls
       const activeFilters: ActiveFilter[] = [];
 
+      // The web applies deal-breakers as hard applyFilters entries and does not read the
+      // engine's dealBreakerFailed flag in slice 1. The "in" op is not used by any
+      // slice-1 preset and is skipped here.
       for (const db of composed.dealBreakers) {
         if (db.op === "<=") {
           activeFilters.push({ key: db.key, max: db.value as number });
@@ -441,7 +444,7 @@ const jsonLd = {
             const markClass = match ? "mark-yes" : "mark-no";
             const markText = match ? "match" : "no";
             const unit = def?.unit ? esc(def.unit) : "";
-            const valueStr = esc(String(cited.value));
+            const valueStr = typeof cited.value === "boolean" ? (cited.value ? "yes" : "no") : esc(String(cited.value));
 
             let boundNote = "";
             if (criterion !== undefined) {

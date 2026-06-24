@@ -14,13 +14,23 @@ export function placeVariables(place: Place): Record<string, CitedValue> {
     derived.top_income_tax_rate = place.tax.headlinePersonalIncomeTaxRate as CitedValue;
   }
   if (place.tax?.specialRegime) {
-    derived.special_tax_regime = place.tax.specialRegime as CitedValue;
+    const r = place.tax.specialRegime;
+    derived.special_tax_regime = {
+      ...r,
+      value: true,
+      excerpt: r.excerpt ?? String(r.value),
+    } as CitedValue;
   }
   if (place.residency?.digitalNomadVisa) {
     derived.dnv_income_floor = place.residency.digitalNomadVisa as CitedValue;
   }
   if (place.residency?.goldenVisa) {
-    derived.golden_visa = place.residency.goldenVisa as CitedValue;
+    const g = place.residency.goldenVisa;
+    derived.golden_visa = {
+      ...g,
+      value: true,
+      excerpt: g.excerpt ?? String(g.value),
+    } as CitedValue;
   }
 
   derived.winter_high = place.climate.averageJanuaryHighC as CitedValue;

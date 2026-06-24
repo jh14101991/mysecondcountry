@@ -89,7 +89,6 @@ export const PROFILES: Profile[] = [
       physicians_per_1k: 0.7,
       cost_price_level: 0.6,
       winter_high: 0.5,
-      koppen: 0.3,
     },
     surfaced: [
       "dnv_income_floor",

@@ -47,6 +47,22 @@ describe("placeVariables", () => {
     expect("gpi_score" in vars).toBe(false);
   });
 
+  it("golden_visa and special_tax_regime carry value=true with provenance and excerpt preserved", () => {
+    const vars = placeVariables(greece);
+
+    const gv = vars.golden_visa;
+    expect(gv).toBeDefined();
+    expect(gv?.value).toBe(true);
+    expect(gv?.sourceUrl).toMatch(/^https:\/\//);
+    expect(gv?.excerpt).toBeTruthy();
+
+    const str = vars.special_tax_regime;
+    expect(str).toBeDefined();
+    expect(str?.value).toBe(true);
+    expect(str?.sourceUrl).toMatch(/^https:\/\//);
+    expect(str?.excerpt).toBeTruthy();
+  });
+
   it("collectCitedValues covers the variables map after change B", () => {
     const thatPlace = {
       ...greece,
