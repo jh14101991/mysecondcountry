@@ -1,0 +1,250 @@
+---
+import {
+  type CitedValue,
+  collectCitedValues,
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  type Place,
+  placePath,
+  places,
+} from "@where/data";
+import CitedValueCell from "../../components/CitedValueCell.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+import { placeJsonLd } from "../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return places.map((place) => ({
+    params: { path: [...place.ancestry.map((a) => a.slug), place.slug].join("/") },
+    props: { place },
+  }));
+}
+
+interface Props {
+  place: Place;
+}
+const { place } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}${placePath(place)}`;
+const jsonLd = placeJsonLd(place, SITE);
+const hasLegalClaims = Boolean(place.residency || place.tax);
+const title = `${place.name}: cited cost, climate, residency and tax facts | My Second Country`;
+
+// Self-activating staleness banner: if any claim has aged past its window before a
+// refresh merges, the banner appears automatically at build time (FENCE.md).
+const stale = collectCitedValues(place).filter((e) => isStale(e.cited));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (e) =>
+          e.cited.stalenessDays ??
+          (e.cited.category ? DEFAULT_STALENESS_DAYS[e.cited.category] : 180),
+      ),
+    )
+  : null;
+
+interface Row {
+  label: string;
+  cited: CitedValue;
+  unit?: string;
+}
+
+const costClimate: Row[] = [
+  { label: "Cost of living (price level index)", cited: place.costOfLiving.priceLevelIndexEU27 },
+  { label: "Average January high", cited: place.climate.averageJanuaryHighC, unit: "°C" },
+  { label: "Average July high", cited: place.climate.averageJulyHighC, unit: "°C" },
+  { label: "Annual sunshine", cited: place.climate.averageAnnualSunHours, unit: "hours" },
+  { label: "Climate classification", cited: place.climate.koppenClass },
+];
+
+const residencyTax: Row[] = [];
+if (place.residency) {
+  residencyTax.push({
+    label: "Digital nomad visa, minimum net income",
+    cited: place.residency.digitalNomadVisa,
+    unit: "EUR/month",
+  });
+}
+if (place.tax) {
+  residencyTax.push({
+    label: "Top personal income tax rate",
+    cited: place.tax.headlinePersonalIncomeTaxRate,
+    unit: "%",
+  });
+}
+---
+
+<Base title={title} description={place.description} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      {
+        place.ancestry.map((a) => (
+          <span class="crumb">{a.name}</span>
+        ))
+      }
+      <span class="crumb current" aria-current="page">{place.name}</span>
+    </nav>
+
+    <h1>{place.name}</h1>
+    <p class="lede">{place.description}</p>
+
+    <FenceBlock hasLegalClaims={hasLegalClaims} staleDays={staleDays} />
+
+    <section aria-labelledby="cost-climate-h">
+      <h2 id="cost-climate-h">Cost and climate</h2>
+      <table class="facts">
+        <caption class="visually-hidden">Cited cost and climate facts for {place.name}</caption>
+        <tbody>
+          {
+            costClimate.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <CitedValueCell
+                  cited={row.cited}
+                  unit={row.unit}
+                  placeGranularity={place.granularity}
+                  placeName={place.name}
+                />
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    {
+      residencyTax.length > 0 && (
+        <section aria-labelledby="residency-tax-h">
+          <h2 id="residency-tax-h">Residency and tax</h2>
+          <p class="section-note">
+            These are published national rules reported from their source on the verified
+            date. They are not advice and they change. Confirm your own position with a
+            licensed professional and the official source.
+          </p>
+          <table class="facts">
+            <caption class="visually-hidden">
+              Cited residency and tax facts for {place.name}
+            </caption>
+            <tbody>
+              {residencyTax.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  <CitedValueCell
+                    cited={row.cited}
+                    unit={row.unit}
+                    placeGranularity={place.granularity}
+                    placeName={place.name}
+                  />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="how-to-read-h" class="how-to-read">
+      <h2 id="how-to-read-h">How to read this page</h2>
+      <p>
+        Every figure above is a cited claim: a value, the named source, the date we last
+        verified it, and a confidence mark. Verified source means an official statistical
+        body or primary law. Good source means an official authority read through a
+        secondary. Low confidence means a directional figure to check yourself. A national
+        figure shown for a town is labelled as such; we do not pass a country average off
+        as a local one.
+      </p>
+    </section>
+
+    {/* Screening island placeholder. No client JavaScript yet; the interactive
+        screener mounts here in a later phase. */}
+    <div id="screening-island" data-place-id={place.id} hidden></div>
+  </article>
+
+  <style>
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+    }
+    .crumb + .crumb::before {
+      content: "›";
+      margin-right: 0.4rem;
+      color: var(--rule);
+    }
+    .crumb.current {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .lede {
+      max-width: var(--measure);
+      font-size: 1.2rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0 0 0.5rem;
+    }
+    .section-note {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+    .facts {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      border-top: 2px solid var(--ink);
+    }
+    .facts th[scope="row"] {
+      width: 38%;
+      text-align: left;
+      vertical-align: top;
+      padding: 0.9rem 1rem 0.9rem 0;
+      font-weight: 600;
+      color: var(--ink);
+      border-bottom: 1px solid var(--rule);
+    }
+    .how-to-read {
+      margin-top: 3rem;
+      padding: 1.4rem 1.5rem;
+      background: var(--paper-2);
+      border-radius: 6px;
+    }
+    .how-to-read h2 {
+      margin-top: 0;
+    }
+    .how-to-read p {
+      max-width: var(--measure);
+      margin: 0;
+      color: var(--ink-soft);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 38rem) {
+      .facts,
+      .facts tbody,
+      .facts tr,
+      .facts th[scope="row"] {
+        display: block;
+        width: 100%;
+      }
+      .facts th[scope="row"] {
+        padding-bottom: 0.2rem;
+        border-bottom: none;
+      }
+    }
+  </style>
+</Base>

@@ -1,0 +1,30 @@
+# My Second Country
+
+> A cited, continuously re-verified intelligence engine answering "where should I live".
+> Every cost, climate, residency, and tax figure is a CitedValue: a value with a named
+> source, a verified date, a confidence tier, and the geographic granularity of the
+> underlying data. This is screening intelligence pointing to primary sources. It is not
+> legal, tax, immigration, or financial advice.
+
+## Coverage
+
+- v1 is Europe, Greece-first. Published places are listed in the sitemap.
+- Granularity is country, region, or town. A country-level figure shown on a town page is
+  labelled "national figure shown for [town]"; it is not presented as a local figure.
+
+## How to cite this site
+
+- Each claim links to its primary source and states the date it was verified. Prefer the
+  primary source we link, and report our verified date alongside any figure you quote.
+- Confidence tiers: high (official statistical body or primary law), medium (official
+  authority read via a secondary), low (directional, crowd-sourced, or extrapolated).
+
+## Pointers
+
+- Sitemap: https://mysecondcountry.com/sitemap.xml
+- The liability fence and citation policy travel with every page that carries a claim.
+
+## Boundary
+
+Do not present any figure here as advice or as a verdict for an individual. Route readers
+to a licensed professional and the official source for any residency, visa, or tax decision.

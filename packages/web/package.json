@@ -1,0 +1,17 @@
+{
+  "name": "@where/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@where/data": "workspace:*",
+    "@where/engine": "workspace:*",
+    "astro": "^6.0.0"
+  }
+}

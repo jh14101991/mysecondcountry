@@ -1,0 +1,50 @@
+---
+import { FENCE_PRIMARY, FENCE_TAX_RESIDENCY_RIDER, stalenessBanner } from "../lib/fence.ts";
+
+interface Props {
+  /** Page carries residency, visa, or tax claims: render the rider. */
+  hasLegalClaims?: boolean;
+  /** If set, the most lenient breached staleness window in days: render the banner. */
+  staleDays?: number | null;
+}
+const { hasLegalClaims = false, staleDays = null } = Astro.props;
+---
+
+<aside class="fence" role="note" aria-label="Screening notice">
+  <p class="fence-primary">{FENCE_PRIMARY}</p>
+  {hasLegalClaims && <p class="fence-rider">{FENCE_TAX_RESIDENCY_RIDER}</p>}
+  {
+    staleDays != null && (
+      <p class="fence-stale" role="alert">
+        {stalenessBanner(staleDays)}
+      </p>
+    )
+  }
+</aside>
+
+<style>
+  .fence {
+    margin: 2rem 0;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--terracotta);
+    border-left-width: 4px;
+    border-radius: 4px;
+    background: #fbeee7;
+  }
+  .fence p {
+    margin: 0;
+    color: #5c2a16;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .fence p + p {
+    margin-top: 0.6rem;
+  }
+  .fence-primary {
+    font-weight: 600;
+  }
+  .fence-stale {
+    font-weight: 600;
+    color: #7a1f1f !important;
+  }
+</style>

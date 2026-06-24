@@ -1,0 +1,86 @@
+---
+import { placePath, places } from "@where/data";
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const description =
+  "A cited, dated answer to where to live. Cost, climate, residency, and tax facts for each place, every figure linked to its source. Screening intelligence, not advice.";
+const featured = places;
+---
+
+<Base
+  title="My Second Country: cited 'where should I live' intelligence"
+  description={description}
+  canonical={`${SITE}/`}
+>
+  <section class="hero">
+    <h1>Where should you live, with the facts to back it up.</h1>
+    <p class="lede">{description}</p>
+  </section>
+
+  <FenceBlock hasLegalClaims={true} />
+
+  <section aria-labelledby="places-h">
+    <h2 id="places-h">Published places</h2>
+    <ul class="place-list">
+      {
+        featured.map((place) => (
+          <li>
+            <a href={placePath(place)}>
+              <span class="place-name">{place.name}</span>
+              <span class="place-where">
+                {place.ancestry.map((a) => a.name).join(", ")}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <style>
+    .hero {
+      padding: 1.5rem 0 0.5rem;
+    }
+    .hero h1 {
+      max-width: 18ch;
+    }
+    .lede {
+      max-width: var(--measure);
+      font-size: 1.2rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .place-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .place-list a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      text-decoration: none;
+      background: var(--paper-2);
+    }
+    .place-list a:hover {
+      border-color: var(--terracotta);
+    }
+    .place-name {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .place-where {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+  </style>
+</Base>
