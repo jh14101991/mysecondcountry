@@ -9,9 +9,8 @@
 > controlled re-run to finish). Auto-pull: yes = API/open dataset on a cron; partial = real
 > source, needs scripted/geospatial work; manual = a human reads an official page and dates it.
 >
-> Provenance note: this registry was assembled from a parallel research sweep on 2026-06-24.
-> The sweep over-fanned (themed agents spawned sub-agents and several rate-limited), so the
-> categories below marked PARTIAL still need a tidy single-agent pass.
+> Provenance note: assembled from a research sweep on 2026-06-24, completed by a controlled
+> single-agent pass per category. All 8 categories are now COMPLETE (roughly 200 variables).
 
 ## Headline finding
 
@@ -192,32 +191,157 @@ no dataset. TEMIS Europe UV files are ~130-190 MB NetCDF, free, no login.
 
 ---
 
-## 6. Nature and outdoors  (PARTIAL, re-run pending)
+## 6. Nature and outdoors  (COMPLETE)
 
-Founder priority (hiking, scenery, the nature you like). Sources verified so far: OpenStreetMap
-(hiking trails highway=path, ski piste, climbing, water bodies), Copernicus CORINE Land Cover
-(scenery types: coast/mountain/forest/lake/plains), WDPA/Protected Planet and Natura 2000
-(protected areas), Natural Earth coastline (coast distance), SRTM/OpenTopography (elevation),
-EFFIS (wildfire), EEA bathing-water quality, OpenAQ (PM2.5), VIIRS (light pollution/dark sky).
-Pollen via Copernicus CAMS is at risk. Needs a clean single-agent pass to finalise the table and
-the auto-pull notes.
+### KEEP
 
-## 7. Health, family and schooling  (PARTIAL, re-run pending)
+| key | label | source | gran | auto | conf |
+|---|---|---|---|---|---|
+| pm25_annual | PM2.5 annual mean | EEA interpolated air-quality grid | ~1km | yes | high |
+| pm25_monthly | PM2.5 monthly mean | Copernicus CAMS EAC4 reanalysis | grid | yes | high |
+| pm25_exceedance_days | Days over WHO PM2.5 guideline | EEA Air Quality e-Reporting | station | yes | high |
+| dist_coast_km | Distance to coast | Natural Earth coastline + NOAA distance grid | point | yes | high |
+| elevation_m | Elevation | SRTM via OpenTopography API | 30m | yes | high |
+| mountain_proximity | Distance to peak >=1500m | SRTM-derived | derived | partial | high |
+| ski_piste_km | Downhill piste km nearby | OSM piste:type=downhill / OpenSkiStats | way | yes | medium |
+| bathing_water_quality | Bathing-water quality rating | EEA Bathing Water Directive (DISCODATA) | site | yes | high |
+| blue_flag_beaches | Blue Flag beaches nearby | JRC Blue Flags dataset | point | partial | medium |
+| seismic_hazard_pga | Earthquake hazard (PGA) | ESHM20 European Seismic Hazard Model | ~10km | yes | high |
+| wildfire_risk | Wildfire risk class | EFFIS Wildfire Risk (WMS) | ~1km | partial | high |
+| flood_risk_100yr | River flood depth, 100-yr | JRC Global River Flood Hazard v2 | 30-75m | yes | high |
+| green_space_pct | Green/vegetated land share | Copernicus CORINE Land Cover 2018 | 100m | yes | high |
+| forest_cover_pct | Forest cover percent | Copernicus HRL Forest Type 2018 | 10-100m | yes | high |
+| tree_canopy_pct | Tree canopy density | Copernicus HRL Tree Cover Density | 10m | yes | high |
+| protected_area_overlap | Protected area nearby | EEA Natura 2000 + WDPA (Protected Planet) | polygon | yes | high |
+| nat_park_dist_km | Distance to national park | WDPA (IUCN Cat II) | polygon | yes | high |
+| surface_water_density | Lake/river area share | JRC Global Surface Water Explorer | 30m | yes | high |
+| hiking_trail_km | Hiking trail km nearby | OSM route=hiking / Waymarked Trails | way | yes | medium |
+| mtb_trail_count | Mountain-bike routes nearby | OSM route=mtb | way | yes | medium |
+| climbing_sites | Rock-climbing sites nearby | OSM sport=climbing | point | yes | medium |
+| surf_spots | Surf spots nearby | OSM sport=surfing | point | yes | low |
+| light_pollution | Night-sky radiance | VIIRS Black Marble / NOAA DNB | 500m | yes | high |
+| pollen_severity | Pollen season severity | Copernicus CAMS pollen species | ~10km | yes | high |
+| scenery_tags | Coast/mountain/forest/lake/plain present | derived: Natural Earth, SRTM, CORINE, JRC GSW | derived | yes | high |
+| green_urban_pct | Green urban space share | Copernicus Urban Atlas | FUA | partial | high |
 
-Verified anchors: WHO Global Health Observatory (physicians, life expectancy), OECD Health and
-Family databases (beds, out-of-pocket spend, childcare), OECD PISA (school outcomes), OSM
-(pharmacies, hospitals, dentists). International-school directories (Council of International
-Schools / ISC Research) and Montessori/Waldorf association directories were being verified when
-the sweep rate-limited. Likely DROP: English-speaking-doctor availability, international-school
-tuition (no open dataset). Needs a clean pass.
+### DROP
+- Surf-spot quality (wave/break): only commercial/scrape sources.
+- Dark-sky certified reserves as a polygon layer: DarkSky lists, no open geodataset.
+- Via-ferrata / multi-pitch route density: no open licensed dataset.
+- Snowpack / snow-season length at town level: ERA5-derivable but no ready product.
+- Landslide / ground-instability hazard: no unified Europe-wide open dataset.
+- Wild-camping legality, scenic-vs-industrial coast quality: no machine-readable source.
 
-## 8. Safety, rights, culture, community and services  (PARTIAL, re-run pending)
+## 7. Health, family and schooling  (COMPLETE)
 
-Founder priorities (LGBT acceptance, running clubs, trades). Intended anchors, mostly known-good:
-IEP Global Peace Index, UNODC homicide, Transparency International CPI, World Bank WGI, ILGA-Europe
-Rainbow Map (legal) and Equaldex acceptance index (social acceptance), Georgetown WPS (women's
-safety), RSF press freedom, EF EPI (English), parkrun open data (running events), OSM
-(cafes/coffee, restaurants, nightlife, gyms/fitness_centre, sauna, climbing, swimming pools,
-museums, libraries, craft= tradespeople density), Eurostat foreign-born share (expat proxy), WHO
-(smoking/alcohol). Likely DROP: Internations/Meetup group counts (no open source). The
-synthesising agents rested before producing the final table; needs a clean pass.
+### KEEP
+
+| key | label | source | gran | auto | conf |
+|---|---|---|---|---|---|
+| physicians_per_1k | Physicians per 1,000 | Eurostat hlth_rs_prsns / WHO-EURO / OECD | country | yes | high |
+| hospital_beds_per_1k | Hospital beds per 1,000 | WHO GHO / Eurostat hlth_rs_bdsns | country | yes | high |
+| life_expectancy | Life expectancy at birth | Eurostat / OECD | country | yes | high |
+| infant_mortality | Infant mortality rate | OECD / Eurostat | country | yes | high |
+| public_health_coverage | Public health coverage share | OECD Health at a Glance | country | partial | high |
+| oop_spending_share | Out-of-pocket health spend share | Eurostat / OECD SHA | country | yes | high |
+| dentists_per_100k | Dentists per 100k | Eurostat hlth_rs_prs2 | country | yes | high |
+| pharmacists_per_100k | Pharmacists per 100k | Eurostat hlth_rs_prs2 | country | yes | high |
+| psychiatrists_per_100k | Psychiatrists per 100k | WHO-EURO HFA-DB | country | partial | medium |
+| paediatricians_per_10k | Paediatricians per 10k | WHO-EURO HFA-DB | country | partial | medium |
+| vaccination_dtp3 | DTP3 immunisation coverage | WHO Immunization Data (WUENIC) | country | yes | high |
+| vaccination_mmr | MMR immunisation coverage | WHO Immunization Data | country | yes | high |
+| ivf_access | IVF/ART access score | Fertility Europe Atlas 2024 | country | manual | medium |
+| ltc_beds_per_100k | Long-term care beds per 100k | Eurostat hlth_rs_bdltc | country | yes | high |
+| intl_schools_count | International schools count | ISC Research / CIS directory | country | partial | medium |
+| intl_school_tuition | Median intl-school tuition | International Schools Database | city | manual | medium |
+| montessori_presence | Montessori presence | AMI country directory | country | manual | medium |
+| waldorf_presence | Waldorf-Steiner presence | ECSWE member list | country | manual | medium |
+| homeschool_legal | Home-education legal status | National legislation / HSLDA survey | country | manual | medium |
+| childcare_cost | Net childcare cost (% wage) | OECD Family DB | country | yes | high |
+| ecec_enrolment_under3 | Childcare enrolment under 3 | Eurostat ilc_caindformal | country | yes | high |
+| pisa_reading | PISA reading score | OECD PISA 2022 | country | yes | high |
+| pisa_maths | PISA maths score | OECD PISA 2022 | country | yes | high |
+| pisa_science | PISA science score | OECD PISA 2022 | country | yes | high |
+| pupil_teacher_ratio | Pupil-teacher ratio | OECD Education at a Glance | country | yes | high |
+| clil_bilingual | Bilingual (CLIL) provision | Eurydice Key Data on Languages | country | manual | medium |
+| special_needs | SEN inclusion policy | European Agency / Eurydice | country | manual | medium |
+| maternity_leave_weeks | Paid maternity leave (weeks) | OECD Family DB PF2.1 | country | yes | high |
+| parental_leave_weeks | Total paid parental leave | OECD Family DB PF2.1 | country | yes | high |
+| top_university_qs | Top QS university + rank | QS World University Rankings | country | manual | high |
+| pharmacy_density | Pharmacy density | OSM amenity=pharmacy | town | yes | medium |
+| hospital_density | Hospital count | OSM amenity=hospital | town | yes | medium |
+| dentist_density | Dentist density | OSM amenity=dentist | town | yes | medium |
+
+### DROP
+- English-speaking-doctor availability: no open per-country dataset (IAMAT paywalled).
+- Health-system rank: WHO abandoned the ranking after 2000; no current comparable list.
+- Mental-health (psychiatric) bed density: WHO-EURO series too gappy for auto-pull.
+- Elder-care quality / nursing-home rating: only bed counts exist, no quality score.
+- Bilingual-school city count, SEN numeric score, pan-EU dental price series: no source.
+
+## 8. Safety, rights, culture, community and services  (COMPLETE)
+
+### KEEP
+
+| key | label | source | gran | auto | conf |
+|---|---|---|---|---|---|
+| gpi_score | Global Peace Index | IEP Global Peace Index | country | yes | high |
+| homicide_rate | Homicide per 100k | UNODC / Eurostat crim_off_cat | country | yes | high |
+| recorded_crime | Recorded offences per 100k | Eurostat crim_off_cat | country | yes | high |
+| corruption_cpi | Corruption Perceptions Index | Transparency International CPI | country | yes | high |
+| pol_stability | Political stability percentile | World Bank WGI | country | yes | high |
+| govt_effectiveness | Government effectiveness | World Bank WGI | country | yes | high |
+| rule_of_law | Rule of law percentile | World Bank WGI | country | yes | high |
+| lgbt_legal | LGBTI legal rights score | ILGA-Europe Rainbow Map | country | yes | high |
+| lgbt_social | LGBT social acceptance | Equaldex acceptance index | country | partial | high |
+| lgbt_combined | LGBT combined equality | Equaldex Equality Index | country | yes | high |
+| womens_safety | Women Peace & Security score | Georgetown WPS Index | country | yes | high |
+| press_freedom | Press freedom score | Reporters Without Borders | country | yes | high |
+| english_proficiency | English proficiency | EF EPI | country | partial | high |
+| parkrun_events | Active parkrun events | parkrun.com/countries | country | yes | high |
+| craft_plumber | Plumbers per 100k | OSM craft=plumber | town | partial | medium |
+| craft_electrician | Electricians per 100k | OSM craft=electrician | town | partial | medium |
+| craft_carpenter | Carpenters per 100k | OSM craft=carpenter | town | partial | medium |
+| craft_builder | Builders per 100k | OSM craft=builder | town | partial | low |
+| gym_density | Gyms per 100k (lifting via sport=weightlifting) | OSM leisure=fitness_centre | town | partial | medium |
+| sauna_density | Saunas per 100k | OSM leisure=sauna | town | partial | medium |
+| climbing_gym | Indoor climbing gyms | OSM sport=climbing + sports_centre | town | partial | medium |
+| swimming_pool | Public pools per 100k | OSM leisure=swimming_pool | town | partial | medium |
+| cafe_density | Cafe density (coffee culture) | OSM amenity=cafe | town | partial | medium |
+| restaurant_density | Restaurant density | OSM amenity=restaurant | town | partial | medium |
+| nightlife_density | Bars/clubs per 100k | OSM amenity=bar/nightclub | town | partial | medium |
+| museum_gallery | Museums/galleries per 100k | OSM tourism=museum/gallery | town | partial | medium |
+| library_density | Libraries per 100k | OSM amenity=library | town | partial | medium |
+| theatre_cinema | Theatres/cinemas per 100k | OSM amenity=theatre/cinema | town | partial | medium |
+| dog_park / vet | Dog parks + vets (dog-friendliness) | OSM leisure=dog_park, amenity=veterinary | town | partial | medium |
+| foreign_born_share | Foreign-born population share | Eurostat tps00178 | country | yes | high |
+| religiosity | Non-religious share / attendance | Pew / European Social Survey | country | partial | medium |
+| vegan_friendly | Vegan-friendly ranking | HappyCow Top Cities | city | manual | medium |
+| smoking_prevalence | Adult smoking prevalence | WHO / Eurostat | country | yes | high |
+| alcohol_consumption | Alcohol litres per capita | WHO / OECD | country | yes | high |
+| cannabis_status | Cannabis legal status | EU Drugs Agency (EUDA) | country | manual | high |
+| noise_pollution | Population over road-noise threshold | EEA Environmental Noise | country | yes | high |
+| social_trust | Interpersonal trust (0-10) | European Social Survey (ppltrst) | country | yes | high |
+| ethnic_fractionalization | Ethnic fractionalization index | HIEF (Harvard Dataverse) | country | yes | medium |
+| running_hiking_clubs | Sport/outdoor club count | OSM club=sport | town | partial | low |
+
+### DROP
+- Internations/Meetup group counts: no open API/dataset.
+- Running and hiking club density beyond OSM: federations publish no city-level open data.
+- Gym "serious-lifting" quality tier: OSM cannot distinguish beyond sport=weightlifting.
+- Dog-friendliness composite, cafe-culture composite: only the component proxies exist, no index.
+- Noise by arbitrary city: EEA reports by agglomeration only, not arbitrary towns.
+- Social attitudes to smoking: only prevalence exists, not cultural acceptance.
+
+---
+
+## Status and the build implication
+
+All 8 categories complete: roughly 200 cited variables, the large majority auto-pullable on a
+cron. This registry is now the build plan for the data pipeline (it names every source to wire),
+and it confirms the cited-only + exhaustive vision is buildable. Granularity splits cleanly:
+country-level institutional data (tax, visa, safety, health, English, indices) pulls fastest and
+wide; the town-level lifestyle layer (OSM amenities, climate/nature point-samples) is what makes
+the filter surface feel like Hotelist and is concentrated on the flagship cities first (hybrid C).
+The honest drop list across all categories stays short and specific, mostly paid flight schedules,
+abandoned official rankings, and "composite vibe" scores that have only component proxies.
