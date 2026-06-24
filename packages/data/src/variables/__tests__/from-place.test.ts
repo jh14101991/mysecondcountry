@@ -3,8 +3,15 @@ import { placeById } from "../../index.js";
 import { collectCitedValues } from "../../schema.js";
 import { placeVariables } from "../from-place.js";
 
+/** Look up a fixture place, throwing if the dataset is missing it (matches the index.ts idiom). */
+function requirePlace(id: string) {
+  const place = placeById(id);
+  if (!place) throw new Error(`place ${id} not in dataset`);
+  return place;
+}
+
 describe("placeVariables", () => {
-  const greece = placeById("gr")!;
+  const greece = requirePlace("gr");
 
   it("maps core typed fields to catalogue keys for Greece", () => {
     const vars = placeVariables(greece);
@@ -32,7 +39,7 @@ describe("placeVariables", () => {
   });
 
   it("omits healthcare/safety keys for Chania (no healthcare/safety blocks)", () => {
-    const chania = placeById("gr-crete-chania")!;
+    const chania = requirePlace("gr-crete-chania");
     const vars = placeVariables(chania);
     expect(vars).toHaveProperty("cost_price_level");
     expect(vars).toHaveProperty("dnv_income_floor");
