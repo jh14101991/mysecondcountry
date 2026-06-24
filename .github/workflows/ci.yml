@@ -42,5 +42,14 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Verify data (freshness, uniqueness)
+        run: pnpm verify:data
+
+      - name: Verify sources reachable
+        run: pnpm verify:sources
+
       - name: Build
         run: pnpm build
+
+      - name: Verify build output (fence, JSON-LD, robots, a11y)
+        run: pnpm verify:build
