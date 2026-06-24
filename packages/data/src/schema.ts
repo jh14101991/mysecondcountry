@@ -176,6 +176,11 @@ export const PlaceSchema = z.object({
       peaceIndexScore: citedValue(z.number()),
     })
     .optional(),
+  // Open, cited variable map keyed by catalogue key (ADR-0016). Optional; the typed
+  // fields above remain the launch surface. Each value is a scalar CitedValue.
+  variables: z
+    .record(z.string(), citedValue(z.union([z.number(), z.string(), z.boolean()])))
+    .optional(),
 });
 export type Place = z.infer<typeof PlaceSchema>;
 
@@ -205,6 +210,7 @@ export function collectCitedValues(place: Place): { path: string; cited: CitedVa
   if (place.tax) visit(place.tax, "tax");
   if (place.healthcare) visit(place.healthcare, "healthcare");
   if (place.safety) visit(place.safety, "safety");
+  if (place.variables) visit(place.variables, "variables");
   return out;
 }
 

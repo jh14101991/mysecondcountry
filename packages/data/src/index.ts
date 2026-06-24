@@ -4,6 +4,7 @@ import type { Place } from "./schema.js";
 export * from "./profiles/presets.js";
 export * from "./schema.js";
 export * from "./variables/catalog.js";
+export * from "./variables/from-place.js";
 export * from "./variables/schema.js";
 export { places };
 
