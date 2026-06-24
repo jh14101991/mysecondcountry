@@ -1,0 +1,72 @@
+name: Refresh data
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Auto-refresh the automatable fields (Eurostat). Manual-only sources (migration.gov.gr,
+      # AADE/PwC, climate normals) stay on the human gate. Resilient: a failed fetch is a warning.
+      - name: Refresh Greece places
+        run: pnpm exec tsx scripts/refresh-place.ts --all-greece || true
+
+      - name: Normalize JSON formatting
+        run: pnpm exec biome check --write packages/data/src/places || true
+
+      - name: Open or update the data PR
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- packages/data/src/places; then
+            echo "No data changes this run."
+            exit 0
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="refresh/${DATE}"
+          git config user.name "mysecondcountry-bot"
+          git config user.email "bot@mysecondcountry.com"
+          git checkout -B "$BRANCH"
+          git add packages/data/src/places
+          git commit -m "data: weekly refresh ${DATE}"
+          git push --force-with-lease origin "$BRANCH"
+          if gh pr view "$BRANCH" >/dev/null 2>&1; then
+            echo "PR already open for ${BRANCH}."
+          else
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "Data refresh ${DATE}" \
+              --body "Automated weekly refresh of the automatable fields. Manual-only fields (visa, tax, climate normals) are unchanged and must be re-verified by hand before merge. Review the diff, confirm sources, then merge. No auto-merge (ADR-0006)."
+          fi
+
+      # Informational guard: a red run here means a visa/tax/residency value has aged past
+      # its window and needs a manual re-verify before the next deploy (the PR is already open).
+      - name: Check visa/tax freshness
+        run: pnpm verify:data

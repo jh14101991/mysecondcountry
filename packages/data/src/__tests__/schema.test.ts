@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chania } from "../fixtures/crete-chania.js";
+import { chania } from "../index.js";
 import { collectCitedValues, PlaceSchema } from "../schema.js";
 
 describe("Chania fixture (golden canary)", () => {
