@@ -339,3 +339,30 @@ All of A0 is free; there is no audience to monetize into yet. The full Greece br
 - The comparison page and screener are the AI-citation surface (what Perplexity and AI Overviews quote), which is the wedge; they are built to be the cited source.
 - Phase A1 (Greece regions and towns) is demand-led, not speculative.
 - Monetization stays out of A0 deliberately. Affiliate referrals to licensed professionals (immigration lawyers, cross-border tax advisors, golden-visa firms, international health insurers) are the base case, added once there is traffic; see `docs/content-projection.md`.
+
+---
+
+## ADR-0016: Cited variable catalogue with profile presets
+
+**Status:** Accepted
+**Date:** 2026-06-24
+**Spec:** `docs/superpowers/specs/2026-06-24-variable-system-design.md`. Registry: `docs/data/variable-registry.md`.
+
+### Context
+
+The product needs a deep, clickable, filterable surface of relocation variables (the Hotelist-for-relocation idea) without breaking the citation fence, and it must serve very different reader profiles (retirees, nomad families, no-kid couples, exiters) who weight the same variables oppositely. A research sweep produced roughly 200 candidate variables, almost all with a real, named, mostly auto-pullable European source.
+
+### Decision
+
+1. Variables are cited-only: a variable exists only if it maps to a real, named, publicly reachable source. Soft concepts become objective proxies or are dropped. The drop list is recorded.
+2. A variable catalogue describes each variable once (key, category, unit, intrinsic vs relational, filter type, direction, source, default confidence, profile relevance). Per-place values stay `CitedValue` objects (ADR-0002), written at ingest, keyed by variable. Relational variables are computed at query time from user inputs against a cited base fact.
+3. Coverage is hybrid: a country-level layer wide across Europe, plus a town-level lifestyle layer on flagship cities first, deepened by demand (ADR-0015).
+4. Interaction is filter-to-narrow then score-to-rank on the existing engine. Unknown is never zero: it renders as "no data" and is excluded from scoring by renormalisation, never penalised.
+5. Profiles are config-driven weighting presets plus deal-breaker filters (built on ADR-0009), combinable, with a custom backstop. v1 has seven base presets plus an LGBTQ+ overlay.
+
+### Consequences
+
+- The screener and comparison gain a large filterable, cited surface; the fence, the cited-not-advice rule, and the content-as-code JSON model are unchanged.
+- The main new engineering dependency is a geospatial build step (`scripts/geo-build.ts`) that point-samples raster/vector sources at place coordinates; kept to the variables each slice needs.
+- The build is sliced and demand-led, never 200 variables across 100 towns up front. Each slice ships to strangers and the first implementation plan covers slice 1 only.
+- A known coverage gap (retiree-specific healthcare: English-speaking doctors, elder-care quality, private-insurance cost) has no open source yet; either a further hunt finds one or the profile is honest about it.
