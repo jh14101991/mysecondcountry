@@ -20,6 +20,30 @@ The on-camera couple are "relocators sharing sourced data." They do not give adv
 
 ---
 
+## Monetization and positioning (base case)
+
+Monetization is deferred until there is traffic; the launch artifact (Phase A0, ADR-0015) ships entirely free. When it turns on, the base case is affiliate referral fees to LICENSED professionals, embedded in the relevant cited claim, never framed as advice:
+
+- immigration lawyers and regulated advisers, on residency and visa pages
+- cross-border / expat tax advisors, on tax-regime pages
+- golden-visa and residency-by-investment firms, on investment-threshold pages
+- international health insurers, on healthcare pages
+
+These are high-intent, high-value referrals that fit the audience (people with real money in motion) and the fence: we already route the reader to a licensed professional, so the referral is the safe call to action. moveBuddha-style affiliate is the proven model in the category. The paid dossier / Pro tier is secondary, validated later with the Stripe fake-door; it is not the base case.
+
+Every affiliate link renders only through `AffiliateLink.astro` (`rel="sponsored noopener"`, visible disclosure above the fold, Plausible click event), and only once the program has an `approvedDate` (Phase C). No affiliate value renders on a page before the program is approved.
+
+### Positioning and the wave
+
+- The wave to be early on is AI-citation-era cited relocation data: the clean, dated, sourced signal that Perplexity and AI Overviews quote. Every page is built to be that cited source (schema.org, llms.txt, dated citations). This is the wedge against noisy, affiliate-captured incumbents, the Nomads.com / Hotelist move: normalise messy public data into a clean cited signal.
+- Build-in-public, the couple's real relocation as content, is a slow 2 to 3 year PARALLEL track, not a launch lever. The launch needs no audience.
+
+### Fence source of truth (correction)
+
+The canonical fence string lives in `packages/web/src/lib/fence.ts` (the FENCE.md verbatim text); renderers import it, never copy it. The earlier reference in this file to `packages/engine/src/fence.ts` predates the shipped layout; treat the web `fence.ts` as authoritative.
+
+---
+
 ## Channel projection contracts
 
 ### 1. Programmatic page (`packages/web/src/pages/[...slug].astro`)

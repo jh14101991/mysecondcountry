@@ -283,3 +283,59 @@ Vercel is the host for v1. The `packages/web` Astro 6 project uses `@astrojs/ver
 - The serverless functions (email capture, Stripe session, Stripe webhook) become Vercel Functions automatically via the adapter; no separate Workers bindings.
 - AI-crawler detection uses Vercel Edge Middleware rather than a Workers scheduled handler; hits are recorded to Vercel Blob or a Vercel Log Drain (Pro).
 - Migrating to Cloudflare Workers later is a one-adapter-line change and does not require a superseding ADR unless the project commits to Workers-specific primitives (KV, D1, R2).
+
+---
+
+## ADR-0014: Reference docs reconciled to the locked ADRs
+
+**Status:** Accepted
+**Date:** 2026-06-24
+
+### Context
+
+During the bootstrap, three reference docs had drifted from the locked ADRs. The implementation followed the ADRs (they win by the ADR rule), but the reference docs still described the old shapes, which would mislead future contributors. The three drifts: CITATIONS.md showed an eight-field, uppercase-confidence `CitedValue`; the implementation plan and llms.txt section described locale-prefixed `/en/places/...` URLs; engine-weights.md treated `confidence` as a 0.0 to 1.0 float.
+
+### Decision
+
+The reference docs are reconciled to the ADRs, not the other way round:
+
+- CITATIONS.md now defines the six-field, lowercase `CitedValue` of ADR-0002, with `archiveUrl`, `excerpt`, `category`, and `stalenessDays` as optional provenance fields.
+- The plan's URL structure is `/places/[country]/[region]/[town]` with no locale prefix, per ADR-0010; the `/en/` and `/el/` references and the locale redirect rule are removed.
+- engine-weights.md documents the `confidence` enum and the `CONFIDENCE_FACTOR` map (high 1.0, medium 0.6, low 0.4) the engine actually uses.
+
+No locked decision changed. This ADR only records that the prose caught up to the locked decisions.
+
+### Consequences
+
+- A contributor reading CITATIONS.md, the plan, or engine-weights.md now sees the same shapes the code enforces.
+- If any of these shapes genuinely needs to change in future, it requires a superseding ADR first, not a quiet edit.
+
+---
+
+## ADR-0015: Launch artifact before full Greece breadth
+
+**Status:** Accepted
+**Date:** 2026-06-24
+**Amends:** the phasing in `docs/superpowers/plans/2026-06-24-v1-implementation-plan.md` (Phase A)
+
+### Context
+
+A competitive read of Pieter Levels / NomadList against the founder profile in FOUNDER.md surfaced the project's biggest current risk: building more pages with zero market contact, which is the documented "building instead of shipping" failure mode. The original Phase A grinds the full Greece cluster (country plus seven regions plus five towns) before anything reaches a stranger. Levels' lesson is the opposite: get a genuinely useful, shareable artifact in front of an audience-less cold start fast, read the demand, then add depth where the audience voted.
+
+### Decision
+
+The golden rule is extended: a real artifact in front of strangers comes before more breadth. A new Phase A0 precedes the full Greece breadth:
+
+1. Country-level cited data for Greece, Portugal, and Spain across the screener dimensions (cost, tax by buyer type, residency and visa, climate, healthcare, safety), every value a `CitedValue` with the fence on every page.
+2. A deeply-cited "Greece vs Portugal vs Spain" comparison page across roughly ten sourced dimensions: the shareable centrepiece.
+3. The free "where should I live" screener as the Astro island over `@where/engine`: constraints in, cited ranked shortlist out, fence and confidence visible.
+4. A launch: Show HN plus value-first posts for r/IWantOut, r/expats, r/digitalnomad, and Greece/Portugal expat groups (copy and assets prepared here; posting is the founder's browser task). The screener and comparison fire analytics events so the launch yields a real demand signal.
+
+All of A0 is free; there is no audience to monetize into yet. The full Greece breadth (the original Phase A) resumes as Phase A1, informed by what the launch showed people clicked and searched.
+
+### Consequences
+
+- The first real market contact happens weeks earlier, before sinking time into breadth that may target the wrong places.
+- The comparison page and screener are the AI-citation surface (what Perplexity and AI Overviews quote), which is the wedge; they are built to be the cited source.
+- Phase A1 (Greece regions and towns) is demand-led, not speculative.
+- Monetization stays out of A0 deliberately. Affiliate referrals to licensed professionals (immigration lawyers, cross-border tax advisors, golden-visa firms, international health insurers) are the base case, added once there is traffic; see `docs/content-projection.md`.

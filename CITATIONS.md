@@ -7,22 +7,31 @@ Every claim in the dataset is a `CitedValue`. There are no bare numbers, no unso
 ## The CitedValue contract
 
 ```ts
-type Confidence = "HIGH" | "MEDIUM" | "LOW";
+type Confidence = "high" | "medium" | "low";
 type Granularity = "country" | "region" | "town";
+type CitedCategory =
+  | "identity" | "cost" | "climate" | "connectivity"
+  | "healthcare" | "safety" | "residency" | "tax" | "visa";
 
 interface CitedValue<T> {
+  // required core (locked by ADR-0002)
   value: T;
-  sourceUrl: string;        // canonical URL of the primary source page or PDF
-  sourceName: string;       // human-readable name, e.g. "Eurostat" or "AADE"
+  sourceUrl: string;        // permalink to the primary source page or PDF, never homepage-only
+  sourceName: string;       // human-readable authority, e.g. "Eurostat" or "AADE"
   verifiedDate: string;     // ISO 8601 date, e.g. "2026-05-14"
-  archiveUrl: string;       // Wayback/archive.today snapshot URL, set at verify time
-  excerpt: string;          // the specific sentence or table cell that contains the value
   confidence: Confidence;
   granularity: Granularity;
+  // optional provenance and rot-detection
+  category?: CitedCategory; // subject; drives the visa/tax/residency staleness rule
+  archiveUrl?: string;      // Wayback/archive.today snapshot, set at verify time
+  excerpt?: string;         // the sentence or table cell that contains the value
+  stalenessDays?: number;   // per-field staleness override, e.g. the Greek DNV uses 60
 }
 ```
 
-The Zod 4 schema for `CitedValue` marks every field required. An object that omits `sourceUrl`, `verifiedDate`, `archiveUrl`, `excerpt`, or `confidence` fails schema validation at build time. This is not a convention; it is a type-level fence. Validation runs in `packages/data/src/schema.ts` and is exercised by `vitest` in the same package. A build that fails data validation does not deploy.
+The Zod 4 schema marks the six core fields required: an object that omits `sourceUrl`, `sourceName`, `verifiedDate`, `confidence`, or `granularity` fails validation at build time. `archiveUrl`, `excerpt`, `category`, and `stalenessDays` are optional fields the rot-detection and staleness tooling uses; populate `excerpt` and `archiveUrl` whenever a value is hand-verified. This is not a convention; it is a type-level fence. Validation runs in `packages/data/src/schema.ts` and is exercised by `vitest` in the same package. A build that fails data validation does not deploy.
+
+The `confidence` field value is lowercase (`high` / `medium` / `low`). The confidence-tier names written in caps below (HIGH, MEDIUM, LOW) are labels for the source classes that map onto those three values.
 
 See also FENCE.md for the human-visible disclaimer text that must accompany every rendered CitedValue.
 

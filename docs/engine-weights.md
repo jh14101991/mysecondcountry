@@ -62,30 +62,38 @@ These defaults are baked into the static build and shown on every ranking page. 
 
 ## Confidence awareness
 
-Every scored value comes from a `CitedValue` which carries a `confidence` field (0.0 to 1.0, defined in `packages/data/src/schemas/cited-value.ts`). The engine applies two confidence rules before scoring.
+Every scored value comes from a `CitedValue` whose `confidence` is one of the three enum values `high`, `medium`, or `low` (locked by ADR-0002, defined in `packages/data/src/schema.ts`). The engine projects the enum onto a numeric factor and applies it before scoring.
 
-### Rule 1: exclusion floor
+### Enum to numeric factor
 
-If a `CitedValue.confidence` is below `minConfidenceToInclude` for its domain (default 0.4), that domain score is excluded from the Place's total and the missing weight is redistributed proportionally across the remaining domains. The ranking card shows "tax score not available: source confidence too low" for that Place.
+The mapping lives in `packages/engine/src/weights.ts` as `CONFIDENCE_FACTOR`:
 
-This prevents a scraped, unverifiable figure from silently distorting the rank. Exclusion is always surfaced visually.
+confidence | factor
+---|---
+high | 1.0
+medium | 0.6
+low | 0.4
 
-### Rule 2: confidence penalty
+A dimension's contribution to a Place's score is multiplied by this factor, so a low-confidence input counts for less than a high-confidence one without being silently dropped. The factor is also surfaced on the page through the confidence badge, so the discount is visible, never hidden.
 
-If a `CitedValue.confidence` is at or above `minConfidenceToInclude` but below `penaltyBelowConfidence` (default 0.6), the raw domain score is multiplied by `penaltyMultiplier` (default 0.7). The ranking card shows a warning icon and "low-confidence input, score discounted" next to the domain.
+### Future cohort ranking (Phase A)
 
-The penalty and multiplier are per-domain in `weights.json`, so high-stakes domains (tax, healthcare) can be configured more conservatively than lower-stakes ones.
+When the cohort-relative ranking lands (it needs multiple Places to normalize across), the same factor drives two further rules, configured per domain in `weights.json`:
 
-### Confidence band labels
+- exclusion floor: a factor below a domain's `minConfidenceToInclude` excludes that domain and redistributes its weight, with a visible "source confidence too low" note;
+- penalty: a factor below `penaltyBelowConfidence` discounts the raw domain score by `penaltyMultiplier`.
 
-These are display-only labels derived from the `confidence` field. They are not used in scoring logic.
+Until that model ships, the single-place screener (`packages/engine/src/screen.ts`) uses the factor as a straight multiplier on each matched dimension.
 
-Confidence range | Label | Badge color
+### Confidence badge labels
+
+Display-only, derived from the enum. Not part of scoring logic. They match the rendering in `CitedValueCell.astro`.
+
+confidence | label | rendering
 ---|---|---
-0.85 to 1.0 | Verified | Green
-0.65 to 0.84 | Good | Blue
-0.40 to 0.64 | Low, discounted | Amber
-Below 0.40 | Excluded | Red/strikethrough
+high | verified source | filled
+medium | good source | half
+low | low confidence, verify | hollow
 
 ---
 

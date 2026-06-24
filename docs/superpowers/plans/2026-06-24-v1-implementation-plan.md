@@ -92,7 +92,18 @@ Gate: `pnpm test --filter @where/data` still passes with the new clients. Refres
 
 ## 2. Phased build after bootstrap
 
-### Phase A: Greece deep cluster + data layer (weeks 2 to 4)
+### Phase A0: launch artifact, before full breadth (ADR-0015)
+
+The golden rule is extended: a real artifact in front of strangers comes before more breadth. Do A0 before the full Greece cluster. The biggest risk now is building more pages with zero market contact (the FOUNDER.md "building instead of shipping" failure mode).
+
+1. Country-level cited data for Greece, Portugal, and Spain across the screener dimensions: cost, tax by buyer type (headline rate plus the special regime that applies to retirees, remote earners, and high-net-worth movers), residency and visa (digital nomad income floor, golden visa status), climate, healthcare, safety. Every value a `CitedValue` with source, verified date, and confidence. The fence on every page.
+2. A deeply-cited "Greece vs Portugal vs Spain" comparison page across roughly ten sourced dimensions, at `/compare/greece-portugal-spain`. This is the shareable centrepiece, the thing Show HN and the subreddits upvote.
+3. The free "where should I live" screener as the Astro island over `@where/engine`: constraints in, cited ranked shortlist out, fence and confidence visible. Fires analytics events as the demand sensor.
+4. Launch prep: Show HN copy plus value-first posts for r/IWantOut, r/expats, r/digitalnomad, and two Greece/Portugal expat groups, ready for the founder to post. See the launch track in section 3.
+
+All of A0 is free; there is no audience to monetize into yet. Gate: comparison page and screener live on the canonical domain, fence on every page, guards green, analytics events firing, launch copy ready.
+
+### Phase A1: Greece deep cluster + data layer (was Phase A, now demand-led)
 
 1. Author Place objects for the full Greece seed set. See `docs/data/greece-seed.md` for the target place list and the minimum required CitedValues per place type.
 2. Wire the refresh pipeline to cover all Greece places.
@@ -100,7 +111,7 @@ Gate: `pnpm test --filter @where/data` still passes with the new clients. Refres
 4. Extend `[slug].astro` to generate all place routes from the index.
 5. Add `sitemap.xml` generation via `@astrojs/sitemap`.
 6. Add a per-page uniqueness check: each town page must have at least three CitedValues that differ from the parent region page. Enforced as a build-time assertion in the Astro config. This is the programmatic-SEO uniqueness gate (see section 6).
-7. Add `hreflang` and `<link rel="canonical">` to every page. URL structure: `/<locale>/places/<slug>`. Reserve `/en/`, `/el/` from day one even if only `/en/` is populated.
+7. Add `<link rel="canonical">` to every page. URL structure is `/places/[country]/[region]/[town]` with no locale prefix (ADR-0010). v1 is English only; i18n, if it ever lands, uses locale-prefixed URLs via a future superseding ADR, not now.
 8. Update `docs/data/SOURCES.md` with every data source added.
 
 Gate: all Greece places render, build passes, sitemap complete, uniqueness check passes for every town page.
@@ -136,6 +147,15 @@ Gate: `AffiliateLink` renders `rel="sponsored"` in every test case. Stripe fake-
 ## 3. Parallel tracks: start early, not at the end
 
 These must not be deferred to "after the build is done." They are load-bearing dependencies.
+
+### Launch: the audience-less cold start (Phase A0, ADR-0015)
+
+The launch needs no existing audience; that is the whole point. It is distribution as engineering: a genuinely useful, fully-cited artifact posted where internationally-mobile people already gather.
+
+- Centrepiece: the "Greece vs Portugal vs Spain" comparison page and the free screener, both live on the canonical domain, both firing analytics events.
+- Channels (the founder posts; the copy and assets are prepared in this repo, ready to go): a Show HN ("Show HN: a fully-cited Greece vs Portugal vs Spain relocation comparison plus a where-should-I-live screener"), and value-first (not promotional) posts for r/IWantOut, r/expats, r/digitalnomad, and two Greece/Portugal expat Facebook groups. Forum posts lead with the data and a question, not a pitch, or they get downvoted.
+- Build-in-public (the couple's real relocation as content) is a slow 2 to 3 year PARALLEL track, not a launch lever. Do not wait on an audience to launch.
+- The wave to be early on is AI-citation-era cited relocation data: what Perplexity and AI Overviews cite. Every page stays optimised to be the cited source (schema.org, llms.txt, dated citations). Positioning is mainstream and cited, the Nomads.com / Hotelist move: normalise noisy, affiliate-captured public data into a clean cited signal.
 
 ### Name and domain: RESOLVED (locked 2026-06-24, not a gate)
 
@@ -197,12 +217,12 @@ Availability at check time (2026-06-24): YouTube and LinkedIn confirmed free (Yo
 - `FenceBlock` must meet color contrast AA. `CitedValueCell` confidence badges must not rely on color alone (use icons + text).
 - `AffiliateLink` disclosure label must be readable by screen readers (not hidden via CSS).
 
-### hreflang and locale URL structure
+### URL structure (no locale prefix in v1)
 
-- Reserve `/en/places/<slug>` and `/el/places/<slug>` from the first commit, even if `/el/` is empty.
-- Add `<link rel="alternate" hreflang="en" href="...">` and `<link rel="alternate" hreflang="x-default" href="...">` to every page.
-- Add a redirect rule in `vercel.json` (or in the Astro middleware): `/places/<slug>` redirects to `/en/places/<slug>` (301, permanent).
-- The Place `id` is locale-independent; the `slug` may be translated per locale.
+- URLs are `/places/[country]/[region]/[town]` with no locale prefix (ADR-0010). v1 is English only.
+- Add `<link rel="canonical">` to every page. No `hreflang` tags in v1 (there is one locale).
+- The Place `id` is stable and opaque; the `slug` is URL-mutable and redirects on change.
+- If i18n is ever added it uses locale-prefixed URLs (for example `/de/places/...`) introduced by a superseding ADR with a redirect plan. Do not pre-build locale routing now.
 
 ---
 
@@ -271,7 +291,7 @@ Ship a `robots.txt` that explicitly names and allows known AI crawlers (GPTBot, 
 ### llms.txt
 
 Ship `/llms.txt` following the llms.txt convention. Point AI agents at:
-- `/en/places/index.json`: machine-readable index of all Place IDs and slugs.
+- `/places/index.json`: machine-readable index of all Place IDs and slugs.
 - `docs/data/SOURCES.md`: the full source registry.
 - `CITATIONS.md`: the citation methodology.
 - `FENCE.md`: the liability fence policy.
