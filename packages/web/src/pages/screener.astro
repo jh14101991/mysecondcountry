@@ -36,6 +36,21 @@ const jsonLd = {
           <legend>Your constraints</legend>
 
           <div class="field">
+            <label for="profile">Start as</label>
+            <select id="profile" name="profile">
+              <!-- Options populated by island script from PROFILES -->
+            </select>
+          </div>
+
+          <div class="field">
+            <label>
+              <input type="checkbox" id="lgbtq" name="lgbtq" />
+              Add LGBTQ+ overlay
+            </label>
+            <p class="hint">Nudges English proficiency and safety weighting. The acceptance/legal variable lands in a later slice.</p>
+          </div>
+
+          <div class="field">
             <label for="income">Provable net monthly income (EUR)</label>
             <input
               type="number"
@@ -48,31 +63,7 @@ const jsonLd = {
             <p class="hint">Used only to compare against each country's published digital nomad visa income floor.</p>
           </div>
 
-          <div class="field">
-            <label for="cost">Max acceptable cost level <output id="cost-out">100</output></label>
-            <input type="range" id="cost" name="cost" min="70" max="110" value="100" step="1" />
-            <p class="hint">Eurostat price level index, EU27 = 100. Lower is cheaper.</p>
-          </div>
-
-          <div class="field">
-            <label for="winter">Min comfortable winter day high <output id="winter-out">10</output> °C</label>
-            <input type="range" id="winter" name="winter" min="5" max="20" value="10" step="1" />
-          </div>
-
-          <div class="field">
-            <label for="summer">Max comfortable summer day high <output id="summer-out">35</output> °C</label>
-            <input type="range" id="summer" name="summer" min="25" max="40" value="35" step="1" />
-          </div>
-
-          <div class="field">
-            <label for="sun">Min annual sunshine <output id="sun-out">2500</output> hours</label>
-            <input type="range" id="sun" name="sun" min="2000" max="3500" value="2500" step="50" />
-          </div>
-
-          <div class="field">
-            <label for="tax">Max acceptable top income tax rate <output id="tax-out">50</output> %</label>
-            <input type="range" id="tax" name="tax" min="30" max="55" value="50" step="1" />
-          </div>
+          <div id="filters"></div>
         </fieldset>
       </form>
 
@@ -82,8 +73,9 @@ const jsonLd = {
     </div>
 
     <p class="method">
-      How it works: each country's published figures are matched against your constraints, then
-      weighted by source confidence (a low-confidence input counts for less). The score is the
+      How it works: you pick a profile, which surfaces the variables most relevant to your
+      situation. Each country's published figures are matched against your constraints, then
+      weighted by source confidence (a low-confidence figure counts for less). The score is the
       confidence-weighted share of your stated criteria that match. It is a screening signal, not
       a recommendation. Open any country's <a href="/compare/greece-portugal-spain">full cited
       comparison</a> to check every source yourself.
@@ -136,6 +128,14 @@ const jsonLd = {
       font-weight: 600;
       margin-bottom: 0.3rem;
     }
+    .field select {
+      width: 100%;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--paper);
+    }
     .field input[type="number"] {
       width: 100%;
       padding: 0.55rem 0.7rem;
@@ -147,6 +147,9 @@ const jsonLd = {
     .field input[type="range"] {
       width: 100%;
       accent-color: var(--terracotta);
+    }
+    .field input[type="checkbox"] {
+      margin-right: 0.4rem;
     }
     .field output {
       font-weight: 700;
@@ -228,44 +231,59 @@ const jsonLd = {
       font-size: 0.85rem;
       color: #7a1f1f;
     }
+    :global(.mark-nodata) { color: var(--ink-soft); font-style: italic; }
+    :global(.cbadge) { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.02em; padding: 0.05rem 0.4rem; border-radius: 999px;
+      border: 1px solid var(--rule); margin-left: 0.4rem; }
+    :global(.cbadge-high) { color: #1f5132; border-color: #9ec9ac; background: #eef6f0; }
+    :global(.cbadge-medium) { color: #6b4a12; border-color: #d9c08a; background: #f8f1de; }
+    :global(.cbadge-low) { color: #7a1f1f; border-color: #d9a3a3; background: #f8e9e9; }
+    :global(.rank-src) { display: block; font-size: 0.8rem; color: var(--ink-soft); margin-top: 0.15rem; }
   </style>
 
   <script>
-    import { places } from "@where/data";
-    import { screenPlace, type ScreeningCriteria } from "@where/engine";
+    import {
+      places,
+      PROFILES,
+      LGBTQ_OVERLAY,
+      composeProfile,
+      variableByKey,
+      placeVariables,
+      type Profile,
+    } from "@where/data";
+    import { applyFilters, scoreByProfile, type ActiveFilter } from "@where/engine";
 
     const countries = places.filter((p) => p.granularity === "country");
 
     const form = document.getElementById("screener-form") as HTMLFormElement;
     const resultsEl = document.getElementById("results") as HTMLElement;
+    const profileSelect = document.getElementById("profile") as HTMLSelectElement;
+    const lgbtqCheckbox = document.getElementById("lgbtq") as HTMLInputElement;
+    const incomeInput = document.getElementById("income") as HTMLInputElement;
+    const filtersContainer = document.getElementById("filters") as HTMLDivElement;
 
-    const outs: Record<string, string> = {
-      cost: "cost-out",
-      winter: "winter-out",
-      summer: "summer-out",
-      sun: "sun-out",
-      tax: "tax-out",
+    // Populate the profile selector
+    for (const p of PROFILES) {
+      const opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.label;
+      if (p.id === "budgetRetiree") opt.selected = true;
+      profileSelect.appendChild(opt);
+    }
+
+    const RANGE_CONFIG: Record<string, { min: number; max: number; step: number; def: number }> = {
+      cost_price_level:    { min: 70,   max: 110,  step: 1,    def: 90 },
+      top_income_tax_rate: { min: 0,    max: 60,   step: 1,    def: 46 },
+      summer_high:         { min: 20,   max: 45,   step: 0.5,  def: 33 },
+      gpi_score:           { min: 1,    max: 3.5,  step: 0.05, def: 1.7 },
+      air_quality_pm25:    { min: 0,    max: 50,   step: 1,    def: 25 },
+      winter_high:         { min: 0,    max: 25,   step: 0.5,  def: 12 },
+      annual_sunshine:     { min: 1500, max: 3500, step: 25,   def: 2800 },
+      physicians_per_1k:   { min: 0,    max: 8,    step: 0.1,  def: 5 },
+      english_proficiency: { min: 0,    max: 700,  step: 10,   def: 500 },
+      cafe_density:        { min: 0,    max: 500,  step: 10,   def: 100 },
+      gym_density:         { min: 0,    max: 200,  step: 5,    def: 40 },
     };
-
-    function num(id: string): number | undefined {
-      const el = document.getElementById(id) as HTMLInputElement | null;
-      if (!el || el.value === "") return undefined;
-      const n = Number(el.value);
-      return Number.isFinite(n) ? n : undefined;
-    }
-
-    function readCriteria(): ScreeningCriteria {
-      const income = num("income");
-      const criteria: ScreeningCriteria = {
-        maxPriceLevelIndexEU27: num("cost"),
-        minJanuaryHighC: num("winter"),
-        maxJulyHighC: num("summer"),
-        minAnnualSunHours: num("sun"),
-        maxIncomeTaxRate: num("tax"),
-      };
-      if (income && income > 0) criteria.provableMonthlyIncomeEUR = income;
-      return criteria;
-    }
 
     function esc(s: string): string {
       return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
@@ -275,63 +293,205 @@ const jsonLd = {
       return `/places/${[...p.ancestry.map((a) => a.slug), p.slug].join("/")}`;
     }
 
-    function render() {
-      const criteria = readCriteria();
-      const ranked = countries
-        .map((place) => ({ place, result: screenPlace(place, criteria) }))
+    function getComposed(): ReturnType<typeof composeProfile> {
+      const base = PROFILES.find((p) => p.id === profileSelect.value) ?? PROFILES[0];
+      return composeProfile(base as Profile, lgbtqCheckbox.checked ? LGBTQ_OVERLAY : undefined);
+    }
+
+    function renderFilterControls(): void {
+      const composed = getComposed();
+      const html: string[] = [];
+
+      for (const key of composed.surfaced) {
+        const def = variableByKey(key);
+        if (def === undefined) continue;
+
+        if (key === "dnv_income_floor") {
+          html.push(
+            `<div class="field"><p class="hint">Digital nomad visa floor: uses your income above.</p></div>`,
+          );
+          continue;
+        }
+
+        if (def.filterType === "range") {
+          const cfg = RANGE_CONFIG[key];
+          if (cfg === undefined) continue;
+          const outId = `out-${key}`;
+          const unit = def.unit ? ` ${esc(def.unit)}` : "";
+          html.push(`
+            <div class="field">
+              <label for="range-${esc(key)}">${esc(def.label)} <output id="${outId}">${cfg.def}</output>${unit}</label>
+              <input type="range" id="range-${esc(key)}" data-vkey="${esc(key)}"
+                min="${cfg.min}" max="${cfg.max}" step="${cfg.step}" value="${cfg.def}" />
+              <p class="hint">${unit.trim() ? `Unit: ${esc(def.unit ?? "")}. ` : ""}Source: ${esc(def.source.name)}</p>
+            </div>`);
+          continue;
+        }
+
+        if (def.filterType === "boolean") {
+          html.push(`
+            <div class="field">
+              <label><input type="checkbox" data-vkey="${esc(key)}" /> ${esc(def.label)}</label>
+              <p class="hint">Check to require this is available. Source: ${esc(def.source.name)}</p>
+            </div>`);
+          continue;
+        }
+
+        // filterType === "select" or range key missing RANGE_CONFIG: skip gracefully
+      }
+
+      filtersContainer.innerHTML = html.join("");
+
+      // Wire up live output labels for the newly rendered sliders
+      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='range']")) {
+        const key = input.dataset.vkey;
+        if (key === undefined) continue;
+        const out = document.getElementById(`out-${key}`);
+        if (out === null) continue;
+        const sync = () => { out.textContent = input.value; };
+        input.addEventListener("input", sync);
+        sync();
+      }
+    }
+
+    function render(): void {
+      const composed = getComposed();
+      const incomeRaw = incomeInput.value === "" ? undefined : Number(incomeInput.value);
+      const income = incomeRaw !== undefined && Number.isFinite(incomeRaw) && incomeRaw > 0 ? incomeRaw : undefined;
+
+      // Build criteria from surfaced range sliders
+      const criteria: Record<string, { min?: number; max?: number }> = {};
+      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='range'][data-vkey]")) {
+        const key = input.dataset.vkey;
+        if (key === undefined) continue;
+        const v = Number(input.value);
+        if (!Number.isFinite(v)) continue;
+        const def = variableByKey(key);
+        if (def === undefined) continue;
+        if (def.direction === "higherBetter") {
+          criteria[key] = { min: v };
+        } else if (def.direction === "lowerBetter") {
+          criteria[key] = { max: v };
+        }
+        // neutral: no criterion set
+      }
+
+      // dnv_income_floor: driven by income input
+      if (composed.surfaced.includes("dnv_income_floor") && income !== undefined) {
+        criteria.dnv_income_floor = { max: income };
+      }
+
+      // Build activeFilters from dealBreakers + checked boolean controls
+      const activeFilters: ActiveFilter[] = [];
+
+      for (const db of composed.dealBreakers) {
+        if (db.op === "<=") {
+          activeFilters.push({ key: db.key, max: db.value as number });
+        } else if (db.op === ">=") {
+          activeFilters.push({ key: db.key, min: db.value as number });
+        } else if (db.op === "==") {
+          activeFilters.push({ key: db.key, equals: db.value as string | boolean });
+        }
+        // "in": skip in slice 1
+      }
+
+      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='checkbox'][data-vkey]")) {
+        if (input.checked) {
+          activeFilters.push({ key: input.dataset.vkey as string, requireData: true });
+        }
+      }
+
+      const survivors = applyFilters(countries, activeFilters);
+      const ranked = survivors
+        .map((place) => ({ place, result: scoreByProfile(place, composed, criteria) }))
         .sort((a, b) => b.result.score - a.result.score);
 
       resultsEl.innerHTML = ranked
         .map(({ place, result }, i) => {
-          const dims = result.breakdown
-            .filter((d) => d.applicable)
-            .map((d) => {
-              const mark = d.matched ? '<span class="mark mark-yes">match</span>' : '<span class="mark mark-no">no</span>';
-              return `<li>${mark}<span>${esc(d.detail)}</span></li>`;
-            })
-            .join("");
-          const warn = result.fenceWarnings.length
-            ? `<p class="warn">${result.fenceWarnings.length} figure(s) are low-confidence or past their verify-by window; check the source.</p>`
-            : "";
+          const vars = placeVariables(place);
+          let matchCount = 0;
+          let usedCount = 0;
+
+          const dimRows = composed.surfaced.map((key) => {
+            const def = variableByKey(key);
+            const label = def ? esc(def.label) : esc(key);
+            const cited = vars[key];
+
+            if (cited === undefined || cited.value === undefined) {
+              return `<li><span class="mark mark-nodata">no data</span><span>${label}: not gathered for this place yet.</span></li>`;
+            }
+
+            usedCount += 1;
+            const criterion = criteria[key];
+            const direction = def ? def.direction : "neutral";
+            let match = true;
+            if (criterion !== undefined && direction !== "neutral" && typeof cited.value === "number") {
+              match =
+                (criterion.min === undefined || cited.value >= criterion.min) &&
+                (criterion.max === undefined || cited.value <= criterion.max);
+            }
+            if (match) matchCount += 1;
+
+            const markClass = match ? "mark-yes" : "mark-no";
+            const markText = match ? "match" : "no";
+            const unit = def?.unit ? esc(def.unit) : "";
+            const valueStr = esc(String(cited.value));
+
+            let boundNote = "";
+            if (criterion !== undefined) {
+              if (criterion.min !== undefined) boundNote = ` (your min: ${criterion.min}${unit ? " " + unit : ""})`;
+              else if (criterion.max !== undefined) boundNote = ` (your max: ${criterion.max}${unit ? " " + unit : ""})`;
+            }
+
+            const confidenceIcon = cited.confidence === "high" ? "●" : cited.confidence === "medium" ? "◐" : "○";
+            const confidenceText = cited.confidence === "high" ? "verified source" : cited.confidence === "medium" ? "good source" : "low confidence, verify";
+            const badge = `<span class="cbadge cbadge-${esc(cited.confidence)}">${confidenceIcon} ${confidenceText}</span>`;
+            const srcLink = `<a href="${esc(cited.sourceUrl)}" rel="noopener nofollow" target="_blank">${esc(cited.sourceName)}</a>`;
+            const srcLine = `<span class="rank-src">${srcLink} Verified ${esc(cited.verifiedDate)}${badge}</span>`;
+
+            return `<li><span class="mark ${markClass}">${markText}</span><span>${label}: ${valueStr}${unit ? " " + unit : ""}${boundNote}${srcLine}</span></li>`;
+          });
+
+          const sub = `Matches ${matchCount} of ${usedCount} of your stated criteria. Score is the confidence-weighted share. Not a recommendation.`;
+
           return `
             <div class="rank-card">
               <div class="rank-head">
                 <span class="rank-name">#${i + 1} <a href="${placeHref(place)}">${esc(place.name)}</a></span>
                 <span class="rank-score">${result.score}</span>
               </div>
-              <p class="rank-sub">Matches ${result.matchedCount} of ${result.applicableCount} of your stated criteria. Score is the confidence-weighted share. Not a recommendation.</p>
-              <ul class="rank-dims">${dims}</ul>
-              ${warn}
+              <p class="rank-sub">${esc(sub)}</p>
+              <ul class="rank-dims">${dimRows.join("")}</ul>
             </div>`;
         })
         .join("");
 
-      // Demand signal: fire once per settled interaction (debounced by the caller).
       const w = window as unknown as { plausible?: (e: string, o?: { props?: Record<string, unknown> }) => void };
       w.plausible?.("Screener Run", {
-        props: { criteria: Object.keys(criteria).length, top: ranked[0]?.place.id ?? "none" },
+        props: { profile: profileSelect.value, top: ranked[0]?.place.id ?? "none" },
       });
     }
 
-    // Live slider value labels.
-    for (const [id, outId] of Object.entries(outs)) {
-      const input = document.getElementById(id) as HTMLInputElement | null;
-      const out = document.getElementById(outId);
-      if (input && out) {
-        const sync = () => {
-          out.textContent = input.value;
-        };
-        input.addEventListener("input", sync);
-        sync();
-      }
+    function onProfileChange(): void {
+      renderFilterControls();
+      render();
     }
 
+    profileSelect.addEventListener("change", onProfileChange);
+    lgbtqCheckbox.addEventListener("change", onProfileChange);
+
     let t: ReturnType<typeof setTimeout> | undefined;
-    form.addEventListener("input", () => {
-      window.clearTimeout(t);
-      t = setTimeout(render, 250);
+    form.addEventListener("input", (e) => {
+      const target = e.target as HTMLElement;
+      // Profile/lgbtq changes are handled by their own listeners (re-render controls)
+      // Other inputs just re-run render
+      if (target.id !== "profile" && target.id !== "lgbtq") {
+        window.clearTimeout(t);
+        t = setTimeout(render, 250);
+      }
     });
 
-    render();
+    // Initial render
+    onProfileChange();
   </script>
 </Base>
