@@ -1,3 +1,4 @@
+export { type ActiveFilter, applyFilters } from "./filter.js";
 export {
   type DimensionResult,
   type FenceWarning,
