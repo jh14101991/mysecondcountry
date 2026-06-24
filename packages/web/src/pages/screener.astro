@@ -262,6 +262,12 @@ const jsonLd = {
     const incomeInput = document.getElementById("income") as HTMLInputElement;
     const filtersContainer = document.getElementById("filters") as HTMLDivElement;
 
+    // Thin wrapper so callers skip the plausible cast every time.
+    function track(event: string, props: Record<string, unknown>): void {
+      const w = window as unknown as { plausible?: (e: string, o?: { props?: Record<string, unknown> }) => void };
+      w.plausible?.(event, { props });
+    }
+
     // Populate the profile selector
     for (const p of PROFILES) {
       const opt = document.createElement("option");
@@ -466,19 +472,25 @@ const jsonLd = {
         })
         .join("");
 
-      const w = window as unknown as { plausible?: (e: string, o?: { props?: Record<string, unknown> }) => void };
-      w.plausible?.("Screener Run", {
-        props: { profile: profileSelect.value, top: ranked[0]?.place.id ?? "none" },
-      });
+      track("Screener Run", { profile: profileSelect.value, top: ranked[0]?.place.id ?? "none" });
     }
 
     function onProfileChange(): void {
       renderFilterControls();
       render();
+      track("Profile Selected", { profile: profileSelect.value, overlay: lgbtqCheckbox.checked });
     }
 
     profileSelect.addEventListener("change", onProfileChange);
     lgbtqCheckbox.addEventListener("change", onProfileChange);
+
+    // Delegated listener: fires once per settled filter interaction (slider release or checkbox toggle).
+    // Added once at init so it survives filtersContainer innerHTML replacements.
+    filtersContainer.addEventListener("change", (e) => {
+      const target = e.target as HTMLElement;
+      const key = target.dataset?.vkey;
+      if (key) track("Filter Used", { key });
+    });
 
     let t: ReturnType<typeof setTimeout> | undefined;
     form.addEventListener("input", (e) => {
