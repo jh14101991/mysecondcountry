@@ -30,6 +30,12 @@ importers:
         specifier: ^3.0.0
         version: 3.2.6(@types/node@22.20.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  packages/data:
+    dependencies:
+      zod:
+        specifier: ^4.0.0
+        version: 4.4.3
+
 packages:
 
   '@biomejs/biome@2.5.1':
@@ -1012,6 +1018,9 @@ packages:
     engines: {node: '>= 14.6'}
     hasBin: true
 
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
 snapshots:
 
   '@biomejs/biome@2.5.1':
@@ -1799,3 +1808,5 @@ snapshots:
       strip-ansi: 7.2.0
 
   yaml@2.9.0: {}
+
+  zod@4.4.3: {}
