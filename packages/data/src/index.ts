@@ -2,6 +2,7 @@ import { places } from "./places/index.js";
 import type { Place } from "./schema.js";
 
 export * from "./profiles/presets.js";
+export * from "./regimes/index.js";
 export * from "./schema.js";
 export * from "./variables/catalog.js";
 export * from "./variables/from-place.js";

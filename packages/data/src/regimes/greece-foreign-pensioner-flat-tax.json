@@ -1,0 +1,87 @@
+{
+  "id": "greece-foreign-pensioner-flat-tax",
+  "slug": "foreign-pensioner-flat-tax",
+  "name": "Greece foreign-pensioner 7% flat tax",
+  "countryId": "gr",
+  "regimeType": "tax",
+  "headlineRate": {
+    "value": 7,
+    "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+    "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "stalenessDays": 60,
+    "excerpt": "Every tax year, individuals will pay tax at a rate of 7% on their foreign-sourced income, with exhaustion of the tax liability for this income."
+  },
+  "durationYears": {
+    "value": 15,
+    "sourceUrl": "https://www.mondaq.com/uk/tax-authorities/1256528/greek-tax-incentive-regimes-for-newly-arrived-residents-and-family-offices",
+    "sourceName": "Ruchelman PLLC, Greek Tax Incentive Regimes for Newly Arrived Residents and Family Offices, via Mondaq",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "stalenessDays": 60,
+    "excerpt": "The Foreign Pensioner's Tax Regime covers a maximum of 15 tax years, beginning with the year of application."
+  },
+  "eligibility": {
+    "priorNonResidency": {
+      "value": "Must not have been a Greek tax resident for five of the six years prior to transferring tax residence to Greece.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "stalenessDays": 60,
+      "excerpt": "not have been Greek tax residents for the previous five of the six years prior to the transfer of their tax residence to Greece"
+    },
+    "qualifyingCountry": {
+      "value": "Must transfer tax residence from a state with which an administrative-cooperation agreement in the field of taxation with Greece is in force.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "stalenessDays": 60,
+      "excerpt": "transfer their tax residence from a state with which an agreement on administrative cooperation in the field of taxation with Greece is in force"
+    },
+    "residencyObligation": {
+      "value": "Must become and remain a Greek tax resident during the regime years; required to declare worldwide income to Greek authorities.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "stalenessDays": 60,
+      "excerpt": "Pensioners subject to this regime are required to declare their income earned both in Greece and abroad."
+    },
+    "applicationWindow": {
+      "value": "Apply by 31 March of the tax year of transfer; applications submitted after that date are deferred to the following tax year.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "stalenessDays": 60,
+      "excerpt": "The application for the tax residence transfer and submission to this regime is submitted by the pensioner until 31 March of the respective tax year."
+    },
+    "knownCatch": {
+      "value": "Non-payment of the full tax due in any single year triggers exit from the regime: the general Greek income tax rules then apply to worldwide income from that year onward.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "stalenessDays": 60,
+      "excerpt": "non-payment of the entire amount of tax due in one tax year results in the application of the general provisions of the ITC for the taxation of their global income from the relevant tax year onwards"
+    }
+  },
+  "summary": "Greece offers a flat 7 percent annual tax on all foreign-source income for qualifying foreign pensioners who transfer their tax residence to Greece, for up to 15 years (Article 5B, Income Tax Code). Eligibility requires at least five years of non-Greek tax residence in the prior six years and transfer from a country with an administrative-cooperation tax agreement with Greece. The figures cited here are screened, sourced, and dated to 2026-06-25. They are not advice."
+}
