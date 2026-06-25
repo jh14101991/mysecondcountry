@@ -1,0 +1,122 @@
+{
+  "id": "cy",
+  "slug": "cyprus",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Cyprus",
+  "country": "Cyprus",
+  "coordinates": { "lat": 35.1856, "lon": 33.3823 },
+  "ancestry": [],
+  "description": "Cyprus is a Mediterranean island republic in the eastern basin, drawing remote workers and investors for its low tax rates, warm climate, and EU membership. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 89.2,
+      "sourceUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/tec00120?format=JSON&lang=EN&geo=CY",
+      "sourceName": "Eurostat API, tec00120 comparative price levels of final consumption by private households",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Index key 2025 for CY returns 89.2 (EU27 = 100)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 15.8,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Nicosia",
+      "sourceName": "Wikipedia, Nicosia climate table, Athalassa station (1991 to 2020)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "15.8 (60.4) mean daily maximum temperature January, degrees C (degrees F)."
+    },
+    "averageJulyHighC": {
+      "value": 37.5,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Nicosia",
+      "sourceName": "Wikipedia, Nicosia climate table, Athalassa station (1991 to 2020)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "37.5 (99.5) mean daily maximum temperature July, degrees C (degrees F)."
+    },
+    "averageAnnualSunHours": {
+      "value": 3298.4,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Nicosia",
+      "sourceName": "Wikipedia, Nicosia climate table, Athalassa station (1991 to 2020)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "3,298.4 mean annual sunshine hours."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, dominant across the coastal and lowland areas of Cyprus. The central plain around Nicosia is semi-arid (BSh)."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://www.gov.cy/en/migration/announcement-by-the-deputy-ministry-of-migration-and-international-protection-on-cyprus-digital-nomad-visa-scheme/",
+      "sourceName": "Cyprus Deputy Ministry of Migration and International Protection (gov.cy)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 90,
+      "excerpt": "a stable and sufficient monthly net income of at least 3,500 euros (after deduction of contributions and taxes)"
+    },
+    "goldenVisa": {
+      "value": "Residence by investment under Regulation 6(2): minimum 300,000 euros in qualifying assets (new residential property, commercial property, share capital of a Cyprus-registered company employing at least 5 people, or Cyprus Investment Funds), plus a minimum annual foreign-source income of 50,000 euros. The permit is indefinite. Cyprus citizenship by investment was terminated in November 2020; this programme is residence only.",
+      "sourceUrl": "https://www.chambers.law/important-amendments-in-the-regulations-and-criteria-of-the-permanent-residency-by-investment/",
+      "sourceName": "Chambers Law, amendments to Cyprus permanent residency by investment regulations (citing official Migration Department criteria, effective 2 May 2023)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "the requirement for an investment of a minimum amount of 300,000 euros (three hundred thousand) in either of the following categories, remains the same."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 35,
+      "sourceUrl": "https://taxsummaries.pwc.com/cyprus/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Cyprus individual, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top rate is 35%, applicable to chargeable income above 72,000 euros per year from 1 January 2026."
+    },
+    "specialRegime": {
+      "value": "Non-domicile regime: Cyprus tax residents who are not domiciled in Cyprus are fully exempt from the Special Defence Contribution on dividend income (17%, or 5% from 2026) and interest income (17%). Non-domicile status applies for up to 17 years. 50% employment income exemption: applies to individuals commencing first employment in Cyprus on or after 1 January 2022 with annual remuneration exceeding 55,000 euros, who were not Cyprus tax resident for at least 15 consecutive years immediately prior. Exemption runs for 17 years, once per lifetime.",
+      "sourceUrl": "https://taxsummaries.pwc.com/cyprus/individual/income-determination",
+      "sourceName": "PwC Worldwide Tax Summaries, Cyprus individual, income determination",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "a new 50% exemption on remuneration applies for first employment exercised in Cyprus by individuals who were not resident in Cyprus for a period of at least 15 consecutive tax years immediately prior to the commencement of their employment in Cyprus. For each individual, the exemption will apply once in their lifetime for a period of 17 years."
+    }
+  },
+  "healthcare": {
+    "physiciansPer1000": {
+      "value": 3.55,
+      "sourceUrl": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_number_of_physicians",
+      "sourceName": "Wikipedia, list of countries by number of physicians, citing WHO GHO (accessed 2023-01-12), medical doctors per 10,000 population",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "healthcare",
+      "excerpt": "Cyprus: 35.517 medical doctors per 10,000 (about 3.55 per 1,000), WHO GHO year 2021."
+    }
+  }
+}

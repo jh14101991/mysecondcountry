@@ -1,0 +1,110 @@
+{
+  "id": "mt",
+  "slug": "malta",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Malta",
+  "country": "Malta",
+  "coordinates": { "lat": 35.8989, "lon": 14.5146 },
+  "ancestry": [],
+  "description": "Malta is a small EU island state in the central Mediterranean, drawing remote workers, retirees, and investors for its English-speaking environment, flat-tax regimes, and year-round sunshine. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 91.9,
+      "sourceUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/tec00120?format=JSON&lang=EN&geo=MT&lastTimePeriod=1",
+      "sourceName": "Eurostat, comparative price levels of consumer goods and services (tec00120)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "API JSON response for MT: value 91.9 for period 2025 (EU27 = 100)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 15.7,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Malta",
+      "sourceName": "Wikipedia, Climate of Malta, Luqa station (1991 to 2020 normals)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Climate data for Malta (Luqa in the south-east part of main island, 1991 to 2020): January mean daily maximum 15.7 degrees C (60.3 degrees F)."
+    },
+    "averageJulyHighC": {
+      "value": 31.7,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Malta",
+      "sourceName": "Wikipedia, Climate of Malta, Luqa station (1991 to 2020 normals)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Climate data for Malta (Luqa in the south-east part of main island, 1991 to 2020): July mean daily maximum 31.7 degrees C (89.1 degrees F)."
+    },
+    "averageAnnualSunHours": {
+      "value": 3054,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Malta",
+      "sourceName": "Wikipedia, Climate of Malta, Luqa station (1991 to 2020 normals)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Climate data for Malta (Luqa in the south-east part of main island, 1991 to 2020): annual sunshine hours 3,054."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, across Malta."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://nomad.residencymalta.gov.mt/nomad-eligibility/",
+      "sourceName": "Residency Malta Agency, Malta Nomad Residence Permit eligibility",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 90,
+      "excerpt": "a minimum gross yearly income of 42,000 euros (approximately 3,500 euros per month) for applications from 1 April 2024."
+    },
+    "goldenVisa": {
+      "value": "Malta Permanent Residence Programme (MPRP): government contribution of 28,000 euros if purchasing property or 58,000 euros if renting; property purchase minimum of 300,000 euros in the South of Malta or Gozo, or 350,000 euros elsewhere, alternatively rent of at least 10,000 euros per year in the South of Malta or Gozo or 12,000 euros per year elsewhere; plus a 2,000 euro NGO donation; total assets of at least 500,000 euros of which at least 150,000 must be financial assets.",
+      "sourceUrl": "https://residencymalta.gov.mt/wp-content/uploads/2024/07/MPRP-FAQs-V2.6.1.pdf",
+      "sourceName": "Residency Malta Agency, MPRP FAQs V2.6.1",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "Government contribution: 28,000 euros if purchasing a property or 58,000 euros if renting a property. Property purchase minimum: 300,000 euros in the South of Malta or Gozo or 350,000 euros for the rest of Malta. Rental minimum: 10,000 euros per year for the South of Malta or Gozo or 12,000 euros per year for the rest of Malta. Asset requirement: 500,000 euros in assets, of which a minimum of 150,000 must be financial assets."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 35,
+      "sourceUrl": "https://taxsummaries.pwc.com/malta/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Malta individual, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Income is taxable at graduated progressive rates, ranging from 0% to 35%. Single rates table: 60,001 and above taxable income at 35 percent."
+    },
+    "specialRegime": {
+      "value": "Global Residence Programme: foreign-source income remitted to Malta taxed at a flat 15%, subject to a minimum annual tax of 15,000 euros. Applicants must hold immovable property in Malta purchased for at least 275,000 euros (lower thresholds in certain areas) or rent at not less than 9,600 euros per year. Eligibility restricted to third-country nationals. Non-domicile remittance basis also available: ordinarily resident but not domiciled individuals are taxed only on Malta-source income and foreign income remitted to Malta.",
+      "sourceUrl": "https://taxsummaries.pwc.com/malta/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Malta individual, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "foreign-source income remitted to Malta by the beneficiary or its dependants being taxed at a flat rate of 15%, subject to a minimum tax of 15,000 euros per annum."
+    }
+  }
+}
