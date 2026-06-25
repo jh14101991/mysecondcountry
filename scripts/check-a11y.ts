@@ -45,15 +45,26 @@ function contrast(a: string, b: string): number {
 }
 // Text/background pairs actually used by the layout and components.
 const PAIRS: [string, string, string][] = [
-  ["body ink / paper", "#1c1a17", "#faf7f0"],
-  ["soft ink / paper", "#4a463f", "#faf7f0"],
-  ["soft ink / paper-2", "#4a463f", "#f3ede1"],
-  ["link / paper", "#8f3d1f", "#faf7f0"],
-  ["fence body / fence bg", "#5c2a16", "#fbeee7"],
-  ["fence stale / fence bg", "#7a1f1f", "#fbeee7"],
-  ["badge high / bg", "#1f5132", "#eef6f0"],
-  ["badge medium / bg", "#6b4a12", "#f8f1de"],
-  ["badge low / bg", "#7a1f1f", "#f8e9e9"],
+  ["body ink / paper", "#151210", "#EFE9DF"],
+  ["body ink / card", "#151210", "#F8F5EF"],
+  ["muted / paper", "#6A6458", "#EFE9DF"],
+  ["muted / card", "#6A6458", "#F8F5EF"],
+  ["muted-strong / card", "#5A5248", "#F8F5EF"],
+  ["primary link / paper", "#0A3D52", "#EFE9DF"],
+  ["greece ink / paper", "#15639C", "#EFE9DF"],
+  ["portugal ink / paper", "#9B2335", "#EFE9DF"],
+  ["spain ink / paper", "#9C5717", "#EFE9DF"],
+  ["greece ink / card", "#15639C", "#F8F5EF"],
+  ["spain ink / card", "#9C5717", "#F8F5EF"],
+  ["on-primary / teal", "#EDF1F2", "#0A3D52"],
+  ["on-primary-soft / teal", "#AFC0C7", "#0A3D52"],
+  ["greece on teal", "#63ADE8", "#0A3D52"],
+  ["portugal on teal", "#E8919D", "#0A3D52"],
+  ["spain on teal", "#E8A765", "#0A3D52"],
+  ["fence ink / fence bg", "#2C2418", "#F4EAD4"],
+  ["conf verified / card", "#1F6B3C", "#F8F5EF"],
+  ["conf good / card", "#6E5E16", "#F8F5EF"],
+  ["conf low / card", "#5A5248", "#F8F5EF"],
 ];
 for (const [name, fg, bg] of PAIRS) {
   const ratio = contrast(fg, bg);

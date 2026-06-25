@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greece vs Portugal vs Spain: My Second Country</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+:root {
+  --paper:       oklch(0.985 0.008 230);
+  --surface:     oklch(0.995 0.004 230);
+  --ink:         oklch(0.25 0.02 250);
+  --ink-soft:    oklch(0.48 0.015 250);
+  --rule:        oklch(0.91 0.012 230);
+  --brand:       oklch(0.52 0.12 235);
+  --brand-deep:  oklch(0.44 0.11 235);
+  --brand-soft:  oklch(0.95 0.03 230);
+  --sun:         oklch(0.80 0.10 80);
+
+  /* Confidence badges */
+  --conf-v-bg:   oklch(0.95 0.03 150);
+  --conf-v-text: oklch(0.52 0.10 150);
+  --conf-g-bg:   oklch(0.95 0.04 80);
+  --conf-g-text: oklch(0.50 0.09 75);
+  --conf-l-bg:   oklch(0.94 0.006 250);
+  --conf-l-text: oklch(0.50 0.02 250);
+
+  /* Bar */
+  --bar-track:   oklch(0.91 0.012 230);
+  --bar-neutral: oklch(0.75 0.02 250);
+
+  /* Card shadow */
+  --shadow-card: 0 1px 2px oklch(0.5 0.05 250 / 0.04), 0 8px 24px oklch(0.5 0.05 250 / 0.06);
+  --shadow-hover: 0 2px 4px oklch(0.5 0.05 250 / 0.06), 0 12px 32px oklch(0.5 0.05 250 / 0.10);
+}
+
+/* =========================================================
+   RESET + BASE
+   ========================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Onest', sans-serif;
+  font-size: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   TYPOGRAPHY HELPERS
+   ========================================================= */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.nav-wordmark {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.nav-wordmark span {
+  color: var(--brand);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--ink);
+  background: var(--brand-soft);
+}
+
+.nav-links a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.nav-cta {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: oklch(0.99 0.002 230);
+  background: var(--brand);
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  background: var(--brand-deep);
+  box-shadow: 0 4px 16px oklch(0.52 0.12 235 / 0.28);
+  transform: translateY(-1px);
+}
+
+.nav-cta:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero-wrapper {
+  background: var(--brand);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Minimal Mediterranean coastline SVG motif */
+.hero-motif {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 520px;
+  height: 100%;
+  opacity: 0.10;
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.95 0.03 230 / 0.75);
+  margin-bottom: 1.5rem;
+}
+
+.hero-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sun);
+  flex-shrink: 0;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: oklch(0.99 0.002 230);
+  text-wrap: balance;
+  margin-bottom: 1.5rem;
+}
+
+.hero-vs {
+  color: oklch(0.99 0.002 230 / 0.45);
+  font-weight: 700;
+}
+
+.hero-sub {
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: oklch(0.99 0.002 230 / 0.72);
+  max-width: 50ch;
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   SCENARIO CHIPS
+   ========================================================= */
+.scenario-bar {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.scenario-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.scenario-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.scenario-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+  text-decoration: none;
+}
+
+.chip:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.chip--active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: oklch(0.99 0.002 230);
+  font-weight: 600;
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+/* =========================================================
+   DISCLAIMER CARD
+   ========================================================= */
+.disclaimer {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 3.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+.disclaimer-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.disclaimer-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: oklch(0.91 0.012 230);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.disclaimer-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.disclaimer p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 72ch;
+}
+
+.disclaimer p + p {
+  margin-top: 0.5rem;
+}
+
+/* =========================================================
+   LEADERS BAND
+   ========================================================= */
+.leaders-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+}
+
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.leader-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.leader-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.leader-card-dim {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+.leader-card-country {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+/* =========================================================
+   HOW TO READ
+   ========================================================= */
+.how-to-read-block {
+  margin-bottom: 2.5rem;
+}
+
+.how-to-read-block p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 68ch;
+  margin-bottom: 1.25rem;
+}
+
+.how-to-read-block a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.18s ease;
+}
+
+.how-to-read-block a:hover { opacity: 0.72; }
+
+/* =========================================================
+   CONFIDENCE LEGEND
+   ========================================================= */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   BADGE (CONFIDENCE CHIP)
+   ========================================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2em 0.6em;
+  border-radius: 999px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-v { background: var(--conf-v-bg); color: var(--conf-v-text); }
+.badge-g { background: var(--conf-g-bg); color: var(--conf-g-text); }
+.badge-l { background: var(--conf-l-bg); color: var(--conf-l-text); }
+
+/* =========================================================
+   METRICS SECTION
+   ========================================================= */
+.metrics-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+/* Each metric is a card */
+.metric-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2rem 2rem 1.75rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.22s ease;
+}
+
+.metric-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.metric-header {
+  margin-bottom: 1.75rem;
+}
+
+.metric-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.metric-sub {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+/* Country columns inside a metric */
+.metric-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* Individual country cell */
+.country-cell {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1rem;
+  position: relative;
+  transition: background 0.18s ease;
+}
+
+.country-cell--leader {
+  background: var(--brand-soft);
+  border-color: oklch(0.82 0.06 230);
+}
+
+.country-cell-flag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.leader-tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand);
+  background: oklch(0.88 0.05 230 / 0.5);
+  border-radius: 999px;
+  padding: 0.15em 0.55em;
+  white-space: nowrap;
+}
+
+.country-val {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 0.1rem;
+  letter-spacing: -0.02em;
+  display: block;
+}
+
+.country-val sup {
+  font-size: 0.5em;
+  vertical-align: super;
+  line-height: 1;
+  margin-left: 0.06em;
+}
+
+.country-val sup a {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.country-val sup a:hover {
+  text-decoration: underline;
+}
+
+/* Comparison bar */
+.bar-wrap {
+  margin: 0.85rem 0 0.85rem;
+}
+
+.bar-track {
+  height: 4px;
+  background: var(--bar-track);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  border-radius: 99px;
+}
+
+.bar-fill--leader { background: var(--brand); }
+.bar-fill--neutral { background: var(--bar-neutral); opacity: 0.5; }
+
+.cell-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.source-link {
+  font-size: 0.8125rem;
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+  line-height: 1.4;
+  transition: opacity 0.18s ease;
+}
+
+.source-link:hover { opacity: 0.7; text-decoration: none; }
+
+.source-link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.verified-date {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+/* Prose value (no large number) */
+.country-prose {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.country-prose sup {
+  font-size: 0.6em;
+  vertical-align: super;
+  line-height: 1;
+  margin-left: 0.06em;
+}
+
+.country-prose sup a {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.country-prose sup a:hover { text-decoration: underline; }
+
+/* =========================================================
+   COUNTRY LINKS
+   ========================================================= */
+.country-links {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-bottom: 4rem;
+  padding-top: 1rem;
+}
+
+.country-links a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: opacity 0.18s ease;
+}
+
+.country-links a:hover { opacity: 0.72; }
+
+/* =========================================================
+   SCREENER CTA
+   ========================================================= */
+.screener-cta {
+  background: var(--brand-soft);
+  border: 1px solid oklch(0.85 0.05 230);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.22s ease;
+}
+
+.screener-cta:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.screener-cta h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.875rem;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.screener-cta p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 58ch;
+  margin-bottom: 2rem;
+}
+
+.screener-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Onest', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: oklch(0.99 0.002 230);
+  background: var(--brand);
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.75rem;
+  text-decoration: none;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.screener-btn:hover {
+  background: var(--brand-deep);
+  box-shadow: 0 4px 20px oklch(0.52 0.12 235 / 0.3);
+  transform: translateY(-1px);
+}
+
+.screener-btn:active { transform: scale(0.98) translateY(0); }
+
+.screener-btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SOURCES REGISTER
+   ========================================================= */
+.sources-section {
+  border-top: 1px solid var(--rule);
+  padding-top: 3.5rem;
+  margin-bottom: 4rem;
+}
+
+.sources-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2rem;
+  letter-spacing: -0.015em;
+}
+
+.sources-list {
+  list-style: decimal;
+  padding-left: 1.75rem;
+  max-width: 72ch;
+}
+
+.sources-list li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  padding: 0.75rem 0 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sources-list li:last-child { border-bottom: none; }
+
+.sources-list li::marker {
+  font-variant-numeric: tabular-nums;
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.sources-list a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-word;
+  transition: opacity 0.18s ease;
+}
+
+.sources-list a:hover { opacity: 0.72; text-decoration: none; }
+
+.sources-list a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.src-meta {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.src-date {
+  font-variant-numeric: tabular-nums;
+  font-style: normal;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  margin-right: 0.6em;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 2rem;
+  background: var(--paper);
+}
+
+.footer-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-wordmark {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footer-wordmark span { color: var(--brand); }
+
+.footer-copy {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   ENTRANCE ANIMATIONS
+   ========================================================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-1 { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both; }
+.anim-2 { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
+.anim-3 { animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.20s both; }
+.anim-4 { animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
+.anim-5 { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both; }
+.anim-6 { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.44s both; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 820px) {
+  .nav-inner {
+    padding: 0 1.25rem;
+    height: 56px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero-inner {
+    padding: 3.5rem 1.25rem 3rem;
+  }
+
+  .hero-motif {
+    width: 280px;
+    opacity: 0.07;
+  }
+
+  .scenario-inner {
+    padding: 1rem 1.25rem;
+  }
+
+  main {
+    padding: 2rem 1.25rem 5rem;
+  }
+
+  .metric-cols {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .country-val {
+    font-size: 1.75rem;
+  }
+
+  .leaders-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .screener-cta {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .leaders-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metric-card {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV
+     ========================================================= -->
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-wordmark">My Second <span>Country</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="#">Compare</a></li>
+      <li><a href="#">Screener</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Open the screener</a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+<div class="hero-wrapper">
+  <!-- Minimal Mediterranean motif: abstract coastline waves -->
+  <svg class="hero-motif" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Layered soft arcs suggesting a coastline horizon -->
+    <ellipse cx="520" cy="380" rx="420" ry="310" fill="oklch(0.99 0.002 230)" opacity="0.15"/>
+    <ellipse cx="520" cy="350" rx="380" ry="260" fill="oklch(0.99 0.002 230)" opacity="0.12"/>
+    <ellipse cx="520" cy="320" rx="340" ry="210" fill="oklch(0.99 0.002 230)" opacity="0.10"/>
+    <!-- A warm sun circle -->
+    <circle cx="380" cy="60" r="36" fill="oklch(0.80 0.10 80)" opacity="0.6"/>
+    <circle cx="380" cy="60" r="52" fill="oklch(0.80 0.10 80)" opacity="0.15"/>
+  </svg>
+
+  <div class="hero-inner anim-1">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+      Country comparison
+    </div>
+    <h1>Greece <span class="hero-vs">vs</span> Portugal <span class="hero-vs">vs</span> Spain</h1>
+    <p class="hero-sub">Independent, sourced comparison data for people deciding where to move.</p>
+  </div>
+</div>
+
+<!-- =========================================================
+     SCENARIO CHIPS
+     ========================================================= -->
+<div class="scenario-bar anim-2">
+  <div class="scenario-inner">
+    <span class="scenario-label">I'm moving to...</span>
+    <div class="scenario-chips" role="list">
+      <span class="chip" role="listitem">lower my taxes</span>
+      <span class="chip chip--active" role="listitem">work remotely</span>
+      <span class="chip" role="listitem">retire</span>
+      <span class="chip" role="listitem">find better weather</span>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+<main>
+
+  <!-- DISCLAIMER -->
+  <aside class="disclaimer anim-3" role="note" aria-label="Legal disclaimer">
+    <div class="disclaimer-header">
+      <div class="disclaimer-icon" aria-hidden="true">i</div>
+      <span class="disclaimer-label">Important to know</span>
+    </div>
+    <p>Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
+    <p>This is not legal or tax advice. Verify residency, visa, and tax facts with a licensed professional and the official source before acting.</p>
+  </aside>
+
+  <!-- LEADERS SECTION -->
+  <section class="leaders-section anim-3" aria-labelledby="leaders-heading">
+    <div class="section-eyebrow" id="leaders-heading">At a glance: who leads each metric</div>
+    <div class="leaders-grid" role="list">
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Lowest cost of living</div>
+        <div class="leader-card-country">Portugal</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Lowest income tax rate</div>
+        <div class="leader-card-country">Greece</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Lowest nomad visa income</div>
+        <div class="leader-card-country">Spain</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Warmest in January</div>
+        <div class="leader-card-country">Portugal</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Most sunshine per year</div>
+        <div class="leader-card-country">Portugal</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Most physicians per 1,000</div>
+        <div class="leader-card-country">Greece</div>
+      </div>
+      <div class="leader-card" role="listitem">
+        <div class="leader-card-dim">Safest (Global Peace Index)</div>
+        <div class="leader-card-country">Portugal</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO READ + LEGEND -->
+  <div class="how-to-read-block anim-4">
+    <p>Every figure links to its source and shows a confidence mark and the date we last verified it. Superscript numbers link to the full Sources register at the bottom. The neutral tags (lowest, sunniest, safest) just name which country leads a row on that number. We do not pick a winner for you. For a shortlist tuned to your own constraints, use the <a href="#">screener</a>.</p>
+
+    <div class="legend" aria-label="Confidence key">
+      <div class="legend-item">
+        <span class="badge badge-v">&#x25CF; Verified</span>
+        <span>official statistical body or primary law</span>
+      </div>
+      <div class="legend-item">
+        <span class="badge badge-g">&#x25D0; Good</span>
+        <span>official authority via secondary source</span>
+      </div>
+      <div class="legend-item">
+        <span class="badge badge-l">&#x25CB; Low</span>
+        <span>directional figure to check yourself</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       METRICS
+       =================================================== -->
+  <div class="metrics-label anim-5">Detailed comparison</div>
+
+  <!-- 1. COST OF LIVING -->
+  <article class="metric-card anim-5" aria-labelledby="metric-col-title">
+    <div class="metric-header">
+      <div class="metric-title">Cost of living</div>
+      <div class="metric-sub">Price level index, EU27 = 100</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">87.4<sup><a href="#src-1">1</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:16%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener nofollow">Eurostat, price level index (tec00120, EU27=100)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Portugal <span class="leader-tag">Lowest</span></div>
+        <span class="country-val tabular">86.6<sup><a href="#src-1">1</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener nofollow">Eurostat, price level index (tec00120, EU27=100)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">91.6<sup><a href="#src-1">1</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener nofollow">Eurostat, price level index (tec00120, EU27=100)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2. TOP INCOME TAX RATE -->
+  <article class="metric-card" aria-label="Top income tax rate comparison">
+    <div class="metric-header">
+      <div class="metric-title">Top income tax rate</div>
+      <div class="metric-sub">Percent</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Greece <span class="leader-tag">Lowest</span></div>
+        <span class="country-val tabular">44%<sup><a href="#src-2">2</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Greece</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <span class="country-val tabular">48%<sup><a href="#src-3">3</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/portugal/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Portugal</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">47%<sup><a href="#src-4">4</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:75%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/spain/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Spain</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3. SPECIAL TAX REGIME (PROSE) -->
+  <article class="metric-card" aria-label="Special tax regime for movers">
+    <div class="metric-header">
+      <div class="metric-title">Special tax regime for movers</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <p class="country-prose">Non-dom (Art 5A): 100,000 euros per year flat on foreign income, up to 15 years, requires a 500,000 euro investment. Pensioners (Art 5B): 7 percent flat on foreign income.<sup><a href="#src-5">5</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener nofollow">PwC, Greece, incentives</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <p class="country-prose">IFICI (the NHR successor, from 2024): 20 percent flat on eligible Portuguese employment and professional income, plus some foreign-income exemptions. Old NHR closed to new entrants at end of 2023.<sup><a href="#src-6">6</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/portugal/individual/significant-developments" target="_blank" rel="noopener nofollow">PwC, Portugal, developments</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <p class="country-prose">Beckham regime (Art 93 LIRPF): 24 percent flat on Spanish employment income up to 600,000 euros, 47 percent above, for the arrival year plus five years.<sup><a href="#src-7">7</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://taxsummaries.pwc.com/spain/individual/other-issues" target="_blank" rel="noopener nofollow">PwC, Spain, other issues</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4. DIGITAL NOMAD VISA -->
+  <article class="metric-card" aria-label="Digital nomad visa minimum income">
+    <div class="metric-header">
+      <div class="metric-title">Digital nomad visa</div>
+      <div class="metric-sub">Minimum net income, EUR per month</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">3,500<sup><a href="#src-8">8</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:80%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/" target="_blank" rel="noopener nofollow">Hellenic Ministry of Migration and Asylum (Law 5038/2023)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <span class="country-val tabular">3,680<sup><a href="#src-9">9</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://citizenremote.com/visas/portugal-digital-nomad-visa/" target="_blank" rel="noopener nofollow">Portugal D8 visa, 4x minimum wage, via AIMA</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Spain <span class="leader-tag">Lowest</span></div>
+        <span class="country-val tabular">2,763<sup><a href="#src-10">10</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://www.exteriores.gob.es/Consulados/washington/en/ServiciosConsulares/Paginas/Consular/Telework-visa.aspx" target="_blank" rel="noopener nofollow">Spain Ministry of Foreign Affairs, telework visa (200% SMI)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5. GOLDEN VISA (PROSE) -->
+  <article class="metric-card" aria-label="Golden visa or investor residency">
+    <div class="metric-header">
+      <div class="metric-title">Golden visa / investor residency</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <p class="country-prose">Tiered since 31 Aug 2024: 800,000 euros in high-demand zones; 400,000 elsewhere; 250,000 only for commercial-to-residential conversion or listed-building restoration.<sup><a href="#src-11">11</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://migration.gov.gr/en/golden-visa/" target="_blank" rel="noopener nofollow">Hellenic Ministry of Migration and Asylum</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <p class="country-prose">Real estate and capital-transfer routes removed in October 2023 (Mais Habitacao). Remaining: 500,000 euros into investment funds, 250,000 cultural support, research, and job creation.<sup><a href="#src-12">12</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://www.globalcitizensolutions.com/portugal-golden-visa/" target="_blank" rel="noopener nofollow">Portugal ARI after 2023 reform</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <p class="country-prose">Abolished on 3 April 2025 (Organic Law 1/2025). Real-estate-linked investor permits over 500,000 euros no longer exist.<sup><a href="#src-13">13</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/vivienda-agenda-urbana/paginas/2025/020425-fin-golden-visa.aspx" target="_blank" rel="noopener nofollow">La Moncloa, Government of Spain</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6. AVERAGE JULY HIGH -->
+  <article class="metric-card" aria-label="Average July high temperature">
+    <div class="metric-header">
+      <div class="metric-title">Average July high</div>
+      <div class="metric-sub">Degrees Celsius</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">34.3&#176;C<sup><a href="#src-14">14</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Athens" target="_blank" rel="noopener nofollow">Athens climate normals, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <span class="country-val tabular">27.9&#176;C<sup><a href="#src-15">15</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Climate_of_Lisbon" target="_blank" rel="noopener nofollow">Lisbon climate normals (IPMA), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">32.8&#176;C<sup><a href="#src-16">16</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:77%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Madrid" target="_blank" rel="noopener nofollow">Madrid climate normals (AEMET), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 7. AVERAGE JANUARY HIGH -->
+  <article class="metric-card" aria-label="Average January high temperature">
+    <div class="metric-header">
+      <div class="metric-title">Average January high</div>
+      <div class="metric-sub">Degrees Celsius</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">13.3&#176;C<sup><a href="#src-14">14</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:69%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Athens" target="_blank" rel="noopener nofollow">Athens climate normals, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Portugal <span class="leader-tag">Warmest</span></div>
+        <span class="country-val tabular">14.8&#176;C<sup><a href="#src-15">15</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Climate_of_Lisbon" target="_blank" rel="noopener nofollow">Lisbon climate normals (IPMA), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">10.0&#176;C<sup><a href="#src-16">16</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Madrid" target="_blank" rel="noopener nofollow">Madrid climate normals (AEMET), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 8. ANNUAL SUNSHINE -->
+  <article class="metric-card" aria-label="Annual sunshine hours">
+    <div class="metric-header">
+      <div class="metric-title">Annual sunshine</div>
+      <div class="metric-sub">Hours per year</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">2,773<sup><a href="#src-14">14</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:22%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Athens" target="_blank" rel="noopener nofollow">Athens (Elliniko), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Portugal <span class="leader-tag">Sunniest</span></div>
+        <span class="country-val tabular">2,875<sup><a href="#src-15">15</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Climate_of_Lisbon" target="_blank" rel="noopener nofollow">Lisbon, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">2,744<sup><a href="#src-16">16</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-l">&#x25CB; Low</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/Madrid" target="_blank" rel="noopener nofollow">Madrid (AEMET), via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 9. CLIMATE CLASSIFICATION (PROSE) -->
+  <article class="metric-card" aria-label="Climate classification by Koppen scheme">
+    <div class="metric-header">
+      <div class="metric-title">Climate classification</div>
+      <div class="metric-sub">Koppen-Geiger</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <p class="country-prose">Csa, hot-summer Mediterranean.<sup><a href="#src-17">17</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://www.gloh2o.org/koppen/" target="_blank" rel="noopener nofollow">GloH2O Koppen-Geiger (Beck et al. 2023)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <p class="country-prose">Csa, hot-summer Mediterranean.<sup><a href="#src-17">17</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://www.gloh2o.org/koppen/" target="_blank" rel="noopener nofollow">GloH2O Koppen-Geiger (Beck et al. 2023)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <p class="country-prose">Csa, hot-summer Mediterranean (central); coasts differ.<sup><a href="#src-17">17</a></sup></p>
+        <div class="cell-meta">
+          <span class="badge badge-v">&#x25CF; Verified</span>
+          <a class="source-link" href="https://www.gloh2o.org/koppen/" target="_blank" rel="noopener nofollow">GloH2O Koppen-Geiger (Beck et al. 2023)</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 10. PHYSICIANS PER 1,000 -->
+  <article class="metric-card" aria-label="Physicians per 1,000 population">
+    <div class="metric-header">
+      <div class="metric-title">Physicians per 1,000 population</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Greece <span class="leader-tag">Most</span></div>
+        <span class="country-val tabular">6.37<sup><a href="#src-18">18</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians" target="_blank" rel="noopener nofollow">WHO Global Health Observatory, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Portugal</div>
+        <span class="country-val tabular">5.77<sup><a href="#src-18">18</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:68%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians" target="_blank" rel="noopener nofollow">WHO Global Health Observatory, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">4.48<sup><a href="#src-18">18</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians" target="_blank" rel="noopener nofollow">WHO Global Health Observatory, via Wikipedia</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 11. GLOBAL PEACE INDEX -->
+  <article class="metric-card anim-6" aria-label="Global Peace Index safety score">
+    <div class="metric-header">
+      <div class="metric-title">Global Peace Index</div>
+      <div class="metric-sub">Lower score is safer</div>
+    </div>
+    <div class="metric-cols">
+      <!-- Greece -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Greece</div>
+        <span class="country-val tabular">1.793<sup><a href="#src-19">19</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:100%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf" target="_blank" rel="noopener nofollow">Institute for Economics and Peace, GPI 2024</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Portugal LEADER -->
+      <div class="country-cell country-cell--leader">
+        <div class="country-cell-flag">Portugal <span class="leader-tag">Safest</span></div>
+        <span class="country-val tabular">1.372<sup><a href="#src-19">19</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--leader" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf" target="_blank" rel="noopener nofollow">Institute for Economics and Peace, GPI 2024</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+      <!-- Spain -->
+      <div class="country-cell">
+        <div class="country-cell-flag">Spain</div>
+        <span class="country-val tabular">1.597<sup><a href="#src-19">19</a></sup></span>
+        <div aria-hidden="true" class="bar-wrap">
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--neutral" style="width:53%"></div>
+          </div>
+        </div>
+        <div class="cell-meta">
+          <span class="badge badge-g">&#x25D0; Good</span>
+          <a class="source-link" href="https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf" target="_blank" rel="noopener nofollow">Institute for Economics and Peace, GPI 2024</a>
+          <span class="verified-date">Verified 2026-06-24</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- COUNTRY PAGE LINKS -->
+  <p class="country-links">
+    Full cited pages:
+    <a href="#" rel="noopener nofollow">Greece</a>,
+    <a href="#" rel="noopener nofollow">Portugal</a>,
+    <a href="#" rel="noopener nofollow">Spain</a>
+  </p>
+
+  <!-- SCREENER CTA -->
+  <div class="screener-cta" role="complementary" aria-label="Screener call to action">
+    <h2>Not sure which fits your situation?</h2>
+    <p>The free screener takes your budget, climate, visa, and tax constraints and returns a cited, ranked shortlist across these countries, with every figure sourced and the same fence. It never tells you what to do; it shows how each country's published rules match what you entered.</p>
+    <a href="#" class="screener-btn">Open the screener</a>
+  </div>
+
+  <!-- SOURCES REGISTER -->
+  <section class="sources-section" aria-labelledby="sources-heading">
+    <h2 id="sources-heading">Sources</h2>
+    <ol class="sources-list">
+      <li id="src-1">
+        <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener nofollow">Eurostat, price level index for actual individual consumption (tec00120, EU27=100)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports cost of living: Greece 87.4, Portugal 86.6, Spain 91.6 (2025, EU27 = 100).</span>
+      </li>
+      <li id="src-2">
+        <a href="https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Greece, taxes on personal income</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Greece top income tax rate: 44 percent on income above 60,000 euros.</span>
+      </li>
+      <li id="src-3">
+        <a href="https://taxsummaries.pwc.com/portugal/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Portugal, taxes on personal income</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Portugal top income tax rate: 48 percent above about 86,634 euros, plus a 2.5 to 5 percent solidarity rate.</span>
+      </li>
+      <li id="src-4">
+        <a href="https://taxsummaries.pwc.com/spain/individual/taxes-on-personal-income" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Spain, taxes on personal income</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Spain top income tax rate: state top rate 47 percent above 300,000 euros; combined rates typically 47 to 54 percent by region.</span>
+      </li>
+      <li id="src-5">
+        <a href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Greece, other tax credits and incentives</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Greece special regime: 100,000 euro lump sum on foreign income (Art 5A); 7 percent on foreign income (Art 5B), each up to 15 years.</span>
+      </li>
+      <li id="src-6">
+        <a href="https://taxsummaries.pwc.com/portugal/individual/significant-developments" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Portugal, significant developments</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Portugal special regime: IFICI 20 percent on eligible category A and B income; NHR closed to new entrants.</span>
+      </li>
+      <li id="src-7">
+        <a href="https://taxsummaries.pwc.com/spain/individual/other-issues" target="_blank" rel="noopener nofollow">PwC Worldwide Tax Summaries, Spain, other issues</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Spain special regime: Beckham 24 percent up to 600,000 euros, 47 percent above, for the option year plus five years.</span>
+      </li>
+      <li id="src-8">
+        <a href="https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/" target="_blank" rel="noopener nofollow">Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Law 5038/2023)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Greece nomad visa: minimum net income 3,500 euros per month, plus 20 percent for a spouse and 15 percent per child.</span>
+      </li>
+      <li id="src-9">
+        <a href="https://citizenremote.com/visas/portugal-digital-nomad-visa/" target="_blank" rel="noopener nofollow">Portugal D8 digital nomad visa, four times the national minimum wage, applied by AIMA (via CitizenRemote)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Portugal nomad visa: about 3,680 euros per month in 2026.</span>
+      </li>
+      <li id="src-10">
+        <a href="https://www.exteriores.gob.es/Consulados/washington/en/ServiciosConsulares/Paginas/Consular/Telework-visa.aspx" target="_blank" rel="noopener nofollow">Spain Ministry of Foreign Affairs, telework (digital nomad) visa, 200 percent of the SMI</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Spain nomad visa: about 2,763 euros per month in 2025.</span>
+      </li>
+      <li id="src-11">
+        <a href="https://migration.gov.gr/en/golden-visa/" target="_blank" rel="noopener nofollow">Hellenic Ministry of Migration and Asylum, investor residence permit (Golden Visa)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Greece golden visa: tiered since 31 Aug 2024; the 250,000 euro tier only for commercial-to-residential conversion or listed-building restoration.</span>
+      </li>
+      <li id="src-12">
+        <a href="https://www.globalcitizensolutions.com/portugal-golden-visa/" target="_blank" rel="noopener nofollow">Portugal golden visa (ARI) after the 2023 Mais Habitacao reform (via Global Citizen Solutions)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Portugal golden visa: real estate and capital transfers removed; investment funds from 500,000 euros and cultural support from 250,000 remain.</span>
+      </li>
+      <li id="src-13">
+        <a href="https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/vivienda-agenda-urbana/paginas/2025/020425-fin-golden-visa.aspx" target="_blank" rel="noopener nofollow">La Moncloa, Government of Spain press office, end of the golden visa</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Spain golden visa: abolished on 3 April 2025 (Organic Law 1/2025).</span>
+      </li>
+      <li id="src-14">
+        <a href="https://en.wikipedia.org/wiki/Athens" target="_blank" rel="noopener nofollow">Athens climate normals, via Wikipedia</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Greece climate: July high 34.3 C, January high 13.3 C, about 2,773 annual sunshine hours (Elliniko).</span>
+      </li>
+      <li id="src-15">
+        <a href="https://en.wikipedia.org/wiki/Climate_of_Lisbon" target="_blank" rel="noopener nofollow">Lisbon climate normals (IPMA 1981 to 2010), via Wikipedia</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Portugal climate: July high 27.9 C, January high 14.8 C, about 2,875 annual sunshine hours.</span>
+      </li>
+      <li id="src-16">
+        <a href="https://en.wikipedia.org/wiki/Madrid" target="_blank" rel="noopener nofollow">Madrid climate normals (AEMET 1991 to 2020), via Wikipedia</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Spain climate: July high 32.8 C, January high 10.0 C, about 2,744 annual sunshine hours.</span>
+      </li>
+      <li id="src-17">
+        <a href="https://www.gloh2o.org/koppen/" target="_blank" rel="noopener nofollow">GloH2O Koppen-Geiger climate classification (Beck et al. 2023)</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports climate classification: class Csa, hot-summer Mediterranean, for all three countries.</span>
+      </li>
+      <li id="src-18">
+        <a href="https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians" target="_blank" rel="noopener nofollow">WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports physicians per 1,000: Greece 6.37, Portugal 5.77, Spain 4.48 (WHO 2021).</span>
+      </li>
+      <li id="src-19">
+        <a href="https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf" target="_blank" rel="noopener nofollow">Institute for Economics and Peace, Global Peace Index 2024</a>
+        <span class="src-meta"><span class="src-date">Verified 2026-06-24</span>Supports Global Peace Index: Greece 1.793, Portugal 1.372, Spain 1.597 (lower is safer).</span>
+      </li>
+    </ol>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="#" class="footer-wordmark">My Second <span>Country</span></a>
+    <span class="footer-copy">Screening intelligence, not advice. Verify before you act.</span>
+  </div>
+</footer>
+
+</body>
+</html>

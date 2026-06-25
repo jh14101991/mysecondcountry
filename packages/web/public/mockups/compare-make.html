@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Greece vs Portugal vs Spain — My Second Country</title>
+
+<!-- ── Google Fonts (verbatim from fonts.css) ───────────────────────── -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Keyframe animations (verbatim from fonts.css) ──────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(1.055); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.hero-panel  { animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+.hero-photo  { animation: scaleIn    1.4s cubic-bezier(0.16,1,0.3,1) both; }
+.hero-info   { animation: fadeSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.intro-fade  { animation: fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
+.verdict-fade{ animation: fadeSlideUp 0.3s cubic-bezier(0.16,1,0.3,1) both; }
+.row-fade    { animation: fadeSlideUp 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ── prefers-reduced-motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── CSS Variables (from theme.css) ────────────────────────────────── */
+:root {
+  --background: #EFE9DF;
+  --foreground: #151210;
+  --card: #F8F5EF;
+  --card-foreground: #151210;
+  --primary: #0A3D52;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E2DBD0;
+  --muted: #E4DDD1;
+  --muted-foreground: #7A7062;
+  --accent: #D4CCC0;
+  --border: rgba(21, 18, 16, 0.08);
+  --ring: #0A3D52;
+  --radius: 0.5rem;
+}
+
+/* ── Reset & base ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Figtree', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; }
+img { display: block; }
+
+/* ── Layout helpers ─────────────────────────────────────────────────── */
+.max-w-7xl   { max-width: 80rem; margin-left: auto; margin-right: auto; }
+.px-5        { padding-left: 1.25rem; padding-right: 1.25rem; }
+.border-t    { border-top: 1px solid var(--border); }
+.border-b    { border-bottom: 1px solid var(--border); }
+
+/* ── Tooltip ────────────────────────────────────────────────────────── */
+.tip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.tip-wrap .tip-content {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  max-width: 220px;
+  padding: 6px 10px;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: normal;
+  background: #151210;
+  color: #EFE9DF;
+  font-family: 'Figtree', sans-serif;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  transition: opacity 0.15s ease;
+}
+.tip-wrap .tip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #151210;
+}
+.tip-wrap:hover .tip-content,
+.tip-wrap:focus-within .tip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ── NAV ────────────────────────────────────────────────────────────── */
+nav.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #0A3D52;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+@media (min-width: 640px) { .nav-inner { padding: 0 2rem; } }
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.wordmark-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.wordmark-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav-pills {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-pills.visible { opacity: 1; pointer-events: auto; }
+@media (min-width: 640px) { .nav-pills { display: flex; } }
+.nav-pill {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav-sources {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.nav-sources:hover { color: white; }
+
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: clamp(340px, 52vh, 620px);
+}
+@media (min-width: 640px) { .hero { grid-template-columns: 1fr 1fr 1fr; } }
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+}
+.hero-panel:hover .hero-top-bar { opacity: 1; }
+.hero-top-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.48;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+.hero-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px;
+}
+@media (min-width: 1024px) { .hero-info { padding: 32px; } }
+.hero-flag { font-size: 24px; line-height: 1; margin-bottom: 8px; }
+.hero-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 300;
+  font-style: italic;
+  color: white;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.hero-tagline {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── INTRO ───────────────────────────────────────────────────────────── */
+.intro-section {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 56px 1.25rem 40px;
+}
+@media (min-width: 640px) { .intro-section { padding-left: 2rem; padding-right: 2rem; } }
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+  margin-bottom: 20px;
+}
+.intro-h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+.intro-h1 em {
+  font-style: italic;
+  font-weight: 300;
+}
+.intro-sub {
+  margin-top: 16px;
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: #6A6458;
+  max-width: 36rem;
+}
+
+/* ── TABS ────────────────────────────────────────────────────────────── */
+.tabs-section {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+@media (min-width: 640px) { .tabs-section { padding: 0 2rem; } }
+
+.tabs-list {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(21,18,16,0.1);
+  scrollbar-width: none;
+}
+.tabs-list::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 12px 20px;
+  font-size: 11px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  color: var(--muted-foreground);
+  transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn:hover { color: var(--foreground); }
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.tab-btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* ── VERDICT CARD ────────────────────────────────────────────────────── */
+.verdict-wrap {
+  max-width: 80rem;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.verdict-card {
+  margin: 16px 1.25rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #F8F5EF;
+  border: 1px solid rgba(21,18,16,0.08);
+  display: none;
+}
+@media (min-width: 640px) { .verdict-card { margin: 16px 2rem 0; } }
+.verdict-card.visible { display: block; }
+.verdict-bar { height: 3px; }
+.verdict-body {
+  padding: 20px 24px;
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+@media (min-width: 640px) { .verdict-body { grid-template-columns: auto 1fr; } }
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.verdict-badge-icon { width: 12px; height: 12px; }
+.verdict-badge-text {
+  font-size: 11px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 600;
+}
+.verdict-text {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: #5A5248;
+}
+
+/* ── RADAR SECTION ───────────────────────────────────────────────────── */
+.radar-section {
+  border-top: 1px solid rgba(21,18,16,0.08);
+  background: #F8F5EF;
+}
+.radar-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 56px 1.25rem;
+}
+@media (min-width: 640px) { .radar-inner { padding: 56px 2rem; } }
+.radar-grid {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1024px) { .radar-grid { grid-template-columns: 1fr 2fr; } }
+
+.radar-label-col { transition: opacity 0.7s ease, transform 0.7s ease; }
+.radar-label-col.hidden-anim { opacity: 0; transform: translateX(-16px); }
+
+.radar-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+  margin-bottom: 16px;
+}
+.radar-h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.radar-note {
+  margin-top: 12px;
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: #6A6458;
+}
+.radar-legend { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+.radar-legend-item { display: flex; align-items: center; gap: 12px; }
+.legend-line { width: 40px; height: 2px; flex-shrink: 0; }
+.legend-country {
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+.legend-tagline { font-size: 11px; color: var(--muted-foreground); }
+
+.radar-chart-col { transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s; }
+.radar-chart-col.hidden-anim { opacity: 0; transform: scale(0.97); }
+.radar-svg-wrap {
+  width: 100%;
+  height: 300px;
+}
+@media (min-width: 640px) { .radar-svg-wrap { height: 380px; } }
+
+/* ── LEADER STRIP ────────────────────────────────────────────────────── */
+.leader-strip {
+  border-top: 1px solid rgba(21,18,16,0.1);
+  border-bottom: 1px solid rgba(21,18,16,0.1);
+  background: #0A3D52;
+}
+.leader-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+@media (min-width: 640px) { .leader-inner { padding: 0 2rem; } }
+.leader-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (min-width: 640px) { .leader-grid { grid-template-columns: repeat(6, 1fr); } }
+.leader-cell {
+  padding: 16px 8px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.leader-cell:last-child { border-right: none; }
+@media (min-width: 640px) { .leader-cell:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.07); } }
+.leader-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 6px;
+}
+.leader-stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.leader-country { font-size: 10px; margin-top: 4px; color: rgba(255,255,255,0.42); }
+
+/* ── COMPARISON ──────────────────────────────────────────────────────── */
+.comparison-section { max-width: 80rem; margin: 0 auto; }
+
+/* Sticky headers */
+.col-headers {
+  display: none;
+  position: sticky;
+  top: 52px;
+  z-index: 30;
+  background: rgba(239,233,223,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(21,18,16,0.09);
+  grid-template-columns: 220px 1fr 1fr 1fr;
+}
+@media (min-width: 640px) { .col-headers { display: grid; } }
+@media (min-width: 1024px) { .col-headers { grid-template-columns: 280px 1fr 1fr 1fr; } }
+
+.col-header-dim {
+  padding: 10px 0 10px 1.25rem;
+  display: flex; align-items: center;
+}
+@media (min-width: 640px) { .col-header-dim { padding-left: 2rem; } }
+.col-header-dim span {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
+}
+.col-header-country {
+  padding: 10px 16px;
+  text-align: center;
+  border-left: 1px solid rgba(21,18,16,0.07);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+@media (min-width: 1024px) { .col-header-country { padding: 10px 24px; } }
+.col-flag { font-size: 16px; line-height: 1; margin-bottom: 2px; }
+.col-country-name {
+  font-family: 'Figtree', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Metric rows */
+.metric-row {
+  border-bottom: 1px solid rgba(21,18,16,0.07);
+  transition: background 0.1s;
+}
+
+/* Mobile dimension header */
+.mobile-dim-header {
+  display: block;
+  padding: 24px 1.25rem 12px;
+}
+@media (min-width: 640px) { .mobile-dim-header { display: none; } }
+.mobile-dim-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted-foreground);
+}
+.mobile-dim-desc {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.45;
+  margin-top: 2px;
+  color: #6A6458;
+}
+
+/* Row grid */
+.row-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (min-width: 640px) { .row-grid { grid-template-columns: 220px 1fr 1fr 1fr; } }
+@media (min-width: 1024px) { .row-grid { grid-template-columns: 280px 1fr 1fr 1fr; } }
+
+/* Desktop dimension cell */
+.dim-cell {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 24px 32px 1.25rem;
+}
+@media (min-width: 640px) { .dim-cell { display: flex; padding-left: 2rem; } }
+@media (min-width: 1024px) { .dim-cell { padding-left: 2rem; } }
+.dim-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted-foreground);
+  margin-bottom: 8px;
+}
+.dim-desc {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.45;
+  color: #6A6458;
+}
+.dim-leader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+.dim-leader-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dim-leader-text {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Country cell */
+.country-cell {
+  padding: 24px 12px;
+  border-left: 1px solid rgba(21,18,16,0.07);
+  transition: opacity 0.2s ease;
+}
+@media (min-width: 640px) { .country-cell { padding: 24px 16px; } }
+@media (min-width: 1024px) { .country-cell { padding: 24px; } }
+.country-cell:first-child { border-left: none; }
+
+/* Mobile flag label */
+.mobile-flag {
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+@media (min-width: 640px) { .mobile-flag { display: none; } }
+
+/* Value row */
+.value-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+.value-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.value-unit {
+  font-family: 'Figtree', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: 2px;
+}
+.value-arrow {
+  margin-bottom: 2px;
+  opacity: 0.7;
+}
+.value-arrow svg { display: block; }
+
+.cell-subtext {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-top: 6px;
+  line-height: 1.3;
+  display: none;
+}
+@media (min-width: 640px) { .cell-subtext { display: block; } }
+
+.cell-badges {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+@media (min-width: 640px) { .cell-badges { display: flex; } }
+
+/* Badge */
+.conf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  border-radius: 2px;
+  cursor: default;
+  user-select: none;
+}
+.conf-badge.verified {
+  border: 1px solid rgba(42,122,69,0.38);
+  color: #2A7A45;
+}
+.conf-badge.good {
+  border: 1px solid rgba(122,106,32,0.38);
+  color: #7A6A20;
+}
+
+/* Source ref */
+.src-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted-foreground);
+  transition: color 0.15s;
+}
+.src-ref:hover { color: var(--foreground); }
+
+/* Bar */
+.bar-wrap {
+  margin-top: 12px;
+  height: 2px;
+  width: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: rgba(21,18,16,0.08);
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  width: 0%;
+  transition: width 1.1s cubic-bezier(0.16,1,0.3,1) 0.2s;
+}
+
+/* Mobile leader/source row */
+.mobile-leader-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 1.25rem;
+  border-top: 1px solid rgba(21,18,16,0.06);
+}
+@media (min-width: 640px) { .mobile-leader-row { display: none; } }
+.mobile-leader-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.mobile-leader-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.mobile-leader-text { font-size: 11px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mobile-src-refs { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+
+/* Show-all button */
+.show-all-wrap { padding: 20px 1.25rem; }
+@media (min-width: 640px) { .show-all-wrap { padding: 20px 2rem; } }
+.show-all-btn {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+  font-family: 'Figtree', sans-serif;
+}
+.show-all-btn:hover { color: var(--foreground); }
+
+/* ── DISCLAIMER ──────────────────────────────────────────────────────── */
+.disclaimer-section {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 40px 1.25rem;
+}
+@media (min-width: 640px) { .disclaimer-section { padding: 40px 2rem; } }
+.disclaimer-inner {
+  border-left: 2px solid #0A3D52;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.disclaimer-text {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #7A7062;
+  max-width: 42rem;
+}
+.disclaimer-text strong { color: var(--foreground); font-weight: 600; }
+
+/* ── SOURCES ─────────────────────────────────────────────────────────── */
+.sources-section {
+  border-top: 1px solid rgba(21,18,16,0.09);
+  background: #F8F5EF;
+}
+.sources-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 48px 1.25rem;
+}
+@media (min-width: 640px) { .sources-inner { padding: 48px 2rem; } }
+.sources-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+  margin-bottom: 32px;
+}
+.sources-grid {
+  display: grid;
+  gap: 14px 48px;
+}
+@media (min-width: 640px) { .sources-grid { grid-template-columns: 1fr 1fr; } }
+.source-row { display: flex; align-items: flex-start; gap: 12px; }
+.source-n {
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+  width: 20px;
+  text-align: right;
+  color: #0A3D52;
+}
+.source-body-wrap { min-width: 0; }
+.source-link {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #151210;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+.source-link:hover { color: #0A3D52; }
+.source-year {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  margin-left: 6px;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid rgba(21,18,16,0.07);
+  background: #0A3D52;
+}
+.footer-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (min-width: 640px) { .footer-inner { padding: 0 2rem; } }
+.footer-brand { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.35); }
+.footer-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.25); }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────────────────── -->
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="nav-inner">
+    <div class="wordmark">
+      <div class="wordmark-icon" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.3"/>
+          <circle cx="6" cy="6" r="1.8" fill="white"/>
+        </svg>
+      </div>
+      <span class="wordmark-text">My Second Country</span>
+    </div>
+
+    <div class="nav-pills" id="navPills" aria-label="Countries compared">
+      <span class="nav-pill" style="color:#1570BA">🇬🇷 Greece</span>
+      <span class="nav-pill" style="color:#9B2335">🇵🇹 Portugal</span>
+      <span class="nav-pill" style="color:#C8782A">🇪🇸 Spain</span>
+    </div>
+
+    <a href="#sources" class="nav-sources">Sources</a>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<div class="hero" id="heroSection">
+
+  <!-- Greece -->
+  <div class="hero-panel" style="background:#061E32; animation-delay:0s;">
+    <div class="hero-top-bar" style="background:#1570BA;"></div>
+    <img
+      class="hero-photo"
+      src="https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=900&h=700&fit=crop&auto=format"
+      alt="Acropolis of Athens at golden hour"
+      style="animation-delay:0s;"
+    />
+    <div class="hero-overlay" style="background:linear-gradient(160deg, transparent 30%, #061E32cc 80%, #061E32f0 100%);"></div>
+    <div class="hero-info" style="animation-delay:0.4s;">
+      <div class="hero-flag">🇬🇷</div>
+      <h2 class="hero-name">Greece</h2>
+      <p class="hero-tagline">Lowest cost · lowest tax</p>
+    </div>
+  </div>
+
+  <!-- Portugal -->
+  <div class="hero-panel" style="background:#3E0A12; animation-delay:0.12s;">
+    <div class="hero-top-bar" style="background:#9B2335;"></div>
+    <img
+      class="hero-photo"
+      src="https://images.unsplash.com/photo-1762144062643-699966b2f7f9?w=900&h=700&fit=crop&auto=format"
+      alt="Terracotta rooftops and river, Lisbon"
+      style="animation-delay:0.1s;"
+    />
+    <div class="hero-overlay" style="background:linear-gradient(160deg, transparent 30%, #3E0A12cc 80%, #3E0A12f0 100%);"></div>
+    <div class="hero-info" style="animation-delay:0.5s;">
+      <div class="hero-flag">🇵🇹</div>
+      <h2 class="hero-name">Portugal</h2>
+      <p class="hero-tagline">Safest · most stable</p>
+    </div>
+  </div>
+
+  <!-- Spain -->
+  <div class="hero-panel" style="background:#4A2200; animation-delay:0.24s;">
+    <div class="hero-top-bar" style="background:#C8782A;"></div>
+    <img
+      class="hero-photo"
+      src="https://images.unsplash.com/photo-1764246195415-6e83157c2c74?w=900&h=700&fit=crop&auto=format"
+      alt="Ornate arched courtyard, Seville"
+      style="animation-delay:0.2s;"
+    />
+    <div class="hero-overlay" style="background:linear-gradient(160deg, transparent 30%, #4A2200cc 80%, #4A2200f0 100%);"></div>
+    <div class="hero-info" style="animation-delay:0.6s;">
+      <div class="hero-flag">🇪🇸</div>
+      <h2 class="hero-name">Spain</h2>
+      <p class="hero-tagline">Best climate · healthcare</p>
+    </div>
+  </div>
+
+</div><!-- /hero -->
+
+<!-- ── INTRO ──────────────────────────────────────────────────────────────── -->
+<div class="intro-section">
+  <div class="intro-fade">
+    <p class="eyebrow">Independent comparison · 2024 data · 10 cited sources</p>
+    <h1 class="intro-h1">
+      Greece <em>vs</em> Portugal <em>vs</em> Spain
+    </h1>
+    <p class="intro-sub">
+      Six decisions — cost, tax, residency, climate, healthcare, and safety — with every
+      figure sourced, dated, and confidence-rated.
+    </p>
+  </div>
+</div>
+
+<!-- ── TABS ───────────────────────────────────────────────────────────────── -->
+<div class="tabs-section">
+  <div class="tabs-list" role="tablist" aria-label="Filter by scenario">
+    <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="all"    aria-controls="comparison">All metrics</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" data-tab="taxes"  aria-controls="comparison">Lower my taxes</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" data-tab="remote" aria-controls="comparison">Work remotely</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" data-tab="retire" aria-controls="comparison">Retire abroad</button>
+  </div>
+</div>
+
+<!-- ── VERDICT ────────────────────────────────────────────────────────────── -->
+<div class="verdict-wrap">
+  <!-- taxes -->
+  <div class="verdict-card verdict-fade" id="verdict-taxes">
+    <div class="verdict-bar" style="background:#1570BA;"></div>
+    <div class="verdict-body">
+      <div class="flex-shrink-0">
+        <div class="verdict-badge" style="background:rgba(21,112,186,0.094);">
+          <svg class="verdict-badge-icon" viewBox="0 0 24 24" fill="none" stroke="#1570BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+          </svg>
+          <span class="verdict-badge-text" style="color:#1570BA;">🇬🇷 Greece recommended</span>
+        </div>
+      </div>
+      <p class="verdict-text">
+        Greece wins on tax. At 7% flat for qualifying retirees and €250k Golden Visa entry, it offers the most cost-effective path to Mediterranean residency. Portugal's IFICI (20%) and Spain's Beckham Law (24%) are competitive but materially more expensive.
+      </p>
+    </div>
+  </div>
+  <!-- remote -->
+  <div class="verdict-card verdict-fade" id="verdict-remote">
+    <div class="verdict-bar" style="background:#1570BA;"></div>
+    <div class="verdict-body">
+      <div class="flex-shrink-0">
+        <div class="verdict-badge" style="background:rgba(21,112,186,0.094);">
+          <svg class="verdict-badge-icon" viewBox="0 0 24 24" fill="none" stroke="#1570BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+          </svg>
+          <span class="verdict-badge-text" style="color:#1570BA;">🇬🇷 Greece recommended</span>
+        </div>
+      </div>
+      <p class="verdict-text">
+        Athens costs €600/mo less than Madrid and has the lowest Golden Visa entry point. Portugal's D7 passive-income visa is an accessible alternative. Spain lags on entry cost but leads on sunshine and healthcare infrastructure.
+      </p>
+    </div>
+  </div>
+  <!-- retire -->
+  <div class="verdict-card verdict-fade" id="verdict-retire">
+    <div class="verdict-bar" style="background:#9B2335;"></div>
+    <div class="verdict-body">
+      <div class="flex-shrink-0">
+        <div class="verdict-badge" style="background:rgba(155,35,53,0.094);">
+          <svg class="verdict-badge-icon" viewBox="0 0 24 24" fill="none" stroke="#9B2335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+          </svg>
+          <span class="verdict-badge-text" style="color:#9B2335;">🇵🇹 Portugal recommended</span>
+        </div>
+      </div>
+      <p class="verdict-text">
+        Portugal earns it on safety — ranked 7th in the world — backed by solid healthcare (68/100) and the IFICI tax regime. Greece undercuts it on cost and tax. Spain leads on healthcare alone. Portugal is the most balanced choice.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ── RADAR ──────────────────────────────────────────────────────────────── -->
+<section class="radar-section" id="radarSection">
+  <div class="radar-inner">
+    <div class="radar-grid">
+
+      <!-- Left: label col -->
+      <div class="radar-label-col hidden-anim" id="radarLabelCol">
+        <p class="radar-eyebrow">At a glance</p>
+        <h2 class="radar-h2">Strengths &amp;<br>trade-offs</h2>
+        <p class="radar-note">
+          Scores are normalised to 100. Higher is better on every axis — including cost
+          (lower cost → higher score) and safety (lower rank → higher score).
+        </p>
+        <div class="radar-legend">
+          <div class="radar-legend-item">
+            <div class="legend-line" style="background:#1570BA;"></div>
+            <span class="legend-country" style="color:#1570BA; font-family:'Figtree',sans-serif;">🇬🇷 Greece</span>
+            <span class="legend-tagline">— Lowest cost · lowest tax</span>
+          </div>
+          <div class="radar-legend-item">
+            <div class="legend-line" style="background:#9B2335;"></div>
+            <span class="legend-country" style="color:#9B2335; font-family:'Figtree',sans-serif;">🇵🇹 Portugal</span>
+            <span class="legend-tagline">— Safest · most stable</span>
+          </div>
+          <div class="radar-legend-item">
+            <div class="legend-line" style="background:#C8782A;"></div>
+            <span class="legend-country" style="color:#C8782A; font-family:'Figtree',sans-serif;">🇪🇸 Spain</span>
+            <span class="legend-tagline">— Best climate · healthcare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: radar SVG -->
+      <div class="radar-chart-col hidden-anim" id="radarChartCol">
+        <div class="radar-svg-wrap">
+          <svg id="radarSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <!-- rendered by JS -->
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── LEADER STRIP ───────────────────────────────────────────────────────── -->
+<section class="leader-strip" aria-label="Category leaders">
+  <div class="leader-inner">
+    <div class="leader-grid">
+
+      <div class="leader-cell">
+        <p class="leader-label">Cost</p>
+        <p class="leader-stat" style="color:#1570BA;">€1,350/mo</p>
+        <p class="leader-country">🇬🇷 Greece</p>
+      </div>
+      <div class="leader-cell">
+        <p class="leader-label">Tax</p>
+        <p class="leader-stat" style="color:#1570BA;">7% flat</p>
+        <p class="leader-country">🇬🇷 Greece</p>
+      </div>
+      <div class="leader-cell">
+        <p class="leader-label">Visa</p>
+        <p class="leader-stat" style="color:#1570BA;">€250k</p>
+        <p class="leader-country">🇬🇷 Greece</p>
+      </div>
+      <div class="leader-cell">
+        <p class="leader-label">Sunshine</p>
+        <p class="leader-stat" style="color:#C8782A;">3,000 hrs</p>
+        <p class="leader-country">🇪🇸 Spain</p>
+      </div>
+      <div class="leader-cell">
+        <p class="leader-label">Healthcare</p>
+        <p class="leader-stat" style="color:#C8782A;">Score 72</p>
+        <p class="leader-country">🇪🇸 Spain</p>
+      </div>
+      <div class="leader-cell" style="border-right:none;">
+        <p class="leader-label">Safety</p>
+        <p class="leader-stat" style="color:#9B2335;">Rank #7</p>
+        <p class="leader-country">🇵🇹 Portugal</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ─────────────────────────────────────────────────────────── -->
+<section class="comparison-section" id="comparison" aria-label="Metric comparison">
+
+  <!-- Sticky column headers -->
+  <div class="col-headers" aria-hidden="true">
+    <div class="col-header-dim"><span>Dimension</span></div>
+    <div class="col-header-country" style="border-left:1px solid rgba(21,18,16,0.07);">
+      <div class="col-flag">🇬🇷</div>
+      <p class="col-country-name" style="color:#1570BA;">Greece</p>
+    </div>
+    <div class="col-header-country" style="border-left:1px solid rgba(21,18,16,0.07);">
+      <div class="col-flag">🇵🇹</div>
+      <p class="col-country-name" style="color:#9B2335;">Portugal</p>
+    </div>
+    <div class="col-header-country" style="border-left:1px solid rgba(21,18,16,0.07);">
+      <div class="col-flag">🇪🇸</div>
+      <p class="col-country-name" style="color:#C8782A;">Spain</p>
+    </div>
+  </div>
+
+  <!-- Metric rows — rendered by JS -->
+  <div id="metricsContainer"></div>
+
+  <div id="showAllWrap" class="show-all-wrap" style="display:none;">
+    <button class="show-all-btn" id="showAllBtn">Show all 6 metrics</button>
+  </div>
+
+</section>
+
+<!-- ── DISCLAIMER ─────────────────────────────────────────────────────────── -->
+<div class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <p class="disclaimer-text">
+      <strong>Not advice.</strong>
+      This tool is for orientation only. Tax thresholds, visa rules, and investment minimums
+      change frequently. Verify all figures with a licensed tax adviser and qualified
+      immigration lawyer before making decisions. All data is sourced and dated — see references below.
+    </p>
+  </div>
+</div>
+
+<!-- ── SOURCES ────────────────────────────────────────────────────────────── -->
+<section class="sources-section" id="sources">
+  <div class="sources-inner">
+    <p class="sources-eyebrow">Sources &amp; Methodology</p>
+    <div class="sources-grid" id="sourcesGrid"></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-brand">My Second Country · Independent research</span>
+    <span class="footer-year">2024</span>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Data ─────────────────────────────────────────────────────────────── */
+
+const SOURCES_DATA = [
+  { n:1,  body:"Numbeo Cost of Living Index",                            year:"2024", url:"https://www.numbeo.com/cost-of-living/" },
+  { n:2,  body:"AADE Greece — Non-Dom Retiree Tax Regime",               year:"2024", url:"https://www.aade.gr/" },
+  { n:3,  body:"Autoridade Tributária Portugal — IFICI Programme",       year:"2024", url:"https://info.portaldasfinancas.gov.pt/" },
+  { n:4,  body:"Agencia Tributaria Spain — Art. 93 LIRPF (Beckham Law)", year:"2024", url:"https://www.agenciatributaria.es/" },
+  { n:5,  body:"Enterprise Greece — Golden Visa Programme",              year:"2024", url:"https://www.enterprisegreece.gov.gr/" },
+  { n:6,  body:"AIMA Portugal — ARI Investment Residence Permit",        year:"2024", url:"https://www.aima.gov.pt/" },
+  { n:7,  body:"Secretaría de Estado de Migraciones — Visado Inversor",  year:"2024", url:"https://www.inclusion.gob.es/" },
+  { n:8,  body:"World Meteorological Organisation — Sunshine Duration",  year:"2023", url:"https://wmo.int/" },
+  { n:9,  body:"CEOWORLD Magazine Health Care Index",                    year:"2024", url:"https://ceoworld.biz/" },
+  { n:10, body:"Institute for Economics & Peace — Global Peace Index",   year:"2024", url:"https://www.visionofhumanity.org/" },
+];
+
+const METRICS = [
+  {
+    id:"cost", dimension:"Cost of Living",
+    description:"Monthly budget, single person — rent, food, transport",
+    scenarios:["remote","retire"],
+    leader:"greece", leaderNote:"€500–600/mo cheaper than Spain",
+    greece:   { value:"€1,350", unit:"/mo",     subtext:"Athens, incl. rent",       confidence:"Verified", sourceIndex:1, score:90 },
+    portugal: { value:"€1,700", unit:"/mo",     subtext:"Lisbon, incl. rent",       confidence:"Verified", sourceIndex:1, score:72 },
+    spain:    { value:"€1,950", unit:"/mo",     subtext:"Madrid, incl. rent",       confidence:"Verified", sourceIndex:1, score:62 },
+  },
+  {
+    id:"tax", dimension:"Best Expat Tax Rate",
+    description:"Headline rate under the best available expat regime",
+    scenarios:["taxes","retire"],
+    leader:"greece", leaderNote:"7% flat for retirees, valid 10 years",
+    greece:   { value:"7%",  unit:"flat", subtext:"Non-Dom retiree scheme",      confidence:"Verified", sourceIndex:2, score:95 },
+    portugal: { value:"20%", unit:"flat", subtext:"IFICI programme (ex-NHR)",    confidence:"Verified", sourceIndex:3, score:70 },
+    spain:    { value:"24%", unit:"flat", subtext:"Beckham Law — first 6 years", confidence:"Verified", sourceIndex:4, score:60 },
+  },
+  {
+    id:"residency", dimension:"Residency Entry",
+    description:"Minimum investment for a long-term residency permit",
+    scenarios:["taxes","remote","retire"],
+    leader:"greece", leaderNote:"Half the minimum needed in Portugal or Spain",
+    greece:   { value:"€250k", unit:"min.", subtext:"Golden Visa — property",       confidence:"Verified", sourceIndex:5, score:90 },
+    portugal: { value:"€500k", unit:"min.", subtext:"Golden Visa — investment fund", confidence:"Verified", sourceIndex:6, score:55 },
+    spain:    { value:"€500k", unit:"min.", subtext:"Golden Visa — property",        confidence:"Good",     sourceIndex:7, score:55 },
+  },
+  {
+    id:"climate", dimension:"Sunshine",
+    description:"Annual sunshine hours, major city average",
+    scenarios:["retire","remote"],
+    leader:"spain", leaderNote:"Seville regularly exceeds 3,000 hours",
+    greece:   { value:"2,900", unit:"hrs/yr", subtext:"Athens",          confidence:"Verified", sourceIndex:8, score:88 },
+    portugal: { value:"2,800", unit:"hrs/yr", subtext:"Lisbon",          confidence:"Verified", sourceIndex:8, score:84 },
+    spain:    { value:"3,000", unit:"hrs/yr", subtext:"Seville / South", confidence:"Good",     sourceIndex:8, score:95 },
+  },
+  {
+    id:"healthcare", dimension:"Healthcare Quality",
+    description:"CEOWORLD Health Care Index 2024 — 100 is best",
+    scenarios:["retire"],
+    leader:"spain", leaderNote:"Ranked 19th globally",
+    greece:   { value:"51", unit:"/ 100", subtext:"Ranked 38th globally", confidence:"Verified", sourceIndex:9, score:51 },
+    portugal: { value:"68", unit:"/ 100", subtext:"Ranked 22nd globally", confidence:"Verified", sourceIndex:9, score:68 },
+    spain:    { value:"72", unit:"/ 100", subtext:"Ranked 19th globally", confidence:"Verified", sourceIndex:9, score:72 },
+  },
+  {
+    id:"safety", dimension:"Safety",
+    description:"Global Peace Index 2024 — lower rank number is safer",
+    scenarios:["retire","remote"],
+    leader:"portugal", leaderNote:"7th safest country on earth",
+    greece:   { value:"#64", unit:"", subtext:"GPI 2024", confidence:"Verified", sourceIndex:10, score:58 },
+    portugal: { value:"#7",  unit:"", subtext:"GPI 2024", confidence:"Verified", sourceIndex:10, score:96 },
+    spain:    { value:"#30", unit:"", subtext:"GPI 2024", confidence:"Verified", sourceIndex:10, score:80 },
+  },
+];
+
+const COUNTRY_COLOR  = { greece:"#1570BA", portugal:"#9B2335", spain:"#C8782A" };
+const COUNTRY_FLAG   = { greece:"🇬🇷",      portugal:"🇵🇹",      spain:"🇪🇸"    };
+const COUNTRY_NAME   = { greece:"Greece",   portugal:"Portugal", spain:"Spain"  };
+const COUNTRIES      = ["greece","portugal","spain"];
+
+// Radar axis labels (matching the RADAR_DATA subjects from App.tsx)
+const RADAR_SUBJECTS = ["Cost","Tax","Visa","Sunshine","Healthcare","Safety"];
+
+/* ── Tooltip helper ────────────────────────────────────────────────────── */
+function tipHtml(content, innerHtml) {
+  return `<span class="tip-wrap">${innerHtml}<span class="tip-content">${content}</span></span>`;
+}
+
+/* ── Badge HTML ────────────────────────────────────────────────────────── */
+function badgeHtml(level) {
+  const isV = level === "Verified";
+  const tooltip = isV
+    ? "Cross-referenced against 3 or more primary government or academic sources."
+    : "Based on a single credible source. Directionally reliable — verify before acting.";
+  const cls = isV ? "verified" : "good";
+  const sym = isV ? "✓" : "~";
+  return tipHtml(tooltip,
+    `<span class="conf-badge ${cls}">${sym} ${level}</span>`
+  );
+}
+
+/* ── Source ref HTML ───────────────────────────────────────────────────── */
+function srcHtml(n) {
+  const s = SOURCES_DATA[n - 1];
+  const tooltip = `${s.body} — ${s.year}`;
+  return tipHtml(tooltip,
+    `<a href="#sources" class="src-ref">[${n}]<svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;display:inline-block;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
+  );
+}
+
+/* ── Build metric row HTML ─────────────────────────────────────────────── */
+function buildMetricRow(metric, idx) {
+  const leaderColor = COUNTRY_COLOR[metric.leader];
+  const leaderName  = COUNTRY_NAME[metric.leader];
+
+  // Country cells
+  const cells = COUNTRIES.map(c => {
+    const cell = metric[c];
+    const isLeader = metric.leader === c;
+    const color = COUNTRY_COLOR[c];
+
+    const arrowSvg = isLeader
+      ? `<span class="value-arrow" style="color:${color};" aria-label="leader"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>`
+      : "";
+
+    return `
+      <div class="country-cell" data-country="${c}" style="border-left:1px solid rgba(21,18,16,0.07);">
+        <span class="mobile-flag" style="color:${color};">${COUNTRY_FLAG[c]}</span>
+        <div class="value-row">
+          <span class="value-num" style="color:${color};">${cell.value}</span>
+          ${cell.unit ? `<span class="value-unit">${cell.unit}</span>` : ""}
+          ${arrowSvg}
+        </div>
+        <p class="cell-subtext">${cell.subtext}</p>
+        <div class="cell-badges">
+          ${badgeHtml(cell.confidence)}
+          ${srcHtml(cell.sourceIndex)}
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-fill" data-score="${cell.score}" data-leader="${isLeader}" style="background:${color};opacity:${isLeader ? 1 : 0.42};"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // Mobile source refs (one per country, all three)
+  const mobileSrcs = COUNTRIES.map(c => srcHtml(metric[c].sourceIndex)).join("");
+
+  return `
+    <div class="metric-row row-fade" data-metric-id="${metric.id}" style="animation-delay:${idx * 0.04}s;">
+      <!-- Mobile dimension header -->
+      <div class="mobile-dim-header">
+        <p class="mobile-dim-name">${metric.dimension}</p>
+        <p class="mobile-dim-desc">${metric.description}</p>
+      </div>
+
+      <div class="row-grid">
+        <!-- Desktop dimension cell -->
+        <div class="dim-cell">
+          <p class="dim-name">${metric.dimension}</p>
+          <p class="dim-desc">${metric.description}</p>
+          <div class="dim-leader">
+            <div class="dim-leader-dot" style="background:${leaderColor};"></div>
+            <p class="dim-leader-text" style="color:${leaderColor};">${leaderName} leads — ${metric.leaderNote}</p>
+          </div>
+        </div>
+
+        ${cells}
+      </div>
+
+      <!-- Mobile leader note + source row -->
+      <div class="mobile-leader-row">
+        <div class="mobile-leader-info">
+          <div class="mobile-leader-dot" style="background:${leaderColor};"></div>
+          <p class="mobile-leader-text" style="color:${leaderColor};">${leaderName} leads — ${metric.leaderNote}</p>
+        </div>
+        <div class="mobile-src-refs">${mobileSrcs}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ── Render metrics ────────────────────────────────────────────────────── */
+let currentTab = "all";
+let hoveredCountry = null;
+
+function getFilteredMetrics(tab) {
+  if (tab === "all") return METRICS;
+  return METRICS.filter(m => m.scenarios.includes(tab));
+}
+
+function renderMetrics(tab) {
+  const container = document.getElementById("metricsContainer");
+  const metrics   = getFilteredMetrics(tab);
+  container.innerHTML = metrics.map((m, i) => buildMetricRow(m, i)).join("");
+
+  // Animate bars via IntersectionObserver
+  attachBarObservers();
+  attachHoverListeners();
+
+  // Show-all button
+  const showAllWrap = document.getElementById("showAllWrap");
+  const showAllBtn  = document.getElementById("showAllBtn");
+  if (tab !== "all") {
+    showAllWrap.style.display = "block";
+    showAllBtn.textContent = `Show all ${METRICS.length} metrics`;
+  } else {
+    showAllWrap.style.display = "none";
+  }
+}
+
+/* ── Bar IntersectionObserver ──────────────────────────────────────────── */
+function attachBarObservers() {
+  const fills = document.querySelectorAll(".bar-fill");
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el    = e.target;
+        const score = el.dataset.score;
+        el.style.width = score + "%";
+        obs.unobserve(el);
+      }
+    });
+  }, { rootMargin: "-60px 0px" });
+  fills.forEach(f => obs.observe(f));
+}
+
+/* ── Hover dimming ─────────────────────────────────────────────────────── */
+function attachHoverListeners() {
+  const rows = document.querySelectorAll(".metric-row");
+  rows.forEach(row => {
+    const cells = row.querySelectorAll(".country-cell");
+    cells.forEach(cell => {
+      const country = cell.dataset.country;
+      cell.addEventListener("mouseenter", () => setHover(country));
+      cell.addEventListener("mouseleave", () => setHover(null));
+    });
+  });
+}
+
+function setHover(country) {
+  hoveredCountry = country;
+  const allCells = document.querySelectorAll(".country-cell");
+  allCells.forEach(cell => {
+    if (country === null) {
+      cell.style.opacity = "1";
+    } else {
+      cell.style.opacity = cell.dataset.country === country ? "1" : "0.28";
+    }
+  });
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────────── */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tab = btn.dataset.tab;
+    currentTab = tab;
+
+    // Update active state
+    document.querySelectorAll(".tab-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.tab === tab);
+      b.setAttribute("aria-selected", b.dataset.tab === tab ? "true" : "false");
+    });
+
+    // Show/hide verdicts
+    ["taxes","remote","retire"].forEach(s => {
+      const card = document.getElementById("verdict-" + s);
+      if (tab === s) {
+        card.classList.add("visible");
+      } else {
+        card.classList.remove("visible");
+      }
+    });
+
+    // Re-render metrics
+    renderMetrics(tab);
+
+    // Update radar
+    renderRadar(tab === "all" ? null : tab);
+  });
+});
+
+// Show-all button
+document.getElementById("showAllBtn").addEventListener("click", () => {
+  currentTab = "all";
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    const isAll = b.dataset.tab === "all";
+    b.classList.toggle("active", isAll);
+    b.setAttribute("aria-selected", isAll ? "true" : "false");
+  });
+  ["taxes","remote","retire"].forEach(s => {
+    document.getElementById("verdict-" + s).classList.remove("visible");
+  });
+  renderMetrics("all");
+  renderRadar(null);
+});
+
+/* ── Hero IntersectionObserver (nav pills) ─────────────────────────────── */
+const heroEl   = document.getElementById("heroSection");
+const navPills = document.getElementById("navPills");
+const heroObs  = new IntersectionObserver(([e]) => {
+  if (!e.isIntersecting) {
+    navPills.classList.add("visible");
+  } else {
+    navPills.classList.remove("visible");
+  }
+}, { threshold: 0 });
+heroObs.observe(heroEl);
+
+/* ── Radar chart ───────────────────────────────────────────────────────── */
+const CX = 200, CY = 200, MAX_R = 140;
+const AXES_COUNT = 6;
+const AXIS_ANGLES = Array.from({length: AXES_COUNT}, (_, i) => -Math.PI/2 + (2 * Math.PI * i / AXES_COUNT));
+
+function polarToXY(angle, r) {
+  return {
+    x: CX + r * Math.cos(angle),
+    y: CY + r * Math.sin(angle),
+  };
+}
+
+function scoresForMetric(metricId) {
+  const m = METRICS.find(m => m.id === metricId);
+  return {
+    greece:   m.greece.score,
+    portugal: m.portugal.score,
+    spain:    m.spain.score,
+  };
+}
+
+// Map axis index -> metric id (same order as RADAR_SUBJECTS)
+const AXIS_METRIC_IDS = ["cost","tax","residency","climate","healthcare","safety"];
+
+function renderRadar(scenario) {
+  const svg = document.getElementById("radarSvg");
+
+  // Determine which axes to show
+  let activeAxes;
+  if (!scenario) {
+    activeAxes = AXIS_METRIC_IDS.map((id, i) => i); // all 6
+  } else {
+    activeAxes = AXIS_METRIC_IDS.map((id, i) => {
+      const m = METRICS.find(m => m.id === id);
+      return m.scenarios.includes(scenario) ? i : null;
+    }).filter(i => i !== null);
+  }
+
+  // Build the full scores (use 0 for inactive axes)
+  const scores = { greece: [], portugal: [], spain: [] };
+  AXIS_METRIC_IDS.forEach((id, i) => {
+    const m = METRICS.find(m => m.id === id);
+    const active = !scenario || m.scenarios.includes(scenario);
+    COUNTRIES.forEach(c => {
+      scores[c].push(active ? m[c].score : 0);
+    });
+  });
+
+  // Grid rings (5 rings at 20% increments)
+  const rings = [0.2,0.4,0.6,0.8,1.0];
+  let svgHtml = "";
+
+  // Rings
+  rings.forEach(frac => {
+    const points = AXIS_ANGLES.map(a => {
+      const p = polarToXY(a, MAX_R * frac);
+      return `${p.x},${p.y}`;
+    }).join(" ");
+    svgHtml += `<polygon points="${points}" fill="none" stroke="rgba(21,18,16,0.07)" stroke-width="1"/>`;
+  });
+
+  // Axis lines and labels
+  AXIS_METRIC_IDS.forEach((id, i) => {
+    const a = AXIS_ANGLES[i];
+    const outer = polarToXY(a, MAX_R);
+    const labelR = MAX_R + 22;
+    const label = polarToXY(a, labelR);
+    const active = !scenario || METRICS.find(m=>m.id===id).scenarios.includes(scenario);
+    const strokeOpacity = active ? 0.12 : 0.04;
+    const textOpacity   = active ? 1 : 0.3;
+    svgHtml += `<line x1="${CX}" y1="${CY}" x2="${outer.x}" y2="${outer.y}" stroke="rgba(21,18,16,${strokeOpacity})" stroke-width="1"/>`;
+
+    // Align label text
+    let textAnchor = "middle";
+    if (label.x < CX - 8)  textAnchor = "end";
+    if (label.x > CX + 8)  textAnchor = "start";
+
+    svgHtml += `<text
+      x="${label.x}" y="${label.y}"
+      text-anchor="${textAnchor}"
+      dominant-baseline="middle"
+      font-family="'Figtree', sans-serif"
+      font-size="10"
+      font-weight="600"
+      fill="#7A7062"
+      opacity="${textOpacity}"
+    >${RADAR_SUBJECTS[i]}</text>`;
+  });
+
+  // Country polygons
+  COUNTRIES.forEach(c => {
+    const color = COUNTRY_COLOR[c];
+    const points = AXIS_ANGLES.map((a, i) => {
+      const r = (scores[c][i] / 100) * MAX_R;
+      const p = polarToXY(a, r);
+      return `${p.x},${p.y}`;
+    }).join(" ");
+    svgHtml += `<polygon points="${points}" stroke="${color}" fill="${color}" fill-opacity="0.10" stroke-width="1.5"/>`;
+  });
+
+  svg.innerHTML = svgHtml;
+}
+
+/* ── Radar IntersectionObserver ────────────────────────────────────────── */
+const radarSection = document.getElementById("radarSection");
+const radarLabelCol  = document.getElementById("radarLabelCol");
+const radarChartCol  = document.getElementById("radarChartCol");
+const radarObs = new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) {
+    radarLabelCol.classList.remove("hidden-anim");
+    radarChartCol.classList.remove("hidden-anim");
+    radarObs.disconnect();
+  }
+}, { rootMargin: "-60px 0px" });
+radarObs.observe(radarSection);
+
+/* ── Sources list ──────────────────────────────────────────────────────── */
+function renderSources() {
+  const grid = document.getElementById("sourcesGrid");
+  grid.innerHTML = SOURCES_DATA.map(s => `
+    <div class="source-row">
+      <span class="source-n">${s.n}.</span>
+      <div class="source-body-wrap">
+        <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="source-link">
+          ${s.body}
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.3;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <span class="source-year">— ${s.year}</span>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ── Init ──────────────────────────────────────────────────────────────── */
+renderMetrics("all");
+renderRadar(null);
+renderSources();
+</script>
+</body>
+</html>

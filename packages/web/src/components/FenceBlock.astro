@@ -26,14 +26,13 @@ const { hasLegalClaims = false, staleDays = null } = Astro.props;
   .fence {
     margin: 2rem 0;
     padding: 1.1rem 1.25rem;
-    border: 1px solid var(--terracotta);
-    border-left-width: 4px;
-    border-radius: 4px;
-    background: #fbeee7;
+    border: 1px solid var(--fence-border);
+    border-radius: var(--radius);
+    background: var(--fence-bg);
   }
   .fence p {
     margin: 0;
-    color: #5c2a16;
+    color: var(--fence-ink);
     font-size: 1rem;
     line-height: 1.55;
   }
@@ -45,6 +44,6 @@ const { hasLegalClaims = false, staleDays = null } = Astro.props;
   }
   .fence-stale {
     font-weight: 600;
-    color: #7a1f1f !important;
+    color: var(--fence-ink);
   }
 </style>

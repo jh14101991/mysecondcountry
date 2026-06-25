@@ -31,6 +31,10 @@ coverage/
 # local claude overrides (project settings.json IS committed)
 .claude/settings.local.json
 
+# Rosetta TRIAL fonts: evaluation only, never commit or deploy (license restriction).
+# Replace with bought web-licence woff2 before launch, then remove this ignore.
+packages/web/public/fonts/*.woff2
+
 # data pipeline caches
 packages/*/cache/
 .cache/

@@ -1,0 +1,88 @@
+---
+import type { CitedValue as Cited, Granularity } from "@where/data";
+import CitedValue from "./CitedValue.astro";
+
+/**
+ * A semantic two-column facts table: a caption, a row header (the field label) and the
+ * cited value cell. The owned-rule and place archetypes both render their facts through it.
+ */
+interface Row {
+  label: string;
+  cited: Cited;
+  unit?: string;
+  prose?: boolean;
+}
+interface Props {
+  caption: string;
+  rows: Row[];
+  placeGranularity?: Granularity;
+  placeName?: string;
+}
+const { caption, rows, placeGranularity, placeName } = Astro.props;
+---
+
+<table class="facts-table">
+  <caption class="facts-caption">{caption}</caption>
+  <tbody>
+    {
+      rows.map((row) => (
+        <tr>
+          <th scope="row" class="facts-th">
+            {row.label}
+          </th>
+          <CitedValue
+            cited={row.cited}
+            unit={row.unit}
+            prose={row.prose}
+            placeGranularity={placeGranularity}
+            placeName={placeName}
+            as="td"
+          />
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .facts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--ink);
+  }
+  .facts-caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .facts-th {
+    width: 38%;
+    text-align: left;
+    vertical-align: top;
+    padding: 0.9rem 1rem 0.9rem 0;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 38rem) {
+    .facts-table,
+    .facts-table tbody,
+    .facts-table tr,
+    .facts-th {
+      display: block;
+      width: 100%;
+    }
+    .facts-th {
+      padding-bottom: 0.2rem;
+      border-bottom: none;
+    }
+  }
+</style>

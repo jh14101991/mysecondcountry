@@ -1,0 +1,77 @@
+---
+/**
+ * The cite-this block: one mono line per cited fact, naming the source, the verified date,
+ * and the canonical URL with a fragment pointing to the fact path. Lets a reader (or an AI
+ * engine) lift an attribution verbatim.
+ */
+interface CiteLine {
+  sourceName: string;
+  verifiedDate: string;
+  citationUrl: string;
+}
+interface Props {
+  lines: CiteLine[];
+  heading?: string;
+}
+const { lines, heading = "Cite this data" } = Astro.props;
+---
+
+<section class="cite-this" aria-labelledby="cite-this-h">
+  <h2 id="cite-this-h" class="cite-this-eyebrow">{heading}</h2>
+  <p class="cite-this-note">
+    Copy the line for any fact you want to cite. Each line names the source, the date we
+    verified it, and the canonical URL with a fragment pointing to the fact path.
+  </p>
+  <ul class="cite-list">
+    {
+      lines.map((line) => (
+        <li>
+          <code>
+            {line.sourceName}, verified {line.verifiedDate}, {line.citationUrl}
+          </code>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .cite-this {
+    margin-top: 2.5rem;
+  }
+  .cite-this-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.6rem;
+  }
+  .cite-this-note {
+    max-width: var(--measure);
+    color: var(--muted-foreground);
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    margin: 0 0 1.2rem;
+  }
+  .cite-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .cite-list li code {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    word-break: break-all;
+    color: var(--ink);
+  }
+</style>

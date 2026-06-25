@@ -1,0 +1,332 @@
+---
+/**
+ * The at-a-glance band: small-multiple dot scales (one per measure, relative among the
+ * compared places) above a teal leader strip naming who leads each measure. Every figure is
+ * sourced in the rows below; this is a scannable summary, never a recommendation. Extracted
+ * verbatim from the comparison archetype so the reference rendering is preserved.
+ *
+ * The dot markup keeps the .multiple-chart / data-scenarios hooks the scenario tabs filter on.
+ */
+type CountryId = "gr" | "pt" | "es";
+
+const COUNTRY_NAME: Record<CountryId, string> = { gr: "Greece", pt: "Portugal", es: "Spain" };
+
+interface Dot {
+  country: CountryId;
+  tag: string;
+  pos: number;
+  isLeader: boolean;
+  value: string;
+}
+interface Multiple {
+  label: string;
+  caption: string;
+  scenarios: string;
+  dots: Dot[];
+}
+interface Leader {
+  label: string;
+  stat: string;
+  country: CountryId;
+  countryLabel: string;
+}
+interface Props {
+  multiples: Multiple[];
+  leaders: Leader[];
+  note?: string;
+}
+const {
+  multiples,
+  leaders,
+  note = "Scores are relative among these places. Every number is sourced in the rows below.",
+} = Astro.props;
+---
+
+<section class="multiples-section" aria-label="Metric dot scales" data-filter-target="multiples">
+  <div class="multiples-inner">
+    <p class="multiples-note">{note}</p>
+    <div class="multiples-grid">
+      {
+        multiples.map((m) => (
+          <div class="multiple-chart" data-metric={m.label.toLowerCase()} data-scenarios={m.scenarios}>
+            <p class="multiple-label">{m.label}</p>
+            <div class="multiple-axis-wrap">
+              <div class="multiple-axis" />
+              {m.dots.map((d, idx) => {
+                const above = idx % 2 === 0;
+                const tagText = d.isLeader ? COUNTRY_NAME[d.country] : d.tag;
+                return (
+                  <div class={`multiple-dot-wrap ${above ? "above" : "below"}`} style={`left: ${d.pos}%;`}>
+                    {above && (
+                      <span class={`multiple-country-tag multiple-country-tag--${d.country}${d.isLeader ? " is-leader" : ""}`}>
+                        {tagText}
+                      </span>
+                    )}
+                    <div
+                      class={`multiple-dot multiple-dot--${d.country}${d.isLeader ? " is-leader" : ""}`}
+                      aria-label={`${tagText}: ${d.value}`}
+                    />
+                    <span class="multiple-value">{d.value}</span>
+                    {!above && (
+                      <span class={`multiple-country-tag multiple-country-tag--${d.country}${d.isLeader ? " is-leader" : ""}`}>
+                        {tagText}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <p class="multiple-caption">{m.caption}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="leader-strip" aria-label="Category leaders">
+  <div class="leader-inner">
+    <div class="leader-grid">
+      {
+        leaders.map((l) => (
+          <div class="leader-cell">
+            <p class="leader-label">{l.label}</p>
+            <p class={`leader-stat leader-stat--${l.country}`}>{l.stat}</p>
+            <p class="leader-country">{l.countryLabel}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── SMALL MULTIPLES ──────────────────────────────────────────────────── */
+  .multiples-section {
+    border-top: 1px solid var(--rule);
+    background: var(--card);
+  }
+  .multiples-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 40px 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .multiples-inner {
+      padding: 40px 2rem;
+    }
+  }
+
+  .multiples-note {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--muted-foreground);
+    margin: 0 0 32px;
+    max-width: 40rem;
+  }
+
+  .multiples-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  @media (min-width: 480px) {
+    .multiples-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 800px) {
+    .multiples-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .multiple-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .multiple-label {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+
+  .multiple-axis-wrap {
+    position: relative;
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+
+  .multiple-axis {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .multiple-dot-wrap {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .multiple-dot-wrap.above {
+    bottom: 50%;
+    flex-direction: column-reverse;
+  }
+  .multiple-dot-wrap.below {
+    top: 50%;
+    flex-direction: column;
+  }
+
+  .multiple-dot {
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .multiple-dot.is-leader {
+    width: 8px;
+    height: 8px;
+  }
+  .multiple-dot:not(.is-leader) {
+    width: 6px;
+    height: 6px;
+    background: transparent !important;
+  }
+  .multiple-dot--gr.is-leader {
+    background: var(--gr);
+  }
+  .multiple-dot--pt.is-leader {
+    background: var(--pt);
+  }
+  .multiple-dot--es.is-leader {
+    background: var(--es);
+  }
+  .multiple-dot--gr:not(.is-leader) {
+    border: 1.5px solid oklch(0.4846 0.1159 246.4 / 0.6);
+  }
+  .multiple-dot--pt:not(.is-leader) {
+    border: 1.5px solid oklch(0.4578 0.1549 18 / 0.6);
+  }
+  .multiple-dot--es:not(.is-leader) {
+    border: 1.5px solid oklch(0.5274 0.1165 57.5 / 0.6);
+  }
+
+  .multiple-value {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+
+  .multiple-country-tag {
+    font-family: var(--font-ui);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .multiple-country-tag--gr {
+    color: var(--gr);
+  }
+  .multiple-country-tag--pt {
+    color: var(--pt);
+  }
+  .multiple-country-tag--es {
+    color: var(--es);
+  }
+
+  .multiple-caption {
+    font-family: var(--font-ui);
+    font-size: 0.5625rem;
+    color: var(--muted-foreground);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── LEADER STRIP ─────────────────────────────────────────────────────── */
+  .leader-strip {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--primary);
+  }
+  .leader-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .leader-inner {
+      padding: 0 2rem;
+    }
+  }
+
+  .leader-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 640px) {
+    .leader-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .leader-cell {
+    padding: 16px 8px;
+    text-align: center;
+    border-right: 1px solid oklch(0.9554 0.0045 214.3 / 0.09);
+  }
+  .leader-cell:last-child {
+    border-right: none;
+  }
+  @media (min-width: 640px) {
+    .leader-cell:nth-child(3) {
+      border-right: 1px solid oklch(0.9554 0.0045 214.3 / 0.09);
+    }
+  }
+
+  .leader-label {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--on-primary-soft);
+    margin: 0 0 6px;
+  }
+  .leader-stat {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .leader-stat--gr {
+    color: var(--gr-on-primary);
+  }
+  .leader-stat--pt {
+    color: var(--pt-on-primary);
+  }
+  .leader-stat--es {
+    color: var(--es-on-primary);
+  }
+
+  .leader-country {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    margin: 4px 0 0;
+    color: var(--on-primary-soft);
+  }
+</style>

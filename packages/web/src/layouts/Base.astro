@@ -4,8 +4,11 @@ interface Props {
   description: string;
   canonical: string;
   jsonLd?: unknown;
+  fullBleed?: boolean;
+  /** Dev-reference pages (the styleguide) opt out of indexing. */
+  noindex?: boolean;
 }
-const { title, description, canonical, jsonLd } = Astro.props;
+const { title, description, canonical, jsonLd, fullBleed = false, noindex = false } = Astro.props;
 const year = 2026;
 ---
 
@@ -14,8 +17,14 @@ const year = 2026;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Free, non-default faces standing in for the Rosetta direction (no paid licence needed).
+        Rosetta names stay first in the --font-* stacks for an optional future drop-in. */}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -51,22 +60,33 @@ const year = 2026;
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
-        <a class="wordmark" href="/">My&nbsp;Second&nbsp;Country</a>
+        <a class="wordmark" href="/">
+          <span class="wordmark-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="4.5" stroke="var(--on-primary)" stroke-width="1.3"/>
+              <circle cx="6" cy="6" r="1.8" fill="var(--on-primary)"/>
+            </svg>
+          </span>
+          <span class="wordmark-text">My&nbsp;Second&nbsp;Country</span>
+        </a>
+        <slot name="nav-extra" />
         <div class="nav-links">
           <a href="/compare/greece-portugal-spain">Compare</a>
           <a href="/screener">Screener</a>
         </div>
       </nav>
     </header>
-    <main id="main">
+    <main id="main" class={fullBleed ? "bleed" : ""}>
       <slot />
     </main>
     <footer class="site-footer">
-      <p>
-        My Second Country is run by relocators sharing sourced data, not advisers. Every
-        figure links to its source and carries a verified date.
-      </p>
-      <p class="fineprint">&copy; {year} My Second Country. mysecondcountry.com</p>
+      <div class="footer-inner">
+        <p>
+          My Second Country is run by relocators sharing sourced data, not advisers. Every
+          figure links to its source and carries a verified date.
+        </p>
+        <p class="fineprint">&copy; {year} My Second Country. mysecondcountry.com</p>
+      </div>
     </footer>
 
     <script is:inline>
@@ -96,20 +116,71 @@ const year = 2026;
 
     <style is:global>
       :root {
-        --paper: #faf7f0;
-        --paper-2: #f3ede1;
-        --ink: #1c1a17;
-        --ink-soft: #4a463f;
-        --rule: #ddd4c4;
-        --terracotta: #b5532f;
-        --terracotta-dark: #8f3d1f;
-        --sea: #2c6e75;
+        /* Neutrals -- OKLCH, tinted, never pure black/white */
+        --paper: oklch(0.9360 0.0149 80.7);            /* #EFE9DF */
+        --card: oklch(0.9708 0.0086 84.6);             /* #F8F5EF */
+        --panel: oklch(0.9180 0.0140 82);              /* subtle grouping surface */
+        --ink: oklch(0.1850 0.0064 56.0);              /* #151210 */
+        --muted-foreground: oklch(0.5051 0.0200 84.6); /* #6A6458 -- AA 4.86 on paper */
+        --muted-strong: oklch(0.4432 0.0191 73.4);     /* #5A5248 -- prose, 7.06 on card */
+        --rule: oklch(0.1850 0.0064 56 / 0.10);        /* hairline */
+        --rule-soft: oklch(0.1850 0.0064 56 / 0.07);
+
+        /* Brand teal-navy */
+        --primary: oklch(0.3389 0.0625 231.2);         /* #0A3D52 */
+        --primary-deep: oklch(0.2834 0.0508 230.4);    /* #072E3E -- hover/active */
+        --on-primary: oklch(0.9554 0.0045 214.3);      /* #EDF1F2 -- near-white on teal, 10.2:1 */
+        --on-primary-soft: oklch(0.7969 0.0212 224.4); /* #AFC0C7 -- secondary on teal, 6.2:1 */
+
+        /* Country accents -- on light surfaces (text + fills), AA-safe */
+        --gr: oklch(0.4846 0.1159 246.4);              /* #15639C -- 5.3:1 on paper */
+        --pt: oklch(0.4578 0.1549 18.0);               /* #9B2335 -- 6.5:1 on paper */
+        --es: oklch(0.5274 0.1165 57.5);               /* #9C5717 -- 4.6:1 on paper (deepened amber) */
+        /* Country accents -- on teal (leader strip, nav pills) */
+        --gr-on-primary: oklch(0.7236 0.1138 244.4);   /* #63ADE8 -- 4.8:1 on teal */
+        --pt-on-primary: oklch(0.7491 0.1061 11.0);    /* #E8919D -- 5.0:1 on teal */
+        --es-on-primary: oklch(0.7767 0.1130 65.2);    /* #E8A765 -- 5.6:1 on teal */
+
+        /* Confidence -- glyph + word, never colour alone; low is neutral, not red */
+        --conf-verified: oklch(0.4693 0.1055 152.3);   /* #1F6B3C */
+        --conf-good: oklch(0.4840 0.0900 95.9);        /* #6E5E16 */
+        --conf-low: oklch(0.4432 0.0191 73.4);         /* #5A5248 */
+
+        /* Fence -- calm sand notice */
+        --fence-bg: oklch(0.9391 0.0310 86.5);         /* #F4EAD4 */
+        --fence-border: oklch(0.8348 0.0557 86.1);     /* #D9C7A0 */
+        --fence-ink: oklch(0.2657 0.0241 77.5);        /* #2C2418 -- 12.8:1 on fence-bg */
+
+        /* Type (Rosetta-first, free stand-ins load now, licensed woff2 is a drop-in swap) */
+        --font-display: "Neacademia", "EB Garamond", Georgia, "Times New Roman", serif;
+        --font-serif:   "Skolar", "Spectral", Georgia, serif;
+        --font-ui:      "Skolar Sans", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+        --font-mono:    "Adapter Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --radius: 0.5rem;
+        --radius-sm: 0.25rem;
         --measure: 68ch;
-        --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman",
-          serif;
-        --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-          sans-serif;
+
+        /* Legacy aliases -- keep other pages working with the new palette */
+        --paper-2: var(--card);
+        --ink-soft: var(--muted-foreground);
+        --rule-color: var(--rule);
+        --terracotta: var(--primary);
+        --terracotta-dark: var(--primary-deep);
+        --sea: var(--primary);
+        --serif: var(--font-serif);
+        --sans: var(--font-ui);
       }
+
+      /* Optional Rosetta upgrade: drop LICENSED woff2 into public/fonts/ and uncomment to
+         activate. We ship the free faces above for now; the trial fonts box the letter x
+         (and Q/q in Neacademia), so they are intentionally not loaded.
+      @font-face { font-family: "Neacademia"; src: url("/fonts/Neacademia-Display.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Neacademia"; src: url("/fonts/Neacademia-Display-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+      @font-face { font-family: "Skolar"; src: url("/fonts/Skolar.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Skolar"; src: url("/fonts/Skolar-Italic.woff2") format("woff2"); font-weight: 300 800; font-style: italic; font-display: swap; }
+      @font-face { font-family: "Skolar Sans"; src: url("/fonts/SkolarSans.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Skolar Sans"; src: url("/fonts/SkolarSans-Italic.woff2") format("woff2"); font-weight: 300 800; font-style: italic; font-display: swap; }
+      */
 
       * {
         box-sizing: border-box;
@@ -117,13 +188,14 @@ const year = 2026;
 
       html {
         -webkit-text-size-adjust: 100%;
+        font-size: 16px;
       }
 
       body {
         margin: 0;
         background: var(--paper);
         color: var(--ink);
-        font-family: var(--sans);
+        font-family: var(--font-ui);
         font-size: 1.0625rem;
         line-height: 1.65;
         text-rendering: optimizeLegibility;
@@ -144,7 +216,7 @@ const year = 2026;
       }
 
       a {
-        color: var(--terracotta-dark);
+        color: var(--primary-deep);
         text-underline-offset: 2px;
       }
       a:hover {
@@ -152,39 +224,64 @@ const year = 2026;
       }
 
       .site-header {
-        border-bottom: 1px solid var(--rule);
-        background: var(--paper);
+        border-bottom: 1px solid oklch(0.9554 0.0045 214.3 / 0.08);
+        background: var(--primary);
+        position: sticky;
+        top: 0;
+        z-index: 50;
       }
       .site-nav {
-        max-width: 72rem;
+        max-width: 80rem;
         margin: 0 auto;
-        padding: 1.1rem 1.5rem;
+        padding: 0 1.25rem;
+        height: 52px;
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        flex-wrap: wrap;
+      }
+      @media (min-width: 640px) {
+        .site-nav {
+          padding: 0 2rem;
+        }
       }
       .wordmark {
-        font-family: var(--serif);
-        font-size: 1.3rem;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
         text-decoration: none;
+      }
+      .wordmark-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid oklch(0.9554 0.0045 214.3 / 0.35);
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+      }
+      .wordmark-text {
+        color: var(--on-primary);
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
       }
       .nav-links {
         display: flex;
         gap: 1.25rem;
       }
       .nav-links a {
+        font-family: var(--font-ui);
         font-size: 0.95rem;
         font-weight: 600;
-        color: var(--ink-soft);
+        color: var(--on-primary-soft);
         text-decoration: none;
       }
       .nav-links a:hover {
-        color: var(--terracotta-dark);
+        color: var(--on-primary);
       }
 
       main {
@@ -192,17 +289,31 @@ const year = 2026;
         margin: 0 auto;
         padding: 2.5rem 1.5rem 4rem;
       }
+      main.bleed {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
 
       .site-footer {
         border-top: 1px solid var(--rule);
-        background: var(--paper-2);
+        background: var(--primary);
+      }
+      .footer-inner {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+      @media (min-width: 640px) {
+        .footer-inner {
+          padding: 0 2rem;
+        }
       }
       .site-footer p {
-        max-width: 72rem;
-        margin: 0 auto;
-        padding: 0.4rem 1.5rem;
-        color: var(--ink-soft);
+        color: var(--on-primary-soft);
         font-size: 0.95rem;
+        margin: 0;
+        padding: 0.4rem 0;
       }
       .site-footer p:first-child {
         padding-top: 2rem;
@@ -212,13 +323,14 @@ const year = 2026;
       }
       .fineprint {
         font-size: 0.82rem !important;
+        color: var(--on-primary-soft) !important;
       }
 
       h1,
       h2,
       h3 {
-        font-family: var(--serif);
-        font-weight: 600;
+        font-family: var(--font-display);
+        font-weight: 300;
         line-height: 1.15;
         color: var(--ink);
       }

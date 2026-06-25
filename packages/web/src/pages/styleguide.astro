@@ -1,0 +1,546 @@
+---
+import { placeById, regimes } from "@where/data";
+import { regimeEligibilityCards } from "@where/engine";
+import AtAGlance from "../components/AtAGlance.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import CitedValue from "../components/CitedValue.astro";
+import CiteThis from "../components/CiteThis.astro";
+import ClaimCard from "../components/ClaimCard.astro";
+import ComparisonCell from "../components/ComparisonCell.astro";
+import DirectAnswer from "../components/DirectAnswer.astro";
+import FactsTable from "../components/FactsTable.astro";
+import FaqItem from "../components/FaqItem.astro";
+import FenceBlock from "../components/FenceBlock.astro";
+import Masthead from "../components/Masthead.astro";
+import RelatedLinks from "../components/RelatedLinks.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import SourcesList from "../components/SourcesList.astro";
+import Base from "../layouts/Base.astro";
+import { buildDateline, monthYearLabel } from "../lib/cited.ts";
+
+const gr = placeById("gr")!;
+const pt = placeById("pt")!;
+const es = placeById("es")!;
+const regime = regimes[0];
+const eligibilityCards = regimeEligibilityCards(regime);
+
+// Three representative CitedValues for the confidence demo
+const highCited = gr.costOfLiving.priceLevelIndexEU27; // confidence: high
+const mediumCited = gr.residency!.digitalNomadVisa; // confidence: medium
+const lowCited = gr.climate.averageJanuaryHighC; // confidence: low
+const proseCited = gr.tax!.specialRegime!; // string claim
+
+// Dateline helpers
+const verifiedLabel = monthYearLabel(highCited.verifiedDate);
+const dateline = buildDateline({ citedLabel: verifiedLabel, sourceCount: 3 });
+
+// AtAGlance data: cost of living relative positions
+// gr=87.4, pt=86.6, es=91.6 => pt leads (lowest = cheapest)
+// sun hours: gr=2773, pt=2874.9, es=2744 => pt leads
+const costMultiple = {
+  label: "Cost of living",
+  caption: "Price level index, EU27=100",
+  scenarios: "all",
+  dots: [
+    { country: "gr" as const, tag: "GR", pos: 55, isLeader: false, value: "87.4" },
+    { country: "pt" as const, tag: "PT", pos: 42, isLeader: true, value: "86.6" },
+    { country: "es" as const, tag: "ES", pos: 80, isLeader: false, value: "91.6" },
+  ],
+};
+const sunMultiple = {
+  label: "Annual sunshine",
+  caption: "Hours per year",
+  scenarios: "all",
+  dots: [
+    { country: "gr" as const, tag: "GR", pos: 52, isLeader: false, value: "2,773" },
+    { country: "pt" as const, tag: "PT", pos: 72, isLeader: true, value: "2,875" },
+    { country: "es" as const, tag: "ES", pos: 32, isLeader: false, value: "2,744" },
+  ],
+};
+
+const leaders = [
+  { label: "Cost of living", stat: "86.6", country: "pt" as const, countryLabel: "Portugal" },
+  { label: "Annual sunshine", stat: "2,875 h", country: "pt" as const, countryLabel: "Portugal" },
+];
+---
+
+<Base
+  title="Component styleguide"
+  description="Dev-reference component gallery. Noindex."
+  canonical="https://mysecondcountry.com/styleguide"
+  noindex={true}
+>
+  <h1>Component styleguide</h1>
+  <p class="sg-intro">
+    Dev-reference only. Every figure on this page is a real CitedValue from the dataset.
+    This page is noindexed and exists solely so the component library can be viewed
+    and audited without modifying any production page.
+  </p>
+
+  <!-- ─────────────────────── SECTION 1: TOKENS ─────────────────────── -->
+  <SectionHeading as="h2">Section 1: design tokens</SectionHeading>
+
+  <SectionHeading as="h3">Color tokens</SectionHeading>
+  <div class="swatch-grid">
+    {[
+      { token: "--paper",             label: "--paper" },
+      { token: "--card",              label: "--card" },
+      { token: "--panel",             label: "--panel" },
+      { token: "--ink",               label: "--ink" },
+      { token: "--muted-foreground",  label: "--muted-foreground" },
+      { token: "--primary",           label: "--primary" },
+      { token: "--primary-deep",      label: "--primary-deep" },
+      { token: "--gr",                label: "--gr (greece)" },
+      { token: "--pt",                label: "--pt (portugal)" },
+      { token: "--es",                label: "--es (spain)" },
+      { token: "--conf-verified",     label: "--conf-verified" },
+      { token: "--conf-good",         label: "--conf-good" },
+      { token: "--conf-low",          label: "--conf-low" },
+      { token: "--fence-bg",          label: "--fence-bg" },
+    ].map(({ token, label }) => (
+      <div class="swatch">
+        <div class="swatch-box" style={`background: var(${token}); border: 1px solid var(--rule);`}></div>
+        <code class="swatch-label">{label}</code>
+      </div>
+    ))}
+  </div>
+
+  <SectionHeading as="h3">Typography tokens</SectionHeading>
+  <div class="type-stack">
+    <div class="type-row">
+      <code class="type-token">--font-display</code>
+      <p class="type-sample" style="font-family: var(--font-display); font-size: 2rem; font-weight: 400; margin:0; line-height:1.1;">
+        Relocation intelligence, cited
+      </p>
+    </div>
+    <div class="type-row">
+      <code class="type-token">--font-serif</code>
+      <p class="type-sample" style="font-family: var(--font-serif); font-size: 1.0625rem; margin:0; line-height:1.65;">
+        Every figure on this page links to its primary source and carries a verified date.
+        The data is screened, not advice.
+      </p>
+    </div>
+    <div class="type-row">
+      <code class="type-token">--font-ui</code>
+      <p class="type-sample" style="font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin:0;">
+        Verified label
+      </p>
+    </div>
+    <div class="type-row">
+      <code class="type-token">--font-mono</code>
+      <p class="type-sample" style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 500; font-variant-numeric: tabular-nums; margin:0;">
+        1,234.5
+      </p>
+    </div>
+  </div>
+
+  <!-- ─────────────────────── SECTION 2: COMPONENTS ─────────────────── -->
+  <SectionHeading as="h2">Section 2: components</SectionHeading>
+
+  <!-- FenceBlock -->
+  <SectionHeading as="h3">FenceBlock: without legal claims</SectionHeading>
+  <div class="demo-block">
+    <FenceBlock />
+  </div>
+
+  <SectionHeading as="h3">FenceBlock: with hasLegalClaims</SectionHeading>
+  <div class="demo-block">
+    <FenceBlock hasLegalClaims={true} />
+  </div>
+
+  <!-- CitedValue: high confidence -->
+  <SectionHeading as="h3">CitedValue: high confidence (cost of living index)</SectionHeading>
+  <div class="demo-block">
+    <table class="demo-table">
+      <caption>Greece: cited figures</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Price level index, EU27=100</th>
+          <CitedValue cited={highCited} unit="EU27=100" as="td" />
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CitedValue: medium confidence -->
+  <SectionHeading as="h3">CitedValue: medium confidence (digital nomad visa income floor)</SectionHeading>
+  <div class="demo-block">
+    <table class="demo-table">
+      <caption>Greece: cited figures</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Digital nomad visa, minimum net monthly income</th>
+          <CitedValue cited={mediumCited} unit="EUR/month" as="td" />
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CitedValue: low confidence -->
+  <SectionHeading as="h3">CitedValue: low confidence (January high, Limited tier)</SectionHeading>
+  <div class="demo-block">
+    <table class="demo-table">
+      <caption>Greece: cited figures</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Average January high</th>
+          <CitedValue cited={lowCited} unit="°C" as="td" />
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CitedValue: prose variant -->
+  <SectionHeading as="h3">CitedValue: prose (long-text string claim)</SectionHeading>
+  <div class="demo-block">
+    <table class="demo-table">
+      <caption>Greece: cited figures</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Special tax regime for movers</th>
+          <CitedValue cited={proseCited} prose={true} as="td" />
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FactsTable -->
+  <SectionHeading as="h3">FactsTable: Greece key figures</SectionHeading>
+  <div class="demo-block">
+    <FactsTable
+      caption="Greece: key cited figures"
+      rows={[
+        { label: "Price level index, EU27=100", cited: gr.costOfLiving.priceLevelIndexEU27, unit: "EU27=100" },
+        { label: "Digital nomad visa, minimum net income", cited: gr.residency!.digitalNomadVisa, unit: "EUR/month" },
+        { label: "Average January high", cited: gr.climate.averageJanuaryHighC, unit: "°C" },
+        { label: "Special tax regime", cited: gr.tax!.specialRegime!, prose: true },
+      ]}
+    />
+  </div>
+
+  <!-- ComparisonCell -->
+  <SectionHeading as="h3">ComparisonCell: leader (Portugal) and non-leader (Greece)</SectionHeading>
+  <div class="demo-block">
+    <table class="demo-comp-table">
+      <caption>Cost of living comparison</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Cost of living, price level index</th>
+          <td>
+            <ComparisonCell
+              cited={pt.costOfLiving.priceLevelIndexEU27}
+              displayValue="86.6"
+              unit="EU27=100"
+              subtext="Below EU average; leads among the three countries compared."
+              country="pt"
+              isLeader={true}
+              score={86}
+              sourceRef={1}
+            />
+          </td>
+          <td>
+            <ComparisonCell
+              cited={gr.costOfLiving.priceLevelIndexEU27}
+              displayValue="87.4"
+              unit="EU27=100"
+              subtext="Slightly above Portugal; below the EU average."
+              country="gr"
+              isLeader={false}
+              score={80}
+              sourceRef={1}
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="demo-note">Note: ComparisonCell must sit inside a table td for valid markup.</p>
+  </div>
+
+  <!-- ClaimCard -->
+  <SectionHeading as="h3">ClaimCard: eligibility and dealbreaker variants</SectionHeading>
+  <div class="demo-block">
+    <ul role="list" style="list-style:none;padding:0;display:grid;gap:1rem;">
+      <ClaimCard
+        framing={eligibilityCards[0].framing}
+        cited={eligibilityCards[0].cited}
+        variant="eligibility"
+      />
+      <ClaimCard
+        framing={eligibilityCards[eligibilityCards.length - 1].framing}
+        cited={eligibilityCards[eligibilityCards.length - 1].cited}
+        variant="dealbreaker"
+      />
+    </ul>
+  </div>
+
+  <!-- Masthead -->
+  <SectionHeading as="h3">Masthead: topic variant</SectionHeading>
+  <div class="demo-block">
+    <Masthead
+      variant="topic"
+      title="Greece relocation overview"
+      dateline={dateline}
+      standfirst="Sourced figures on cost, climate, residence routes, and tax. Updated June 2026."
+    />
+  </div>
+
+  <!-- Breadcrumb -->
+  <SectionHeading as="h3">Breadcrumb</SectionHeading>
+  <div class="demo-block">
+    <Breadcrumb
+      items={[
+        { name: "Home", href: "/" },
+        { name: "Places", href: "/places" },
+        { name: "Greece" },
+      ]}
+    />
+  </div>
+
+  <!-- SectionHeading: heading and eyebrow variants -->
+  <SectionHeading as="h3">SectionHeading: heading variant (h2)</SectionHeading>
+  <div class="demo-block">
+    <SectionHeading as="h2">Cost of living in Greece</SectionHeading>
+  </div>
+
+  <SectionHeading as="h3">SectionHeading: eyebrow variant</SectionHeading>
+  <div class="demo-block">
+    <SectionHeading as="h2" variant="eyebrow">Sources and methodology</SectionHeading>
+  </div>
+
+  <!-- DirectAnswer -->
+  <SectionHeading as="h3">DirectAnswer</SectionHeading>
+  <div class="demo-block">
+    <DirectAnswer
+      question="What is the price level in Greece compared with the EU average?"
+      headingAs="h3"
+    >
+      <p>
+        Greece scores 87.4 on the Eurostat price level index (EU27=100), meaning prices
+        run about 13 percent below the EU average (Eurostat tec00120, verified June 2026).
+      </p>
+    </DirectAnswer>
+  </div>
+
+  <!-- FaqItem -->
+  <SectionHeading as="h3">FaqItem</SectionHeading>
+  <div class="demo-block">
+    <FaqItem question="What is the minimum income for the Greek digital nomad visa?">
+      <p>
+        The minimum net monthly income is 3,500 euros for a single applicant, plus 20 percent
+        for a spouse and 15 percent per child (Hellenic Ministry of Migration and Asylum,
+        Law 5038/2023, verified June 2026).
+      </p>
+    </FaqItem>
+  </div>
+
+  <!-- CiteThis -->
+  <SectionHeading as="h3">CiteThis</SectionHeading>
+  <div class="demo-block">
+    <CiteThis
+      lines={[
+        {
+          sourceName: "Eurostat, price level index (tec00120)",
+          verifiedDate: "2026-06-24",
+          citationUrl: "https://mysecondcountry.com/places/greece#costOfLiving.priceLevelIndexEU27",
+        },
+        {
+          sourceName: "Hellenic Ministry of Migration and Asylum, digital nomad permit (Law 5038/2023)",
+          verifiedDate: "2026-06-24",
+          citationUrl: "https://mysecondcountry.com/places/greece#residency.digitalNomadVisa",
+        },
+      ]}
+    />
+  </div>
+
+  <!-- RelatedLinks: minimal one-link state -->
+  <SectionHeading as="h3">RelatedLinks: single link (minimal state)</SectionHeading>
+  <div class="demo-block">
+    <RelatedLinks
+      links={[
+        { label: "Compare Greece, Portugal, and Spain", href: "/compare/greece-portugal-spain" },
+      ]}
+    />
+  </div>
+
+  <!-- RelatedLinks: full set -->
+  <SectionHeading as="h3">RelatedLinks: full set</SectionHeading>
+  <div class="demo-block">
+    <RelatedLinks
+      links={[
+        { label: "Greece: relocation overview", href: "/places/greece" },
+        { label: "Portugal: relocation overview", href: "/places/portugal" },
+        { label: "Spain: relocation overview", href: "/places/spain" },
+        { label: "Compare Greece, Portugal, and Spain", href: "/compare/greece-portugal-spain" },
+      ]}
+    />
+  </div>
+
+  <!-- SourcesList -->
+  <SectionHeading as="h3">SourcesList</SectionHeading>
+  <div class="demo-block demo-block--flush">
+    <SourcesList
+      sources={[
+        {
+          url: "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+          name: "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+          verifiedDate: "2026-06-24",
+        },
+        {
+          url: "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+          name: "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Law 5038/2023)",
+          verifiedDate: "2026-06-24",
+        },
+        {
+          url: "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+          name: "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+          verifiedDate: "2026-06-24",
+        },
+      ]}
+    />
+  </div>
+
+  <!-- AtAGlance -->
+  <SectionHeading as="h3">AtAGlance: cost of living and sunshine (2 small multiples)</SectionHeading>
+  <div class="demo-block demo-block--flush">
+    <AtAGlance
+      multiples={[costMultiple, sunMultiple]}
+      leaders={leaders}
+      note="Scores are relative among Greece, Portugal, and Spain. Every number is sourced in the dataset."
+    />
+  </div>
+</Base>
+
+<style>
+  .sg-intro {
+    font-family: var(--font-serif);
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    max-width: 52rem;
+    margin: 0 0 2rem;
+    line-height: 1.65;
+  }
+
+  /* ── Swatches ────────────────────────────────────────────────────────── */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .swatch-box {
+    width: 100%;
+    height: 3.5rem;
+    border-radius: var(--radius-sm);
+  }
+  .swatch-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    word-break: break-all;
+  }
+
+  /* ── Typography rows ─────────────────────────────────────────────────── */
+  .type-stack {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .type-row {
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .type-token {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.5rem;
+  }
+  .type-sample {
+    color: var(--ink);
+  }
+
+  /* ── Demo blocks ─────────────────────────────────────────────────────── */
+  .demo-block {
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+  }
+  .demo-block--flush {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* ── Demo tables ─────────────────────────────────────────────────────── */
+  .demo-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid var(--ink);
+  }
+  .demo-table caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .demo-table th[scope="row"] {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.9rem 1rem 0.9rem 0;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    width: 38%;
+  }
+
+  .demo-comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid var(--ink);
+  }
+  .demo-comp-table caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .demo-comp-table th[scope="row"] {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.9rem 1rem 0.9rem 0;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    width: 28%;
+  }
+  .demo-comp-table td {
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+    width: 36%;
+  }
+
+  .demo-note {
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--muted-foreground);
+    margin: 0.75rem 0 0;
+  }
+</style>

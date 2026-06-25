@@ -1,0 +1,81 @@
+---
+/**
+ * Breadcrumb trail of real <a> links. The last crumb is the current page (no link).
+ * Its machine twin is breadcrumbJsonLd() in lib/jsonld.ts; the page emits both from the
+ * same items so the visible trail and the BreadcrumbList can never drift.
+ */
+interface Crumb {
+  name: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    {
+      items.map((crumb, i) => {
+        const isCurrent = i === items.length - 1;
+        return (
+          <li class="crumb">
+            {isCurrent ? (
+              <span class="crumb-current" aria-current="page">
+                {crumb.name}
+              </span>
+            ) : crumb.href ? (
+              <a class="crumb-link" href={crumb.href}>
+                {crumb.name}
+              </a>
+            ) : (
+              <span class="crumb-plain">{crumb.name}</span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  /* Sentence case, not uppercase: a long current crumb (a regime name) reads as a passage,
+     and the copy doctrine (PRODUCT.md) reserves all-caps for short labels, not navigation. */
+  .breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    color: var(--muted-foreground);
+  }
+  .crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .crumb + .crumb::before {
+    content: "›";
+    color: var(--muted-foreground);
+  }
+  .crumb-link {
+    color: var(--primary-deep);
+    text-decoration: none;
+  }
+  .crumb-link:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+  .crumb-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  .crumb-current {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

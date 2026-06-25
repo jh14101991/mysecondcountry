@@ -4,7 +4,14 @@
 // parent Place exists in the dataset; with a single town and no parent objects yet it
 // reports a skip. Phase A (which adds the country/region Places) turns it into a hard gate.
 
-import { collectCitedValues, type Place, placeById, places } from "@where/data";
+import {
+  collectCitedValues,
+  collectRegimeCitedValues,
+  type Place,
+  placeById,
+  places,
+  regimes,
+} from "@where/data";
 
 const MIN_UNIQUE = 4;
 
@@ -43,8 +50,25 @@ for (const place of places) {
   }
 }
 
+// Topic (regime) pages have no parent to differ from; the anti-thin floor is instead a
+// minimum of distinct cited fields, each carrying its own sourceUrl (a single authoritative
+// source can legitimately back several distinct facts, so we count fields, not URLs).
+let regimesChecked = 0;
+for (const regime of regimes) {
+  regimesChecked += 1;
+  const citedFields = collectRegimeCitedValues(regime).filter(({ cited }) => cited.sourceUrl);
+  if (citedFields.length < MIN_UNIQUE) {
+    console.error(
+      `THIN  ${regime.id}: only ${citedFields.length} cited field(s) (need ${MIN_UNIQUE}).`,
+    );
+    failures += 1;
+  }
+}
+
 if (failures > 0) {
   console.error(`\nassert-uniqueness: ${failures} thin page(s).`);
   process.exit(1);
 }
-console.log(`assert-uniqueness: ok (${checked} checked, ${skipped} skipped pending parents).`);
+console.log(
+  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked).`,
+);

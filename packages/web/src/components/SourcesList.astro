@@ -1,0 +1,135 @@
+---
+/**
+ * A numbered, deduplicated source list on a full-bleed tonal band. Each row carries an
+ * id="sources-{n}" anchor so a cited cell's [n] reference can deep-link to it. Sources arrive
+ * already deduplicated and ordered by first appearance (the page owns that ordering).
+ */
+interface Source {
+  url: string;
+  name: string;
+  verifiedDate: string;
+}
+interface Props {
+  sources: Source[];
+  heading?: string;
+}
+const { sources, heading = "Sources and methodology" } = Astro.props;
+---
+
+<section class="sources-section" id="sources" aria-label="Sources and methodology">
+  <div class="sources-inner">
+    <h2 class="sources-eyebrow">{heading}</h2>
+    <div class="sources-grid">
+      {
+        sources.map((src, i) => (
+          <div class="source-row" id={`sources-${i + 1}`}>
+            <span class="source-n">{i + 1}.</span>
+            <div class="source-body-wrap">
+              <a href={src.url} target="_blank" rel="noopener nofollow" class="source-link">
+                {src.name}
+                <svg
+                  width="9"
+                  height="9"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  style="flex-shrink:0;opacity:.3;"
+                >
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+              <span class="source-year">verified {src.verifiedDate}</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .sources-section {
+    border-top: 1px solid var(--rule);
+    background: var(--card);
+  }
+  .sources-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 48px 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .sources-inner {
+      padding: 48px 2rem;
+    }
+  }
+
+  .sources-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted-foreground);
+    margin: 0 0 32px;
+  }
+  .sources-grid {
+    display: grid;
+    gap: 14px 48px;
+  }
+  @media (min-width: 640px) {
+    .sources-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .source-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    scroll-margin-top: 4rem;
+  }
+  .source-n {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    margin-top: 1px;
+    width: 20px;
+    text-align: right;
+    color: var(--primary);
+  }
+  .source-body-wrap {
+    min-width: 0;
+  }
+  .source-link {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .source-link:hover {
+    color: var(--primary);
+  }
+  .source-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  .source-year {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted-foreground);
+    margin-top: 2px;
+  }
+</style>

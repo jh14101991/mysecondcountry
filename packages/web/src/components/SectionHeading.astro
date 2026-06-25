@@ -1,0 +1,49 @@
+---
+/**
+ * A section heading in one of two registers: a display-serif heading (default) or a small
+ * uppercase ui eyebrow (for sources, cite-this, and similar labels). Renders one <h2> or
+ * <h3>; the text is the default slot.
+ */
+interface Props {
+  as?: "h2" | "h3";
+  id?: string;
+  variant?: "heading" | "eyebrow";
+}
+const { as = "h2", id, variant = "heading" } = Astro.props;
+const Tag = as;
+---
+
+<Tag id={id} class:list={["section-heading", `section-heading--${variant}`]}>
+  <slot />
+</Tag>
+
+<style>
+  .section-heading--heading {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .section-heading--heading.section-heading {
+    /* h2 sizing mirrors the Base layout default; h3 a step down. */
+  }
+  h2.section-heading--heading {
+    font-size: 1.5rem;
+    margin: 2.75rem 0 1rem;
+  }
+  h3.section-heading--heading {
+    font-size: 1.2rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .section-heading--eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+    margin: 0 0 1rem;
+    line-height: 1.4;
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+/**
+ * A flat list of up to six internal links. Navigation, not cited data: it carries no
+ * figures and emits no structured data. Used to connect an owned-rule or place page to its
+ * neighbours (the country profile, the comparison).
+ */
+interface RelatedLink {
+  label: string;
+  href: string;
+}
+interface Props {
+  links: RelatedLink[];
+  heading?: string;
+}
+const { links, heading = "Related" } = Astro.props;
+const shown = links.slice(0, 6);
+---
+
+<section class="related" aria-label={heading}>
+  <h2 class="related-eyebrow">{heading}</h2>
+  <ul class="related-list">
+    {
+      shown.map((link) => (
+        <li>
+          <a class="related-link" href={link.href}>
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .related {
+    margin-top: 2.5rem;
+  }
+  .related-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.9rem;
+  }
+  .related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .related-link {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--primary-deep);
+    text-decoration: none;
+  }
+  .related-link:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+  .related-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+</style>

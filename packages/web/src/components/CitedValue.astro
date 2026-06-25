@@ -1,0 +1,154 @@
+---
+import type { CitedValue, Granularity } from "@where/data";
+import { CONFIDENCE_DISPLAY, granularityNote, LOW_CONFIDENCE_NOTE } from "../lib/cited.ts";
+
+/**
+ * The atom of the record. One cited fact rendered in full: the figure (mono, tabular) or a
+ * prose claim (serif), a confidence mark (glyph + word, OKLCH --conf-* tokens), the source
+ * link, the verified date, an optional granularity note, and an optional excerpt. Its machine
+ * twin is citedPropertyValue() in lib/jsonld.ts; the page collects those into its Dataset.
+ *
+ * Mono-Figure rule (DESIGN.md): numbers render in --font-mono. String claims render as prose
+ * in --font-serif via `prose`.
+ */
+interface Props {
+  cited: CitedValue;
+  unit?: string;
+  /** Render the value as serif prose (for string claims like a tax regime), not a mono figure. */
+  prose?: boolean;
+  /** Wrapper element: a table cell (default) or an inline span. */
+  as?: "td" | "span";
+  /** The attaching place's granularity, to label any broader figure (ADR-0003). */
+  placeGranularity?: Granularity;
+  placeName?: string;
+}
+const { cited, unit, prose = false, as = "td", placeGranularity, placeName } = Astro.props;
+
+const conf = CONFIDENCE_DISPLAY[cited.confidence];
+const note =
+  placeGranularity && placeName
+    ? granularityNote(cited.granularity, placeGranularity, placeName)
+    : null;
+const valueText = unit ? `${cited.value} ${unit}` : `${cited.value}`;
+const Tag = as;
+---
+
+<Tag class:list={["cv", `cv--${as}`]}>
+  <span class:list={["cv-value", prose && "cv-value--prose"]}>{valueText}</span>
+  <span class="cv-conf" data-confidence={cited.confidence} aria-label={`Confidence: ${conf.word}`}>
+    <span class="cv-conf-glyph" aria-hidden="true">{conf.glyph}</span>
+    <span class="cv-conf-word">{conf.word}</span>
+  </span>
+  {note && <span class="cv-granularity">{note}</span>}
+  <span class="cv-provenance">
+    <a href={cited.sourceUrl} rel="noopener nofollow" target="_blank">{cited.sourceName}</a>
+    <span class="cv-verified">Verified {cited.verifiedDate}</span>
+  </span>
+  {cited.confidence === "low" && <span class="cv-low-note">{LOW_CONFIDENCE_NOTE}</span>}
+  {cited.excerpt && <span class="cv-excerpt">{cited.excerpt}</span>}
+</Tag>
+
+<style>
+  .cv--td {
+    padding: 0.9rem 1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cv--span {
+    display: inline-block;
+  }
+
+  .cv-value {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .cv-value--prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.55;
+    font-variant-numeric: normal;
+  }
+
+  /* Confidence: glyph + word, colour from the OKLCH --conf-* tokens, never colour alone. */
+  .cv-conf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.45rem;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+  }
+  .cv-conf-glyph {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+  .cv-conf[data-confidence="high"] {
+    color: var(--conf-verified);
+    border-color: color-mix(in oklch, var(--conf-verified) 38%, transparent);
+  }
+  .cv-conf[data-confidence="medium"] {
+    color: var(--conf-good);
+    border-color: color-mix(in oklch, var(--conf-good) 38%, transparent);
+  }
+  .cv-conf[data-confidence="low"] {
+    color: var(--conf-low);
+    border-color: color-mix(in oklch, var(--conf-low) 38%, transparent);
+  }
+
+  .cv-granularity {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: italic;
+    font-family: var(--font-serif);
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+  }
+
+  .cv-provenance {
+    display: block;
+    margin-top: 0.55rem;
+    font-size: 0.88rem;
+  }
+  .cv-provenance a {
+    display: inline;
+  }
+  .cv-verified {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    margin-top: 0.15rem;
+  }
+
+  .cv-low-note {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--conf-low);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .cv-excerpt {
+    display: block;
+    margin-top: 0.6rem;
+    padding-left: 0.8rem;
+    border-left: 1px solid var(--rule);
+    color: var(--muted-foreground);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+</style>

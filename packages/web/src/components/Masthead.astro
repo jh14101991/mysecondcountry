@@ -1,0 +1,119 @@
+---
+/**
+ * The one confident move per page. A dateline (mono), a single display-serif <h1>, an
+ * optional standfirst, and an optional media band (the duotone photo strip, passed as the
+ * "media" slot). The h1 text is the `title` prop, or a "title" slot for inline emphasis.
+ *
+ * variant tunes the layout: "compare" centres an 80rem inner column for full-bleed pages;
+ * the others sit inside the page's content column.
+ */
+interface Props {
+  variant: "topic" | "compare" | "place" | "qa" | "tracker" | "tool";
+  title: string;
+  dateline: string;
+  standfirst?: string;
+  id?: string;
+}
+const { variant, title, dateline, standfirst, id } = Astro.props;
+const hasMedia = Astro.slots.has("media");
+---
+
+<header class:list={["masthead", `masthead--${variant}`]} id={id}>
+  <div class="masthead-inner">
+    <p class="masthead-dateline">{dateline}</p>
+    <h1 class="masthead-h1"><slot name="title">{title}</slot></h1>
+    {standfirst && <p class="masthead-standfirst">{standfirst}</p>}
+  </div>
+  {
+    hasMedia && (
+      <div class="masthead-media">
+        <slot name="media" />
+      </div>
+    )
+  }
+</header>
+
+<style>
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+  }
+  .masthead--topic,
+  .masthead--place,
+  .masthead--qa,
+  .masthead--tracker,
+  .masthead--tool {
+    border-bottom: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .masthead-inner {
+    animation: masthead-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .masthead--compare .masthead-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 56px 1.25rem 32px;
+  }
+  @media (min-width: 640px) {
+    .masthead--compare .masthead-inner {
+      padding: 64px 2rem 32px;
+    }
+  }
+
+  @keyframes masthead-rise {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .masthead-inner {
+      animation: none;
+    }
+  }
+
+  .masthead-dateline {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    margin: 0 0 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .masthead-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5.5vw, 4.6rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .masthead--topic .masthead-h1,
+  .masthead--place .masthead-h1,
+  .masthead--qa .masthead-h1,
+  .masthead--tracker .masthead-h1,
+  .masthead--tool .masthead-h1 {
+    font-size: clamp(2.1rem, 5vw, 3.2rem);
+    line-height: 1.06;
+  }
+  .masthead-h1 :global(em) {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .masthead-standfirst {
+    margin: 16px 0 0;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+    max-width: 40rem;
+  }
+</style>

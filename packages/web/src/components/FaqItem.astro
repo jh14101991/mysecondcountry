@@ -1,0 +1,47 @@
+---
+/**
+ * One question-and-answer pair. The question is a visible <h3>; its text must match the
+ * Question.name in the page's FAQPage JSON-LD (assert-faq-jsonld enforces the match). The
+ * answer is the default slot, cited like any other claim.
+ */
+interface Props {
+  question: string;
+  id?: string;
+}
+const { question, id } = Astro.props;
+---
+
+<div class="faq-item">
+  <h3 id={id} class="faq-q">{question}</h3>
+  <div class="faq-a">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .faq-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .faq-q {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+  }
+  .faq-a {
+    max-width: var(--measure);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .faq-a :global(p) {
+    margin: 0 0 0.6rem;
+  }
+  .faq-a :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

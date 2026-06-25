@@ -1,0 +1,52 @@
+---
+/**
+ * The answer-first box for AI answer engines: the question as a heading, and the cited answer
+ * as the first sentence below it (country, number, unit, source, date, no preamble). The
+ * answer is the default slot so the page can place an inline CitedValue or a cited sentence.
+ */
+interface Props {
+  question: string;
+  headingAs?: "h2" | "h3";
+  id?: string;
+}
+const { question, headingAs = "h2", id } = Astro.props;
+const Tag = headingAs;
+---
+
+<section class="direct-answer">
+  <Tag id={id} class="direct-answer-q">{question}</Tag>
+  <div class="direct-answer-body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .direct-answer {
+    padding: 1.4rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    margin: 1.5rem 0;
+  }
+  .direct-answer-q {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+  .direct-answer-body {
+    max-width: var(--measure);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .direct-answer-body :global(p) {
+    margin: 0 0 0.6rem;
+  }
+  .direct-answer-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

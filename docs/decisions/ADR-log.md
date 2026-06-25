@@ -394,3 +394,46 @@ A0 (ADR-0015) is live. The first deep page after A0 is the Greece foreign-pensio
 - The slice-1 engine (deal-breaker filters, presets, the `placeVariables` adapter pattern) is the foundation the dealbreaker card reuses; regime eligibility variables overlap with variable-system slice 2 and must be coordinated, not duplicated.
 - `validate-jsonld` checks Place JSON-LD only today and is extended to validate the regime Dataset block.
 - The freshness moat fires only once `check-freshness` and `check-sources` walk the regimes collection; until then it is decorative. `check-freshness` runs in `verify:data` (CI), not in the Vercel `buildCommand`, so blocking the deploy on stale tax is a separate, optional wiring decision left to the founder.
+
+---
+
+## ADR-0018: Monetize the freshness moat as recurring, not the referral; affiliate demoted to a quarantined floor (challenger to ADR-0007)
+
+**Status:** Proposed (challenger to ADR-0007; not yet accepted)
+**Date:** 2026-06-25
+**Challenges:** ADR-0007. Builds on: ADR-0008, ADR-0017. Source: Hermes creative-ideation pass, Provocation 4 ("affiliate-first poisons the asset") stacked on Provocation 3 ("nobody visits the website").
+
+### Context
+
+ADR-0007 set v1 monetization as affiliate links only, with a Stripe fake-door to validate a paid product later. A creative-ideation pass plus review surfaced a structural objection that the original ADR did not weigh:
+
+1. **Affiliate requires a human on the page; the distribution model removes that human.** ADR-0017 commits to a machine-first asset (dataset endpoint, `llms.txt`, schema.org Dataset). The clearer the cited data is for answer engines, the more the reader gets the figure inside Perplexity or an AI Overview and never lands on the page where an affiliate link could fire. The channel we are betting on and the affiliate mechanism partly cancel.
+2. **Affiliate on the rule claims corrodes the moat.** Paid referral links embedded in the cited tax/visa/residency claims undercut the cited-not-advice trust (ADR-0008, FENCE.md) that is the product's reason to exist, and are the exact pattern PRODUCT.md positions against.
+3. **The high-value verticals resist clean affiliation.** Immigration lawyers and cross-border tax advisers (the targets in `content-projection.md`) are regulated professions where paid referral and fee-sharing are restricted in many jurisdictions.
+4. **The cookie dies before the decision.** Relocation is a 6 to 18 month deliberation; affiliate cookies last 30 to 90 days.
+
+The objection is overstated as "affiliate is fatal" (disclosed affiliate on commodity services, e.g. Wise, retains trust) but correct as "affiliate-first is the wrong primary."
+
+### Decision
+
+If accepted, this reorders the monetization hierarchy set by ADR-0007:
+
+1. **Primary: recurring revenue off the freshness moat.** The moat is freshness (rules change yearly; the ADR-0017 staleness machinery), which is by definition a subscription asset. The base case is therefore recurring, in two forms:
+   - **B2B feed licensing.** Sell the cited, dated, staleness-monitored dataset to immigration and tax firms. Recurring, price-setting rather than price-taking, and immune to the machine-first channel problem (the buyer pays for the feed, not for on-page clicks). Promoted from a parked afterthought to a primary line; gated on dataset depth beyond one regime.
+   - **Consumer change-monitoring subscription.** "Alert me when the rule that affects my move changes." Converts the freshness wedge directly into recurring consumer revenue, and is the one consumer product that does not go stale in the buyer's hands.
+2. **Entry product, not destination: the paid cited dossier.** A one-time, timestamped, cited "relocation snapshot" the user hands to their own accountant or lawyer. Validated by the existing Stripe fake-door before any build. It is the front door that upsells into the monitoring subscription, promoted from ADR-0007's deferred "paid product" but explicitly not the endgame.
+3. **Floor, not headline: affiliate, quarantined.** Affiliate is demoted from "v1 monetization" to a disclosed revenue floor, permitted only on commodity adjacencies (currency transfer, expat insurance, SIM/banking, moving logistics) and barred from all cited tax/visa/residency/legal rule claims. The ADR-0007 mechanics carry over unchanged: `AffiliateLink.astro`, `rel="sponsored noopener"`, above-the-fold disclosure, click event, `approvedDate` gate.
+4. **Content channels are the demand engine for the paid products, not a revenue line.** The free cited content (short-form video, social, newsletter) exists to generate reach and trust and to convert viewers into an owned email list. That list is the conversion surface for the dossier, the upsell path to the monitoring subscription, and the lead source for B2B licensing. Content ad revenue, creator-fund payouts, and direct sponsorships are declined: they pay little at our short-form-first format and near-term scale, depend on a view-chasing treadmill that fights the cron/batched founder shape (FOUNDER.md), and a sponsor segment reintroduces the same advertiser-over-reader trust tension as affiliate links on rule claims.
+5. **A filter for any future money model:** it must not depend on a human clicking a link on our own page, and recurring beats one-time wherever the freshness moat is the source of value, because a one-time product discards the moat's main value.
+
+### Consequences
+
+- This contradicts ADR-0007's "affiliate links only" v1 stance. If accepted, it supersedes ADR-0007 on the monetization hierarchy; ADR-0007's affiliate mechanics and disclosure rules survive intact.
+- Near-term revenue is smaller and slower: the dossier needs the fake-door signal first, and affiliate-as-floor yields little at launch traffic. Acceptable under the infinite-runway, asset-over-cash shape (FOUNDER.md); not under cash pressure.
+- The fake-door's role is unchanged but its priority rises: it now validates the *primary* model. The SHIP.md kill-gate "paid intent" signal becomes the dossier fake-door.
+- B2B licensing introduces a sales motion, a different muscle from the build track, and needs depth beyond one regime before it is real.
+- Putting recurring first changes the build order: the dossier ships first (cheapest to validate via the fake-door) but is designed from day one as the entry point to a subscription, not a standalone. The consumer monitoring subscription is a new product line not previously scoped; it reuses the ADR-0017 staleness machinery rather than adding new infrastructure.
+- No revenue projection is committed by this ADR. A sizing model with explicit assumptions lives in `docs/revenue-model.md` (a reference doc under ADR-0012); it is fiction until the first fake-door conversion returns a real number, which replaces the model's central assumption.
+- The content engine's success metric shifts from views to owned-list growth and dossier conversion; the SHIP.md kill-gate "short-form hook breaking past the founder's own audience" stays a reach/validation signal, not a revenue line. The newsletter is the load-bearing channel because it is the part that converts directly to first-party sales and is not intermediated by AI answer engines or platform algorithms.
+- No change to the fence (ADR-0008), the dataset endpoint, or any data model. The affiliate quarantine is a placement rule enforced in the content/renderer layer.
+- Status stays Proposed until the founder accepts. Until then ADR-0007 remains the accepted decision and this entry is the challenger of record.

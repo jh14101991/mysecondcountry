@@ -8,10 +8,26 @@ import {
   regimes,
 } from "@where/data";
 import { regimeEligibilityCards } from "@where/engine";
-import CitedValueCell from "../../../components/CitedValueCell.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
+import CiteThis from "../../../components/CiteThis.astro";
+import ClaimCard from "../../../components/ClaimCard.astro";
+import DirectAnswer from "../../../components/DirectAnswer.astro";
+import FactsTable from "../../../components/FactsTable.astro";
+import FaqItem from "../../../components/FaqItem.astro";
 import FenceBlock from "../../../components/FenceBlock.astro";
+import Masthead from "../../../components/Masthead.astro";
+import RelatedLinks from "../../../components/RelatedLinks.astro";
+import SectionHeading from "../../../components/SectionHeading.astro";
 import Base from "../../../layouts/Base.astro";
-import { regimeDatasetJsonLd } from "../../../lib/jsonld.ts";
+import { buildDateline, monthYearLabel } from "../../../lib/cited.ts";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  definedTermJsonLd,
+  faqPageJsonLd,
+  maxVerifiedDate,
+  regimeDatasetJsonLd,
+} from "../../../lib/jsonld.ts";
 
 export function getStaticPaths() {
   return regimes.map((regime) => {
@@ -29,13 +45,22 @@ interface Props {
 const { regime } = Astro.props;
 
 const SITE = "https://mysecondcountry.com";
-const country = placeById(regime.countryId)?.slug;
+const countryPlace = placeById(regime.countryId);
+const country = countryPlace?.slug;
+const countryName = countryPlace?.name ?? "this country";
 const canonical = `${SITE}/${country}/tax/${regime.slug}`;
-const jsonLd = regimeDatasetJsonLd(regime, SITE);
 
-// Self-activating staleness banner: if any cited value has aged past its window
-// before a refresh merges, the banner appears automatically at build time (FENCE.md).
-const stale = collectRegimeCitedValues(regime).filter((e) => isStale(e.cited));
+const allFacts = collectRegimeCitedValues(regime);
+const maxDate = maxVerifiedDate(allFacts.map((f) => f.cited));
+const uniqueSources = new Set(allFacts.map((f) => f.cited.sourceUrl));
+const dateline = buildDateline({
+  citedLabel: monthYearLabel(maxDate),
+  sourceCount: uniqueSources.size,
+});
+
+// Self-activating staleness banner: if any cited value has aged past its window before a
+// refresh merges, the banner appears automatically at build time (FENCE.md).
+const stale = allFacts.filter((e) => isStale(e.cited));
 const staleDays = stale.length
   ? Math.min(
       ...stale.map(
@@ -48,316 +73,174 @@ const staleDays = stale.length
 
 const eligibilityCards = regimeEligibilityCards(regime);
 
-const BADGE: Record<string, { icon: string; label: string }> = {
-  high: { icon: "●", label: "verified source" },
-  medium: { icon: "◐", label: "good source" },
-  low: { icon: "○", label: "low confidence, verify" },
-};
+const breadcrumbItems = [
+  { name: countryName, href: `/places/${country}` },
+  { name: "Tax regimes" },
+  { name: regime.name, href: `/${country}/tax/${regime.slug}` },
+];
+
+const factRows = [
+  { label: "Flat tax rate on foreign-source income", cited: regime.headlineRate, unit: "%" },
+  { label: "Maximum regime duration", cited: regime.durationYears, unit: "years" },
+];
+
+const citeLines = allFacts.map(({ path, cited }) => ({
+  sourceName: cited.sourceName,
+  verifiedDate: cited.verifiedDate,
+  citationUrl: `${canonical}#${path}`,
+}));
+
+// FAQ pairs, cited. Each question is rendered as a visible <h3> and mirrored into FAQPage
+// JSON-LD; the two must match (assert-faq-jsonld).
+const rateSource = `${regime.headlineRate.sourceName}, verified ${regime.headlineRate.verifiedDate}`;
+const durationSource = `${regime.durationYears.sourceName}, verified ${regime.durationYears.verifiedDate}`;
+const faqs = [
+  {
+    question: `What is the headline rate of the ${regime.name}?`,
+    answer: `A flat ${regime.headlineRate.value}% on foreign-source income (${rateSource}). It is one published regime among several; eligibility differs by regime, so verify yours with a licensed professional.`,
+  },
+  {
+    question: `How long does the ${regime.name} last?`,
+    answer: `Up to ${regime.durationYears.value} years for a qualifying applicant (${durationSource}). Non-compliance in any year can end it early; see the disqualifying conditions above.`,
+  },
+];
 
 const title = `${regime.name}: eligibility rules and tax facts | My Second Country`;
 
-const allFacts = collectRegimeCitedValues(regime);
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: regime.name,
+    description: regime.summary,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  regimeDatasetJsonLd(regime, SITE),
+  definedTermJsonLd({
+    url: canonical,
+    name: regime.name,
+    description: `${regime.summary.split(". ")[0]}.`,
+    siteUrl: SITE,
+  }),
+  faqPageJsonLd(faqs),
+];
 ---
 
 <Base title={title} description={regime.summary} canonical={canonical} jsonLd={jsonLd}>
   <article>
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <span class="crumb">{country ? country.charAt(0).toUpperCase() + country.slice(1) : "Country"}</span>
-      <span class="crumb">Tax regimes</span>
-      <span class="crumb current" aria-current="page">{regime.name}</span>
-    </nav>
+    <Breadcrumb items={breadcrumbItems} />
 
-    <h1>{regime.name}</h1>
+    <Masthead variant="topic" title={regime.name} dateline={dateline} />
 
     <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
 
     <p class="lede">{regime.summary}</p>
 
+    <DirectAnswer question={`How does the ${regime.name} work?`}>
+      <p>
+        {countryName} applies a flat {regime.headlineRate.value}% rate on foreign-source income
+        under this regime, for up to {regime.durationYears.value} years ({rateSource}). The
+        published eligibility rules are below; confirm your own position with a licensed
+        professional and the official source.
+      </p>
+    </DirectAnswer>
+
     <section aria-labelledby="dealbreakers-h">
-      <h2 id="dealbreakers-h">What would disqualify you</h2>
+      <SectionHeading as="h2" id="dealbreakers-h">What would disqualify you</SectionHeading>
       <p class="section-note">
         These are published eligibility rules reported from their source on the verified date.
         Each rule describes a condition that, if it does not hold, would exclude an applicant from
         this regime. They are not advice and they change. Confirm your own position with a licensed
         professional and the official source.
       </p>
-      <ul class="eligibility-cards" role="list">
+      <ul class="claim-cards" role="list">
         {
-          eligibilityCards.map((card) => {
-            const badge = BADGE[card.cited.confidence] ?? BADGE.low;
-            return (
-              <li class="eligibility-card">
-                <p class="card-framing">{card.framing}</p>
-                <div class="card-meta">
-                  <span class={`badge badge-${card.cited.confidence}`}>
-                    <span class="badge-icon" aria-hidden="true">{badge.icon}</span>
-                    <span class="badge-text">{badge.label}</span>
-                  </span>
-                  <span class="card-provenance">
-                    <a
-                      href={card.cited.sourceUrl}
-                      rel="noopener nofollow"
-                      target="_blank"
-                    >
-                      {card.cited.sourceName}
-                    </a>
-                    <span class="verified">Verified {card.cited.verifiedDate}</span>
-                  </span>
-                </div>
-                {card.cited.excerpt && (
-                  <blockquote class="excerpt">{card.cited.excerpt}</blockquote>
-                )}
-              </li>
-            );
-          })
-        }
-      </ul>
-    </section>
-
-    <section aria-labelledby="headline-facts-h">
-      <h2 id="headline-facts-h">Headline facts</h2>
-      <table class="facts">
-        <caption class="visually-hidden">Cited headline facts for {regime.name}</caption>
-        <tbody>
-          <tr>
-            <th scope="row">Flat tax rate on foreign-source income</th>
-            <CitedValueCell
-              cited={regime.headlineRate}
-              unit="%"
-              placeGranularity="country"
-              placeName={regime.name}
-            />
-          </tr>
-          <tr>
-            <th scope="row">Maximum regime duration</th>
-            <CitedValueCell
-              cited={regime.durationYears}
-              unit="years"
-              placeGranularity="country"
-              placeName={regime.name}
-            />
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section aria-labelledby="cite-this-h" class="cite-this">
-      <h2 id="cite-this-h">Cite this data</h2>
-      <p class="section-note">
-        Copy the line for any fact you want to cite. Each line names the source, the date we
-        verified it, and the canonical URL with a fragment pointing to the fact path.
-      </p>
-      <ul class="cite-list">
-        {
-          allFacts.map(({ path, cited }) => (
-            <li>
-              <code>
-                {cited.sourceName}, verified {cited.verifiedDate},{" "}
-                {canonical}#{path}
-              </code>
-            </li>
+          eligibilityCards.map((card) => (
+            <ClaimCard framing={card.framing} cited={card.cited} variant="dealbreaker" />
           ))
         }
       </ul>
     </section>
 
+    <section aria-labelledby="headline-facts-h">
+      <SectionHeading as="h2" id="headline-facts-h">Headline facts</SectionHeading>
+      <FactsTable caption={`Cited headline facts for ${regime.name}`} rows={factRows} />
+    </section>
+
+    <section aria-labelledby="faq-h">
+      <SectionHeading as="h2" id="faq-h">Common questions</SectionHeading>
+      {faqs.map((f) => (
+        <FaqItem question={f.question}>
+          <p>{f.answer}</p>
+        </FaqItem>
+      ))}
+    </section>
+
+    <CiteThis lines={citeLines} />
+
+    <RelatedLinks
+      links={[
+        {
+          label: `${countryName}: cited cost, climate, residency and tax facts`,
+          href: `/places/${country}`,
+        },
+        {
+          label: "Greece vs Portugal vs Spain: a cited comparison",
+          href: "/compare/greece-portugal-spain",
+        },
+      ]}
+    />
+
     <section aria-labelledby="how-to-read-h" class="how-to-read">
-      <h2 id="how-to-read-h">How to read this page</h2>
+      <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
       <p>
         Every figure above is a cited claim: a value, the named source, the date we last verified
-        it, and a confidence mark. Verified source means an official statistical body or primary
-        law. Good source means an official authority read through a secondary. Low confidence means
-        a directional figure to check yourself.
+        it, and a confidence mark. Verified means an official statistical body or primary law. Good
+        means an official authority read through a secondary. Limited means a directional figure to
+        check yourself.
       </p>
     </section>
   </article>
 
   <style>
-    .breadcrumb {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 1.4rem;
-    }
-    .crumb + .crumb::before {
-      content: "›";
-      margin-right: 0.4rem;
-      color: var(--rule);
-    }
-    .crumb.current {
-      color: var(--ink);
-      font-weight: 600;
-    }
     .lede {
       max-width: var(--measure);
+      font-family: var(--font-serif);
       font-size: 1.05rem;
       line-height: 1.6;
-      color: var(--ink-soft);
+      color: var(--muted-strong);
       margin: 0 0 0.5rem;
     }
     .section-note {
       max-width: var(--measure);
-      color: var(--ink-soft);
+      color: var(--muted-foreground);
+      font-family: var(--font-serif);
       font-size: 0.98rem;
       margin-bottom: 1.2rem;
     }
-    /* Eligibility cards */
-    .eligibility-cards {
+    .claim-cards {
       list-style: none;
       padding: 0;
       margin: 0;
       display: grid;
       gap: 1rem;
     }
-    .eligibility-card {
-      padding: 1.1rem 1.25rem;
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
-      background: var(--card);
-    }
-    .card-framing {
-      margin: 0 0 0.75rem;
-      font-size: 1rem;
-      line-height: 1.55;
-      color: var(--ink);
-    }
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      padding: 0.1rem 0.5rem;
-      border-radius: 999px;
-      border: 1px solid var(--rule);
-      flex-shrink: 0;
-    }
-    .badge-icon {
-      font-size: 0.9rem;
-      line-height: 1;
-    }
-    .badge-high {
-      color: #1f5132;
-      border-color: #9ec9ac;
-      background: #eef6f0;
-    }
-    .badge-medium {
-      color: #6b4a12;
-      border-color: #d9c08a;
-      background: #f8f1de;
-    }
-    .badge-low {
-      color: #7a1f1f;
-      border-color: #d9a3a3;
-      background: #f8e9e9;
-    }
-    .card-provenance {
-      display: flex;
-      flex-direction: column;
-      font-size: 0.88rem;
-    }
-    .verified {
-      color: var(--ink-soft);
-      font-size: 0.82rem;
-      margin-top: 0.1rem;
-    }
-    .excerpt {
-      margin: 0.75rem 0 0;
-      padding-left: 0.8rem;
-      border-left: 2px solid var(--rule);
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      font-style: italic;
-    }
-    /* Headline facts table */
-    .facts {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      border-top: 2px solid var(--ink);
-    }
-    .facts th[scope="row"] {
-      width: 38%;
-      text-align: left;
-      vertical-align: top;
-      padding: 0.9rem 1rem 0.9rem 0;
-      font-weight: 600;
-      color: var(--ink);
-      border-bottom: 1px solid var(--rule);
-    }
-    /* Cite-this section */
-    .cite-this {
-      margin-top: 2.5rem;
-    }
-    .cite-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.5rem;
-    }
-    .cite-list li code {
-      display: block;
-      padding: 0.5rem 0.75rem;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius-sm);
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      line-height: 1.5;
-      word-break: break-all;
-      color: var(--ink);
-    }
-    /* How to read */
     .how-to-read {
       margin-top: 3rem;
       padding: 1.4rem 1.5rem;
-      background: var(--paper-2);
-      border-radius: 6px;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
     }
-    .how-to-read h2 {
+    .how-to-read :global(.section-heading--heading) {
       margin-top: 0;
     }
     .how-to-read p {
       max-width: var(--measure);
       margin: 0;
-      color: var(--ink-soft);
-    }
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    @media (max-width: 38rem) {
-      .facts,
-      .facts tbody,
-      .facts tr,
-      .facts th[scope="row"] {
-        display: block;
-        width: 100%;
-      }
-      .facts th[scope="row"] {
-        padding-bottom: 0.2rem;
-        border-bottom: none;
-      }
+      font-family: var(--font-serif);
+      color: var(--muted-strong);
     }
   </style>
 </Base>

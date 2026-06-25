@@ -5,21 +5,29 @@
 
 import {
   ageInDays,
+  type CitedValue,
   collectCitedValues,
   collectRegimeCitedValues,
+  DEFAULT_STALENESS_DAYS,
   places,
   regimes,
 } from "@where/data";
 
 const HIGH_LIABILITY = new Set(["visa", "tax", "residency"]);
-const DEFAULT_LIMIT = 90;
+
+// Per-field stalenessDays wins; otherwise the field's category default (90 for the
+// visa/tax/residency categories, see DEFAULT_STALENESS_DAYS). The Greek visa/tax fields
+// carry a 60-day override, which this honours (FENCE.md jurisdiction note).
+function limitFor(cited: CitedValue): number {
+  return cited.stalenessDays ?? (cited.category ? DEFAULT_STALENESS_DAYS[cited.category] : 90);
+}
 
 let failures = 0;
 for (const place of places) {
   for (const { path, cited } of collectCitedValues(place)) {
     if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
     if (cited.confidence === "low") continue; // shown with caution, exempt from hard fail
-    const limit = cited.stalenessDays ?? DEFAULT_LIMIT;
+    const limit = limitFor(cited);
     const age = ageInDays(cited.verifiedDate);
     if (age > limit) {
       console.error(
@@ -34,7 +42,7 @@ for (const regime of regimes) {
   for (const { path, cited } of collectRegimeCitedValues(regime)) {
     if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
     if (cited.confidence === "low") continue; // shown with caution, exempt from hard fail
-    const limit = cited.stalenessDays ?? DEFAULT_LIMIT;
+    const limit = limitFor(cited);
     const age = ageInDays(cited.verifiedDate);
     if (age > limit) {
       console.error(
