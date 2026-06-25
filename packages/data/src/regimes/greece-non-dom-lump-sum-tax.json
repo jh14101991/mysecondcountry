@@ -1,0 +1,78 @@
+{
+  "id": "greece-non-dom-lump-sum-tax",
+  "slug": "non-dom-lump-sum-tax",
+  "name": "Greece non-dom 100,000 euro lump-sum tax (Article 5A)",
+  "countryId": "gr",
+  "regimeType": "tax",
+  "rateType": "lumpSum",
+  "incomeBasis": "foreign-source income",
+  "headlineRate": {
+    "value": 100000,
+    "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+    "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "stalenessDays": 60,
+    "excerpt": "individuals will pay a lump-sum tax of EUR 100,000 per tax year, irrespective of the amount of income earned abroad"
+  },
+  "durationYears": {
+    "value": 15,
+    "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+    "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "stalenessDays": 60,
+    "excerpt": "for a maximum of 15 fiscal years"
+  },
+  "eligibility": {
+    "priorNonResidency": {
+      "value": "Must not have been a Greek tax resident for seven of the eight years prior to transferring tax residence to Greece.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "stalenessDays": 60,
+      "excerpt": "the taxpayers were not Greek tax residents for the previous seven out of the eight years prior to transferring their tax residence to Greece"
+    },
+    "applicationWindow": {
+      "value": "Apply for the transfer of tax residence and non-dom status by 31 March of each tax year.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "stalenessDays": 60,
+      "excerpt": "The relevant application for the transfer of tax residence and for obtaining the non-dom status has to be submitted by individuals by 31 March of each tax year"
+    },
+    "knownCatch": {
+      "value": "Non-payment of the full lump-sum tax in any year abolishes the regime, and worldwide income is then taxed under the general rules.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "stalenessDays": 60,
+      "excerpt": "In the event of non-payment of the full amount of the lump-sum tax, the special regime will be abolished, and these persons will be taxed for their worldwide income in accordance with the general provisions"
+    },
+    "investmentRequirement": {
+      "value": "Must invest at least 500,000 euros in Greek real estate, businesses, or securities, completed within three years of the application.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "stalenessDays": 60,
+      "excerpt": "they invested at least EUR 500,000 in real estate, businesses, or transferable securities or shares in legal entities based in Greece"
+    }
+  },
+  "summary": "Greece's Article 5A non-dom regime lets a qualifying individual who transfers tax residence to Greece pay a flat lump sum of 100,000 euros per year on all foreign-source income, regardless of amount, for up to 15 years, in return for a 500,000 euro Greek investment. The figures below are screened, sourced, and dated. They are not advice."
+}

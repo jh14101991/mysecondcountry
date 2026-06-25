@@ -1,0 +1,72 @@
+{
+  "id": "portugal-ifici",
+  "slug": "ifici",
+  "name": "Portugal IFICI 20% regime (NHR successor)",
+  "countryId": "pt",
+  "regimeType": "tax",
+  "rateType": "percent",
+  "incomeBasis": "eligible Portuguese employment and professional income",
+  "headlineRate": {
+    "value": 20,
+    "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/other-tax-credits-and-incentives",
+    "sourceName": "PwC Worldwide Tax Summaries, Portugal, other tax credits and incentives",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "excerpt": "A special 20% rate on net employment income (category A) and business and professional income (category B) derived from the activities identified in the applicable legislation"
+  },
+  "durationYears": {
+    "value": 10,
+    "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/other-tax-credits-and-incentives",
+    "sourceName": "PwC Worldwide Tax Summaries, Portugal, other tax credits and incentives",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "excerpt": "is entitled to benefit from the regime for a period of ten years"
+  },
+  "eligibility": {
+    "priorNonResidency": {
+      "value": "Must not have qualified as a Portuguese tax resident in any of the previous five years.",
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, significant developments",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "have not qualified as tax residents in Portugal in any of the previous five years"
+    },
+    "applicationWindow": {
+      "value": "Apply by 15 January of the year after becoming a Portuguese tax resident.",
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, other tax credits and incentives",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "The application should be filed until the 15th January of the next year following that in which the individual is considered resident in Portugal for tax purposes"
+    },
+    "knownCatch": {
+      "value": "Most foreign-source income is exempt, but foreign pension income and income from blacklisted countries are not, so foreign pensions are taxed.",
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, significant developments",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "foreign-sourced income is exempt with the exception of pension income and income sourced in 'blacklisted' countries"
+    },
+    "priorRegimeExclusion": {
+      "value": "Must not have benefited from the former NHR regime or the former-resident regime.",
+      "sourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments",
+      "sourceName": "PwC Worldwide Tax Summaries, Portugal, significant developments",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "must not benefit or have benefited from the NHR regime or the former resident regime"
+    }
+  },
+  "summary": "Portugal's IFICI regime, the successor to NHR from the 2024 State Budget, applies a flat 20 percent rate to eligible Portuguese employment and professional income for ten years, with most foreign-source income exempt apart from pensions. It is open only to people who were not Portuguese tax residents in the prior five years and never used NHR. The figures below are screened, sourced, and dated. They are not advice."
+}

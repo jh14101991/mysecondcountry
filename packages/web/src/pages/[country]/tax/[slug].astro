@@ -73,6 +73,24 @@ const staleDays = stale.length
 
 const eligibilityCards = regimeEligibilityCards(regime);
 
+const rateDisplay =
+  regime.rateType === "lumpSum"
+    ? `EUR ${regime.headlineRate.value.toLocaleString("en-US")} per year`
+    : `${regime.headlineRate.value}%`;
+const rateApplies =
+  regime.rateType === "lumpSum"
+    ? `applies a lump-sum tax of ${rateDisplay} on ${regime.incomeBasis}`
+    : `applies a flat ${regime.headlineRate.value}% rate on ${regime.incomeBasis}`;
+const rateClause =
+  regime.rateType === "lumpSum"
+    ? `A lump sum of ${rateDisplay} on ${regime.incomeBasis}`
+    : `A flat ${regime.headlineRate.value}% on ${regime.incomeBasis}`;
+const rateRowLabel =
+  regime.rateType === "lumpSum"
+    ? `Annual lump-sum tax on ${regime.incomeBasis}`
+    : `Flat tax rate on ${regime.incomeBasis}`;
+const rateRowUnit = regime.rateType === "lumpSum" ? "EUR/year" : "%";
+
 const breadcrumbItems = [
   { name: countryName, href: `/places/${country}` },
   { name: "Tax regimes" },
@@ -80,7 +98,7 @@ const breadcrumbItems = [
 ];
 
 const factRows = [
-  { label: "Flat tax rate on foreign-source income", cited: regime.headlineRate, unit: "%" },
+  { label: rateRowLabel, cited: regime.headlineRate, unit: rateRowUnit },
   { label: "Maximum regime duration", cited: regime.durationYears, unit: "years" },
 ];
 
@@ -97,7 +115,7 @@ const durationSource = `${regime.durationYears.sourceName}, verified ${regime.du
 const faqs = [
   {
     question: `What is the headline rate of the ${regime.name}?`,
-    answer: `A flat ${regime.headlineRate.value}% on foreign-source income (${rateSource}). It is one published regime among several; eligibility differs by regime, so verify yours with a licensed professional.`,
+    answer: `${rateClause} (${rateSource}). It is one published regime among several; eligibility differs by regime, so verify yours with a licensed professional.`,
   },
   {
     question: `How long does the ${regime.name} last?`,
@@ -139,10 +157,9 @@ const jsonLd = [
 
     <DirectAnswer question={`How does the ${regime.name} work?`}>
       <p>
-        {countryName} applies a flat {regime.headlineRate.value}% rate on foreign-source income
-        under this regime, for up to {regime.durationYears.value} years ({rateSource}). The
-        published eligibility rules are below; confirm your own position with a licensed
-        professional and the official source.
+        {countryName} {rateApplies} under this regime, for up to {regime.durationYears.value} years
+        ({rateSource}). The published eligibility rules are below; confirm your own position with a
+        licensed professional and the official source.
       </p>
     </DirectAnswer>
 

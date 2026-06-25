@@ -291,6 +291,8 @@ const REGIME_FIELD_META: Record<string, { name: string; unitText?: string }> = {
   "eligibility.residencyObligation": { name: "Residency obligation during the regime" },
   "eligibility.applicationWindow": { name: "Application window" },
   "eligibility.knownCatch": { name: "Known catch" },
+  "eligibility.investmentRequirement": { name: "Minimum investment requirement" },
+  "eligibility.priorRegimeExclusion": { name: "Prior-regime exclusion" },
 };
 
 /**
@@ -327,7 +329,12 @@ export function regimeDatasetJsonLd(regime: Regime, siteUrl: string): JsonLdNode
     variableMeasured: facts.map(({ path, cited }) =>
       citedPropertyValue({
         name: REGIME_FIELD_META[path]?.name ?? path,
-        unitText: REGIME_FIELD_META[path]?.unitText,
+        unitText:
+          path === "headlineRate"
+            ? regime.rateType === "lumpSum"
+              ? "EUR per year"
+              : "percent"
+            : REGIME_FIELD_META[path]?.unitText,
         cited,
         id: regimeFactId(regime.id, path),
       }),

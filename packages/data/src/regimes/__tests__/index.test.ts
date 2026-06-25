@@ -40,4 +40,22 @@ describe("regimes index", () => {
       );
     }
   });
+
+  it("regimes.length is at least 3", () => {
+    expect(regimes.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("regimeBySlug resolves non-dom-lump-sum-tax and its countryId resolves via placeById", () => {
+    const regime = regimeBySlug("non-dom-lump-sum-tax");
+    expect(regime).toBeDefined();
+    if (!regime) return;
+    expect(placeById(regime.countryId)).toBeDefined();
+  });
+
+  it("regimeBySlug resolves ifici and its countryId resolves via placeById", () => {
+    const regime = regimeBySlug("ifici");
+    expect(regime).toBeDefined();
+    if (!regime) return;
+    expect(placeById(regime.countryId)).toBeDefined();
+  });
 });

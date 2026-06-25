@@ -1,7 +1,13 @@
 import raw from "./greece-foreign-pensioner-flat-tax.json" with { type: "json" };
+import rawLumpSum from "./greece-non-dom-lump-sum-tax.json" with { type: "json" };
+import rawIfici from "./portugal-ifici.json" with { type: "json" };
 import { type Regime, RegimeSchema } from "./schema.js";
 
-export const regimes: Regime[] = [RegimeSchema.parse(raw)];
+export const regimes: Regime[] = [
+  RegimeSchema.parse(raw),
+  RegimeSchema.parse(rawLumpSum),
+  RegimeSchema.parse(rawIfici),
+];
 
 /** Look up a Regime by its URL slug. */
 export function regimeBySlug(slug: string): Regime | undefined {
