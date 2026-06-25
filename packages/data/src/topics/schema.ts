@@ -18,6 +18,8 @@ export const TopicInputSchema = z.object({
   countryId: z.string().nullable(),
   facts: z.array(FactInputSchema).min(1),
   context: z.string().min(80),
+  /** Short authored summary for the HTML meta description (SEO sweet spot ~155 chars). */
+  metaDescription: z.string().min(50).max(160),
   definedTerm: z
     .object({
       name: z.string().min(1),
@@ -45,6 +47,7 @@ export interface Topic {
   countryId: string | null;
   facts: { key: string; label: string; cited: CitedValue }[];
   context: string;
+  metaDescription: string;
   definedTerm?: { name: string; description: string };
   faqs?: { question: string; answer: string }[];
   relatedSlugs: string[];

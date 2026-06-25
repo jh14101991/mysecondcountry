@@ -31,6 +31,8 @@ const GOOD: TopicInput = {
   ],
   context:
     "Portugal closed its Non-Habitual Resident (NHR) regime to new applicants at the end of 2023 and replaced it with IFICI, which applies a 20 percent flat rate on eligible Portuguese-sourced income.",
+  metaDescription:
+    "Portugal replaced its NHR regime with IFICI: a 20 percent flat rate on eligible income for qualifying new residents.",
   relatedSlugs: [],
 };
 
@@ -60,6 +62,21 @@ describe("TopicInputSchema", () => {
 
   it("rejects context shorter than 80 chars", () => {
     const bad = { ...GOOD, context: "Too short." };
+    expect(TopicInputSchema.safeParse(bad).success).toBe(false);
+  });
+
+  it("rejects a metaDescription shorter than 50 chars", () => {
+    const bad = { ...GOOD, metaDescription: "Too short for SEO." };
+    expect(TopicInputSchema.safeParse(bad).success).toBe(false);
+  });
+
+  it("rejects a metaDescription longer than 160 chars", () => {
+    const bad = { ...GOOD, metaDescription: "x".repeat(161) };
+    expect(TopicInputSchema.safeParse(bad).success).toBe(false);
+  });
+
+  it("rejects a topic missing metaDescription", () => {
+    const { metaDescription: _omit, ...bad } = GOOD;
     expect(TopicInputSchema.safeParse(bad).success).toBe(false);
   });
 
