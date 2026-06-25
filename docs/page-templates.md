@@ -30,7 +30,7 @@ them. Four are new and need design.
 One owned, cited rule: a tax regime, a visa, or a special status. This is the proven flagship and
 roughly half the backlog plus 11 of the 15 build-now pages live here.
 - Sections: fence above the fold; the dealbreaker hero ("what would disqualify you", cited
-  eligibility cards); headline facts table (rate, duration, thresholds via CitedValueCell);
+  eligibility cards); headline facts table (rate, duration, thresholds via CitedValue rows in FactsTable);
   eligibility detail; a cite-this line per fact; Dataset JSON-LD.
 - The template must support three modes:
   - **Dealbreaker-led**: a standalone "what disqualifies you from X" leads with the hero (the
@@ -91,8 +91,8 @@ the residency-day test, a citizenship clock.
 These live components carry the cited-data look and must be reused so all seven templates feel like
 one site:
 - the fence block (`FenceBlock.astro`) on every page that carries a claim,
-- the cited value cell (`CitedValueCell.astro`): value, confidence badge, source link, verified
-  date, excerpt,
+- the cited value atom (`CitedValue.astro`): value, confidence badge, source link, verified
+  date, excerpt (replaced the retired `CitedValueCell.astro`),
 - the dealbreaker eligibility card (from the live regime page),
 - the cite-this snippet block,
 - confidence badges, the granularity-honesty label, the self-activating staleness banner,
