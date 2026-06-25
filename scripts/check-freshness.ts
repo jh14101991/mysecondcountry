@@ -3,7 +3,13 @@
 // Confidence "low" is structurally impossible on these fields (schema forbids it), so
 // any stale high/medium value is a hard failure here.
 
-import { ageInDays, collectCitedValues, places } from "@where/data";
+import {
+  ageInDays,
+  collectCitedValues,
+  collectRegimeCitedValues,
+  places,
+  regimes,
+} from "@where/data";
 
 const HIGH_LIABILITY = new Set(["visa", "tax", "residency"]);
 const DEFAULT_LIMIT = 90;
@@ -18,6 +24,21 @@ for (const place of places) {
     if (age > limit) {
       console.error(
         `STALE  ${place.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
+      );
+      failures += 1;
+    }
+  }
+}
+
+for (const regime of regimes) {
+  for (const { path, cited } of collectRegimeCitedValues(regime)) {
+    if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
+    if (cited.confidence === "low") continue; // shown with caution, exempt from hard fail
+    const limit = cited.stalenessDays ?? DEFAULT_LIMIT;
+    const age = ageInDays(cited.verifiedDate);
+    if (age > limit) {
+      console.error(
+        `STALE  ${regime.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
       );
       failures += 1;
     }

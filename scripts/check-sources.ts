@@ -4,7 +4,7 @@
 // without going flaky on government sites that throttle automated requests (AADE,
 // migration.gov.gr). The weekly link-rot cron does the deeper sweep.
 
-import { collectCitedValues, places } from "@where/data";
+import { collectCitedValues, collectRegimeCitedValues, places, regimes } from "@where/data";
 
 const UA = "MySecondCountryBot/1.0 (+https://mysecondcountry.com; citation link check)";
 const TIMEOUT_MS = 12_000;
@@ -12,6 +12,9 @@ const TIMEOUT_MS = 12_000;
 const urls = new Set<string>();
 for (const place of places) {
   for (const { cited } of collectCitedValues(place)) urls.add(cited.sourceUrl);
+}
+for (const regime of regimes) {
+  for (const { cited } of collectRegimeCitedValues(regime)) urls.add(cited.sourceUrl);
 }
 
 let hardFail = 0;
