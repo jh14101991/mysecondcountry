@@ -366,3 +366,31 @@ The product needs a deep, clickable, filterable surface of relocation variables 
 - The main new engineering dependency is a geospatial build step (`scripts/geo-build.ts`) that point-samples raster/vector sources at place coordinates; kept to the variables each slice needs.
 - The build is sliced and demand-led, never 200 variables across 100 towns up front. Each slice ships to strangers and the first implementation plan covers slice 1 only.
 - A known coverage gap (retiree-specific healthcare: English-speaking doctors, elder-care quality, private-insurance cost) has no open source yet; either a further hunt finds one or the profile is honest about it.
+
+---
+
+## ADR-0017: Regime as a sibling cited collection, dataset endpoint, live staleness
+
+**Status:** Accepted
+**Date:** 2026-06-25
+**Builds on:** ADR-0001, ADR-0002, ADR-0008, ADR-0010, ADR-0016. Supersedes nothing.
+**Spec:** `docs/superpowers/specs/2026-06-25-regime-flagship-page.md`. Plan: `docs/superpowers/plans/2026-06-25-regime-flagship-page.md`.
+
+### Context
+
+A0 (ADR-0015) is live. The first deep page after A0 is the Greece foreign-pensioner 7% flat-tax regime page: a single high-intent tax rule owned end to end, with a cited "what would disqualify you" hero and a machine-readable cited dataset. It needs five architecture decisions resolved without contradicting any locked ADR.
+
+### Decision
+
+1. **Data model: own collection, not a Place section.** A new `regimes` content collection in `packages/data` with its own `RegimeSchema` (ADR-0001 content-as-code, ADR-0002 CitedValue). A regime references its country Place by id; `PlaceSchema` is unchanged. `collectCitedValues` gains a regime sibling so the citation, freshness, and source guards cover regime fields.
+2. **Route family: a new dynamic route outside `/places/...`** (ADR-0010 unaffected): `packages/web/src/pages/[country]/tax/[slug].astro` via `getStaticPaths` over the collection. Regimes carry the same stable-`id` / mutable-`slug` split a Place has.
+3. **Dataset endpoint: a static Astro endpoint** (`src/pages/data/regimes/[slug].json.ts`) emitting `/data/regimes/<slug>.json` from the same `getCollection` source as the page, plus `schema.org/Dataset` JSON-LD on the page, an `llms.txt` entry, and a "cite this" snippet per fact. Per-fact ids are **derived** (`<regime-id>#<field-path>`), not stored on the CitedValue, so the ADR-0002 shape stays locked; field names become a stable contract.
+4. **Engine reuse: a thin adapter, not a drop-in.** The dealbreaker card reuses the ADR-0016 deal-breaker shape and the retiree-shaped presets, but the regime's eligibility fields are not slice-1 relocation-catalogue variables, so they are modelled as the regime's own cited eligibility constraints. The card presents the binding constraints as cited, dated rules framed against the foreign-pensioner profile; it never renders a per-user pass/fail verdict (ADR-0008, FENCE.md).
+5. **Staleness wired to the collection.** `check-freshness.ts` (the script the spec calls `validate.ts`) hard-fails CI on stale visa/tax/residency, but today only over `places`; it is extended to walk the regimes collection, and the regime page renders the self-activating staleness banner. Greek tax fields carry `stalenessDays: 60` (FENCE.md jurisdiction note).
+
+### Consequences
+
+- A new entity type and route family, fully additive: no `PlaceSchema` change, no superseded ADR.
+- The slice-1 engine (deal-breaker filters, presets, the `placeVariables` adapter pattern) is the foundation the dealbreaker card reuses; regime eligibility variables overlap with variable-system slice 2 and must be coordinated, not duplicated.
+- `validate-jsonld` checks Place JSON-LD only today and is extended to validate the regime Dataset block.
+- The freshness moat fires only once `check-freshness` and `check-sources` walk the regimes collection; until then it is decorative. `check-freshness` runs in `verify:data` (CI), not in the Vercel `buildCommand`, so blocking the deploy on stale tax is a separate, optional wiring decision left to the founder.
