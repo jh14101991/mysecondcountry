@@ -1,5 +1,6 @@
 export { type ActiveFilter, applyFilters } from "./filter.js";
 export { type ProfileScore, scoreByProfile } from "./profile-score.js";
+export { type EligibilityCard, regimeEligibilityCards } from "./regime-eligibility.js";
 export {
   type DimensionResult,
   type FenceWarning,
