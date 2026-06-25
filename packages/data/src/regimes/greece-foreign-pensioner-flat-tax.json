@@ -17,14 +17,13 @@
   },
   "durationYears": {
     "value": 15,
-    "sourceUrl": "https://www.mondaq.com/uk/tax-authorities/1256528/greek-tax-incentive-regimes-for-newly-arrived-residents-and-family-offices",
-    "sourceName": "Ruchelman PLLC, Greek Tax Incentive Regimes for Newly Arrived Residents and Family Offices, via Mondaq",
+    "sourceUrl": "https://www.aade.gr/sites/default/files/2025-07/Useful%20Tax%20Guide%20for%20Greeks%20abroad%20and%20Non-residents_enriched_9.7.2025.pdf",
+    "sourceName": "AADE (Independent Authority for Public Revenue), Useful Tax Guide for Greeks abroad and Non-residents (9.7.2025)",
     "verifiedDate": "2026-06-25",
     "confidence": "medium",
     "granularity": "country",
     "category": "tax",
-    "stalenessDays": 60,
-    "excerpt": "The Foreign Pensioner's Tax Regime covers a maximum of 15 tax years, beginning with the year of application."
+    "stalenessDays": 60
   },
   "eligibility": {
     "priorNonResidency": {

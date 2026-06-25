@@ -201,7 +201,7 @@ Confidence tiers used throughout the codebase:
 | Refresh cadence | Manual, at human merge gate. Annual budget cycle (October/November) is the primary risk window. |
 | Confidence | MEDIUM (official source but machine-unreadable and changes with annual budget) |
 | Granularity in schema | `country` |
-| Gotchas | 403 to bots is deliberate. Never add AADE to the automated cron pipeline. Store the canonical PDF URL as `sourceUrl` alongside the AADE homepage. Budget changes can alter thresholds mid-year; `verifiedDate` discipline is mandatory. LEGAL FENCE: every tax CitedValue must carry the "not tax advice" disclaimer. |
+| Gotchas | 403 to bots is deliberate. Never add AADE to the automated cron pipeline. Store the canonical PDF URL as `sourceUrl` alongside the AADE homepage. Budget changes can alter thresholds mid-year; `verifiedDate` discipline is mandatory. LEGAL FENCE: every tax CitedValue must carry the "not tax advice" disclaimer. The regime `durationYears` field in `greece-foreign-pensioner-flat-tax.json` (Article 5B, 15 tax years) is sourced to `https://www.aade.gr/sites/default/files/2025-07/Useful%20Tax%20Guide%20for%20Greeks%20abroad%20and%20Non-residents_enriched_9.7.2025.pdf`; the verbatim excerpt is pending manual human verification because AADE returns 403 to bots. |
 
 ### PwC Worldwide Tax Summaries
 
