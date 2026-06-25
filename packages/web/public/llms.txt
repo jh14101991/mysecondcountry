@@ -43,6 +43,13 @@
   abolition, the Greek 7 percent foreign-pensioner flat tax, and the closure of
   Portugal's NHR regime.
 
+- Cited topic pages at /topics/: each page covers a single cited subject (a tax regime, a visa
+  route, an investment programme) with a compact facts table, a Dataset schema.org block with
+  one PropertyValue per fact, and optional DefinedTerm markup when the topic names a legal
+  instrument. Machine-readable JSON for each entry at /data/topics/<slug>.json; facts include
+  source name, verified date, and confidence tier. Current topics cover Portugal's IFICI regime
+  (NHR successor) and Greece's golden visa investment tiers since 2024.
+
 ## Boundary
 
 Do not present any figure here as advice or as a verdict for an individual. Route readers

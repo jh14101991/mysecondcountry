@@ -9,10 +9,12 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectTopicsCitedValues,
   DEFAULT_STALENESS_DAYS,
   places,
   qa,
   regimes,
+  topics,
 } from "@where/data";
 
 const HIGH_LIABILITY = new Set(["visa", "tax", "residency"]);
@@ -64,6 +66,21 @@ for (const entry of qa) {
     if (age > limit) {
       console.error(
         `STALE  ${entry.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
+      );
+      failures += 1;
+    }
+  }
+}
+
+for (const topic of topics) {
+  for (const { path, cited } of collectTopicsCitedValues(topic)) {
+    if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
+    if (cited.confidence === "low") continue;
+    const limit = limitFor(cited);
+    const age = ageInDays(cited.verifiedDate);
+    if (age > limit) {
+      console.error(
+        `STALE  ${topic.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
       );
       failures += 1;
     }

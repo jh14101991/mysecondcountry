@@ -1,0 +1,166 @@
+---
+import {
+  collectTopicsCitedValues,
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  type Topic,
+  topicBySlug,
+  topics,
+} from "@where/data";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import CiteThis from "../../components/CiteThis.astro";
+import FactsTable from "../../components/FactsTable.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Masthead from "../../components/Masthead.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Base from "../../layouts/Base.astro";
+import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  definedTermJsonLd,
+  faqPageJsonLd,
+  maxVerifiedDate,
+  topicDatasetJsonLd,
+} from "../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return topics.map((topic) => ({ params: { slug: topic.slug }, props: { topic } }));
+}
+
+interface Props {
+  topic: Topic;
+}
+const { topic } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/topics/${topic.slug}`;
+
+const allFacts = collectTopicsCitedValues(topic);
+const maxDate = maxVerifiedDate(allFacts.map((f) => f.cited));
+const uniqueSources = new Set(allFacts.map((f) => f.cited.sourceUrl));
+const dateline = buildDateline({
+  citedLabel: monthYearLabel(maxDate),
+  sourceCount: uniqueSources.size,
+});
+
+const stale = allFacts.filter((e) => isStale(e.cited));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (e) =>
+          e.cited.stalenessDays ??
+          (e.cited.category ? DEFAULT_STALENESS_DAYS[e.cited.category] : 180),
+      ),
+    )
+  : null;
+
+// Breadcrumb: top crumb has no href (no /topics index page exists).
+const breadcrumbItems = [{ name: "Topics" }, { name: topic.title, href: `/topics/${topic.slug}` }];
+
+const citeLines = allFacts.map(({ path, cited }) => ({
+  sourceName: cited.sourceName,
+  verifiedDate: cited.verifiedDate,
+  citationUrl: `${canonical}#${path}`,
+}));
+
+const factsRows = topic.facts.map((fact) => ({
+  label: fact.label,
+  cited: fact.cited,
+}));
+
+const relatedLinks = topic.relatedSlugs
+  .map((slug) => {
+    const related = topicBySlug(slug);
+    if (!related) return null;
+    return { label: related.title, href: `/topics/${related.slug}` };
+  })
+  .filter((l): l is { label: string; href: string } => l !== null);
+
+const title = `${topic.title} | My Second Country`;
+
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: topic.title,
+    description: topic.context,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  topicDatasetJsonLd(topic, SITE),
+  ...(topic.definedTerm
+    ? [
+        definedTermJsonLd({
+          url: canonical,
+          name: topic.definedTerm.name,
+          description: topic.definedTerm.description,
+          siteUrl: SITE,
+        }),
+      ]
+    : []),
+  ...(topic.faqs && topic.faqs.length >= 2 ? [faqPageJsonLd(topic.faqs)] : []),
+];
+---
+
+<Base title={title} description={topic.context} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <Breadcrumb items={breadcrumbItems} />
+
+    <Masthead variant="topic" title={topic.title} dateline={dateline} />
+
+    <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
+
+    <section aria-labelledby="context-h">
+      <SectionHeading as="h2" id="context-h">Overview</SectionHeading>
+      <p class="context-text">{topic.context}</p>
+    </section>
+
+    <section aria-labelledby="facts-h">
+      <SectionHeading as="h2" id="facts-h">Cited facts</SectionHeading>
+      <FactsTable caption={`Cited facts for ${topic.title}`} rows={factsRows} />
+    </section>
+
+    <CiteThis lines={citeLines} />
+
+    {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+
+    <section aria-labelledby="how-to-read-h" class="how-to-read">
+      <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
+      <p>
+        Every figure above is a cited claim: a value, the named source, the date it was last
+        verified, and a confidence mark. Verified means an official statistical body or primary law.
+        Good means an official authority read through a secondary. Limited means a directional
+        figure to check yourself.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .context-text {
+      max-width: var(--measure);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted-strong);
+      margin: 0 0 0.5rem;
+    }
+    .how-to-read {
+      margin-top: 3rem;
+      padding: 1.4rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+    }
+    .how-to-read :global(.section-heading--heading) {
+      margin-top: 0;
+    }
+    .how-to-read p {
+      max-width: var(--measure);
+      margin: 0;
+      font-family: var(--font-serif);
+      color: var(--muted-strong);
+    }
+  </style>
+</Base>

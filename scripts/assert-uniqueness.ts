@@ -8,11 +8,13 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectTopicsCitedValues,
   type Place,
   placeById,
   places,
   qa,
   regimes,
+  topics,
 } from "@where/data";
 
 const MIN_UNIQUE = 4;
@@ -80,10 +82,23 @@ for (const entry of qa) {
   }
 }
 
+// topics pages have no parent; anti-thin floor is >= 4 distinct cited fields with sourceUrl.
+let topicsChecked = 0;
+for (const topic of topics) {
+  topicsChecked += 1;
+  const citedFields = collectTopicsCitedValues(topic).filter(({ cited }) => cited.sourceUrl);
+  if (citedFields.length < MIN_UNIQUE) {
+    console.error(
+      `THIN  ${topic.id}: only ${citedFields.length} cited field(s) (need ${MIN_UNIQUE}).`,
+    );
+    failures += 1;
+  }
+}
+
 if (failures > 0) {
   console.error(`\nassert-uniqueness: ${failures} thin page(s).`);
   process.exit(1);
 }
 console.log(
-  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked).`,
+  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked, ${topicsChecked} topic(s) checked).`,
 );

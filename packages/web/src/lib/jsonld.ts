@@ -2,11 +2,13 @@ import {
   type CitedValue,
   collectCitedValues,
   collectRegimeCitedValues,
+  collectTopicsCitedValues,
   type Place,
   placeById,
   placePath,
   type Regime,
   regimeFactId,
+  type Topic,
 } from "@where/data";
 import { CONFIDENCE_DISPLAY } from "./cited.ts";
 
@@ -239,6 +241,42 @@ export function placeDatasetJsonLd(place: Place, siteUrl: string): JsonLdNode {
         unitText: PLACE_FIELD_META[path]?.unitText,
         cited,
         id: `${url}#${path}`,
+      }),
+    ),
+  };
+}
+
+/**
+ * schema.org Dataset for a Topic page, with one enriched PropertyValue per cited fact.
+ * Mirrors placeDatasetJsonLd; dateModified = maxVerifiedDate(facts.map(f => f.cited)).
+ */
+export function topicDatasetJsonLd(topic: Topic, siteUrl: string): JsonLdNode {
+  const url = `${siteUrl}/topics/${topic.slug}`;
+  const facts = collectTopicsCitedValues(topic);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": `${url}#dataset`,
+    name: topic.title,
+    description: topic.context,
+    url,
+    isAccessibleForFree: true,
+    creator: ORG(siteUrl),
+    license: siteUrl,
+    isPartOf: DATA_CATALOG(siteUrl),
+    dateModified: maxVerifiedDate(facts.map((f) => f.cited)),
+    distribution: [
+      {
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: `${siteUrl}/data/topics/${topic.slug}.json`,
+      },
+    ],
+    variableMeasured: topic.facts.map((fact) =>
+      citedPropertyValue({
+        name: fact.label,
+        cited: fact.cited,
+        id: `${url}#${fact.key}`,
       }),
     ),
   };

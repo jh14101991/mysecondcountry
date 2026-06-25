@@ -8,9 +8,11 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectTopicsCitedValues,
   places,
   qa,
   regimes,
+  topics,
 } from "@where/data";
 
 const UA = "MySecondCountryBot/1.0 (+https://mysecondcountry.com; citation link check)";
@@ -25,6 +27,9 @@ for (const regime of regimes) {
 }
 for (const entry of qa) {
   for (const { cited } of collectQaCitedValues(entry)) urls.add(cited.sourceUrl);
+}
+for (const topic of topics) {
+  for (const { cited } of collectTopicsCitedValues(topic)) urls.add(cited.sourceUrl);
 }
 
 let hardFail = 0;
