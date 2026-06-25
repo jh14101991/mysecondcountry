@@ -1,0 +1,175 @@
+---
+import {
+  collectQaCitedValues,
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  type Qa,
+  qa,
+  qaBySlug,
+} from "@where/data";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import CiteThis from "../../components/CiteThis.astro";
+import DirectAnswer from "../../components/DirectAnswer.astro";
+import FactsTable from "../../components/FactsTable.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Masthead from "../../components/Masthead.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Base from "../../layouts/Base.astro";
+import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  maxVerifiedDate,
+  qaPageJsonLd,
+} from "../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return qa.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+interface Props {
+  entry: Qa;
+}
+const { entry } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/answers/${entry.slug}`;
+
+const allFacts = collectQaCitedValues(entry);
+const maxDate = maxVerifiedDate(allFacts.map((f) => f.cited));
+const uniqueSources = new Set(allFacts.map((f) => f.cited.sourceUrl));
+const dateline = buildDateline({
+  citedLabel: monthYearLabel(maxDate),
+  sourceCount: uniqueSources.size,
+});
+
+const stale = allFacts.filter((e) => isStale(e.cited));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (e) =>
+          e.cited.stalenessDays ??
+          (e.cited.category ? DEFAULT_STALENESS_DAYS[e.cited.category] : 180),
+      ),
+    )
+  : null;
+
+const answerFact = entry.answerFact;
+const answerWithSource = `${entry.answer} (${answerFact.sourceName}, verified ${answerFact.verifiedDate})`;
+
+const breadcrumbItems = [
+  { name: "Answers", href: "/answers" },
+  { name: entry.question, href: `/answers/${entry.slug}` },
+];
+
+const citeLines = allFacts.map(({ path, cited }) => ({
+  sourceName: cited.sourceName,
+  verifiedDate: cited.verifiedDate,
+  citationUrl: `${canonical}#${path}`,
+}));
+
+const supportingRows = entry.supportingFacts.map((cited) => ({
+  label: cited.sourceName,
+  cited,
+}));
+
+const relatedLinks = entry.relatedSlugs
+  .map((slug) => {
+    const related = qaBySlug(slug);
+    if (!related) return null;
+    return { label: related.question, href: `/answers/${related.slug}` };
+  })
+  .filter((l): l is { label: string; href: string } => l !== null);
+
+const title = `${entry.question} | My Second Country`;
+
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: entry.question,
+    description: entry.answer,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  qaPageJsonLd({
+    url: canonical,
+    question: entry.question,
+    answer: answerWithSource,
+    siteUrl: SITE,
+  }),
+];
+---
+
+<Base title={title} description={entry.answer} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <Breadcrumb items={breadcrumbItems} />
+
+    <Masthead variant="topic" title={entry.question} dateline={dateline} />
+
+    <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
+
+    <DirectAnswer question={entry.question}>
+      <p>{entry.answer}</p>
+      <p class="source-note">{answerFact.sourceName}, verified {answerFact.verifiedDate}</p>
+    </DirectAnswer>
+
+    <section aria-labelledby="rule-h">
+      <SectionHeading as="h2" id="rule-h">The rule</SectionHeading>
+      <p class="rule-text">{entry.rule}</p>
+    </section>
+
+    <section aria-labelledby="supporting-facts-h">
+      <SectionHeading as="h2" id="supporting-facts-h">Supporting facts</SectionHeading>
+      <FactsTable caption={`Cited supporting facts for this answer`} rows={supportingRows} />
+    </section>
+
+    <CiteThis lines={citeLines} />
+
+    {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+
+    <section aria-labelledby="how-to-read-h" class="how-to-read">
+      <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
+      <p>
+        Every figure above is a cited claim: a value, the named source, the date it was last
+        verified, and a confidence mark. Verified means an official statistical body or primary law.
+        Good means an official authority read through a secondary. Limited means a directional
+        figure to check yourself.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .source-note {
+      max-width: var(--measure);
+      color: var(--muted-foreground);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    .rule-text {
+      max-width: var(--measure);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted-strong);
+      margin: 0 0 0.5rem;
+    }
+    .how-to-read {
+      margin-top: 3rem;
+      padding: 1.4rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+    }
+    .how-to-read :global(.section-heading--heading) {
+      margin-top: 0;
+    }
+    .how-to-read p {
+      max-width: var(--measure);
+      margin: 0;
+      font-family: var(--font-serif);
+      color: var(--muted-strong);
+    }
+  </style>
+</Base>

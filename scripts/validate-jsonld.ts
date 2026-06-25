@@ -97,10 +97,55 @@ for (const file of regimePages) {
   }
 }
 
+const answerPages = htmlFiles().filter((f) => f.includes("/answers/"));
+
+for (const file of answerPages) {
+  const html = read(file);
+  const blocks = [
+    ...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
+  ].map((m) => m[1]);
+
+  if (blocks.length === 0) {
+    console.error(`NO JSON-LD  ${rel(file)}`);
+    failures += 1;
+    continue;
+  }
+
+  let hasQaPage = false;
+  for (const block of blocks) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(block ?? "");
+    } catch {
+      console.error(`BAD JSON-LD  ${rel(file)}`);
+      failures += 1;
+      continue;
+    }
+    const nodes = Array.isArray(parsed) ? parsed : [parsed];
+    for (const node of nodes as Record<string, unknown>[]) {
+      if (node["@type"] !== "QAPage") continue;
+      hasQaPage = true;
+      if (!node["@context"]) {
+        console.error(`QAPage missing @context  ${rel(file)}`);
+        failures += 1;
+      }
+      const mainEntity = node["mainEntity"] as Record<string, unknown> | undefined;
+      if (!mainEntity || typeof mainEntity["name"] !== "string" || !mainEntity["name"]) {
+        console.error(`QAPage missing question  ${rel(file)}`);
+        failures += 1;
+      }
+    }
+  }
+  if (!hasQaPage) {
+    console.error(`No QAPage node  ${rel(file)}`);
+    failures += 1;
+  }
+}
+
 if (failures > 0) {
   console.error(`\nvalidate-jsonld: ${failures} problem(s).`);
   process.exit(1);
 }
 console.log(
-  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD.`,
+  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD, ${answerPages.length} answer page(s) carry valid QAPage JSON-LD.`,
 );

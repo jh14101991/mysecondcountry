@@ -7,9 +7,11 @@ import {
   ageInDays,
   type CitedValue,
   collectCitedValues,
+  collectQaCitedValues,
   collectRegimeCitedValues,
   DEFAULT_STALENESS_DAYS,
   places,
+  qa,
   regimes,
 } from "@where/data";
 
@@ -47,6 +49,21 @@ for (const regime of regimes) {
     if (age > limit) {
       console.error(
         `STALE  ${regime.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
+      );
+      failures += 1;
+    }
+  }
+}
+
+for (const entry of qa) {
+  for (const { path, cited } of collectQaCitedValues(entry)) {
+    if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
+    if (cited.confidence === "low") continue;
+    const limit = limitFor(cited);
+    const age = ageInDays(cited.verifiedDate);
+    if (age > limit) {
+      console.error(
+        `STALE  ${entry.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
       );
       failures += 1;
     }

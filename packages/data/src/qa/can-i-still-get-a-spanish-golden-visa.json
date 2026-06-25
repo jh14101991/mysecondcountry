@@ -1,0 +1,16 @@
+{
+  "id": "can-i-still-get-a-spanish-golden-visa",
+  "slug": "can-i-still-get-a-spanish-golden-visa",
+  "question": "Can you still get a Spanish golden visa?",
+  "polarity": "no",
+  "answer": "No. Spain abolished its golden visa on 3 April 2025 under Organic Law 1/2025, ending residence permits tied to real estate investment over 500,000 euros.",
+  "answerFact": { "ref": "place:es#residency.goldenVisa" },
+  "supportingFacts": [
+    { "ref": "place:es#residency.digitalNomadVisa" },
+    { "ref": "place:es#tax.specialRegime" },
+    { "ref": "place:es#tax.headlinePersonalIncomeTaxRate" }
+  ],
+  "rule": "Spain ended its investor residence permit (golden visa) on 3 April 2025; people relocating now use ordinary routes such as the telework (digital nomad) visa or a non-lucrative visa, with their own income and tax rules.",
+  "category": "residency",
+  "relatedSlugs": ["is-portugals-nhr-tax-regime-still-available"]
+}
