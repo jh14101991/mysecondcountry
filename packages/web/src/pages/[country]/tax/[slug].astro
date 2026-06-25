@@ -14,13 +14,13 @@ import Base from "../../../layouts/Base.astro";
 import { regimeDatasetJsonLd } from "../../../lib/jsonld.ts";
 
 export function getStaticPaths() {
-  return regimes.map((regime) => ({
-    params: {
-      country: placeById(regime.countryId)?.slug,
-      slug: regime.slug,
-    },
-    props: { regime },
-  }));
+  return regimes.map((regime) => {
+    const country = placeById(regime.countryId)?.slug;
+    if (!country) {
+      throw new Error(`Regime ${regime.id} references unknown countryId "${regime.countryId}"`);
+    }
+    return { params: { country, slug: regime.slug }, props: { regime } };
+  });
 }
 
 interface Props {

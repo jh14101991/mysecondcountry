@@ -60,7 +60,11 @@ export function placeJsonLd(place: Place, siteUrl: string): JsonLdNode {
  * The @id and url use the canonical mysecondcountry.com host.
  */
 export function regimeDatasetJsonLd(regime: Regime, siteUrl: string): JsonLdNode {
-  const country = placeById(regime.countryId)?.slug;
+  const countryPlace = placeById(regime.countryId);
+  if (!countryPlace) {
+    throw new Error(`Regime ${regime.id} references unknown countryId "${regime.countryId}"`);
+  }
+  const country = countryPlace.slug;
   const url = `${siteUrl}/${country}/tax/${regime.slug}`;
   return {
     "@context": "https://schema.org",

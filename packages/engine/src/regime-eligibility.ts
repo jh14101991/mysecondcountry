@@ -15,6 +15,7 @@ export type EligibilityCard = {
  * FENCE (ADR-0008): framing is generic and never issues a per-user verdict.
  */
 export function regimeEligibilityCards(regime: Regime): EligibilityCard[] {
+  // Card order follows the regime JSON's eligibility field declaration order (via collectRegimeCitedValues's walk); the test pins this contract.
   return collectRegimeCitedValues(regime)
     .filter(({ path }) => path.startsWith("eligibility."))
     .map(({ path, cited }) => {
