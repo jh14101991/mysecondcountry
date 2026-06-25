@@ -1,0 +1,42 @@
+---
+import { shortlists } from "@where/data";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/shortlists`;
+const title = "Shortlists | My Second Country";
+const description =
+  "Ranked, cited shortlists of EU countries by tax, income, and residency criteria. Every result is derived from sourced place data.";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    url: canonical,
+    name: "Shortlists: ranked EU countries by cited criteria",
+    itemListElement: shortlists.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: s.title,
+      url: `${SITE}/shortlists/${s.slug}`,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <h1>Shortlists</h1>
+
+  <FenceBlock hasLegalClaims={true} />
+
+  <ul>
+    {
+      shortlists.map((shortlist) => (
+        <li>
+          <a href={`/shortlists/${shortlist.slug}`}>{shortlist.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

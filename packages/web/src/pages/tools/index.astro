@@ -1,0 +1,43 @@
+---
+import { tools } from "@where/data";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/tools`;
+const title = "Tools | My Second Country";
+const description =
+  "Step-by-step eligibility checklists for EU tax regimes. Each step cites the official requirement and its source.";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    url: canonical,
+    name: "EU tax regime eligibility checklists",
+    description,
+    step: tools.map((tool, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: tool.title,
+      text: tool.intro,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <h1>Tools</h1>
+
+  <FenceBlock hasLegalClaims={true} />
+
+  <ul>
+    {
+      tools.map((tool) => (
+        <li>
+          <a href={`/tools/${tool.slug}`}>{tool.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

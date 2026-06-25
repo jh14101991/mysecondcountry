@@ -42,6 +42,42 @@ const featured = places;
     </a>
   </section>
 
+  <section aria-labelledby="explore-h">
+    <h2 id="explore-h">Explore</h2>
+    <ul class="hub-list">
+      <li>
+        <a href="/answers">
+          <span class="hub-title">Cited answers</span>
+          <span class="hub-desc">Short, sourced answers to common tax and visa questions.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/topics">
+          <span class="hub-title">Topics</span>
+          <span class="hub-desc">In-depth guides to tax regimes, visa rules, and residency criteria.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/tax">
+          <span class="hub-title">Tax regimes</span>
+          <span class="hub-desc">Cited regime pages: rates, durations, and eligibility conditions.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/tools">
+          <span class="hub-title">Tools</span>
+          <span class="hub-desc">Step-by-step eligibility checklists with cited requirements.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/shortlists">
+          <span class="hub-title">Shortlists</span>
+          <span class="hub-desc">Ranked country lists derived from sourced place data.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
   <section aria-labelledby="places-h">
     <h2 id="places-h">Published places</h2>
     <ul class="place-list">
@@ -124,6 +160,38 @@ const featured = places;
       margin-top: 0.3rem;
       font-weight: 600;
       color: var(--terracotta-dark);
+    }
+    .hub-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .hub-list a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      text-decoration: none;
+      background: var(--paper);
+    }
+    .hub-list a:hover {
+      border-color: var(--terracotta);
+    }
+    .hub-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .hub-desc {
+      font-size: 0.875rem;
+      color: var(--ink-soft);
+      line-height: 1.4;
     }
     .place-list {
       list-style: none;

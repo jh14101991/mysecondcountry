@@ -59,7 +59,7 @@ const answerFact = entry.answerFact;
 const answerWithSource = `${entry.answer} (${answerFact.sourceName}, verified ${answerFact.verifiedDate})`;
 
 const breadcrumbItems = [
-  { name: "Answers" },
+  { name: "Answers", href: "/answers" },
   { name: entry.question, href: `/answers/${entry.slug}` },
 ];
 

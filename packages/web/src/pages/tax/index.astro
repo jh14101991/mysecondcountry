@@ -1,0 +1,41 @@
+---
+import { placeById, regimes } from "@where/data";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/tax`;
+const title = "Tax regimes | My Second Country";
+const description =
+  "Cited guides to special tax regimes for foreign residents and pensioners in EU countries. Every rate and condition is sourced.";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    url: canonical,
+    name: "Tax regimes: cited EU special tax regime guides",
+    description,
+  },
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <h1>Tax regimes</h1>
+
+  <FenceBlock hasLegalClaims={true} />
+
+  <ul>
+    {
+      regimes.map((regime) => {
+        const country = placeById(regime.countryId);
+        const href = country ? `/${country.slug}/tax/${regime.slug}` : "#";
+        return (
+          <li>
+            <a href={href}>{regime.name}</a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Base>
