@@ -10,7 +10,7 @@
     { "ref": "place:es#tax.specialRegime" },
     { "ref": "place:es#tax.headlinePersonalIncomeTaxRate" }
   ],
-  "rule": "Spain ended its investor residence permit (golden visa) on 3 April 2025; people relocating now use ordinary routes such as the telework (digital nomad) visa or a non-lucrative visa, with their own income and tax rules.",
+  "rule": "Spain ended its investor residence permit (golden visa) on 3 April 2025; people relocating now use ordinary routes such as the telework (digital nomad) visa, which carries its own income and tax rules.",
   "category": "residency",
   "relatedSlugs": ["is-portugals-nhr-tax-regime-still-available"]
 }
