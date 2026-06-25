@@ -11,6 +11,8 @@ export * from "./regimes/index.js";
 export * from "./regimes/schema.js";
 export * from "./resolve.js";
 export * from "./schema.js";
+export * from "./shortlists/index.js";
+export * from "./shortlists/schema.js";
 export * from "./topics/facts.js";
 export * from "./topics/index.js";
 export * from "./topics/schema.js";

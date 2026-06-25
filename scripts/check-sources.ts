@@ -12,8 +12,10 @@ import {
   places,
   qa,
   regimes,
+  shortlists,
   topics,
 } from "@where/data";
+import { evaluateShortlist } from "@where/engine";
 
 const UA = "MySecondCountryBot/1.0 (+https://mysecondcountry.com; citation link check)";
 const TIMEOUT_MS = 12_000;
@@ -30,6 +32,14 @@ for (const entry of qa) {
 }
 for (const topic of topics) {
   for (const { cited } of collectTopicsCitedValues(topic)) urls.add(cited.sourceUrl);
+}
+// Shortlists derive cited values from Place data via the engine; collect unique source URLs.
+const countryPlaces = places.filter((p) => p.granularity === "country");
+for (const shortlist of shortlists) {
+  const items = evaluateShortlist(shortlist.constraint, countryPlaces);
+  for (const item of items) {
+    for (const field of item.citedFields) urls.add(field.cited.sourceUrl);
+  }
 }
 
 let hardFail = 0;

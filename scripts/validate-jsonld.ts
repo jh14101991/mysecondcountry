@@ -129,8 +129,8 @@ for (const file of answerPages) {
         console.error(`QAPage missing @context  ${rel(file)}`);
         failures += 1;
       }
-      const mainEntity = node["mainEntity"] as Record<string, unknown> | undefined;
-      if (!mainEntity || typeof mainEntity["name"] !== "string" || !mainEntity["name"]) {
+      const mainEntity = node.mainEntity as Record<string, unknown> | undefined;
+      if (!mainEntity || typeof mainEntity.name !== "string" || !mainEntity.name) {
         console.error(`QAPage missing question  ${rel(file)}`);
         failures += 1;
       }
@@ -188,10 +188,55 @@ for (const file of topicPages) {
   }
 }
 
+const shortlistPages = htmlFiles().filter((f) => f.includes("/shortlists/"));
+
+for (const file of shortlistPages) {
+  const html = read(file);
+  const blocks = [
+    ...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
+  ].map((m) => m[1]);
+
+  if (blocks.length === 0) {
+    console.error(`NO JSON-LD  ${rel(file)}`);
+    failures += 1;
+    continue;
+  }
+
+  let hasItemList = false;
+  for (const block of blocks) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(block ?? "");
+    } catch {
+      console.error(`BAD JSON-LD  ${rel(file)}`);
+      failures += 1;
+      continue;
+    }
+    const nodes = Array.isArray(parsed) ? parsed : [parsed];
+    for (const node of nodes as Record<string, unknown>[]) {
+      if (node["@type"] !== "ItemList") continue;
+      hasItemList = true;
+      if (!node["@context"]) {
+        console.error(`ItemList missing @context  ${rel(file)}`);
+        failures += 1;
+      }
+      const itemListElement = node.itemListElement;
+      if (!Array.isArray(itemListElement) || itemListElement.length === 0) {
+        console.error(`ItemList missing non-empty itemListElement  ${rel(file)}`);
+        failures += 1;
+      }
+    }
+  }
+  if (!hasItemList) {
+    console.error(`No ItemList node  ${rel(file)}`);
+    failures += 1;
+  }
+}
+
 if (failures > 0) {
   console.error(`\nvalidate-jsonld: ${failures} problem(s).`);
   process.exit(1);
 }
 console.log(
-  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD, ${answerPages.length} answer page(s) carry valid QAPage JSON-LD, ${topicPages.length} topic page(s) carry valid Dataset JSON-LD.`,
+  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD, ${answerPages.length} answer page(s) carry valid QAPage JSON-LD, ${topicPages.length} topic page(s) carry valid Dataset JSON-LD, ${shortlistPages.length} shortlist page(s) carry valid ItemList JSON-LD.`,
 );

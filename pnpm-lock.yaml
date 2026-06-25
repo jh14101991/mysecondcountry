@@ -20,6 +20,9 @@ importers:
       '@where/data':
         specifier: workspace:*
         version: link:packages/data
+      '@where/engine':
+        specifier: workspace:*
+        version: link:packages/engine
       axe-core:
         specifier: ^4.10.2
         version: 4.12.1
@@ -51,6 +54,9 @@ importers:
       '@types/node':
         specifier: ^22.10.0
         version: 22.20.0
+      '@where/engine':
+        specifier: workspace:*
+        version: link:../engine
 
   packages/engine:
     dependencies:

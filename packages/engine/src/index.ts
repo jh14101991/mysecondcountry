@@ -10,6 +10,13 @@ export {
   screenPlace,
 } from "./screen.js";
 export {
+  evaluateShortlist,
+  type ShortlistField,
+  type ShortlistFilter,
+  type ShortlistItem,
+  type ShortlistSpec,
+} from "./shortlist.js";
+export {
   CONFIDENCE_FACTOR,
   DEFAULT_MATCH_WEIGHTS,
   type MatchDimension,

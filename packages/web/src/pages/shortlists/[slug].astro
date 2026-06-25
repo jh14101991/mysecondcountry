@@ -1,0 +1,231 @@
+---
+import {
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  placePath,
+  places,
+  type Shortlist,
+  shortlistBySlug,
+  shortlists,
+  variableByKey,
+} from "@where/data";
+import { evaluateShortlist } from "@where/engine";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import CiteThis from "../../components/CiteThis.astro";
+import FactsTable from "../../components/FactsTable.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Masthead from "../../components/Masthead.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Base from "../../layouts/Base.astro";
+import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import {
+  articleJsonLd,
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  maxVerifiedDate,
+} from "../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return shortlists.map((shortlist) => ({
+    params: { slug: shortlist.slug },
+    props: { shortlist },
+  }));
+}
+
+interface Props {
+  shortlist: Shortlist;
+}
+
+const { shortlist } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/shortlists/${shortlist.slug}`;
+
+// Evaluate the shortlist against country-level places to get ranked, cited items
+const countryPlaces = places.filter((p) => p.granularity === "country");
+const items = evaluateShortlist(shortlist.constraint, countryPlaces);
+
+// Collect all cited values for dateline and CiteThis
+const allCited = items.flatMap((item) => item.citedFields.map((f) => f.cited));
+const maxDate = maxVerifiedDate(allCited);
+const uniqueSources = new Set(allCited.map((c) => c.sourceUrl));
+const dateline = buildDateline({
+  citedLabel: monthYearLabel(maxDate),
+  sourceCount: uniqueSources.size,
+});
+
+const stale = allCited.filter((c) => isStale(c));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (c) => c.stalenessDays ?? (c.category ? DEFAULT_STALENESS_DAYS[c.category] : 180),
+      ),
+    )
+  : null;
+
+const breadcrumbItems = [
+  { name: "Shortlists", href: "/shortlists" },
+  { name: shortlist.title, href: `/shortlists/${shortlist.slug}` },
+];
+
+const citeLines = items.flatMap((item) =>
+  item.citedFields.map((f) => ({
+    sourceName: f.cited.sourceName,
+    verifiedDate: f.cited.verifiedDate,
+    citationUrl: `${canonical}#${item.placeId}-${f.key}`,
+  })),
+);
+
+const relatedLinks = shortlist.relatedSlugs
+  .map((slug) => {
+    const related = shortlistBySlug(slug);
+    if (!related) return null;
+    return { label: related.title, href: `/shortlists/${related.slug}` };
+  })
+  .filter((l): l is { label: string; href: string } => l !== null);
+
+const title = `${shortlist.title} | My Second Country`;
+
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: shortlist.title,
+    description: shortlist.intro,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  itemListJsonLd({
+    url: canonical,
+    items: items.map((item) => {
+      const place = countryPlaces.find((p) => p.id === item.placeId);
+      return {
+        position: item.rank,
+        name: item.name,
+        url: place ? `${SITE}${placePath(place)}` : `${SITE}/places/${item.placeId}`,
+      };
+    }),
+  }),
+];
+---
+
+<Base title={title} description={shortlist.metaDescription ?? shortlist.intro.slice(0, 155)} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <Breadcrumb items={breadcrumbItems} />
+
+    <Masthead variant="topic" title={shortlist.title} dateline={dateline} />
+
+    <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
+
+    <section aria-labelledby="intro-h">
+      <SectionHeading as="h2" id="intro-h">About this shortlist</SectionHeading>
+      <p class="intro-text">{shortlist.intro}</p>
+    </section>
+
+    <section aria-labelledby="ranked-h">
+      <SectionHeading as="h2" id="ranked-h">Ranked results</SectionHeading>
+      {items.length === 0 && (
+        <p class="no-results">No places currently match this constraint. Check the screener for a broader search.</p>
+      )}
+      <ol class="ranked-list">
+        {items.map((item) => {
+          const place = countryPlaces.find((p) => p.id === item.placeId);
+          const href = place ? placePath(place) : `/places/${item.placeId}`;
+          const rows = item.citedFields
+            .filter((f) => typeof f.cited.value === "number" || typeof f.cited.value === "string")
+            .map((f) => ({
+              label: f.label,
+              cited: f.cited,
+              unit: variableByKey(f.key)?.unit,
+            }));
+          return (
+            <li class="ranked-item" id={item.placeId}>
+              <span class="ranked-number">{item.rank}</span>
+              <div class="ranked-body">
+                <h3 class="ranked-name">
+                  <a href={href}>{item.name}</a>
+                </h3>
+                {rows.length > 0 && (
+                  <FactsTable
+                    caption={`Cited facts for ${item.name}`}
+                    rows={rows}
+                  />
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+
+    <section aria-labelledby="screener-link-h">
+      <SectionHeading as="h2" id="screener-link-h">Run the screener yourself</SectionHeading>
+      <p class="screener-note">
+        The screener at <a href="/screener">/screener</a> lets you set your own income, cost,
+        climate, and tax filters and see the ranked results for all places in the dataset.
+      </p>
+    </section>
+
+    <CiteThis lines={citeLines} />
+
+    {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+  </article>
+
+  <style>
+    .intro-text {
+      max-width: var(--measure);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted-strong);
+      margin: 0 0 0.5rem;
+    }
+    .no-results {
+      font-family: var(--font-serif);
+      color: var(--muted-foreground);
+      font-style: italic;
+    }
+    .ranked-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 2rem;
+    }
+    .ranked-item {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0 1rem;
+      align-items: start;
+    }
+    .ranked-number {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--muted-foreground);
+      padding-top: 0.15rem;
+    }
+    .ranked-body {
+      min-width: 0;
+    }
+    .ranked-name {
+      font-family: var(--font-ui);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+    .ranked-name a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .ranked-name a:hover {
+      text-decoration: underline;
+    }
+    .screener-note {
+      max-width: var(--measure);
+      font-family: var(--font-serif);
+      color: var(--muted-strong);
+    }
+  </style>
+</Base>

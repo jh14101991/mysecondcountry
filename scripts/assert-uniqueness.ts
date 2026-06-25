@@ -14,8 +14,10 @@ import {
   places,
   qa,
   regimes,
+  shortlists,
   topics,
 } from "@where/data";
+import { evaluateShortlist } from "@where/engine";
 
 const MIN_UNIQUE = 4;
 
@@ -95,10 +97,29 @@ for (const topic of topics) {
   }
 }
 
+// Shortlists: anti-thin floor is >= 4 total cited fields across all ranked items.
+// The engine derives these from Place data; country-level places match the page output.
+const countryPlaces = places.filter((p) => p.granularity === "country");
+let shortlistsChecked = 0;
+for (const shortlist of shortlists) {
+  shortlistsChecked += 1;
+  const items = evaluateShortlist(shortlist.constraint, countryPlaces);
+  const totalFields = items.reduce(
+    (sum, item) => sum + item.citedFields.filter((f) => f.cited.sourceUrl).length,
+    0,
+  );
+  if (totalFields < MIN_UNIQUE) {
+    console.error(
+      `THIN  ${shortlist.id}: only ${totalFields} total cited field(s) across items (need ${MIN_UNIQUE}).`,
+    );
+    failures += 1;
+  }
+}
+
 if (failures > 0) {
   console.error(`\nassert-uniqueness: ${failures} thin page(s).`);
   process.exit(1);
 }
 console.log(
-  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked, ${topicsChecked} topic(s) checked).`,
+  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked, ${topicsChecked} topic(s) checked, ${shortlistsChecked} shortlist(s) checked).`,
 );

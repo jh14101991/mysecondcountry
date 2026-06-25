@@ -14,8 +14,10 @@ import {
   places,
   qa,
   regimes,
+  shortlists,
   topics,
 } from "@where/data";
+import { evaluateShortlist } from "@where/engine";
 
 const HIGH_LIABILITY = new Set(["visa", "tax", "residency"]);
 
@@ -83,6 +85,28 @@ for (const topic of topics) {
         `STALE  ${topic.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
       );
       failures += 1;
+    }
+  }
+}
+
+// Shortlists derive their cited values from Place data via the engine (no direct storage).
+// Country-level places are used so the engine evaluates against the same set as the page.
+const countryPlaces = places.filter((p) => p.granularity === "country");
+for (const shortlist of shortlists) {
+  const items = evaluateShortlist(shortlist.constraint, countryPlaces);
+  for (const item of items) {
+    for (const field of item.citedFields) {
+      const cited = field.cited;
+      if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
+      if (cited.confidence === "low") continue;
+      const limit = limitFor(cited);
+      const age = ageInDays(cited.verifiedDate);
+      if (age > limit) {
+        console.error(
+          `STALE  ${shortlist.id} ${item.placeId}/${field.key}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
+        );
+        failures += 1;
+      }
     }
   }
 }

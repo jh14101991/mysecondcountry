@@ -1,0 +1,12 @@
+{
+  "id": "eu-expat-tax-regimes-by-rate",
+  "slug": "eu-expat-tax-regimes-by-rate",
+  "title": "EU countries with a special expat tax regime, ranked by headline tax rate",
+  "intro": "Several EU countries run a special inbound or pension tax regime that applies a reduced or flat rate for qualifying new residents. This shortlist covers countries in the dataset that carry such a regime and ranks them by their headline personal income tax rate, lowest first, using the figure from PwC Worldwide Tax Summaries. The special regime rate itself may differ from the headline; see each country page and the linked tax regime pages for the scheme-specific rate. Run the screener at /screener to apply eligibility and income filters.",
+  "metaDescription": "EU countries with a published special inbound or pension tax regime for new residents, ranked by their headline personal income tax rate from lowest to highest.",
+  "constraint": {
+    "filters": [{ "key": "special_tax_regime", "op": "==", "value": true }],
+    "rank": { "byKey": "top_income_tax_rate", "dir": "asc" }
+  },
+  "relatedSlugs": ["eu-residency-under-3700-a-month"]
+}

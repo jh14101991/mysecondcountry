@@ -247,6 +247,28 @@ export function placeDatasetJsonLd(place: Place, siteUrl: string): JsonLdNode {
 }
 
 /**
+ * schema.org ItemList for a shortlist page. Each item is a ranked ListItem pointing to a
+ * place URL. Required primary type for /shortlists/ pages (validate-jsonld guards for it).
+ */
+export function itemListJsonLd(opts: {
+  url: string;
+  items: { position: number; name: string; url: string }[];
+}): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${opts.url}#list`,
+    url: opts.url,
+    itemListElement: opts.items.map((item) => ({
+      "@type": "ListItem",
+      position: item.position,
+      name: item.name,
+      url: item.url,
+    })),
+  };
+}
+
+/**
  * schema.org Dataset for a Topic page, with one enriched PropertyValue per cited fact.
  * Mirrors placeDatasetJsonLd; dateModified = maxVerifiedDate(facts.map(f => f.cited)).
  */

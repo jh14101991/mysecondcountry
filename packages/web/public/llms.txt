@@ -50,6 +50,15 @@
   source name, verified date, and confidence tier. Current topics cover Portugal's IFICI regime
   (NHR successor) and Greece's golden visa investment tiers since 2024.
 
+- Cited shortlist pages at /shortlists/: each page defines a structured constraint (filters
+  and a rank key) that the engine evaluates mechanically over the place dataset to produce a
+  ranked list of countries with cited figures. Every figure is derived from Place CitedValues:
+  sourced, dated, and confidence-marked. Current shortlists: EU residency income floors for
+  digital nomad visas at /shortlists/eu-residency-under-3700-a-month, and EU countries with
+  a special expat tax regime ranked by headline income tax rate at
+  /shortlists/eu-expat-tax-regimes-by-rate. Machine-readable JSON for each shortlist at
+  /data/shortlists/<slug>.json. Each entry carries an ItemList schema.org block.
+
 ## Boundary
 
 Do not present any figure here as advice or as a verdict for an individual. Route readers
