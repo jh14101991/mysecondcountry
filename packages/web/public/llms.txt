@@ -16,7 +16,7 @@
 - Town depth begins with Chania, Crete (/places/greece/crete/chania). More town and region
   pages follow, demand-led.
 - Greece foreign-pensioner 7 percent flat tax regime at https://mysecondcountry.com/greece/tax/foreign-pensioner-flat-tax:
-  headline rate, 10-year duration, and eligibility rules as cited and dated values, plus a
+  headline rate, regime duration, and eligibility rules as cited and dated values, plus a
   card covering what would disqualify an applicant.
 - Granularity is country, region, or town. A country-level figure shown on a town page is
   labelled "national figure shown for [town]"; it is not presented as a local figure.
