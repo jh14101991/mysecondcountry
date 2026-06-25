@@ -88,11 +88,10 @@ export function regimeDatasetJsonLd(regime: Regime, siteUrl: string): JsonLdNode
         contentUrl: `${siteUrl}/data/regimes/${regime.slug}.json`,
       },
     ],
-    variableMeasured: collectRegimeCitedValues(regime).map(({ path, cited }) => ({
+    variableMeasured: collectRegimeCitedValues(regime).map(({ path }) => ({
       "@type": "PropertyValue",
       "@id": regimeFactId(regime.id, path),
       name: path,
-      value: cited.value,
     })),
   };
 }
