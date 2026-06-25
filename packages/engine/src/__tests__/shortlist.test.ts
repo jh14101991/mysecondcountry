@@ -2,14 +2,14 @@ import { places } from "@where/data";
 import { describe, expect, it } from "vitest";
 import { evaluateShortlist } from "../shortlist.js";
 
-// Real places: gr (3500), pt (3680), es (2763) for dnv_income_floor
-// special_tax_regime == true for all three
+// Real places: it (2066), es (2763), gr (3500), pt (3680) for dnv_income_floor
+// special_tax_regime == true for all four country places
 // Note: Chania (gr-crete-chania) inherits the gr dnv_income_floor (3500) and also qualifies.
 
 const countryPlaces = places.filter((p) => p.granularity === "country");
 
 describe("evaluateShortlist", () => {
-  it("dnv_income_floor <= 3700 ranked asc returns Spain, Greece, Portugal in that order (country places)", () => {
+  it("dnv_income_floor <= 3700 ranked asc returns Italy, Spain, Greece, Portugal in that order (country places)", () => {
     const items = evaluateShortlist(
       {
         filters: [{ key: "dnv_income_floor", op: "<=", value: 3700 }],
@@ -18,19 +18,21 @@ describe("evaluateShortlist", () => {
       countryPlaces,
     );
 
-    // All three countries qualify
-    expect(items.length).toBeGreaterThanOrEqual(3);
+    // All four countries qualify
+    expect(items.length).toBeGreaterThanOrEqual(4);
 
-    // First three are Spain (2763), Greece (3500), Portugal (3680) in ascending order
-    const [first, second, third] = items;
-    expect(first?.name).toBe("Spain");
-    expect(second?.name).toBe("Greece");
-    expect(third?.name).toBe("Portugal");
+    // First four are Italy (2066), Spain (2763), Greece (3500), Portugal (3680) in ascending order
+    const [first, second, third, fourth] = items;
+    expect(first?.name).toBe("Italy");
+    expect(second?.name).toBe("Spain");
+    expect(third?.name).toBe("Greece");
+    expect(fourth?.name).toBe("Portugal");
 
     // Ranks are sequential
     expect(first?.rank).toBe(1);
     expect(second?.rank).toBe(2);
     expect(third?.rank).toBe(3);
+    expect(fourth?.rank).toBe(4);
   });
 
   it("each item's citedFields includes dnv_income_floor CitedValue with a sourceUrl", () => {
@@ -49,7 +51,7 @@ describe("evaluateShortlist", () => {
     }
   });
 
-  it("special_tax_regime == true returns 3 items when filtered to country places", () => {
+  it("special_tax_regime == true returns 4 items when filtered to country places", () => {
     const items = evaluateShortlist(
       {
         filters: [{ key: "special_tax_regime", op: "==", value: true }],
@@ -58,11 +60,12 @@ describe("evaluateShortlist", () => {
       countryPlaces,
     );
 
-    // gr, pt, es all have special_tax_regime
-    expect(items).toHaveLength(3);
+    // gr, pt, es, it all have special_tax_regime
+    expect(items).toHaveLength(4);
     expect(items.map((i) => i.name)).toContain("Greece");
     expect(items.map((i) => i.name)).toContain("Portugal");
     expect(items.map((i) => i.name)).toContain("Spain");
+    expect(items.map((i) => i.name)).toContain("Italy");
   });
 
   it("returns empty array when no places match", () => {

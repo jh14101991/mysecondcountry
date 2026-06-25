@@ -1,0 +1,51 @@
+{
+  "id": "italy-pensioner-7-percent-flat-tax",
+  "slug": "pensioner-7-percent-flat-tax",
+  "name": "Italy 7% flat tax for foreign pensioners (southern Italy)",
+  "countryId": "it",
+  "regimeType": "tax",
+  "rateType": "percent",
+  "incomeBasis": "foreign-source income",
+  "headlineRate": {
+    "value": 7,
+    "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+    "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax"
+  },
+  "durationYears": {
+    "value": 10,
+    "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+    "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+    "verifiedDate": "2026-06-25",
+    "confidence": "medium",
+    "granularity": "country",
+    "category": "tax",
+    "excerpt": "The ordinary length of the regime is ten years starting from the year in which an individual become Italian tax resident."
+  },
+  "eligibility": {
+    "priorNonResidency": {
+      "value": "Must not have been an Italian tax resident for at least five tax periods before the option takes effect.",
+      "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "The individual has not been resident of Italy for tax purposes for at least five tax periods before the option for the application of the 7% flat tax regime became effective."
+    },
+    "residencyObligation": {
+      "value": "Must transfer tax residence to a municipality of fewer than 20,000 inhabitants in southern Italy (Sicily, Calabria, Sardinia, Campania, Basilicata, Abruzzo, Molise, or Puglia).",
+      "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "in one of the municipalities belonging to the territory of southern Italy, with a population of less than 20,000 inhabitants, located in the following Regions: Sicily, Calabria, Sardinia, Campania, Basilicata, Abruzzo, Molise, and Puglia."
+    }
+  },
+  "summary": "Italy taxes a qualifying foreign pensioner's foreign-source income at a flat 7 percent for up to ten years, provided they move their tax residence to a small municipality in southern Italy. The figures below are screened, sourced, and dated. They are not advice."
+}

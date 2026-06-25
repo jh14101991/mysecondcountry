@@ -1,0 +1,134 @@
+{
+  "id": "it",
+  "slug": "italy",
+  "granularity": "country",
+  "parentId": null,
+  "name": "Italy",
+  "country": "Italy",
+  "coordinates": { "lat": 41.9028, "lon": 12.4964 },
+  "ancestry": [],
+  "description": "Italy is a southern European country spanning the Alps, the Mediterranean, and a long peninsula, drawing remote earners and retirees for its climate, cities, and special tax regimes. The figures below are screened, sourced, and dated. They are not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 97.1,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Italy price level index for actual individual consumption (EU27 = 100): 97.1 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 12.0,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Rome",
+      "sourceName": "Rome climate normals (NOAA 1991-2020, Ciampino), via Wikipedia",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Rome, shown as representative for Italy: mean daily maximum 12.0 C in January (1991 to 2020 normals)."
+    },
+    "averageJulyHighC": {
+      "value": 31.0,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Rome",
+      "sourceName": "Rome climate normals (NOAA 1991-2020, Ciampino), via Wikipedia",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Rome: mean daily maximum 31.0 C in July (1991 to 2020 normals)."
+    },
+    "averageAnnualSunHours": {
+      "value": 2723.9,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Rome",
+      "sourceName": "Rome climate normals (NOAA 1991-2020, Ciampino), via Wikipedia",
+      "verifiedDate": "2026-06-25",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Rome: about 2,723.9 mean annual sunshine hours (1991 to 2020 normals)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, dominant across central and southern Italy including Rome."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 2066,
+      "sourceUrl": "https://consboston.esteri.it/en/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/digital-nomad-remote-worker/",
+      "sourceName": "Consolato Generale d'Italia Boston, digital nomad / remote worker visa",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 90,
+      "excerpt": "the minimum legal income is no less than 24,789 euros (or the equivalent in USD) per year, about 2,066 euros per month."
+    },
+    "goldenVisa": {
+      "value": "Investor visa with four routes: 250,000 euros in an Italian innovative startup; 500,000 euros in an Italian limited company; 1,000,000 euros in a philanthropic initiative; or 2,000,000 euros in Italian government bonds.",
+      "sourceUrl": "https://investorvisa.mise.gov.it/index.php/en/",
+      "sourceName": "Investor Visa for Italy, official portal (Ministry of Enterprises and Made in Italy)",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "Investment routes: 250,000 euros in an innovative startup, 500,000 euros in a limited company, 1,000,000 euros in a philanthropic initiative, or 2,000,000 euros in government bonds."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 43,
+      "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "National income tax top rate 43 percent on taxable income over 50,000 euros, plus regional (1.23 to 3.33 percent) and municipal (0 to 0.9 percent) surcharges."
+    },
+    "specialRegime": {
+      "value": "Flat substitute tax for new residents on foreign-source income: 200,000 euros per year for those opting from the 2025 tax period, rising to 300,000 euros for residence transfers from 1 January 2026, plus 25,000 euros per family member. Foreign pensioners who move to a small southern municipality can instead elect a 7 percent flat tax for up to 10 years, and an inbound-workers (impatriati) regime gives a partial income exemption.",
+      "sourceUrl": "https://taxsummaries.pwc.com/italy/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Italy, taxes on personal income",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "For the individuals who opt for the lump sum tax regime from the 2025 tax period, the flat tax amounts to EUR 200,000; for individuals who transfer their legal residency to Italy starting from 1 January 2026 the flat tax is increased from EUR 200,000 to EUR 300,000."
+    }
+  },
+  "healthcare": {
+    "physiciansPer1000": {
+      "value": 4.25,
+      "sourceUrl": "https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians",
+      "sourceName": "WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "healthcare",
+      "excerpt": "Italy: 42.5 medical doctors per 10,000 (about 4.25 per 1,000), WHO 2022."
+    }
+  },
+  "safety": {
+    "peaceIndexScore": {
+      "value": 1.692,
+      "sourceUrl": "https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf",
+      "sourceName": "Institute for Economics and Peace, Global Peace Index 2024",
+      "verifiedDate": "2026-06-25",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "safety",
+      "excerpt": "Italy 2024 Global Peace Index score 1.692 (rank 33 of 163). Lower is more peaceful."
+    }
+  }
+}

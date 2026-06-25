@@ -37,7 +37,7 @@ export const RegimeSchema = z.object({
     /** Deadline to apply for the regime, in prose. */
     applicationWindow: TaxRegimeValueSchema.optional(),
     /** Notable condition or caveat, in prose. */
-    knownCatch: TaxRegimeValueSchema,
+    knownCatch: TaxRegimeValueSchema.optional(),
     /** Optional: a minimum investment condition (e.g. Greece Article 5A). */
     investmentRequirement: TaxRegimeValueSchema.optional(),
     /** Optional: exclusion of prior beneficiaries of another regime (e.g. IFICI vs NHR). */

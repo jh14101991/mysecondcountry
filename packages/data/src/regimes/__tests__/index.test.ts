@@ -58,4 +58,12 @@ describe("regimes index", () => {
     if (!regime) return;
     expect(placeById(regime.countryId)).toBeDefined();
   });
+
+  it("regimeBySlug resolves pensioner-7-percent-flat-tax with countryId 'it'", () => {
+    const regime = regimeBySlug("pensioner-7-percent-flat-tax");
+    expect(regime).toBeDefined();
+    if (!regime) return;
+    expect(regime.countryId).toBe("it");
+    expect(placeById(regime.countryId)).toBeDefined();
+  });
 });

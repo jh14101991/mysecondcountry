@@ -96,4 +96,10 @@ describe("RegimeSchema", () => {
     (bad.eligibility.priorNonResidency as { confidence: string }).confidence = "low";
     expect(RegimeSchema.safeParse(bad).success).toBe(false);
   });
+
+  it("accepts a regime without knownCatch (knownCatch is optional)", () => {
+    const noKnownCatch = structuredClone(valid);
+    delete (noKnownCatch.eligibility as { knownCatch?: unknown }).knownCatch;
+    expect(RegimeSchema.safeParse(noKnownCatch).success).toBe(true);
+  });
 });
