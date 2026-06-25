@@ -1,0 +1,41 @@
+name: IndexNow on deploy
+
+# Every push to main triggers a Vercel deploy. After a short wait for that deploy to go
+# live, ping IndexNow with the current sitemap URLs so Bing, Yandex, and other participating
+# engines re-crawl quickly. The wait is a time-based proxy for deploy completion; when the
+# site later adds Vercel Functions, this can become a real deployment-succeeded webhook.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Wait for the Vercel deploy to go live
+        run: sleep 150
+
+      - name: Submit live sitemap URLs to IndexNow
+        run: pnpm indexnow
