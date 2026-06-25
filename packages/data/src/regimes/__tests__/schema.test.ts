@@ -53,4 +53,9 @@ describe("RegimeSchema", () => {
   it("rejects a short summary (anti-thin-content)", () => {
     expect(RegimeSchema.safeParse({ ...valid, summary: "too short" }).success).toBe(false);
   });
+  it("rejects confidence low on a residency string eligibility field", () => {
+    const bad = structuredClone(valid);
+    (bad.eligibility.priorNonResidency as { confidence: string }).confidence = "low";
+    expect(RegimeSchema.safeParse(bad).success).toBe(false);
+  });
 });

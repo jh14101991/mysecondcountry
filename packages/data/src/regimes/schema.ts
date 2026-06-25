@@ -1,20 +1,12 @@
 import { z } from "zod";
-import { citedValue, TaxValueSchema } from "../schema.js";
+import { citedValue, TaxRegimeValueSchema, TaxValueSchema } from "../schema.js";
 
-/**
- * String-valued high-liability wrapper: confidence is high|medium only (no low),
- * category is fixed. Mirrors the module-private highLiabilityValue in schema.ts
- * but for string values (regime eligibility rules described in prose).
- */
-function stringHighLiabilityValue(category: "residency" | "tax") {
-  return citedValue(z.string().min(1)).extend({
-    confidence: z.enum(["high", "medium"]),
-    category: z.literal(category),
-  });
-}
-
-const StringTaxValueSchema = stringHighLiabilityValue("tax");
-const StringResidencyValueSchema = stringHighLiabilityValue("residency");
+// Local residency string wrapper: the only exported string-residency factory is
+// GoldenVisaValueSchema, whose name is misleading for pensioner regime eligibility.
+const StringResidencyValueSchema = citedValue(z.string().min(1)).extend({
+  confidence: z.enum(["high", "medium"]),
+  category: z.literal("residency"),
+});
 
 export const RegimeSchema = z.object({
   /** URL-safe lowercase identifier, unique across regimes. */
@@ -39,9 +31,9 @@ export const RegimeSchema = z.object({
     /** Residency obligation during the regime, in prose. */
     residencyObligation: StringResidencyValueSchema,
     /** Deadline to apply for the regime, in prose. */
-    applicationWindow: StringTaxValueSchema,
+    applicationWindow: TaxRegimeValueSchema,
     /** Notable condition or caveat, in prose. */
-    knownCatch: StringTaxValueSchema,
+    knownCatch: TaxRegimeValueSchema,
   }),
   /**
    * Human-authored prose summary. Minimum 80 characters enforces substantive
