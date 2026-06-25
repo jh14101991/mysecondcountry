@@ -10,7 +10,7 @@
     { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.priorNonResidency" },
     { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" }
   ],
-  "rule": "Greece offers a flat 7 percent tax on all foreign-source income for qualifying foreign pensioners who transfer their tax residence; applicants must not have been Greek tax residents in five of the prior six years, and must renew annually; the regime lasts up to 15 years.",
+  "rule": "Greece offers a flat 7 percent tax on all foreign-source income for qualifying foreign pensioners who transfer their tax residence; applicants must not have been Greek tax residents in five of the prior six years, and must pay the tax due in full each year to keep it; the regime lasts up to 15 years.",
   "category": "tax",
   "relatedSlugs": [
     "can-i-still-get-a-spanish-golden-visa",
