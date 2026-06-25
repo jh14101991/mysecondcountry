@@ -20,6 +20,8 @@ const RankSchema = z.object({
 const ConstraintSchema = z.object({
   filters: z.array(FilterSchema).min(1),
   rank: RankSchema,
+  /** Extra catalogue keys shown as cited context columns, beyond the filter and rank keys. */
+  display: z.array(z.string()).optional(),
 });
 
 export const ShortlistSchema = z.object({

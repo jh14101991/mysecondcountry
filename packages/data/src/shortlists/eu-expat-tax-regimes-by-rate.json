@@ -6,7 +6,8 @@
   "metaDescription": "EU countries with a published special inbound or pension tax regime for new residents, ranked by their headline personal income tax rate from lowest to highest.",
   "constraint": {
     "filters": [{ "key": "special_tax_regime", "op": "==", "value": true }],
-    "rank": { "byKey": "top_income_tax_rate", "dir": "asc" }
+    "rank": { "byKey": "top_income_tax_rate", "dir": "asc" },
+    "display": ["cost_price_level", "dnv_income_floor"]
   },
   "relatedSlugs": ["eu-residency-under-3700-a-month"]
 }

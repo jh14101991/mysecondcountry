@@ -2,14 +2,12 @@
   "id": "eu-residency-under-3700-a-month",
   "slug": "eu-residency-under-3700-a-month",
   "title": "EU residency on under 3,700 euros a month of remote income",
-  "intro": "Three EU countries issue a digital nomad or remote-worker visa that requires a minimum net monthly income at or below 3,700 euros. This shortlist ranks them by that income floor, lowest first, using the figure each country's immigration ministry has published. The headline personal income tax rate is shown alongside for context. The constraint is applied mechanically; eligibility depends on individual circumstances and current regulations. Run the screener at /screener to apply your own income and preference filters.",
+  "intro": "Three EU countries issue a digital nomad or remote-worker visa that requires a minimum net monthly income at or below 3,700 euros. This shortlist ranks them by that income floor, lowest first, using the figure each country's immigration ministry has published. The headline income tax rate and the cost of living index are shown alongside for context. The constraint is applied mechanically; eligibility depends on individual circumstances and current regulations. Run the screener at /screener to apply your own income and preference filters.",
   "metaDescription": "EU countries that offer a digital nomad visa with a net income floor of 3,700 euros a month or less, ranked by that threshold from lowest to highest.",
   "constraint": {
-    "filters": [
-      { "key": "dnv_income_floor", "op": "<=", "value": 3700 },
-      { "key": "top_income_tax_rate", "op": ">=", "value": 1 }
-    ],
-    "rank": { "byKey": "dnv_income_floor", "dir": "asc" }
+    "filters": [{ "key": "dnv_income_floor", "op": "<=", "value": 3700 }],
+    "rank": { "byKey": "dnv_income_floor", "dir": "asc" },
+    "display": ["cost_price_level", "top_income_tax_rate"]
   },
   "relatedSlugs": ["eu-expat-tax-regimes-by-rate"]
 }

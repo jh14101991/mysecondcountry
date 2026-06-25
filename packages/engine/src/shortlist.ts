@@ -8,6 +8,8 @@ export interface ShortlistFilter {
 export interface ShortlistSpec {
   filters: ShortlistFilter[];
   rank: { byKey: string; dir: "asc" | "desc" };
+  /** Extra catalogue keys shown as cited context columns, beyond the filter and rank keys. */
+  display?: string[];
 }
 export interface ShortlistField {
   key: string;
@@ -38,7 +40,7 @@ function passes(cited: CitedValue | undefined, f: ShortlistFilter): boolean {
 }
 
 export function evaluateShortlist(spec: ShortlistSpec, places: Place[]): ShortlistItem[] {
-  const keys = [spec.rank.byKey, ...spec.filters.map((f) => f.key)].filter(
+  const keys = [spec.rank.byKey, ...spec.filters.map((f) => f.key), ...(spec.display ?? [])].filter(
     (k, i, a) => a.indexOf(k) === i,
   );
   const matched = places.filter((p) => {
