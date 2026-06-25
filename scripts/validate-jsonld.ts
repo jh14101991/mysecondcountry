@@ -51,7 +51,9 @@ for (const file of placePages) {
   }
 }
 
-const regimePages = htmlFiles().filter((f) => f.includes("/tax/"));
+const regimePages = htmlFiles().filter(
+  (f) => f.includes("/tax/") && !f.endsWith("/tax/index.html"),
+);
 
 for (const file of regimePages) {
   const html = read(file);
@@ -97,7 +99,9 @@ for (const file of regimePages) {
   }
 }
 
-const answerPages = htmlFiles().filter((f) => f.includes("/answers/"));
+const answerPages = htmlFiles().filter(
+  (f) => f.includes("/answers/") && !f.endsWith("/answers/index.html"),
+);
 
 for (const file of answerPages) {
   const html = read(file);
@@ -142,7 +146,9 @@ for (const file of answerPages) {
   }
 }
 
-const topicPages = htmlFiles().filter((f) => f.includes("/topics/"));
+const topicPages = htmlFiles().filter(
+  (f) => f.includes("/topics/") && !f.endsWith("/topics/index.html"),
+);
 
 for (const file of topicPages) {
   const html = read(file);
@@ -188,7 +194,9 @@ for (const file of topicPages) {
   }
 }
 
-const shortlistPages = htmlFiles().filter((f) => f.includes("/shortlists/"));
+const shortlistPages = htmlFiles().filter(
+  (f) => f.includes("/shortlists/") && !f.endsWith("/shortlists/index.html"),
+);
 
 for (const file of shortlistPages) {
   const html = read(file);
@@ -233,7 +241,9 @@ for (const file of shortlistPages) {
   }
 }
 
-const toolPages = htmlFiles().filter((f) => f.includes("/tools/"));
+const toolPages = htmlFiles().filter(
+  (f) => f.includes("/tools/") && !f.endsWith("/tools/index.html"),
+);
 
 for (const file of toolPages) {
   const html = read(file);

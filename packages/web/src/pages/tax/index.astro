@@ -2,6 +2,7 @@
 import { placeById, regimes } from "@where/data";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
 
 const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/tax`;
@@ -9,14 +10,19 @@ const title = "Tax regimes | My Second Country";
 const description =
   "Cited guides to special tax regimes for foreign residents and pensioners in EU countries. Every rate and condition is sourced.";
 
+const resolvedRegimes = regimes
+  .map((regime, i) => ({ regime, country: placeById(regime.countryId), index: i }))
+  .filter((r): r is { regime: typeof r.regime; country: NonNullable<typeof r.country>; index: number } => r.country != null);
+
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
+  itemListJsonLd({
     url: canonical,
-    name: "Tax regimes: cited EU special tax regime guides",
-    description,
-  },
+    items: resolvedRegimes.map((r, i) => ({
+      position: i + 1,
+      name: r.regime.name,
+      url: `${SITE}/${r.country.slug}/tax/${r.regime.slug}`,
+    })),
+  }),
 ];
 ---
 

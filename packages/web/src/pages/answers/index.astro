@@ -2,6 +2,7 @@
 import { qa } from "@where/data";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
 
 const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/answers`;
@@ -10,20 +11,14 @@ const description =
   "Sourced answers to common questions about tax, visa, and residency in EU countries. Every answer is cited with a named source and verified date.";
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "QAPage",
+  itemListJsonLd({
     url: canonical,
-    name: "Cited answers",
-    mainEntity: {
-      "@type": "Question",
-      name: "Where can I find cited answers to EU tax and residency questions?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "My Second Country publishes sourced answers to common questions about tax, visa, and residency in EU countries. Every figure is cited with a named source and verified date.",
-      },
-    },
-  },
+    items: qa.map((q, i) => ({
+      position: i + 1,
+      name: q.question,
+      url: `${SITE}/answers/${q.slug}`,
+    })),
+  }),
 ];
 ---
 

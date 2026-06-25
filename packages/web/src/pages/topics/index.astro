@@ -2,6 +2,7 @@
 import { topics } from "@where/data";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
 
 const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/topics`;
@@ -10,13 +11,14 @@ const description =
   "Sourced topic guides covering tax regimes, visa rules, and residency requirements in EU countries. Every figure is cited and dated.";
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
+  itemListJsonLd({
     url: canonical,
-    name: "Topics: cited tax, visa, and residency guides",
-    description,
-  },
+    items: topics.map((topic, i) => ({
+      position: i + 1,
+      name: topic.title,
+      url: `${SITE}/topics/${topic.slug}`,
+    })),
+  }),
 ];
 ---
 

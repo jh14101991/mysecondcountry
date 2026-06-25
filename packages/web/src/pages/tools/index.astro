@@ -2,6 +2,7 @@
 import { tools } from "@where/data";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
 
 const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/tools`;
@@ -10,19 +11,14 @@ const description =
   "Step-by-step eligibility checklists for EU tax regimes. Each step cites the official requirement and its source.";
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
+  itemListJsonLd({
     url: canonical,
-    name: "EU tax regime eligibility checklists",
-    description,
-    step: tools.map((tool, i) => ({
-      "@type": "HowToStep",
+    items: tools.map((tool, i) => ({
       position: i + 1,
       name: tool.title,
-      text: tool.intro,
+      url: `${SITE}/tools/${tool.slug}`,
     })),
-  },
+  }),
 ];
 ---
 

@@ -2,6 +2,7 @@
 import { shortlists } from "@where/data";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
 
 const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/shortlists`;
@@ -10,18 +11,14 @@ const description =
   "Ranked, cited shortlists of EU countries by tax, income, and residency criteria. Every result is derived from sourced place data.";
 
 const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
+  itemListJsonLd({
     url: canonical,
-    name: "Shortlists: ranked EU countries by cited criteria",
-    itemListElement: shortlists.map((s, i) => ({
-      "@type": "ListItem",
+    items: shortlists.map((s, i) => ({
       position: i + 1,
       name: s.title,
       url: `${SITE}/shortlists/${s.slug}`,
     })),
-  },
+  }),
 ];
 ---
 
