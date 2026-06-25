@@ -1,0 +1,363 @@
+---
+import {
+  collectRegimeCitedValues,
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  placeById,
+  type Regime,
+  regimes,
+} from "@where/data";
+import { regimeEligibilityCards } from "@where/engine";
+import CitedValueCell from "../../../components/CitedValueCell.astro";
+import FenceBlock from "../../../components/FenceBlock.astro";
+import Base from "../../../layouts/Base.astro";
+import { regimeDatasetJsonLd } from "../../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return regimes.map((regime) => ({
+    params: {
+      country: placeById(regime.countryId)?.slug,
+      slug: regime.slug,
+    },
+    props: { regime },
+  }));
+}
+
+interface Props {
+  regime: Regime;
+}
+const { regime } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const country = placeById(regime.countryId)?.slug;
+const canonical = `${SITE}/${country}/tax/${regime.slug}`;
+const jsonLd = regimeDatasetJsonLd(regime, SITE);
+
+// Self-activating staleness banner: if any cited value has aged past its window
+// before a refresh merges, the banner appears automatically at build time (FENCE.md).
+const stale = collectRegimeCitedValues(regime).filter((e) => isStale(e.cited));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (e) =>
+          e.cited.stalenessDays ??
+          (e.cited.category ? DEFAULT_STALENESS_DAYS[e.cited.category] : 180),
+      ),
+    )
+  : null;
+
+const eligibilityCards = regimeEligibilityCards(regime);
+
+const BADGE: Record<string, { icon: string; label: string }> = {
+  high: { icon: "●", label: "verified source" },
+  medium: { icon: "◐", label: "good source" },
+  low: { icon: "○", label: "low confidence, verify" },
+};
+
+const title = `${regime.name}: eligibility rules and tax facts | My Second Country`;
+
+const allFacts = collectRegimeCitedValues(regime);
+---
+
+<Base title={title} description={regime.summary} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="crumb">{country ? country.charAt(0).toUpperCase() + country.slice(1) : "Country"}</span>
+      <span class="crumb">Tax regimes</span>
+      <span class="crumb current" aria-current="page">{regime.name}</span>
+    </nav>
+
+    <h1>{regime.name}</h1>
+
+    <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
+
+    <p class="lede">{regime.summary}</p>
+
+    <section aria-labelledby="dealbreakers-h">
+      <h2 id="dealbreakers-h">What would disqualify you</h2>
+      <p class="section-note">
+        These are published eligibility rules reported from their source on the verified date.
+        Each rule describes a condition that, if it does not apply to you, would exclude you from
+        this regime. They are not advice and they change. Confirm your position with a licensed
+        professional and the official source.
+      </p>
+      <ul class="eligibility-cards" role="list">
+        {
+          eligibilityCards.map((card) => {
+            const badge = BADGE[card.cited.confidence] ?? BADGE.low;
+            return (
+              <li class="eligibility-card">
+                <p class="card-framing">{card.framing}</p>
+                <div class="card-meta">
+                  <span class={`badge badge-${card.cited.confidence}`}>
+                    <span class="badge-icon" aria-hidden="true">{badge.icon}</span>
+                    <span class="badge-text">{badge.label}</span>
+                  </span>
+                  <span class="card-provenance">
+                    <a
+                      href={card.cited.sourceUrl}
+                      rel="noopener nofollow"
+                      target="_blank"
+                    >
+                      {card.cited.sourceName}
+                    </a>
+                    <span class="verified">Verified {card.cited.verifiedDate}</span>
+                  </span>
+                </div>
+                {card.cited.excerpt && (
+                  <blockquote class="excerpt">{card.cited.excerpt}</blockquote>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="headline-facts-h">
+      <h2 id="headline-facts-h">Headline facts</h2>
+      <table class="facts">
+        <caption class="visually-hidden">Cited headline facts for {regime.name}</caption>
+        <tbody>
+          <tr>
+            <th scope="row">Flat tax rate on foreign-source income</th>
+            <CitedValueCell
+              cited={regime.headlineRate}
+              unit="%"
+              placeGranularity="country"
+              placeName={regime.name}
+            />
+          </tr>
+          <tr>
+            <th scope="row">Maximum regime duration</th>
+            <CitedValueCell
+              cited={regime.durationYears}
+              unit="years"
+              placeGranularity="country"
+              placeName={regime.name}
+            />
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="cite-this-h" class="cite-this">
+      <h2 id="cite-this-h">Cite this data</h2>
+      <p class="section-note">
+        Copy the line for any fact you want to cite. Each line names the source, the date we
+        verified it, and the canonical URL with a fragment pointing to the fact path.
+      </p>
+      <ul class="cite-list">
+        {
+          allFacts.map(({ path, cited }) => (
+            <li>
+              <code>
+                {cited.sourceName}, verified {cited.verifiedDate},{" "}
+                {canonical}#{path}
+              </code>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="how-to-read-h" class="how-to-read">
+      <h2 id="how-to-read-h">How to read this page</h2>
+      <p>
+        Every figure above is a cited claim: a value, the named source, the date we last verified
+        it, and a confidence mark. Verified source means an official statistical body or primary
+        law. Good source means an official authority read through a secondary. Low confidence means
+        a directional figure to check yourself.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+    }
+    .crumb + .crumb::before {
+      content: "›";
+      margin-right: 0.4rem;
+      color: var(--rule);
+    }
+    .crumb.current {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .lede {
+      max-width: var(--measure);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 0.5rem;
+    }
+    .section-note {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      margin-bottom: 1.2rem;
+    }
+    /* Eligibility cards */
+    .eligibility-cards {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 1rem;
+    }
+    .eligibility-card {
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .card-framing {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+    .badge-icon {
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+    .badge-high {
+      color: #1f5132;
+      border-color: #9ec9ac;
+      background: #eef6f0;
+    }
+    .badge-medium {
+      color: #6b4a12;
+      border-color: #d9c08a;
+      background: #f8f1de;
+    }
+    .badge-low {
+      color: #7a1f1f;
+      border-color: #d9a3a3;
+      background: #f8e9e9;
+    }
+    .card-provenance {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.88rem;
+    }
+    .verified {
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      margin-top: 0.1rem;
+    }
+    .excerpt {
+      margin: 0.75rem 0 0;
+      padding-left: 0.8rem;
+      border-left: 2px solid var(--rule);
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    /* Headline facts table */
+    .facts {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      border-top: 2px solid var(--ink);
+    }
+    .facts th[scope="row"] {
+      width: 38%;
+      text-align: left;
+      vertical-align: top;
+      padding: 0.9rem 1rem 0.9rem 0;
+      font-weight: 600;
+      color: var(--ink);
+      border-bottom: 1px solid var(--rule);
+    }
+    /* Cite-this section */
+    .cite-this {
+      margin-top: 2.5rem;
+    }
+    .cite-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .cite-list li code {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      word-break: break-all;
+      color: var(--ink);
+    }
+    /* How to read */
+    .how-to-read {
+      margin-top: 3rem;
+      padding: 1.4rem 1.5rem;
+      background: var(--paper-2);
+      border-radius: 6px;
+    }
+    .how-to-read h2 {
+      margin-top: 0;
+    }
+    .how-to-read p {
+      max-width: var(--measure);
+      margin: 0;
+      color: var(--ink-soft);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 38rem) {
+      .facts,
+      .facts tbody,
+      .facts tr,
+      .facts th[scope="row"] {
+        display: block;
+        width: 100%;
+      }
+      .facts th[scope="row"] {
+        padding-bottom: 0.2rem;
+        border-bottom: none;
+      }
+    }
+  </style>
+</Base>

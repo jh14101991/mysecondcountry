@@ -1,4 +1,11 @@
-import { type Place, placePath } from "@where/data";
+import {
+  collectRegimeCitedValues,
+  type Place,
+  placeById,
+  placePath,
+  type Regime,
+  regimeFactId,
+} from "@where/data";
 
 type JsonLdNode = Record<string, unknown>;
 
@@ -46,4 +53,46 @@ export function placeJsonLd(place: Place, siteUrl: string): JsonLdNode {
   }
 
   return node;
+}
+
+/**
+ * schema.org Dataset markup for a tax regime page.
+ * The @id and url use the canonical mysecondcountry.com host.
+ */
+export function regimeDatasetJsonLd(regime: Regime, siteUrl: string): JsonLdNode {
+  const country = placeById(regime.countryId)?.slug;
+  const url = `${siteUrl}/${country}/tax/${regime.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": url,
+    name: regime.name,
+    description: regime.summary,
+    url,
+    isAccessibleForFree: true,
+    creator: {
+      "@type": "Organization",
+      name: "My Second Country",
+      url: siteUrl,
+    },
+    license: siteUrl,
+    isPartOf: {
+      "@type": "DataCatalog",
+      name: "My Second Country relocation dataset",
+      url: siteUrl,
+    },
+    distribution: [
+      {
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: `${siteUrl}/data/regimes/${regime.slug}.json`,
+      },
+    ],
+    variableMeasured: collectRegimeCitedValues(regime).map(({ path, cited }) => ({
+      "@type": "PropertyValue",
+      "@id": regimeFactId(regime.id, path),
+      name: path,
+      value: cited.value,
+    })),
+  };
 }
