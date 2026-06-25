@@ -5,8 +5,8 @@ import type { Qa } from "./schema.js";
 export function collectQaCitedValues(qa: Qa): { path: string; cited: CitedValue }[] {
   const out: { path: string; cited: CitedValue }[] = [{ path: "answerFact", cited: qa.answerFact }];
   for (let i = 0; i < qa.supportingFacts.length; i++) {
-    const cited = qa.supportingFacts[i];
-    if (cited) out.push({ path: `supportingFacts.${i}`, cited });
+    const fact = qa.supportingFacts[i];
+    if (fact) out.push({ path: `supportingFacts.${i}`, cited: fact.cited });
   }
   return out;
 }

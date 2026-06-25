@@ -11,9 +11,18 @@ const GOOD: QaInput = {
     "No. Spain abolished its golden visa on 3 April 2025 under Organic Law 1/2025, ending residence permits tied to real estate investment over 500,000 euros.",
   answerFact: { ref: "place:es#residency.goldenVisa" },
   supportingFacts: [
-    { ref: "place:es#residency.digitalNomadVisa" },
-    { ref: "place:es#tax.specialRegime" },
-    { ref: "place:es#tax.headlinePersonalIncomeTaxRate" },
+    {
+      label: "Telework (digital nomad) visa income floor",
+      cited: { ref: "place:es#residency.digitalNomadVisa" },
+    },
+    {
+      label: "Beckham special tax regime for new residents",
+      cited: { ref: "place:es#tax.specialRegime" },
+    },
+    {
+      label: "Top personal income tax rate (standard)",
+      cited: { ref: "place:es#tax.headlinePersonalIncomeTaxRate" },
+    },
   ],
   rule: "Spain ended its investor residence permit (golden visa) on 3 April 2025; people relocating now use ordinary routes such as the telework (digital nomad) visa or a non-lucrative visa, with their own income and tax rules.",
   category: "residency",
@@ -66,11 +75,22 @@ describe("QaInputSchema", () => {
     const bad = {
       ...GOOD,
       supportingFacts: [
-        { ref: "place:es#residency.digitalNomadVisa" },
-        { ref: "place:es#tax.specialRegime" },
-        { ref: "place:es#tax.headlinePersonalIncomeTaxRate" },
-        { ref: "place:pt#tax.specialRegime" },
+        { label: "Digital nomad visa", cited: { ref: "place:es#residency.digitalNomadVisa" } },
+        { label: "Beckham regime", cited: { ref: "place:es#tax.specialRegime" } },
+        {
+          label: "Top income tax rate",
+          cited: { ref: "place:es#tax.headlinePersonalIncomeTaxRate" },
+        },
+        { label: "Portugal special regime", cited: { ref: "place:pt#tax.specialRegime" } },
       ],
+    };
+    expect(QaInputSchema.safeParse(bad).success).toBe(false);
+  });
+
+  it("rejects a supportingFact missing its label", () => {
+    const bad = {
+      ...GOOD,
+      supportingFacts: [{ cited: { ref: "place:es#tax.specialRegime" } }],
     };
     expect(QaInputSchema.safeParse(bad).success).toBe(false);
   });

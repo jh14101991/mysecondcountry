@@ -6,9 +6,18 @@
   "answer": "Qualified yes. Greece applies a flat 7 percent on foreign-source income for foreign pensioners who transfer tax residence and meet the rules, for up to 15 years.",
   "answerFact": { "ref": "regime:greece-foreign-pensioner-flat-tax#headlineRate" },
   "supportingFacts": [
-    { "ref": "regime:greece-foreign-pensioner-flat-tax#durationYears" },
-    { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.priorNonResidency" },
-    { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" }
+    {
+      "label": "How long the regime lasts (years)",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#durationYears" }
+    },
+    {
+      "label": "Prior non-residency requirement",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.priorNonResidency" }
+    },
+    {
+      "label": "What ends the regime (annual payment catch)",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" }
+    }
   ],
   "rule": "Greece offers a flat 7 percent tax on all foreign-source income for qualifying foreign pensioners who transfer their tax residence; applicants must not have been Greek tax residents in five of the prior six years, and must pay the tax due in full each year to keep it; the regime lasts up to 15 years.",
   "category": "tax",

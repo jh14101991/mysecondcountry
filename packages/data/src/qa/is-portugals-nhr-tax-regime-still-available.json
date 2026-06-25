@@ -6,9 +6,18 @@
   "answer": "No for new entrants. The NHR regime closed to new applicants at the end of 2023; its successor, IFICI, gives a 20 percent flat rate on eligible Portuguese income.",
   "answerFact": { "ref": "place:pt#tax.specialRegime" },
   "supportingFacts": [
-    { "ref": "place:pt#tax.headlinePersonalIncomeTaxRate" },
-    { "ref": "place:pt#residency.digitalNomadVisa" },
-    { "ref": "place:pt#residency.goldenVisa" }
+    {
+      "label": "Top personal income tax rate (standard)",
+      "cited": { "ref": "place:pt#tax.headlinePersonalIncomeTaxRate" }
+    },
+    {
+      "label": "Digital nomad (D8) visa income floor",
+      "cited": { "ref": "place:pt#residency.digitalNomadVisa" }
+    },
+    {
+      "label": "Investor residency (golden visa) routes that remain",
+      "cited": { "ref": "place:pt#residency.goldenVisa" }
+    }
   ],
   "rule": "Portugal's Non-Habitual Resident regime closed to new applicants at the end of 2023; the successor IFICI regime targets qualifying professionals and certain passive incomes; the standard headline personal income tax rate of 48 percent applies to those who do not qualify.",
   "category": "tax",

@@ -1,0 +1,28 @@
+{
+  "id": "what-happens-when-greece-7-percent-pensioner-tax-expires",
+  "slug": "what-happens-when-greece-7-percent-pensioner-tax-expires",
+  "question": "What happens when Greece's 7 percent pensioner tax expires after 15 years?",
+  "polarity": "n-a",
+  "answer": "The regime is capped at 15 years. On expiry there is no automatic renewal: worldwide income reverts to Greece's standard progressive rates, reaching 44 percent at the top band.",
+  "answerFact": { "ref": "regime:greece-foreign-pensioner-flat-tax#durationYears" },
+  "supportingFacts": [
+    {
+      "label": "Headline flat rate under the regime",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#headlineRate" }
+    },
+    {
+      "label": "Greece standard top personal income tax rate on reversion",
+      "cited": { "ref": "place:gr#tax.headlinePersonalIncomeTaxRate" }
+    },
+    {
+      "label": "What ends the regime early (annual payment catch)",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" }
+    }
+  ],
+  "rule": "Greece's Article 5B flat tax is capped at 15 consecutive years. On expiry there is no automatic renewal; the taxpayer returns to standard Greek progressive rates on worldwide income, which reach 44 percent at the top band. Non-payment in any single year also ends the regime early.",
+  "category": "tax",
+  "relatedSlugs": [
+    "does-greece-tax-foreign-pensions-at-7-percent",
+    "who-does-not-qualify-for-greece-7-percent-pensioner-tax"
+  ]
+}

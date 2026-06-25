@@ -7,8 +7,20 @@ import portugalNhrRaw from "./is-portugals-nhr-tax-regime-still-available.json" 
   type: "json",
 };
 import { type Qa, QaInputSchema } from "./schema.js";
+import greeceExpiryRaw from "./what-happens-when-greece-7-percent-pensioner-tax-expires.json" with {
+  type: "json",
+};
+import greeceDisqualifiersRaw from "./who-does-not-qualify-for-greece-7-percent-pensioner-tax.json" with {
+  type: "json",
+};
 
-const RAW: unknown[] = [spainGoldenVisaRaw, greecePensionRaw, portugalNhrRaw];
+const RAW: unknown[] = [
+  spainGoldenVisaRaw,
+  greecePensionRaw,
+  portugalNhrRaw,
+  greeceDisqualifiersRaw,
+  greeceExpiryRaw,
+];
 
 function resolveQa(raw: unknown): Qa {
   const input = QaInputSchema.parse(raw);
@@ -24,7 +36,10 @@ function resolveQa(raw: unknown): Qa {
   return {
     ...input,
     answerFact,
-    supportingFacts: input.supportingFacts.map(resolveCitedOrRef),
+    supportingFacts: input.supportingFacts.map((f) => ({
+      label: f.label,
+      cited: resolveCitedOrRef(f.cited),
+    })),
   };
 }
 

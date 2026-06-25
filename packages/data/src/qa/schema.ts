@@ -11,6 +11,11 @@ const AnswerFactInline = citedValue(z.union([z.number(), z.string()])).extend({
 });
 // supportingFact inline option: any category, number or string.
 const SupportingFactInline = citedValue(z.union([z.number(), z.string()]));
+// Authoring shape for a supporting fact: an authored label plus a CitedValue or FactRef.
+const SupportingFactInputSchema = z.object({
+  label: z.string().min(1),
+  cited: z.union([FactRefSchema, SupportingFactInline]),
+});
 
 export const QaInputSchema = z.object({
   id: URL_SAFE,
@@ -19,7 +24,7 @@ export const QaInputSchema = z.object({
   polarity: z.enum(["yes", "no", "qualified", "n-a"]),
   answer: z.string().min(12).max(240),
   answerFact: z.union([FactRefSchema, AnswerFactInline]),
-  supportingFacts: z.array(z.union([FactRefSchema, SupportingFactInline])).max(3),
+  supportingFacts: z.array(SupportingFactInputSchema).max(3),
   rule: z.string().min(80),
   category: CitedCategorySchema,
   relatedSlugs: z.array(URL_SAFE).max(6),
@@ -34,7 +39,7 @@ export interface Qa {
   polarity: "yes" | "no" | "qualified" | "n-a";
   answer: string;
   answerFact: CitedValue;
-  supportingFacts: CitedValue[];
+  supportingFacts: { label: string; cited: CitedValue }[];
   rule: string;
   category: z.infer<typeof CitedCategorySchema>;
   relatedSlugs: string[];

@@ -69,9 +69,9 @@ const citeLines = allFacts.map(({ path, cited }) => ({
   citationUrl: `${canonical}#${path}`,
 }));
 
-const supportingRows = entry.supportingFacts.map((cited) => ({
-  label: cited.sourceName,
-  cited,
+const supportingRows = entry.supportingFacts.map((fact) => ({
+  label: fact.label,
+  cited: fact.cited,
 }));
 
 const relatedLinks = entry.relatedSlugs

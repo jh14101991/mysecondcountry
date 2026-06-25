@@ -1,0 +1,28 @@
+{
+  "id": "who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+  "slug": "who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+  "question": "Who does not qualify for Greece's 7 percent pensioner tax regime?",
+  "polarity": "n-a",
+  "answer": "You are excluded if you were a Greek tax resident in five of the prior six years, if you transfer from a country with no tax cooperation agreement, or if you miss the 31 March application deadline, which defers entry a full year.",
+  "answerFact": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.priorNonResidency" },
+  "supportingFacts": [
+    {
+      "label": "Qualifying country requirement",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.qualifyingCountry" }
+    },
+    {
+      "label": "Application window deadline",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.applicationWindow" }
+    },
+    {
+      "label": "What ends the regime (annual payment catch)",
+      "cited": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" }
+    }
+  ],
+  "rule": "Greece's Article 5B flat tax screens applicants out on four published conditions: prior Greek tax residence in five of the last six years, transfer from a country with no administrative-cooperation tax agreement, a missed 31 March deadline that defers entry a year, and non-payment in any single year, which reverts the taxpayer to worldwide taxation.",
+  "category": "tax",
+  "relatedSlugs": [
+    "does-greece-tax-foreign-pensions-at-7-percent",
+    "what-happens-when-greece-7-percent-pensioner-tax-expires"
+  ]
+}

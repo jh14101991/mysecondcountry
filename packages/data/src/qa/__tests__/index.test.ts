@@ -33,6 +33,22 @@ describe("qa index", () => {
     }
   });
 
+  it("every supportingFact has an authored label and a resolved CitedValue", () => {
+    for (const entry of qa) {
+      for (const fact of entry.supportingFacts) {
+        expect(fact.label, `${entry.id}: supportingFact.label must be present`).toBeTruthy();
+        expect(
+          fact.cited.value,
+          `${entry.id}: supportingFact.cited.value must be present`,
+        ).toBeDefined();
+        expect(
+          fact.cited.sourceUrl,
+          `${entry.id}: supportingFact.cited.sourceUrl must be present`,
+        ).toBeDefined();
+      }
+    }
+  });
+
   it("every entry has >= 4 collected cited fields", () => {
     for (const entry of qa) {
       const fields = collectQaCitedValues(entry);
