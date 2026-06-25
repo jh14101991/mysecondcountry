@@ -1,0 +1,185 @@
+---
+import {
+  collectToolCitedValues,
+  DEFAULT_STALENESS_DAYS,
+  isStale,
+  type Tool,
+  toolBySlug,
+  tools,
+} from "@where/data";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import CiteThis from "../../components/CiteThis.astro";
+import FactsTable from "../../components/FactsTable.astro";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Masthead from "../../components/Masthead.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Base from "../../layouts/Base.astro";
+import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import { articleJsonLd, breadcrumbJsonLd, howToJsonLd, maxVerifiedDate } from "../../lib/jsonld.ts";
+
+export function getStaticPaths() {
+  return tools.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+interface Props {
+  entry: Tool;
+}
+const { entry } = Astro.props;
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/tools/${entry.slug}`;
+
+const allCited = collectToolCitedValues(entry);
+const maxDate = maxVerifiedDate(allCited.map((f) => f.cited));
+const uniqueSources = new Set(allCited.map((f) => f.cited.sourceUrl));
+const dateline = buildDateline({
+  citedLabel: monthYearLabel(maxDate),
+  sourceCount: uniqueSources.size,
+});
+
+const stale = allCited.filter((e) => isStale(e.cited));
+const staleDays = stale.length
+  ? Math.min(
+      ...stale.map(
+        (e) =>
+          e.cited.stalenessDays ??
+          (e.cited.category ? DEFAULT_STALENESS_DAYS[e.cited.category] : 180),
+      ),
+    )
+  : null;
+
+const breadcrumbItems = [
+  { name: "Tools", href: "/tools" },
+  { name: entry.title, href: `/tools/${entry.slug}` },
+];
+
+const citeLines = allCited.map(({ path, cited }) => ({
+  sourceName: cited.sourceName,
+  verifiedDate: cited.verifiedDate,
+  citationUrl: `${canonical}#${path}`,
+}));
+
+// Rows for the cited requirements FactsTable (steps that have a requirement).
+const requirementRows = entry.steps
+  .filter((step) => step.requirement !== undefined)
+  .map((step) => ({
+    label: step.title,
+    cited: step.requirement!,
+  }));
+
+const relatedLinks = entry.relatedSlugs
+  .map((slug) => {
+    const related = toolBySlug(slug);
+    if (!related) return null;
+    return { label: related.title, href: `/tools/${related.slug}` };
+  })
+  .filter((l): l is { label: string; href: string } => l !== null);
+
+const title = `${entry.title} | My Second Country`;
+
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: entry.title,
+    description: entry.intro,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  howToJsonLd({
+    url: canonical,
+    name: entry.title,
+    description: entry.intro,
+    steps: entry.steps.map((step) => ({ name: step.title, text: step.detail })),
+  }),
+];
+---
+
+<Base title={title} description={entry.intro} canonical={canonical} jsonLd={jsonLd}>
+  <article>
+    <Breadcrumb items={breadcrumbItems} />
+
+    <Masthead variant="topic" title={entry.title} dateline={dateline} />
+
+    <FenceBlock hasLegalClaims={true} staleDays={staleDays} />
+
+    <section aria-labelledby="intro-h" class="intro-section">
+      <p class="intro-text">{entry.intro}</p>
+    </section>
+
+    <section aria-labelledby="steps-h">
+      <SectionHeading as="h2" id="steps-h">Steps</SectionHeading>
+      <ol class="checklist-steps">
+        {
+          entry.steps.map((step) => (
+            <li class="checklist-step">
+              <h3 class="step-title">{step.title}</h3>
+              <p class="step-detail">{step.detail}</p>
+              {step.officialSourceUrl && (
+                <a
+                  href={step.officialSourceUrl}
+                  class="step-source-link"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Official source
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {
+      requirementRows.length > 0 && (
+        <section aria-labelledby="requirements-h">
+          <SectionHeading as="h2" id="requirements-h">
+            Cited requirements
+          </SectionHeading>
+          <FactsTable caption="Cited requirements for each checklist step" rows={requirementRows} />
+        </section>
+      )
+    }
+
+    <CiteThis lines={citeLines} />
+
+    {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+  </article>
+
+  <style>
+    .intro-text {
+      max-width: var(--measure);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted-strong);
+      margin: 0 0 2rem;
+    }
+    .checklist-steps {
+      max-width: var(--measure);
+      padding-left: 1.5rem;
+      margin: 0 0 2rem;
+    }
+    .checklist-step {
+      margin-bottom: 1.75rem;
+    }
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.4rem;
+      color: var(--foreground);
+    }
+    .step-detail {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+      color: var(--muted-strong);
+      line-height: 1.55;
+    }
+    .step-source-link {
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+  </style>
+</Base>

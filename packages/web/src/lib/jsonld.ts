@@ -269,6 +269,32 @@ export function itemListJsonLd(opts: {
 }
 
 /**
+ * schema.org HowTo for a tools (checklist) page. Each step becomes a HowToStep.
+ * Required primary type for /tools/ pages (validate-jsonld guards for it).
+ */
+export function howToJsonLd(opts: {
+  url: string;
+  name: string;
+  description: string;
+  steps: { name: string; text: string }[];
+}): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${opts.url}#howto`,
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    step: opts.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}
+
+/**
  * schema.org Dataset for a Topic page, with one enriched PropertyValue per cited fact.
  * Mirrors placeDatasetJsonLd; dateModified = maxVerifiedDate(facts.map(f => f.cited)).
  */

@@ -9,12 +9,14 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectToolCitedValues,
   collectTopicsCitedValues,
   DEFAULT_STALENESS_DAYS,
   places,
   qa,
   regimes,
   shortlists,
+  tools,
   topics,
 } from "@where/data";
 import { evaluateShortlist } from "@where/engine";
@@ -83,6 +85,21 @@ for (const topic of topics) {
     if (age > limit) {
       console.error(
         `STALE  ${topic.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
+      );
+      failures += 1;
+    }
+  }
+}
+
+for (const tool of tools) {
+  for (const { path, cited } of collectToolCitedValues(tool)) {
+    if (!cited.category || !HIGH_LIABILITY.has(cited.category)) continue;
+    if (cited.confidence === "low") continue;
+    const limit = limitFor(cited);
+    const age = ageInDays(cited.verifiedDate);
+    if (age > limit) {
+      console.error(
+        `STALE  ${tool.id} ${path}: verified ${cited.verifiedDate} (${age}d > ${limit}d), confidence ${cited.confidence}`,
       );
       failures += 1;
     }

@@ -8,6 +8,7 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectToolCitedValues,
   collectTopicsCitedValues,
   type Place,
   placeById,
@@ -15,6 +16,7 @@ import {
   qa,
   regimes,
   shortlists,
+  tools,
   topics,
 } from "@where/data";
 import { evaluateShortlist } from "@where/engine";
@@ -97,6 +99,19 @@ for (const topic of topics) {
   }
 }
 
+// Tools (checklists): anti-thin floor is >= 4 cited requirements per tool.
+let toolsChecked = 0;
+for (const tool of tools) {
+  toolsChecked += 1;
+  const citedFields = collectToolCitedValues(tool).filter(({ cited }) => cited.sourceUrl);
+  if (citedFields.length < MIN_UNIQUE) {
+    console.error(
+      `THIN  ${tool.id}: only ${citedFields.length} cited requirement(s) (need ${MIN_UNIQUE}).`,
+    );
+    failures += 1;
+  }
+}
+
 // Shortlists: anti-thin floor is >= 4 total cited fields across all ranked items.
 // The engine derives these from Place data; country-level places match the page output.
 const countryPlaces = places.filter((p) => p.granularity === "country");
@@ -121,5 +136,5 @@ if (failures > 0) {
   process.exit(1);
 }
 console.log(
-  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked, ${topicsChecked} topic(s) checked, ${shortlistsChecked} shortlist(s) checked).`,
+  `assert-uniqueness: ok (${checked} place(s) checked, ${skipped} skipped pending parents, ${regimesChecked} regime(s) checked, ${qaChecked} qa entry/entries checked, ${topicsChecked} topic(s) checked, ${toolsChecked} tool(s) checked, ${shortlistsChecked} shortlist(s) checked).`,
 );

@@ -8,11 +8,13 @@ import {
   collectCitedValues,
   collectQaCitedValues,
   collectRegimeCitedValues,
+  collectToolCitedValues,
   collectTopicsCitedValues,
   places,
   qa,
   regimes,
   shortlists,
+  tools,
   topics,
 } from "@where/data";
 import { evaluateShortlist } from "@where/engine";
@@ -32,6 +34,9 @@ for (const entry of qa) {
 }
 for (const topic of topics) {
   for (const { cited } of collectTopicsCitedValues(topic)) urls.add(cited.sourceUrl);
+}
+for (const tool of tools) {
+  for (const { cited } of collectToolCitedValues(tool)) urls.add(cited.sourceUrl);
 }
 // Shortlists derive cited values from Place data via the engine; collect unique source URLs.
 const countryPlaces = places.filter((p) => p.granularity === "country");

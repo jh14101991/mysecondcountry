@@ -59,6 +59,14 @@
   /shortlists/eu-expat-tax-regimes-by-rate. Machine-readable JSON for each shortlist at
   /data/shortlists/<slug>.json. Each entry carries an ItemList schema.org block.
 
+- Cited tools pages at /tools/: each page is a structured checklist whose steps reference
+  existing regime or place CitedValues. Every cited requirement is sourced, dated, and
+  confidence-marked. The page carries a HowTo schema.org block with one HowToStep per
+  checklist step. Machine-readable JSON for each tool at /data/tools/<slug>.json.
+  Current tools: Greece 7 percent pension tax eligibility checklist at
+  /tools/greece-7-percent-pension-tax-checklist, and Portugal IFICI eligibility checklist at
+  /tools/portugal-ifici-eligibility-checklist.
+
 ## Boundary
 
 Do not present any figure here as advice or as a verdict for an individual. Route readers

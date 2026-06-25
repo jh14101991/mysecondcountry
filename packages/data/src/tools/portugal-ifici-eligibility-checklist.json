@@ -1,0 +1,45 @@
+{
+  "id": "portugal-ifici-eligibility-checklist",
+  "slug": "portugal-ifici-eligibility-checklist",
+  "title": "Portugal IFICI regime: eligibility checklist",
+  "toolType": "checklist",
+  "intro": "Portugal's IFICI regime (the NHR successor, effective from the 2024 State Budget) applies a flat 20 percent rate to eligible Portuguese employment and professional income for ten years. This checklist covers the five published eligibility conditions. Work through each item before consulting a Portuguese tax adviser. This is screening information, not tax advice.",
+  "steps": [
+    {
+      "order": 1,
+      "title": "Prior non-residency in Portugal",
+      "detail": "Confirm you were not a Portuguese tax resident in any of the five calendar years before the year in which you become a Portuguese tax resident.",
+      "requirement": { "ref": "regime:portugal-ifici#eligibility.priorNonResidency" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments"
+    },
+    {
+      "order": 2,
+      "title": "No prior NHR or former-resident regime",
+      "detail": "Confirm you have never benefited from Portugal's former NHR (non-habitual residence) regime or the former-resident regime. Prior use of either disqualifies you from IFICI.",
+      "requirement": { "ref": "regime:portugal-ifici#eligibility.priorRegimeExclusion" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments"
+    },
+    {
+      "order": 3,
+      "title": "Application deadline of 15 January",
+      "detail": "Submit your IFICI registration by 15 January of the year after becoming a Portuguese tax resident. Missing this window means waiting for the next eligible year.",
+      "requirement": { "ref": "regime:portugal-ifici#eligibility.applicationWindow" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/portugal/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 4,
+      "title": "Confirm the 20% headline rate on qualifying income",
+      "detail": "The flat 20 percent rate applies to eligible Portuguese employment and professional income in qualifying high-value-added activities. Income from other sources is taxed under standard Portuguese rules.",
+      "requirement": { "ref": "regime:portugal-ifici#headlineRate" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/portugal/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 5,
+      "title": "Understand the pension income exclusion",
+      "detail": "Most foreign-source income is exempt under IFICI, but foreign pension income is explicitly excluded from that exemption. Foreign pensions are taxed at standard Portuguese rates. Factor this into any comparison with Greece's Article 5B regime.",
+      "requirement": { "ref": "regime:portugal-ifici#eligibility.knownCatch" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/portugal/individual/significant-developments"
+    }
+  ],
+  "relatedSlugs": ["greece-7-percent-pension-tax-checklist"]
+}

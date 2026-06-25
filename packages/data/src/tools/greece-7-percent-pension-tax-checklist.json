@@ -1,0 +1,51 @@
+{
+  "id": "greece-7-percent-pension-tax-checklist",
+  "slug": "greece-7-percent-pension-tax-checklist",
+  "title": "Greece 7% flat tax: pension eligibility checklist",
+  "toolType": "checklist",
+  "intro": "Greece offers foreign pensioners a flat 7 percent annual tax on foreign-source income for up to 15 years under Article 5B of the Income Tax Code. This checklist covers the five published eligibility conditions. Work through each item before consulting a Greek tax adviser. This is screening information, not tax advice.",
+  "steps": [
+    {
+      "order": 1,
+      "title": "Prior non-residency in Greece",
+      "detail": "Confirm you were not a Greek tax resident for at least five of the six calendar years before the year in which you intend to transfer your tax residence to Greece.",
+      "requirement": {
+        "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.priorNonResidency"
+      },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 2,
+      "title": "Transfer from a qualifying country",
+      "detail": "Confirm your current tax residence is in a country that has an administrative-cooperation agreement in the field of taxation with Greece. EU member states and most OECD countries qualify.",
+      "requirement": {
+        "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.qualifyingCountry"
+      },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 3,
+      "title": "Application deadline of 31 March",
+      "detail": "Submit your application for tax-residence transfer and election of this regime by 31 March of the tax year in which you transfer. Applications received after that date apply to the following tax year.",
+      "requirement": {
+        "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.applicationWindow"
+      },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 4,
+      "title": "Confirm the 7% headline rate applies to all foreign income",
+      "detail": "The flat rate covers all foreign-source income, replacing the standard progressive tax on that income. Greek-source income is taxed separately under standard rules.",
+      "requirement": { "ref": "regime:greece-foreign-pensioner-flat-tax#headlineRate" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives"
+    },
+    {
+      "order": 5,
+      "title": "Understand the full-payment requirement",
+      "detail": "The full annual tax liability must be paid each year without exception. Non-payment in any single year terminates the regime permanently; standard Greek income-tax rules then apply to worldwide income from that year onward.",
+      "requirement": { "ref": "regime:greece-foreign-pensioner-flat-tax#eligibility.knownCatch" },
+      "officialSourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives"
+    }
+  ],
+  "relatedSlugs": ["portugal-ifici-eligibility-checklist"]
+}
