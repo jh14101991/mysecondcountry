@@ -35,6 +35,7 @@ jobs:
         id: digest
         env:
           PLAUSIBLE_API_KEY: ${{ secrets.PLAUSIBLE_API_KEY }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
         run: |
           pnpm exec tsx scripts/digest.ts > digest.md
           echo "done"
