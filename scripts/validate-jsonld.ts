@@ -292,6 +292,38 @@ for (const file of toolPages) {
   }
 }
 
+// Every BreadcrumbList ListItem must carry an `item` URL across every page, or Google rejects
+// the breadcrumb as invalid (GSC: Missing field "item" in "itemListElement"). Google permits the
+// last item to omit it, but every page here links its current crumb too, so we require it on all.
+let breadcrumbItemsChecked = 0;
+for (const file of htmlFiles()) {
+  const blocks = [
+    ...read(file).matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
+  ].map((m) => m[1]);
+  for (const block of blocks) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(block ?? "");
+    } catch {
+      continue; // malformed JSON-LD is already reported by the type-specific checks above
+    }
+    const nodes = Array.isArray(parsed) ? parsed : [parsed];
+    for (const node of nodes as Record<string, unknown>[]) {
+      if (node["@type"] !== "BreadcrumbList") continue;
+      const list = Array.isArray(node.itemListElement) ? node.itemListElement : [];
+      for (const li of list as Record<string, unknown>[]) {
+        breadcrumbItemsChecked += 1;
+        if (!li.item) {
+          console.error(
+            `BREADCRUMB  ${rel(file)}: ListItem "${String(li.name ?? "")}" (position ${String(li.position ?? "?")}) has no "item" URL.`,
+          );
+          failures += 1;
+        }
+      }
+    }
+  }
+}
+
 if (failures > 0) {
   console.error(`\nvalidate-jsonld: ${failures} problem(s).`);
   process.exit(1);

@@ -65,13 +65,17 @@ const staleDays = stale.length
 // so we never emit a crumb that 404s.
 const validPaths = new Set(places.map((p) => placePath(p)));
 const breadcrumbItems = [
-  ...place.ancestry.map((ancestor, i) => {
-    const path = `/places/${place.ancestry
-      .slice(0, i + 1)
-      .map((a) => a.slug)
-      .join("/")}`;
-    return validPaths.has(path) ? { name: ancestor.name, href: path } : { name: ancestor.name };
-  }),
+  // Only include ancestors that resolve to a real page, so every JSON-LD ListItem
+  // carries an `item` URL (Google rejects a breadcrumb item without one).
+  ...place.ancestry
+    .map((ancestor, i) => {
+      const path = `/places/${place.ancestry
+        .slice(0, i + 1)
+        .map((a) => a.slug)
+        .join("/")}`;
+      return validPaths.has(path) ? { name: ancestor.name, href: path } : null;
+    })
+    .filter((c): c is { name: string; href: string } => c !== null),
   { name: place.name, href: placePath(place) },
 ];
 
