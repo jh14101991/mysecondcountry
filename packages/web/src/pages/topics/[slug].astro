@@ -14,8 +14,11 @@ import FenceBlock from "../../components/FenceBlock.astro";
 import Masthead from "../../components/Masthead.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
+import EmailCapture from "../../components/EmailCapture.astro";
+import IntroRequest from "../../components/IntroRequest.astro";
 import Base from "../../layouts/Base.astro";
 import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import { showIntro } from "../../lib/monetisation.ts";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -121,9 +124,13 @@ const jsonLd = [
       <FactsTable caption={`Cited facts for ${topic.title}`} rows={factsRows} />
     </section>
 
+    {showIntro(topic.id) && <IntroRequest pageId={topic.id} corridorLabel="Portugal IFICI" />}
+
     <CiteThis lines={citeLines} />
 
     {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+
+    <EmailCapture />
 
     <section aria-labelledby="how-to-read-h" class="how-to-read">
       <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>

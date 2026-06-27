@@ -15,8 +15,11 @@ import FenceBlock from "../../components/FenceBlock.astro";
 import Masthead from "../../components/Masthead.astro";
 import RelatedLinks from "../../components/RelatedLinks.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
+import EmailCapture from "../../components/EmailCapture.astro";
+import IntroRequest from "../../components/IntroRequest.astro";
 import Base from "../../layouts/Base.astro";
 import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
+import { showIntro } from "../../lib/monetisation.ts";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -120,6 +123,8 @@ const jsonLd = [
       <p class="rule-text">{entry.rule}</p>
     </section>
 
+    {showIntro(entry.id) && <IntroRequest pageId={entry.id} corridorLabel="Portugal IFICI" />}
+
     <section aria-labelledby="supporting-facts-h">
       <SectionHeading as="h2" id="supporting-facts-h">Supporting facts</SectionHeading>
       <FactsTable caption={`Cited supporting facts for this answer`} rows={supportingRows} />
@@ -128,6 +133,8 @@ const jsonLd = [
     <CiteThis lines={citeLines} />
 
     {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
+
+    <EmailCapture />
 
     <section aria-labelledby="how-to-read-h" class="how-to-read">
       <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>

@@ -1,0 +1,72 @@
+---
+/**
+ * IntroRequest: a thin, UNSTYLED "request a vetted introduction" form. Wiring only; the design
+ * thread styles it later via the `.intro-request` / `.intro-request__*` class hooks without
+ * touching this logic.
+ *
+ * Gating: the host PAGE decides whether to render this, using showIntro(pageId) from
+ * monetisation.ts. As a safety net this component also renders nothing when INTRO_LIVE is false,
+ * so it can never leak on even if a page forgets to gate.
+ *
+ * Props:
+ *   pageId: string         the collection entry id of the host page. Carried to the founder as a
+ *                          hidden field so they know which page produced the lead. Keys the corridor.
+ *   corridorLabel: string  human-readable corridor name shown to the reader and sent as a hidden field.
+ *
+ * Fence (FENCE.md): this screens and routes to a professional; it is never advice. The disclosure
+ * and framing lines below are REQUIRED content and must stay even when this is restyled.
+ */
+import { INTRO_FORM_URL, INTRO_LIVE } from "../lib/monetisation.ts";
+
+interface Props {
+  pageId: string;
+  corridorLabel: string;
+}
+const { pageId, corridorLabel } = Astro.props;
+---
+
+{
+  INTRO_LIVE && (
+    <section class="intro-request" aria-labelledby="intro-request-h">
+      <h2 id="intro-request-h" class="intro-request__heading">
+        Talk to a vetted professional about this
+      </h2>
+      <p class="intro-request__what">
+        Tell us your situation and we will introduce you to a professional we have vetted for the
+        {corridorLabel} corridor.
+      </p>
+      <p class="intro-request__corridor">Corridor: {corridorLabel}</p>
+      <p class="intro-request__disclosure">
+        We may earn a fee if you proceed with an introduction.
+      </p>
+      <p class="intro-request__framing">
+        This is a professional we have vetted, not advice. Confirm everything with them.
+      </p>
+      <form class="intro-request__form" action={INTRO_FORM_URL} method="post">
+        <input type="hidden" name="page_id" value={pageId} />
+        <input type="hidden" name="corridor" value={corridorLabel} />
+
+        <label class="intro-request__label" for="intro-situation">Your situation in a sentence</label>
+        <textarea class="intro-request__input" id="intro-situation" name="situation" required></textarea>
+
+        <fieldset class="intro-request__fieldset">
+          <legend>Have you been tax resident in this country before?</legend>
+          <label><input type="radio" name="prior_residency" value="yes" /> Yes</label>
+          <label><input type="radio" name="prior_residency" value="no" /> No</label>
+          <label><input type="radio" name="prior_residency" value="unsure" /> Not sure</label>
+        </fieldset>
+
+        <label class="intro-request__label" for="intro-timeline">Rough timeline</label>
+        <input
+          class="intro-request__input"
+          id="intro-timeline"
+          type="text"
+          name="timeline"
+          placeholder="e.g. within 12 months"
+        />
+
+        <button class="intro-request__submit" type="submit">Request an introduction</button>
+      </form>
+    </section>
+  )
+}

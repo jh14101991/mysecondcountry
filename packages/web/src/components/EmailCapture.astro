@@ -1,0 +1,32 @@
+---
+/**
+ * EmailCapture: a thin, UNSTYLED email-list signup. Wiring only; the design thread styles it
+ * later via the `.email-capture` / `.email-capture__*` class hooks without touching this logic.
+ *
+ * Props: none. Reads EMAIL_FORM_ACTION from src/lib/monetisation.ts. The form is a standard HTML
+ * POST with a single `email` field, so it works with no JavaScript on a static page. The founder
+ * sets the real endpoint in monetisation.ts.
+ */
+import { EMAIL_FORM_ACTION } from "../lib/monetisation.ts";
+---
+
+<section class="email-capture" aria-labelledby="email-capture-h">
+  <h2 id="email-capture-h" class="email-capture__heading">Get told when these rules change</h2>
+  <p class="email-capture__note">
+    We track the figures and rules on this page and email you when one changes. No spam, and you can
+    unsubscribe anytime.
+  </p>
+  <form class="email-capture__form" action={EMAIL_FORM_ACTION} method="post">
+    <label class="email-capture__label" for="email-capture-input">Email address</label>
+    <input
+      class="email-capture__input"
+      id="email-capture-input"
+      type="email"
+      name="email"
+      autocomplete="email"
+      required
+      placeholder="you@example.com"
+    />
+    <button class="email-capture__submit" type="submit">Email me changes</button>
+  </form>
+</section>
