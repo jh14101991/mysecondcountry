@@ -30,8 +30,12 @@ No new runtime dependency in the repo; providers are loaded by embed or by posti
   table-semantics, confidence-marks, robots, jsonld, date-modified, faq), and `pnpm exec biome check`.
 - Static only: do NOT add `@astrojs/vercel` or any serverless function in this slice. If a self-hosted
   form is ever needed, that is a separate later phase with its own plan.
-- Visual-first protocol: a static HTML mockup is produced and the user approves it BEFORE any
-  component implementation code is written.
+- Design is a SEPARATE thread, not done here. Do not produce mockups or invest in styling. Build the
+  two components as thin, functional, minimally-marked-up units behind a clear prop interface that the
+  design thread restyles later without touching the wiring. The fence disclosure and framing are
+  CONTENT requirements and must be present even when unstyled. This slice delivers working wiring and
+  architecture, not look. (Task 1 below is therefore skipped; ignore any "styled to the kit" wording
+  in Tasks 2 and 3.)
 - The intro block does not show to readers until `INTRO_LIVE` is set true, which is gated on a secured,
   vetted adviser (see the ops track at the end).
 - Git hygiene: branch off `main` (suggested `feat/first-revenue-slice`); stage explicit paths; never
