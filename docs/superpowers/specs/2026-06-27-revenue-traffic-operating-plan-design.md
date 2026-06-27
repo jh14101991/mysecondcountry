@@ -233,13 +233,21 @@ This is what becomes the first implementation plan and the first execution:
 Everything else (lanes 2, 3, 4, and widening 1) is explicitly out of scope for the first slice and
 waits on its gate.
 
-## 11. Open decisions to confirm before Phase 1
+## 11. Decisions (resolved 2026-06-27, via a premortem)
 
-1. First corridor: recommend Portugal IFICI / NHR. Confirm or swap to Greece golden visa.
-2. The seed professional: do you already know a cross-border CPA or immigration / RBI firm for that
-   corridor, or is "find and vet one" the first Phase 1 action? This determines whether revenue can
-   be tested in weeks or after a vetting search.
-3. First-intro pricing: a flat per-intro fee to start (simple) versus a rev-share (more upside, more
-   friction). Recommend a flat fee for the concierge test.
-4. Founder time: roughly how many hours a week for the continuous ops (lanes 5, 6, brokering), so the
-   cadence in the plan is realistic.
+1. First corridor: **Portugal IFICI / NHR**, the most reachable, anxious, and under-served audience.
+   The higher-commission golden-visa corridors wait until traffic is proven.
+2. Seed professional: the founder has no existing Portugal adviser, so the first Phase 1 ops action is
+   a roughly two-week sprint to find and vet one Lisbon cross-border adviser already publishing on
+   IFICI, approached non-exclusively with the first month of introductions free to prove lead
+   quality. The lane-1 block goes live only once that adviser has agreed.
+3. First-intro pricing: **free introductions first to prove quality, then a flat fee per accepted
+   introduction** (auditable without seeing the adviser's books). No rev-share early.
+4. Founder time: **30 hours a week.** Generous, so the binding risk is spending it on building rather
+   than ops. Rule: most of the 30 hours go to the sourcing sprint, lane 5 corrections, and lane 6;
+   the single build (email capture plus the lane-1 block) is time-boxed and small.
+
+Sequencing: because there is no adviser yet, the build (email capture plus the lane-1 block) and the
+ops (sourcing the adviser, starting lane 5 corrections) run in parallel from now. The block ships the
+day the adviser says yes, and the revenue test's clock starts once the corridor has a real trickle of
+visitors from lane 5.
