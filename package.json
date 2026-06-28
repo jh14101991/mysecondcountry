@@ -21,6 +21,7 @@
     "indexnow": "tsx scripts/submit-indexnow.ts",
     "verify:build": "tsx scripts/assert-fence.ts && tsx scripts/assert-fence-before-claim.ts && tsx scripts/assert-h1-count.ts && tsx scripts/assert-table-semantics.ts && tsx scripts/assert-confidence-marks.ts && tsx scripts/assert-no-em-dashes.ts && tsx scripts/assert-no-individualised-copy.ts && tsx scripts/validate-jsonld.ts && tsx scripts/assert-date-modified.ts && tsx scripts/assert-faq-jsonld.ts && tsx scripts/assert-robots.ts && tsx scripts/check-a11y.ts",
     "digest": "tsx scripts/digest.ts",
+    "ai:crawlers": "tsx scripts/parse-ai-crawlers.ts",
     "prepare": "simple-git-hooks || true"
   },
   "simple-git-hooks": {
@@ -42,5 +43,8 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.5.0"
   }
 }

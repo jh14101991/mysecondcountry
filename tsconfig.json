@@ -4,5 +4,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["scripts/**/*.ts", "*.config.ts", "vitest.workspace.ts"]
+  "include": ["scripts/**/*.ts", "*.config.ts", "middleware.ts", "vitest.workspace.ts"]
 }

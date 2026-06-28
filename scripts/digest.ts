@@ -18,6 +18,7 @@ import {
   tools,
   topics,
 } from "@where/data";
+import { renderAiCrawlerSection } from "./lib/ai-crawler-summary";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -413,16 +414,24 @@ async function gscSection(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
-// (d) Traffic and AI-citation referrers
+// (d) AI crawler sightings
+// ---------------------------------------------------------------------------
+
+async function aiCrawlerSection(): Promise<string> {
+  return await renderAiCrawlerSection({ days: 7 });
+}
+
+// ---------------------------------------------------------------------------
+// (e) Traffic and AI-citation referrers
 // ---------------------------------------------------------------------------
 
 async function trafficSection(): Promise<string> {
-  const lines: string[] = ["## Traffic and AI-citation referrers", ""];
+  const lines: string[] = ["## Human traffic and AI-referrer visits", ""];
 
   const key = process.env.PLAUSIBLE_API_KEY;
   if (!key) {
     lines.push(
-      "Traffic + AI-referrer stats: set the PLAUSIBLE_API_KEY repo secret to include 7-day visitors, top pages, and referrers (this is where Perplexity/ChatGPT citations show up).",
+      "Human traffic and referrer stats are not enabled. Keep this separate from AI crawler sightings: crawler hits show ingestion, while referrers show actual visits from ChatGPT, Perplexity, Claude, or other surfaces.",
     );
     lines.push("");
     return lines.join("\n");
@@ -511,7 +520,7 @@ async function trafficSection(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
-// (d) Manual checks
+// (f) Manual checks
 // ---------------------------------------------------------------------------
 
 function manualChecksSection(): string {
@@ -538,10 +547,11 @@ async function main(): Promise<void> {
   const freshness = renderFreshnessSection(today);
   const health = await siteHealth();
   const gsc = await gscSection();
+  const crawlers = await aiCrawlerSection();
   const traffic = await trafficSection();
   const manual = manualChecksSection();
 
-  process.stdout.write([title, freshness, health, gsc, traffic, manual].join("\n"));
+  process.stdout.write([title, freshness, health, gsc, crawlers, traffic, manual].join("\n"));
 }
 
 main().catch((err) => {

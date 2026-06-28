@@ -2,7 +2,9 @@
 
 ## Event taxonomy
 
-All client-side events fire via Plausible's custom event API (`plausible(eventName, { props })`). Server-side AI-crawler events are captured separately via Vercel Edge Middleware; they never appear in Plausible.
+These client-side events are the planned human-traffic taxonomy. They require a human-analytics
+provider before they produce data. Server-side AI-crawler events are captured separately via Vercel
+Routing Middleware; they do not prove human visits.
 
 ### Client-side events
 
@@ -56,23 +58,66 @@ Properties:
 
 ## KPI definitions
 
-### AI-citation rate
+### Manual GSC performance log
 
-**Definition:** the share of place-page requests that originate from known AI crawlers, measured per page per calendar week.
+Manual Search Console snapshots live in `docs/signals/gsc-performance-log.csv` until the
+weekly digest has API-backed GSC exports enabled.
 
-**Formula:**
+Each snapshot records the raw property total plus visible query, page, and country rows. Do not
+treat low-volume impressions as demand proof. Use them as queue evidence only when they repeat
+across days or combine with clicks, source clicks, signups, intro requests, or content movement.
 
-```
-AI-citation rate (page, week) =
-  AI-crawler hits on page (week) / total requests on page (week)
-```
+### New-page URL inspection rule
 
-where "AI-crawler hits" counts any request whose `User-Agent` contains one of:
-`GPTBot`, `ClaudeBot`, `PerplexityBot`, `OAI-SearchBot`, `Google-Extended`.
+When a new page cluster ships, the sitemap handles normal discovery. Do not resubmit the sitemap
+for every deploy.
 
-**Data source:** a Vercel Edge Middleware (`packages/web/src/middleware.ts`) that runs on every request, detects known AI-crawler user-agents (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, Google-Extended), and records the hit. These crawlers strip cookies and never execute JavaScript, so they never appear in Plausible. The middleware writes each hit to a Vercel Blob store (or a Vercel Log Drain on Pro) as a structured JSON record. A standalone `tsx` script at `scripts/parse-ai-crawlers.ts` reads those records on the same GitHub Actions cron schedule as the data-refresh pipeline, emits a dated JSON summary to `docs/analytics/ai-crawlers/YYYY-WW.json`, and opens a PR alongside any data-refresh PR so the human gate also reviews crawler trend. Note: Vercel Log Drains are an alternative on the Pro plan and require no custom middleware for log capture.
+Use Google Search Console URL Inspection only for the top-of-funnel page or the few pages that
+matter most for the shipped cluster:
 
-**Baseline rule:** the log parser must be wired from the first commit and first deployment. Even with zero traffic, an empty weekly file proves the pipeline is running. Any week with no baseline file is a pipeline failure, not a "quiet week."
+- one parent page for a place cluster, such as the region or country hub;
+- one to three high-intent child pages, such as the flagship town, rule, checklist, or answer;
+- any page that is already getting impressions but shows a live-test issue.
+
+After deploy, run **Test live URL** first. If the live test passes and the page is not indexed,
+request indexing. Do not repeatedly request indexing for the same unchanged URL. Log meaningful
+snapshots in `docs/signals/gsc-performance-log.csv`.
+
+Treat URL Inspection as a hand-raise for priority pages, not as the main indexing mechanism.
+
+---
+
+### AI crawler sightings
+
+**Definition:** tracked requests from known AI crawlers, measured by page and bot per calendar
+week.
+
+This is not the same as AI-search impressions, AI citations, or human traffic. It only tells us
+that an AI crawler or AI retrieval user-agent requested a page.
+
+**Primary readout:**
+
+- total tracked crawler hits in the last 7 days;
+- top bots by path;
+- top paths by crawler attention;
+- newest hit per bot and path.
+
+**Data source:** Vercel Routing Middleware (`middleware.ts`) detects known AI-crawler user
+agents and records only matching public-content requests to private Vercel Blob files under
+`ai-crawlers/raw/YYYY-MM-DD/*.json`. It does not log IP addresses, cookies, request bodies, or
+ordinary human browser traffic.
+
+Tracked user-agent families:
+`GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`, `Claude-SearchBot`, `PerplexityBot`,
+`Perplexity-User`, `Google-Extended`, and `GoogleOther`.
+
+The standalone parser is `scripts/parse-ai-crawlers.ts`. The weekly digest calls the same parser
+and reports a conservative "AI crawler sightings" section. To enable the digest reader, set the
+GitHub secret `BLOB_READ_WRITE_TOKEN` to the Vercel Blob read/write token. Production logging uses
+the Vercel project environment for the same Blob store.
+
+**Baseline rule:** zero hits is a real result only when the digest says the Blob reader is
+configured. If the digest says `BLOB_READ_WRITE_TOKEN` is missing, the pipeline is not measuring.
 
 ---
 
@@ -90,7 +135,8 @@ Affiliate CTR =
 
 Report per partner slug to distinguish high-performing placements from underperformers.
 
-**Data source:** Plausible custom events dashboard. Export via Plausible Stats API (`/api/v1/stats/breakdown?property=event:props:partner`).
+**Data source:** future human-traffic analytics. If Plausible is enabled later, export via the
+Plausible Stats API (`/api/v1/stats/breakdown?property=event:props:partner`).
 
 ---
 
@@ -109,7 +155,10 @@ Fake-door conversion % =
 
 Both events carry `place_id` and `dossier_type`, so you can slice by place or dossier variant.
 
-**Data source:** Plausible custom events. The numerator (`dossier_checkout_started`) is fired server-side from the API route, so it is not blocked by ad blockers. The denominator (`dossier_fakedoor_click`) is client-side; expect a small systematic undercount on the denominator from blocked scripts, which makes the reported rate a conservative floor.
+**Data source:** future human-traffic analytics. The numerator (`dossier_checkout_started`) should
+be fired server-side from the API route, so it is not blocked by ad blockers. The denominator
+(`dossier_fakedoor_click`) is client-side; expect a small systematic undercount on the denominator
+from blocked scripts.
 
 ---
 
@@ -127,7 +176,7 @@ Newsletter signup rate =
 
 Slice by `source_placement` to identify whether inline, footer, or exit-intent placements are driving signups.
 
-**Data source:** Plausible custom events. Plausible is cookieless and GDPR-compliant by design; no consent banner is required. This is a non-negotiable reason to use Plausible over GA4.
+**Data source:** future human-traffic analytics. Keep this separate from AI crawler sightings.
 
 ---
 
@@ -145,15 +194,17 @@ Source-click depth =
 
 A secondary cut: breakdown by `cited_value_key` to learn which data categories (tax rates, cost of living, visa rules) readers most want to verify independently. Prioritize those fields for citation quality improvements.
 
-**Data source:** Plausible custom events, breakdown by `event:props:cited_value_key`.
+**Data source:** future human-traffic analytics, broken down by `event:props:cited_value_key`.
 
 ---
 
 ## Instrumentation rules
 
-1. Every event listed above must be wired before the first public URL is indexed, not after traffic arrives. A page that exists for 48 hours with no instrumentation has lost its baseline permanently.
+1. When a human-traffic analytics provider is enabled, every event listed above must be wired
+   before new conversion surfaces ship.
 2. `fence_viewed` must fire on every page that renders residency, tax, visa, or immigration `CitedValue` fields. The `IntersectionObserver` hook lives in a shared Astro island component (`packages/web/src/components/LiabilityFence.astro`); it is not optional per-page.
-3. `dossier_checkout_started` is server-side only. Do not fire it from the client. The API route fires it via Plausible's server-side events API immediately before issuing the Stripe redirect. This ensures the event is captured even if the user's browser blocks the Plausible script.
-4. The AI-crawler log parser (`scripts/parse-ai-crawlers.ts`) is part of the same cron family as `scripts/refresh-data.ts`. Both run on the same schedule. Both open PRs. Neither auto-merges.
-5. Plausible script tag goes in the `<head>` of the Astro base layout with `defer` and `data-domain` set. No custom domain proxy is required initially; add one if Plausible is blocked at a measurably high rate.
-6. All event property values must be strings or numbers. No booleans, no nested objects. Plausible flattens props to a flat key-value map.
+3. `dossier_checkout_started` is server-side only. Do not fire it from the client.
+4. The AI-crawler parser (`scripts/parse-ai-crawlers.ts`) is part of the weekly digest. It reports
+   ingestion signals only. It does not prove AI citations or human demand.
+5. If a human-traffic analytics provider is enabled later, all event property values must be
+   strings or numbers. No booleans, no nested objects.
