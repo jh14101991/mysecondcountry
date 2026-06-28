@@ -57,9 +57,9 @@
     },
     "averageAnnualSunHours": {
       "value": 2813.7,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Chania",
-      "sourceName": "Hellenic National Meteorological Service climate atlas, Chania (Souda) 1971 to 2000, via Wikipedia",
-      "verifiedDate": "2026-06-24",
+      "sourceUrl": "https://newportal.hnms.gr/emy/en/climatology/climatology_city?perifereia=Crete&poli=Chania_Souda",
+      "sourceName": "Hellenic National Meteorological Service (HNMS/EMY) Climate Atlas, Chania (Souda) 1971 to 2000, annual sunshine (HNMS portal has a TLS certificate issue at audit time)",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "town",
       "category": "climate",

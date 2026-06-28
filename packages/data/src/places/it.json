@@ -42,14 +42,14 @@
       "excerpt": "Rome: mean daily maximum 31.0 C in July (1991 to 2020 normals)."
     },
     "averageAnnualSunHours": {
-      "value": 2723.9,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Rome",
-      "sourceName": "Rome climate normals (NOAA 1991-2020, Ciampino), via Wikipedia",
-      "verifiedDate": "2026-06-25",
+      "value": 2472.8,
+      "sourceUrl": "https://clima.meteoam.it/AtlanteClimatico/pdf/(239)Roma%20Ciampino.pdf",
+      "sourceName": "Servizio Meteorologico dell'Aeronautica Militare (Italian Air Force), Atlante Climatico 1971-2000, Roma Ciampino, annual sunshine (eliofania)",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Rome: about 2,723.9 mean annual sunshine hours (1991 to 2020 normals)."
+      "excerpt": "Rome (Ciampino), shown as representative for Italy: 2,472.8 mean annual sunshine hours (Aeronautica Militare, Atlante Climatico 1971 to 2000). The Aeronautica Militare PDF currently has a TLS certificate issue, so the figure was confirmed against the published Atlante Climatico table rather than a live fetch; capital used as a national proxy, marked low confidence."
     },
     "koppenClass": {
       "value": "Csa",

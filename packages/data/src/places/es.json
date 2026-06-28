@@ -43,13 +43,13 @@
     },
     "averageAnnualSunHours": {
       "value": 2744,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Madrid",
-      "sourceName": "Madrid climate normals (AEMET), via Wikipedia",
-      "verifiedDate": "2026-06-24",
+      "sourceUrl": "https://www.aemet.es/es/serviciosclimaticos/datosclimatologicos/valoresclimatologicos?l=3195&k=mad",
+      "sourceName": "AEMET (Agencia Estatal de Meteorologia), Madrid Retiro (station 3195) climate normals, annual insolation",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Madrid: about 2,744 mean annual sunshine hours."
+      "excerpt": "Madrid (Retiro), shown as representative for Spain: about 2,744 mean annual sunshine hours from AEMET station normals. AEMET's openly published monthly table omits one month, so the annual total is not directly verifiable here; capital used as a national proxy, marked low confidence."
     },
     "koppenClass": {
       "value": "Csa",
@@ -64,15 +64,15 @@
   },
   "residency": {
     "digitalNomadVisa": {
-      "value": 2763,
-      "sourceUrl": "https://www.exteriores.gob.es/Consulados/washington/en/ServiciosConsulares/Paginas/Consular/Telework-visa.aspx",
-      "sourceName": "Spain Ministry of Foreign Affairs, telework (digital nomad) visa; floor is 200 percent of the SMI",
-      "verifiedDate": "2026-06-24",
+      "value": 2849,
+      "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2026-3815",
+      "sourceName": "Spain telework (digital nomad) visa: floor is 200 percent of the SMI; the 2026 SMI is set by Real Decreto 126/2026 (BOE-A-2026-3815)",
+      "verifiedDate": "2026-06-28",
       "confidence": "medium",
       "granularity": "country",
       "category": "visa",
       "stalenessDays": 90,
-      "excerpt": "Spain telework (digital nomad) visa: minimum income of 200 percent of the minimum interprofessional wage, about 2,763 euros per month in 2025."
+      "excerpt": "Spain telework (digital nomad) visa: minimum income of 200 percent of the SMI. The 2026 SMI is 1,221 euros per month in 14 payments (17,094 euros per year, Real Decreto 126/2026), so about 2,849 euros per month."
     },
     "goldenVisa": {
       "value": "Abolished on 3 April 2025 under Organic Law 1/2025. Investor residence permits tied to real estate investment over 500,000 euros no longer exist.",
