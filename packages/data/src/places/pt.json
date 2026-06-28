@@ -42,14 +42,14 @@
       "excerpt": "Lisbon: mean daily maximum 27.9 C in July (1981 to 2010 normals)."
     },
     "averageAnnualSunHours": {
-      "value": 2874.9,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Lisbon",
-      "sourceName": "Lisbon climate normals, via Wikipedia",
-      "verifiedDate": "2026-06-24",
+      "value": 2792.8,
+      "sourceUrl": "https://www.ipma.pt/bin/file.data/climate-normal/cn_71-00_LISBOA_GEOFISICO.pdf",
+      "sourceName": "IPMA (Instituto Portugues do Mar e da Atmosfera), Lisboa / Instituto Geofisico climate normal 1971 to 2000, annual insolation",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Lisbon: about 2,874.9 mean annual sunshine hours."
+      "excerpt": "Lisbon (Instituto Geofisico), shown as representative for Portugal: 2,792.8 mean annual sunshine hours (IPMA 1971 to 2000 normal). Capital used as a national proxy, marked low confidence."
     },
     "koppenClass": {
       "value": "Csa",
@@ -65,14 +65,14 @@
   "residency": {
     "digitalNomadVisa": {
       "value": 3680,
-      "sourceUrl": "https://citizenremote.com/visas/portugal-digital-nomad-visa/",
-      "sourceName": "Portugal D8 visa income floor: 4x the national minimum wage (920 euros/month in 2026), applied by AIMA",
-      "verifiedDate": "2026-06-24",
+      "sourceUrl": "https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe",
+      "sourceName": "AIMA (Agencia para a Integracao, Migracoes e Asilo), D8 remote-work residence route (Art. 88 n.1): income floor of 4x the national minimum wage; RMMG 920 euros/month for 2026 set by Decreto-Lei 139/2025",
+      "verifiedDate": "2026-06-28",
       "confidence": "medium",
       "granularity": "country",
       "category": "visa",
       "stalenessDays": 90,
-      "excerpt": "Portugal D8 digital nomad visa: minimum income of 4 times the national minimum wage, about 3,680 euros per month in 2026, assessed by AIMA at the appointment date."
+      "excerpt": "Portugal D8 digital nomad visa: minimum income of 4 times the national minimum wage (RMMG 920 euros/month in 2026, Decreto-Lei 139/2025), about 3,680 euros per month, assessed by AIMA at the appointment date."
     },
     "goldenVisa": {
       "value": "Real estate and capital-transfer routes removed in October 2023 (Mais Habitacao, Law 56/2023). Remaining routes include 500,000 euros into qualifying Portuguese investment funds, 250,000 euros cultural support (200,000 in low-density areas), 500,000 euros scientific research, and job creation.",

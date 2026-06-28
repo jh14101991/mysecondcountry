@@ -43,13 +43,13 @@
     },
     "averageAnnualSunHours": {
       "value": 3298.4,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Nicosia",
-      "sourceName": "Wikipedia, Nicosia climate table, Athalassa station (1991 to 2020)",
-      "verifiedDate": "2026-06-25",
+      "sourceUrl": "https://www.nodc.noaa.gov/archive/arc0216/0253808/6.6/data/0-data/Region-6-WMO-Normals-9120/Cyprus/CSV/AthalassaRadiosonde_17607.csv",
+      "sourceName": "Department of Meteorology, Cyprus; official WMO 1991-2020 climate normal for Nicosia/Athalassa, held in the NOAA NCEI WMO Climate Normals archive",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "3,298.4 mean annual sunshine hours."
+      "excerpt": "Nicosia (Athalassa), shown as representative for Cyprus: 3,298.4 mean annual sunshine hours, the Cyprus Department of Meteorology's official 1991 to 2020 WMO climate normal. Capital used as a national proxy, marked low confidence."
     },
     "koppenClass": {
       "value": "Csa",

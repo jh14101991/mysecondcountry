@@ -43,13 +43,13 @@
     },
     "averageAnnualSunHours": {
       "value": 3054,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Malta",
-      "sourceName": "Wikipedia, Climate of Malta, Luqa station (1991 to 2020 normals)",
-      "verifiedDate": "2026-06-25",
+      "sourceUrl": "https://worldweather.wmo.int/en/city.html?cityId=42",
+      "sourceName": "Meteorological Office, Malta (Luqa / Malta International Airport), via WMO World Weather Information Service",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Climate data for Malta (Luqa in the south-east part of main island, 1991 to 2020): annual sunshine hours 3,054."
+      "excerpt": "Malta (Luqa), shown as representative for the country: about 3,054 mean annual sunshine hours. This figure could not be verified against the Malta Meteorological Office's own published normals at audit time (site access restricted), so it is retained from widely reproduced climate tables and marked low confidence; the WMO World Weather Information Service is the official channel for Malta's normals."
     },
     "koppenClass": {
       "value": "Csa",

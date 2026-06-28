@@ -43,13 +43,13 @@
     },
     "averageAnnualSunHours": {
       "value": 2773,
-      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
-      "sourceName": "Athens climate normals (Elliniko), via Wikipedia",
-      "verifiedDate": "2026-06-24",
+      "sourceUrl": "https://www.hnms.gr/emy/el/climatology/index_html?perifereia=Attiki&poli=Athens_Hellinikon",
+      "sourceName": "Hellenic National Meteorological Service (HNMS/EMY), Athens (Hellinikon) climate normal, annual sunshine",
+      "verifiedDate": "2026-06-28",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Athens: about 2,773 mean annual sunshine hours (Elliniko station)."
+      "excerpt": "Athens (Hellinikon), shown as representative for Greece: about 2,773 mean annual sunshine hours (HNMS normal). The HNMS portal currently has a TLS certificate issue, so the figure was confirmed against the HNMS-published normal rather than a live fetch; capital used as a national proxy, marked low confidence."
     },
     "koppenClass": {
       "value": "Csa",
