@@ -115,7 +115,7 @@ for (const file of answerPages) {
     continue;
   }
 
-  let hasQaPage = false;
+  let hasFaqPage = false;
   for (const block of blocks) {
     let parsed: unknown;
     try {
@@ -127,21 +127,37 @@ for (const file of answerPages) {
     }
     const nodes = Array.isArray(parsed) ? parsed : [parsed];
     for (const node of nodes as Record<string, unknown>[]) {
-      if (node["@type"] !== "QAPage") continue;
-      hasQaPage = true;
+      if (node["@type"] !== "FAQPage") continue;
+      hasFaqPage = true;
       if (!node["@context"]) {
-        console.error(`QAPage missing @context  ${rel(file)}`);
+        console.error(`FAQPage missing @context  ${rel(file)}`);
         failures += 1;
       }
-      const mainEntity = node.mainEntity as Record<string, unknown> | undefined;
-      if (!mainEntity || typeof mainEntity.name !== "string" || !mainEntity.name) {
-        console.error(`QAPage missing question  ${rel(file)}`);
+      const mainEntity = node.mainEntity;
+      if (!Array.isArray(mainEntity) || mainEntity.length === 0) {
+        console.error(`FAQPage missing questions  ${rel(file)}`);
         failures += 1;
+        continue;
+      }
+      for (const question of mainEntity as Record<string, unknown>[]) {
+        if (
+          question["@type"] !== "Question" ||
+          typeof question.name !== "string" ||
+          !question.name
+        ) {
+          console.error(`FAQPage missing question name  ${rel(file)}`);
+          failures += 1;
+        }
+        const acceptedAnswer = question.acceptedAnswer as Record<string, unknown> | undefined;
+        if (!acceptedAnswer || typeof acceptedAnswer.text !== "string" || !acceptedAnswer.text) {
+          console.error(`FAQPage question missing acceptedAnswer text  ${rel(file)}`);
+          failures += 1;
+        }
       }
     }
   }
-  if (!hasQaPage) {
-    console.error(`No QAPage node  ${rel(file)}`);
+  if (!hasFaqPage) {
+    console.error(`No FAQPage node  ${rel(file)}`);
     failures += 1;
   }
 }
@@ -295,7 +311,6 @@ for (const file of toolPages) {
 // Every BreadcrumbList ListItem must carry an `item` URL across every page, or Google rejects
 // the breadcrumb as invalid (GSC: Missing field "item" in "itemListElement"). Google permits the
 // last item to omit it, but every page here links its current crumb too, so we require it on all.
-let breadcrumbItemsChecked = 0;
 for (const file of htmlFiles()) {
   const blocks = [
     ...read(file).matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
@@ -312,7 +327,6 @@ for (const file of htmlFiles()) {
       if (node["@type"] !== "BreadcrumbList") continue;
       const list = Array.isArray(node.itemListElement) ? node.itemListElement : [];
       for (const li of list as Record<string, unknown>[]) {
-        breadcrumbItemsChecked += 1;
         if (!li.item) {
           console.error(
             `BREADCRUMB  ${rel(file)}: ListItem "${String(li.name ?? "")}" (position ${String(li.position ?? "?")}) has no "item" URL.`,
@@ -329,5 +343,5 @@ if (failures > 0) {
   process.exit(1);
 }
 console.log(
-  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD, ${answerPages.length} answer page(s) carry valid QAPage JSON-LD, ${topicPages.length} topic page(s) carry valid Dataset JSON-LD, ${shortlistPages.length} shortlist page(s) carry valid ItemList JSON-LD, ${toolPages.length} tool page(s) carry valid HowTo JSON-LD.`,
+  `validate-jsonld: ${placePages.length} place page(s) carry valid Place JSON-LD, ${regimePages.length} regime page(s) carry valid Dataset JSON-LD, ${answerPages.length} answer page(s) carry valid FAQPage JSON-LD, ${topicPages.length} topic page(s) carry valid Dataset JSON-LD, ${shortlistPages.length} shortlist page(s) carry valid ItemList JSON-LD, ${toolPages.length} tool page(s) carry valid HowTo JSON-LD.`,
 );
