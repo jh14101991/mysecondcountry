@@ -15,6 +15,7 @@ import {
   breadcrumbJsonLd,
   citedPropertyValue,
   faqPageJsonLd,
+  itemListJsonLd,
   maxVerifiedDate,
 } from "../../lib/jsonld.ts";
 
@@ -173,7 +174,7 @@ const safeScoreEs = radarScore(safeVEs, safeMin, safeMax, "min");
 const costLeader: "gr" | "pt" | "es" = "pt";
 // tax: min leader = GR (7%)
 const taxLeader: "gr" | "pt" | "es" = "gr";
-// visa: min leader = ES (2763)
+// visa: min leader = ES (2849)
 const visaLeader: "gr" | "pt" | "es" = "es";
 // sunshine: max leader = PT (2874.9)
 const sunLeader: "gr" | "pt" | "es" = "pt";
@@ -294,7 +295,7 @@ const multiples = [
         tag: "ES",
         pos: flipPos(dotPos(visaRaws[2] ?? 0, visaRange.lo, visaRange.span)),
         isLeader: visaLeader === "es",
-        value: "€2,763",
+        value: "€2,849",
       },
     ],
   },
@@ -443,7 +444,7 @@ const variableMeasured = measuredDims.flatMap((d) =>
 const leaders = [
   { label: "Cost", stat: "86.6 index", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
   { label: "Tax regime", stat: "7% flat", country: "gr" as const, countryLabel: "🇬🇷 Greece" },
-  { label: "Visa floor", stat: "€2,763/mo", country: "es" as const, countryLabel: "🇪🇸 Spain" },
+  { label: "Visa floor", stat: "€2,849/mo", country: "es" as const, countryLabel: "🇪🇸 Spain" },
   { label: "Sunshine", stat: "2,875 hrs", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
   { label: "Doctors", stat: "6.37/1,000", country: "gr" as const, countryLabel: "🇬🇷 Greece" },
   { label: "Safety", stat: "GPI rank 7", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
@@ -465,7 +466,7 @@ const faqs = [
   {
     question: "Which has the lowest digital nomad visa income requirement?",
     answer:
-      "Spain, at a net €2,763 a month (200% of the minimum wage), against Greece at €3,500 and Portugal at €3,680 (national immigration sources, verified 2026-06-24).",
+      "Spain, at a net €2,849 a month (200% of the minimum wage), against Greece at €3,500 and Portugal at €3,680 (national immigration sources, verified June 2026).",
   },
   {
     question: "Which is the most peaceful and the cheapest of the three?",
@@ -503,6 +504,14 @@ const jsonLd = [
     variableMeasured,
   },
   faqPageJsonLd(faqs),
+  itemListJsonLd({
+    url: canonical,
+    items: [
+      { position: 1, name: "Greece", url: `${SITE}/places/greece` },
+      { position: 2, name: "Portugal", url: `${SITE}/places/portugal` },
+      { position: 3, name: "Spain", url: `${SITE}/places/spain` },
+    ],
+  }),
 ];
 ---
 
@@ -607,7 +616,7 @@ const jsonLd = [
     <div class="shows-wrap" aria-live="polite" hidden>
       <h2 class="shows-h2">What the data shows</h2>
       <p class="shows-text" data-shows="taxes" hidden>Among the three special regimes, Greece has the lowest headline rate at 7% flat on foreign-source pension income (article 5B), against Portugal's 20% (IFICI) and Spain's 24% (Beckham). They are different regimes with different eligibility. Confirm yours with a licensed tax adviser.</p>
-      <p class="shows-text" data-shows="remote" hidden>Spain has the lowest digital-nomad visa income floor at €2,763 a month, with Greece at €3,500 and Portugal at €3,680. By the Eurostat price level index, Portugal is the cheapest of the three.</p>
+      <p class="shows-text" data-shows="remote" hidden>Spain has the lowest digital-nomad visa income floor at €2,849 a month, with Greece at €3,500 and Portugal at €3,680. By the Eurostat price level index, Portugal is the cheapest of the three.</p>
       <p class="shows-text" data-shows="retire" hidden>Portugal is the most peaceful of the three (Global Peace Index rank 7) and the cheapest by price level. Greece has the most doctors per person and the lowest special tax rate. Spain sits between the two on most measures.</p>
     </div>
 
@@ -701,7 +710,7 @@ const jsonLd = [
                 <ComparisonCell cited={visaPt} displayValue="€3,680" unit="/mo min" subtext="Four times the minimum wage (D8)" country="pt" isLeader={visaLeader === "pt"} score={visaScorePt} sourceRef={visaSrcRefPt} />
               </td>
               <td class="td-country" data-label="ES">
-                <ComparisonCell cited={visaEs} displayValue="€2,763" unit="/mo min" subtext="200% of the minimum wage (telework visa)" country="es" isLeader={visaLeader === "es"} score={visaScoreEs} sourceRef={visaSrcRefEs} />
+                <ComparisonCell cited={visaEs} displayValue="€2,849" unit="/mo min" subtext="200% of the minimum wage (telework visa)" country="es" isLeader={visaLeader === "es"} score={visaScoreEs} sourceRef={visaSrcRefEs} />
               </td>
             </tr>
 
