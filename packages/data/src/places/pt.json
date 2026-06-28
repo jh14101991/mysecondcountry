@@ -44,12 +44,12 @@
     "averageAnnualSunHours": {
       "value": 2874.9,
       "sourceUrl": "https://en.wikipedia.org/wiki/Climate_of_Lisbon",
-      "sourceName": "Lisbon climate normals, via Wikipedia",
+      "sourceName": "Lisbon climate normals (IPMA 1981-2010), via Wikipedia",
       "verifiedDate": "2026-06-24",
       "confidence": "low",
       "granularity": "country",
       "category": "climate",
-      "excerpt": "Lisbon: about 2,874.9 mean annual sunshine hours."
+      "excerpt": "Lisbon: about 2,874.9 mean annual sunshine hours (1981 to 2010 normals)."
     },
     "koppenClass": {
       "value": "Csa",
@@ -65,14 +65,14 @@
   "residency": {
     "digitalNomadVisa": {
       "value": 3680,
-      "sourceUrl": "https://citizenremote.com/visas/portugal-digital-nomad-visa/",
-      "sourceName": "Portugal D8 visa income floor: 4x the national minimum wage (920 euros/month in 2026), applied by AIMA",
-      "verifiedDate": "2026-06-24",
+      "sourceUrl": "https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe",
+      "sourceName": "AIMA, Portugal D8 remote-work residence (Nomadas Digitais)",
+      "verifiedDate": "2026-06-28",
       "confidence": "medium",
       "granularity": "country",
       "category": "visa",
       "stalenessDays": 90,
-      "excerpt": "Portugal D8 digital nomad visa: minimum income of 4 times the national minimum wage, about 3,680 euros per month in 2026, assessed by AIMA at the appointment date."
+      "excerpt": "Portugal D8 digital nomad visa: minimum income of 4 times the national minimum wage (RMMG 920 euros, Decreto-Lei 139/2025), about 3,680 euros per month in 2026, assessed by AIMA at the appointment date."
     },
     "goldenVisa": {
       "value": "Real estate and capital-transfer routes removed in October 2023 (Mais Habitacao, Law 56/2023). Remaining routes include 500,000 euros into qualifying Portuguese investment funds, 250,000 euros cultural support (200,000 in low-density areas), 500,000 euros scientific research, and job creation.",
@@ -116,7 +116,7 @@
       "confidence": "medium",
       "granularity": "country",
       "category": "healthcare",
-      "excerpt": "Portugal: 57.7 medical doctors per 10,000 (about 5.8 per 1,000), WHO 2021."
+      "excerpt": "Portugal: 57.7 medical doctors per 10,000 (about 5.8 per 1,000), WHO 2021. Counts doctors licensed to practise, which overstates practising doctors."
     }
   },
   "safety": {
