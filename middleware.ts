@@ -4,7 +4,7 @@ import {
   aiCrawlerResourceType,
   detectAiCrawler,
   isAiCrawlerLoggablePath,
-} from "./packages/web/src/lib/ai-crawlers";
+} from "./packages/web/src/lib/ai-crawlers.js";
 
 interface VercelMiddlewareContext {
   waitUntil?: (promise: Promise<unknown>) => void;
@@ -86,5 +86,6 @@ export default function middleware(request: Request, context: VercelMiddlewareCo
 }
 
 export const config = {
+  runtime: "nodejs",
   matcher: ["/((?!_astro/|brand/|mockups/|favicon.ico|og-image.png|site.webmanifest).*)"],
 };
