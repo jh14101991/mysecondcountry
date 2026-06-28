@@ -20,8 +20,8 @@ import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
+  faqPageJsonLd,
   maxVerifiedDate,
-  qaPageJsonLd,
 } from "../../lib/jsonld.ts";
 
 export function getStaticPaths() {
@@ -93,12 +93,7 @@ const jsonLd = [
     siteUrl: SITE,
   }),
   breadcrumbJsonLd(breadcrumbItems, SITE),
-  qaPageJsonLd({
-    url: canonical,
-    question: entry.question,
-    answer: answerWithSource,
-    siteUrl: SITE,
-  }),
+  faqPageJsonLd([{ question: entry.question, answer: answerWithSource }]),
 ];
 ---
 

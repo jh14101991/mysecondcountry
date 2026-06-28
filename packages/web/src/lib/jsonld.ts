@@ -112,26 +112,6 @@ export function faqPageJsonLd(items: { question: string; answer: string }[]): Js
   };
 }
 
-/** schema.org QAPage: the literal question and its single accepted, cited answer. */
-export function qaPageJsonLd(opts: {
-  url: string;
-  question: string;
-  answer: string;
-  siteUrl: string;
-}): JsonLdNode {
-  return {
-    "@context": "https://schema.org",
-    "@type": "QAPage",
-    "@id": `${opts.url}#qa`,
-    url: opts.url,
-    mainEntity: {
-      "@type": "Question",
-      name: opts.question,
-      acceptedAnswer: { "@type": "Answer", text: opts.answer, url: opts.url },
-    },
-  };
-}
-
 /** schema.org DefinedTerm for a named legal instrument (a tax regime, a visa route). */
 export function definedTermJsonLd(opts: {
   url: string;

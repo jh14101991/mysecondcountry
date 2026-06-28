@@ -37,7 +37,7 @@
   carries its named source, verified date, and confidence tier.
 - Cited Q&A pages (AEO) at /answers/: each page carries a single sourced question with a
   polarity (yes/no/qualified), a cited answer fact, and up to three supporting cited facts.
-  Each answer page carries QAPage schema.org markup with a single acceptedAnswer. Machine-
+  Each answer page carries FAQPage schema.org markup with a single acceptedAnswer. Machine-
   readable JSON for each entry at /data/qa/<slug>.json; facts include their source name,
   verified date, and confidence tier. Current entries cover the Spanish golden visa
   abolition, the Greek 7 percent foreign-pensioner flat tax, and the closure of
