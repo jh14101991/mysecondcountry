@@ -1,6 +1,6 @@
 ---
 import type { CitedValue } from "@where/data";
-import { CONFIDENCE_DISPLAY } from "../lib/cited.ts";
+import ConfidenceMark from "./ConfidenceMark.astro";
 
 interface Props {
   cited: CitedValue;
@@ -14,8 +14,6 @@ interface Props {
 }
 
 const { cited, displayValue, unit, subtext, country, isLeader, score, sourceRef } = Astro.props;
-
-const conf = CONFIDENCE_DISPLAY[cited.confidence];
 
 const COUNTRY_FLAG: Record<string, string> = {
   gr: "🇬🇷",
@@ -55,10 +53,7 @@ const countryLabel = COUNTRY_LABEL[country] ?? country;
 
   <!-- Badges row -->
   <div class="cell-badges">
-    <button type="button" class={`conf-badge conf-badge--${cited.confidence}`} data-confidence={cited.confidence} aria-label={`Confidence: ${conf.word}`}>
-      <span aria-hidden="true">{conf.glyph}</span>
-      <span>{conf.word}</span>
-    </button>
+    <ConfidenceMark level={cited.confidence} />
     <a href={`#sources-${sourceRef}`} class="src-ref">[{sourceRef}]</a>
   </div>
 
@@ -170,36 +165,6 @@ const countryLabel = COUNTRY_LABEL[country] ?? country;
     .cell-badges {
       display: flex;
     }
-  }
-
-  .conf-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-family: var(--font-ui);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2px 5px;
-    border-radius: 2px;
-    background: transparent;
-  }
-  .conf-badge:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-  }
-  .conf-badge--high {
-    border: 1px solid oklch(0.4693 0.1055 152.3 / 0.38);
-    color: var(--conf-verified);
-  }
-  .conf-badge--medium {
-    border: 1px solid oklch(0.4840 0.0900 95.9 / 0.38);
-    color: var(--conf-good);
-  }
-  .conf-badge--low {
-    border: 1px solid oklch(0.4432 0.0191 73.4 / 0.38);
-    color: var(--conf-low);
   }
 
   .src-ref {

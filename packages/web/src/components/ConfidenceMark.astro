@@ -1,0 +1,29 @@
+---
+import type { Confidence } from "@where/data";
+
+/**
+ * The v5 confidence mark: a square glyph whose fill encodes the tier (filled = high,
+ * half = medium, open = low) followed by the level word. The glyph carries the level so
+ * colour is never the only signal (DESIGN.md "Colour-Plus-Mark Rule", DOD j). The
+ * data-confidence attribute is the claim hook for assert-fence-before-claim, and the
+ * <svg> mark + word satisfy assert-confidence-marks. Ported verbatim from gate-07-ledger.
+ */
+interface Props {
+  level: Confidence;
+}
+const { level } = Astro.props;
+---
+
+<span class="conf" data-confidence={level} aria-label={`Confidence: ${level}`}>
+  <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+    {level === "high" && <rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25" />}
+    {
+      level === "medium" && (
+        <>
+          <rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25" />
+          <rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor" />
+        </>
+      )
+    }
+    {level === "low" && <rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25" />}
+  </svg>{level}</span>

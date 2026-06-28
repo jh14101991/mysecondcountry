@@ -1,6 +1,7 @@
 ---
 import type { CitedValue, Granularity } from "@where/data";
-import { CONFIDENCE_DISPLAY, granularityNote, LOW_CONFIDENCE_NOTE } from "../lib/cited.ts";
+import { granularityNote, LOW_CONFIDENCE_NOTE } from "../lib/cited.ts";
+import ConfidenceMark from "./ConfidenceMark.astro";
 
 /**
  * The atom of the record. One cited fact rendered in full: the figure (mono, tabular) or a
@@ -24,7 +25,6 @@ interface Props {
 }
 const { cited, unit, prose = false, as = "td", placeGranularity, placeName } = Astro.props;
 
-const conf = CONFIDENCE_DISPLAY[cited.confidence];
 const note =
   placeGranularity && placeName
     ? granularityNote(cited.granularity, placeGranularity, placeName)
@@ -35,10 +35,7 @@ const Tag = as;
 
 <Tag class:list={["cv", `cv--${as}`]}>
   <span class:list={["cv-value", prose && "cv-value--prose"]}>{valueText}</span>
-  <span class="cv-conf" data-confidence={cited.confidence} aria-label={`Confidence: ${conf.word}`}>
-    <span class="cv-conf-glyph" aria-hidden="true">{conf.glyph}</span>
-    <span class="cv-conf-word">{conf.word}</span>
-  </span>
+  <ConfidenceMark level={cited.confidence} />
   {note && <span class="cv-granularity">{note}</span>}
   <span class="cv-provenance">
     <a href={cited.sourceUrl} rel="noopener nofollow" target="_blank">{cited.sourceName}</a>
@@ -75,36 +72,9 @@ const Tag = as;
     font-variant-numeric: normal;
   }
 
-  /* Confidence: glyph + word, colour from the OKLCH --conf-* tokens, never colour alone. */
-  .cv-conf {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.45rem;
-    font-family: var(--font-ui);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.28rem 0.5rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid;
-  }
-  .cv-conf-glyph {
-    font-size: 0.85rem;
-    line-height: 1;
-  }
-  .cv-conf[data-confidence="high"] {
-    color: var(--conf-verified);
-    border-color: color-mix(in oklch, var(--conf-verified) 38%, transparent);
-  }
-  .cv-conf[data-confidence="medium"] {
-    color: var(--conf-good);
-    border-color: color-mix(in oklch, var(--conf-good) 38%, transparent);
-  }
-  .cv-conf[data-confidence="low"] {
-    color: var(--conf-low);
-    border-color: color-mix(in oklch, var(--conf-low) 38%, transparent);
+  /* Confidence renders via ConfidenceMark (global .conf): square mark + level word. */
+  .cv :global(.conf) {
+    margin-top: 0.5rem;
   }
 
   .cv-granularity {
