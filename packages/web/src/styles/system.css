@@ -1128,3 +1128,71 @@ main {
   padding: 2.5rem 1.5rem 4rem;
 }
 main.bleed { max-width: none; margin: 0; padding: 0; }
+
+/* ============================================================
+   CTA BAND (gate 6 — imageless, type-led closing invitation)
+   Ported from _msc-system.css. An ACTION surface: no engraving,
+   a quiet warm broadsheet card framed by a fine inset rule.
+   ============================================================ */
+.cta-section {
+  background: var(--paper);
+  padding: clamp(64px, 9vw, 128px) 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+.cta-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--hairline-soft);
+  min-height: clamp(360px, 40vw, 560px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(18px, 2.2vw, 26px);
+  padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 88px);
+  background-color: var(--paper-warm);
+}
+.cta-card::before {
+  content: "";
+  position: absolute;
+  inset: clamp(13px, 1.5vw, 20px);
+  border: 1px solid var(--hairline-soft);
+  border-radius: calc(var(--radius-card) - 14px);
+  pointer-events: none;
+  z-index: 0;
+}
+.cta-card > * { position: relative; z-index: 1; }
+.cta-eyebrow { margin-bottom: 0; }
+.cta-headline { max-width: 20ch; margin: 0 auto; }
+.cta-sub {
+  font-family: var(--f-ui);
+  font-size: clamp(var(--t-lead), 1.4vw, 1.18rem);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 50ch;
+  margin: 0 auto;
+}
+.cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.cta-reassure {
+  font-family: var(--f-mono);
+  font-size: var(--t-meta);
+  color: var(--stone);
+  margin-top: 2px;
+}
+@media (max-width: 520px) {
+  .cta-card {
+    padding-left: clamp(22px, 6vw, 32px);
+    padding-right: clamp(22px, 6vw, 32px);
+  }
+  .cta-card::before { inset: 11px; }
+}
