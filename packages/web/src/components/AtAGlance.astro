@@ -103,8 +103,7 @@ const {
 <style>
   /* ── SMALL MULTIPLES ──────────────────────────────────────────────────── */
   .multiples-section {
-    border-top: 1px solid var(--rule);
-    background: var(--card);
+    border-top: 1px solid var(--hairline-soft);
   }
   .multiples-inner {
     max-width: 80rem;
@@ -118,10 +117,10 @@ const {
   }
 
   .multiples-note {
-    font-family: var(--font-serif);
+    font-family: var(--f-display);
     font-size: 0.75rem;
     font-style: italic;
-    color: var(--muted-foreground);
+    color: var(--stone);
     margin: 0 0 32px;
     max-width: 40rem;
   }
@@ -149,12 +148,12 @@ const {
   }
 
   .multiple-label {
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-size: 0.625rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--muted-foreground);
+    color: var(--stone);
     margin: 0;
   }
 
@@ -170,7 +169,7 @@ const {
     left: 0;
     right: 0;
     height: 1px;
-    background: var(--rule);
+    background: var(--hairline-soft);
   }
 
   .multiple-dot-wrap {
@@ -204,52 +203,55 @@ const {
     background: transparent !important;
   }
   .multiple-dot--gr.is-leader {
-    background: var(--gr);
+    background: var(--pop);
   }
   .multiple-dot--pt.is-leader {
-    background: var(--pt);
+    background: var(--pop);
   }
   .multiple-dot--es.is-leader {
-    background: var(--es);
+    background: var(--pop);
   }
   .multiple-dot--gr:not(.is-leader) {
-    border: 1.5px solid oklch(0.4846 0.1159 246.4 / 0.6);
+    border: 1.5px solid var(--ink-soft);
   }
   .multiple-dot--pt:not(.is-leader) {
-    border: 1.5px solid oklch(0.4578 0.1549 18 / 0.6);
+    border: 1.5px solid var(--ink-soft);
   }
   .multiple-dot--es:not(.is-leader) {
-    border: 1.5px solid oklch(0.5274 0.1165 57.5 / 0.6);
+    border: 1.5px solid var(--ink-soft);
   }
 
   .multiple-value {
-    font-family: var(--font-mono);
+    font-family: var(--f-mono);
     font-size: 0.5625rem;
     font-variant-numeric: tabular-nums;
-    color: var(--muted-foreground);
+    color: var(--ink);
     white-space: nowrap;
   }
 
   .multiple-country-tag {
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-size: 0.5625rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
     white-space: nowrap;
+    color: var(--stone);
   }
   .multiple-country-tag--gr {
-    color: var(--gr);
+    color: var(--stone);
   }
   .multiple-country-tag--pt {
-    color: var(--pt);
+    color: var(--stone);
   }
   .multiple-country-tag--es {
-    color: var(--es);
+    color: var(--stone);
   }
 
   .multiple-caption {
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-size: 0.5625rem;
-    color: var(--muted-foreground);
+    color: var(--stone);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -257,9 +259,9 @@ const {
 
   /* ── LEADER STRIP ─────────────────────────────────────────────────────── */
   .leader-strip {
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    background: var(--primary);
+    border-top: 1px solid var(--hairline-soft);
+    border-bottom: 1px solid var(--hairline-soft);
+    background: var(--paper-warm);
   }
   .leader-inner {
     max-width: 80rem;
@@ -285,48 +287,49 @@ const {
   .leader-cell {
     padding: 16px 8px;
     text-align: center;
-    border-right: 1px solid oklch(0.9554 0.0045 214.3 / 0.09);
+    border-right: 1px solid var(--hairline-soft);
   }
   .leader-cell:last-child {
     border-right: none;
   }
   @media (min-width: 640px) {
     .leader-cell:nth-child(3) {
-      border-right: 1px solid oklch(0.9554 0.0045 214.3 / 0.09);
+      border-right: 1px solid var(--hairline-soft);
     }
   }
 
   .leader-label {
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-size: 9px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--on-primary-soft);
+    color: var(--stone);
     margin: 0 0 6px;
   }
   .leader-stat {
-    font-family: var(--font-mono);
+    font-family: var(--f-mono);
     font-size: 14px;
     font-weight: 600;
     line-height: 1;
     font-variant-numeric: tabular-nums;
     margin: 0;
+    color: var(--ink);
   }
   .leader-stat--gr {
-    color: var(--gr-on-primary);
+    color: var(--ink);
   }
   .leader-stat--pt {
-    color: var(--pt-on-primary);
+    color: var(--ink);
   }
   .leader-stat--es {
-    color: var(--es-on-primary);
+    color: var(--ink);
   }
 
   .leader-country {
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-size: 10px;
     margin: 4px 0 0;
-    color: var(--on-primary-soft);
+    color: var(--stone);
   }
 </style>

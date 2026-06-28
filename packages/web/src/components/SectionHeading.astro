@@ -19,30 +19,27 @@ const Tag = as;
 
 <style>
   .section-heading--heading {
-    font-family: var(--font-display);
-    font-weight: 300;
+    font-family: var(--f-display);
+    font-weight: 400;
     line-height: 1.15;
     color: var(--ink);
   }
-  .section-heading--heading.section-heading {
-    /* h2 sizing mirrors the Base layout default; h3 a step down. */
-  }
   h2.section-heading--heading {
-    font-size: 1.5rem;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
     margin: 2.75rem 0 1rem;
   }
   h3.section-heading--heading {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 2rem 0 0.75rem;
   }
 
   .section-heading--eyebrow {
-    font-family: var(--font-ui);
-    font-size: 0.625rem;
-    font-weight: 600;
+    font-family: var(--f-ui);
+    font-size: 0.72rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--muted-foreground);
+    letter-spacing: 0.14em;
+    color: var(--stone);
     margin: 0 0 1rem;
     line-height: 1.4;
   }

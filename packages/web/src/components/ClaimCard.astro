@@ -30,18 +30,16 @@ const { framing, cited, variant = "eligibility" } = Astro.props;
 
 <style>
   .claim-card {
-    padding: 1.1rem 1.25rem;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-    background: var(--card);
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--hairline-soft);
     list-style: none;
   }
   .claim-card--dealbreaker {
-    border-top: 2px solid var(--conf-low);
+    border-top: 2px solid var(--pop);
   }
   .claim-framing {
     margin: 0 0 0.75rem;
-    font-family: var(--font-serif);
+    font-family: var(--f-display);
     font-size: 1rem;
     line-height: 1.55;
     color: var(--ink);
@@ -58,20 +56,21 @@ const { framing, cited, variant = "eligibility" } = Astro.props;
   .claim-provenance {
     display: flex;
     flex-direction: column;
+    font-family: var(--f-mono);
     font-size: 0.88rem;
   }
   .claim-verified {
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
+    font-family: var(--f-mono);
+    color: var(--stone);
     font-size: 0.78rem;
     margin-top: 0.1rem;
   }
   .claim-excerpt {
     margin: 0.75rem 0 0;
     padding-left: 0.8rem;
-    border-left: 1px solid var(--rule);
-    color: var(--muted-foreground);
-    font-family: var(--font-serif);
+    border-left: 1px solid var(--hairline-soft);
+    color: var(--stone);
+    font-family: var(--f-display);
     font-size: 0.9rem;
     line-height: 1.5;
     font-style: italic;

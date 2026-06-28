@@ -40,19 +40,20 @@ const { lines, heading = "Cite this data" } = Astro.props;
     margin-top: 2.5rem;
   }
   .cite-this-eyebrow {
-    font-family: var(--font-ui);
-    font-size: 0.625rem;
-    font-weight: 600;
+    font-family: var(--f-ui);
+    font-size: 0.72rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--muted-foreground);
+    letter-spacing: 0.14em;
+    color: var(--stone);
     margin: 0 0 0.6rem;
   }
   .cite-this-note {
     max-width: var(--measure);
-    color: var(--muted-foreground);
-    font-family: var(--font-serif);
+    color: var(--ink-soft);
+    font-family: var(--f-ui);
     font-size: 0.95rem;
+    line-height: 1.6;
     margin: 0 0 1.2rem;
   }
   .cite-list {
@@ -60,15 +61,18 @@ const { lines, heading = "Cite this data" } = Astro.props;
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 0.5rem;
+    gap: 0;
+  }
+  .cite-list li {
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .cite-list li:first-child {
+    border-top: 1px solid var(--hairline-soft);
   }
   .cite-list li code {
     display: block;
-    padding: 0.5rem 0.75rem;
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-mono);
+    padding: 0.55rem 0;
+    font-family: var(--f-mono);
     font-size: 0.78rem;
     line-height: 1.5;
     word-break: break-all;

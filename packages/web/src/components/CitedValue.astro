@@ -49,7 +49,7 @@ const Tag = as;
   .cv--td {
     padding: 0.9rem 1rem;
     vertical-align: top;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--hairline-soft);
   }
   .cv--span {
     display: inline-block;
@@ -57,7 +57,7 @@ const Tag = as;
 
   .cv-value {
     display: block;
-    font-family: var(--font-mono);
+    font-family: var(--f-mono);
     font-size: 1.35rem;
     font-weight: 500;
     font-variant-numeric: tabular-nums;
@@ -65,7 +65,7 @@ const Tag = as;
     color: var(--ink);
   }
   .cv-value--prose {
-    font-family: var(--font-serif);
+    font-family: var(--f-display);
     font-size: 1.0625rem;
     font-weight: 400;
     line-height: 1.55;
@@ -81,23 +81,30 @@ const Tag = as;
     display: block;
     margin-top: 0.5rem;
     font-style: italic;
-    font-family: var(--font-serif);
-    color: var(--muted-foreground);
+    font-family: var(--f-display);
+    color: var(--stone);
     font-size: 0.9rem;
   }
 
   .cv-provenance {
     display: block;
     margin-top: 0.55rem;
+    font-family: var(--f-mono);
     font-size: 0.88rem;
+    color: var(--stone);
   }
   .cv-provenance a {
     display: inline;
+    color: var(--accent);
+    transition: color 150ms var(--ease);
+  }
+  .cv-provenance a:hover {
+    color: var(--accent-dark);
   }
   .cv-verified {
     display: block;
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
+    font-family: var(--f-mono);
+    color: var(--stone);
     font-size: 0.78rem;
     margin-top: 0.15rem;
   }
@@ -114,9 +121,9 @@ const Tag = as;
     display: block;
     margin-top: 0.6rem;
     padding-left: 0.8rem;
-    border-left: 1px solid var(--rule);
-    color: var(--muted-foreground);
-    font-family: var(--font-serif);
+    border-left: 1px solid var(--hairline-soft);
+    color: var(--stone);
+    font-family: var(--f-display);
     font-style: italic;
     font-size: 0.9rem;
     line-height: 1.5;

@@ -21,22 +21,22 @@ const { question, id } = Astro.props;
 <style>
   .faq-item {
     padding: 1.25rem 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--hairline-soft);
   }
   .faq-q {
-    font-family: var(--font-display);
-    font-weight: 300;
-    font-size: 1.4rem;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 1.5rem;
     line-height: 1.25;
     color: var(--ink);
     margin: 0 0 0.5rem;
   }
   .faq-a {
-    max-width: var(--measure);
-    font-family: var(--font-serif);
+    max-width: 62ch;
+    font-family: var(--f-ui);
     font-size: 1.0625rem;
-    line-height: 1.6;
-    color: var(--ink);
+    line-height: 1.68;
+    color: var(--ink-soft);
   }
   .faq-a :global(p) {
     margin: 0 0 0.6rem;
