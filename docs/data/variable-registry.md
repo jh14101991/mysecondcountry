@@ -11,6 +11,10 @@
 >
 > Provenance note: assembled from a research sweep on 2026-06-24, completed by a controlled
 > single-agent pass per category. All 8 categories are now COMPLETE (roughly 200 variables).
+>
+> Operating note: this registry names the variable universe. `docs/data/variable-matrix-contract.md`
+> defines how those variables are evaluated per place, including intended granularity, observed
+> granularity, coverage status, and publish thresholds.
 
 ## Headline finding
 

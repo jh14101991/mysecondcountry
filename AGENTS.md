@@ -80,6 +80,10 @@ Before any fan-out beyond roughly 10 agents, state the agent count and get expli
 
 - `DEFINITION_OF_DONE.md`, the gate every page must pass before it counts
 - `SECRETS.md` and `.env.example`, secret handling, never commit real secrets
+- `docs/msc-operating-ledger.md`, business operating source of truth for threads, queues, automations, and weekly focus
+- `docs/msc-room-state.json`, shared room state, handoffs, blockers, and current focus
+- `docs/content-projection.md`, main source of truth for posting, content, and public presence
+- `docs/data/variable-matrix-contract.md`, canonical matrix coverage and granularity rules for place dossiers
 - `docs/data/SOURCES.md`, approved primary sources, confidence weights
 - `docs/data/greece-seed.md`, the first seed dataset, Greece and its towns
 - `docs/decisions/ADR-log.md`, locked architecture decisions

@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-06-28",
+  "purpose": "Shared operating board for My Second Country rooms. Rooms use this to stay aware of focus, handoffs, blockers, and posting state without reading every other thread.",
+  "authority": {
+    "operatingRules": "docs/msc-operating-ledger.md",
+    "postingSchedule": "docs/content-projection.md",
+    "placeQueue": "docs/data/place-production-queue.json",
+    "corridorQueue": "docs/data/corridor-production-queue.json",
+    "variableMatrix": "docs/data/variable-matrix-contract.md",
+    "citationRules": "CITATIONS.md",
+    "liabilityFence": "FENCE.md",
+    "shipGate": "SHIP.md"
+  },
+  "integrationRules": {
+    "readRule": "Every MSC room reads this file after the repo startup docs and before choosing work.",
+    "writeRule": "A room updates only its own roomStatus entry, handoffs it owns, and narrow queue or content fields directly related to its lane.",
+    "handoffRule": "A handoff is not complete until the receiving room marks it accepted, blocked, or superseded.",
+    "conflictRule": "If this file conflicts with queue files, the queue files win for candidate status. If it conflicts with content-projection, content-projection wins for posting. If it conflicts with AGENTS, CITATIONS, FENCE, or SHIP, those process docs win.",
+    "freshnessRule": "Rooms should update lastUpdated, blockers, handoffs, and nextActions whenever an automation runs or a material manual pass happens.",
+    "publishRule": "No room treats a page, content item, or revenue surface as publishable until the relevant gate is met."
+  },
+  "weeklyFocus": {
+    "weekOf": "2026-06-29",
+    "status": "pre_publish_gate",
+    "activeGeography": "Crete",
+    "activePlace": "Chania",
+    "activeCorridor": "Portugal IFICI and NHR stale-answer corridor",
+    "activeContentFramework": "Video-first source literacy plus Crete build-in-public transparency",
+    "onePageGate": "First real Greek town page must pass DEFINITION_OF_DONE.md before breadth.",
+    "weeklyMarketArtifact": "Public-safe source-literacy posting packet while Chania remains below page gate.",
+    "decisionsNeeded": [
+      "Confirm whether pre-page public posts can begin as process/source-literacy posts.",
+      "Confirm the first monthly founder recording day once the first content packet is ready."
+    ]
+  },
+  "roomStatus": {
+    "commandCenter": {
+      "threadId": "019f0e04-adb9-7121-a0a2-e5ad35947833",
+      "automationId": "msc-weekly-command-packet",
+      "cadence": "Weekly, Monday morning",
+      "owns": ["weekly focus", "room routing", "gate discipline", "cross-room drift control"],
+      "currentJob": "Keep all rooms pointed at Crete, Chania, Portugal IFICI, and the one-page gate.",
+      "nextActions": [
+        "Review room briefs after initialization.",
+        "Resolve conflicts between data readiness, page readiness, and posting pressure."
+      ],
+      "blockers": [],
+      "lastUpdated": "2026-06-28"
+    },
+    "dataDesk": {
+      "threadId": "019f0e05-3825-7302-8c53-60676e3c966b",
+      "automationId": "msc-data-matrix-pull",
+      "cadence": "Monday to Thursday morning",
+      "owns": ["CitedValues", "variable coverage", "source gaps", "freshness"],
+      "currentJob": "Advance Crete and Chania through the canonical variable matrix.",
+      "nextActions": [
+        "Separate Greece national values from Crete regional and Chania local values.",
+        "Mark missing local values as source gaps instead of leaving silent blanks.",
+        "Hand Page Factory only a bundle that is deep enough for the page gate."
+      ],
+      "blockers": [
+        "Chania needs a complete enough local and regional evidence bundle before Page Factory should build a real page."
+      ],
+      "lastUpdated": "2026-06-28"
+    },
+    "pageFactory": {
+      "threadId": "019f0e05-3950-7340-8930-c0b09e54dee1",
+      "automationId": "msc-page-factory-pass",
+      "cadence": "Monday to Thursday late morning",
+      "owns": ["place pages", "data endpoints", "page gate checks"],
+      "currentJob": "Wait for a complete Chania evidence bundle, then advance one page unit only.",
+      "nextActions": [
+        "Refuse thin scaffolds.",
+        "Use Data Desk handoff to build the first Chania page when ready.",
+        "Run relevant build, source, fence, and definition-of-done checks."
+      ],
+      "blockers": ["No first Greek town page should ship before data depth and fence checks pass."],
+      "lastUpdated": "2026-06-28"
+    },
+    "regionDesk": {
+      "threadId": "019f0e05-3aaf-7a42-9356-5f46dab79b0a",
+      "automationId": "msc-region-focus-planner",
+      "cadence": "Weekly, Monday early afternoon",
+      "owns": ["regional batch shape", "place ordering", "local source discovery"],
+      "currentJob": "Keep Crete coherent as Chania, Heraklion, Rethymno, and Agios Nikolaos move through the matrix.",
+      "nextActions": [
+        "Define what is shared across Crete and what must be proven per town.",
+        "Prepare a future regional comparison shape after the Chania gate."
+      ],
+      "blockers": [],
+      "lastUpdated": "2026-06-28"
+    },
+    "contentDesk": {
+      "threadId": "019f0e05-3c3f-7220-835f-268cb35d0cf1",
+      "automationId": "msc-content-packet-builder",
+      "cadence": "Tuesday and Thursday afternoon",
+      "owns": ["content packets", "posting board", "newsletter angles", "source cards"],
+      "currentJob": "Maintain the live posting board and make every real topic a channel-native packet with short-form video planned first.",
+      "nextActions": [
+        "Prepare public-safe source-literacy posts until Chania clears the page gate.",
+        "For each weekly framework, require a master vertical video, cutdowns, source card, written variants, newsletter draft, and site movement or hold reason.",
+        "Replace hold rows with exact channel-native assets when a cited bundle is ready."
+      ],
+      "blockers": ["Place-specific posts should stay on hold until a cited page or packet exists."],
+      "lastUpdated": "2026-06-28"
+    },
+    "distributionDesk": {
+      "threadId": "019f0e05-3dcd-7160-80ff-9ee8465d2618",
+      "automationId": "msc-distribution-sweep",
+      "cadence": "Wednesday and Friday afternoon",
+      "owns": ["channel moves", "search packaging", "backlink and stale-answer opportunities"],
+      "currentJob": "Use the posting board and finished packets to prepare channel-specific moves.",
+      "nextActions": [
+        "Read the daily posting board before proposing external moves.",
+        "Check every topic packet for TikTok, Reels, Shorts, X or Threads, LinkedIn, source-card, newsletter, and site movement variants.",
+        "Feed channel results and audience questions back to Analytics Desk."
+      ],
+      "blockers": ["No external posting or outreach is automatic."],
+      "lastUpdated": "2026-06-28"
+    },
+    "revenueDesk": {
+      "threadId": "019f0e05-3fe1-7610-8af6-dbc1a8de066e",
+      "automationId": "msc-revenue-lane-review",
+      "cadence": "Weekly, Wednesday morning",
+      "owns": ["revenue corridors", "partner screens", "fake-door tests", "commercial risk"],
+      "currentJob": "Pressure-test Portugal IFICI and future paid dossier surfaces without weakening trust.",
+      "nextActions": [
+        "Keep affiliate and adviser ideas behind fence, disclosure, and approval gates.",
+        "Feed commercial intent signals to Analytics Desk and Command Center."
+      ],
+      "blockers": ["No adviser approval, affiliate application, or real charge without James."],
+      "lastUpdated": "2026-06-28"
+    },
+    "analyticsDesk": {
+      "threadId": "019f0e05-4196-7201-8367-65bc2b11c02f",
+      "automationId": "msc-analytics-signal-review",
+      "cadence": "Weekly, Friday late morning",
+      "owns": ["measurement model", "queue implications", "weak-signal discipline"],
+      "currentJob": "Track what can be measured now and what instrumentation is missing.",
+      "nextActions": [
+        "Separate real signals from low-volume noise.",
+        "Tell Command Center when a queue change is evidence-led."
+      ],
+      "blockers": ["Live analytics may be unavailable until instrumentation is wired."],
+      "lastUpdated": "2026-06-28"
+    },
+    "designDesk": {
+      "threadId": "019f0e05-4414-7df2-bd08-f712b82c72f8",
+      "automationId": "msc-design-gate-review",
+      "cadence": "Weekly, Thursday afternoon",
+      "owns": ["rendered product quality", "template experience", "visual gate"],
+      "currentJob": "Keep the first town page and supporting surfaces premium, readable, and source-visible.",
+      "nextActions": [
+        "Review rendered proof when Page Factory has a draft.",
+        "Give compact design QA without changing data truth."
+      ],
+      "blockers": [],
+      "lastUpdated": "2026-06-28"
+    },
+    "sourceQaDesk": {
+      "threadId": "019f0e07-012b-7e13-bfb8-0ca30f511854",
+      "automationId": "msc-monthly-matrix-gap-audit",
+      "cadence": "Monthly, first Monday morning",
+      "owns": ["citation audit", "freshness audit", "matrix drift audit", "fence risk"],
+      "currentJob": "Prevent uneven coverage, stale sources, or unsafe claims as the system scales.",
+      "nextActions": [
+        "Audit source gaps and confidence levels monthly.",
+        "Mark publish blockers clearly for Data Desk and Page Factory."
+      ],
+      "blockers": [],
+      "lastUpdated": "2026-06-28"
+    }
+  },
+  "handoffs": [
+    {
+      "id": "handoff-data-page-chania-evidence-bundle",
+      "from": "dataDesk",
+      "to": "pageFactory",
+      "status": "pending_data",
+      "summary": "Chania evidence bundle must meet the matrix-backed page gate before Page Factory builds a public page.",
+      "nextCheck": "2026-06-29",
+      "lastUpdated": "2026-06-28"
+    },
+    {
+      "id": "handoff-page-content-first-town-packet",
+      "from": "pageFactory",
+      "to": "contentDesk",
+      "status": "blocked_until_page_gate",
+      "summary": "Content Desk can prepare method posts now, but place-specific content waits for the first page or ready bundle.",
+      "nextCheck": "2026-07-02",
+      "lastUpdated": "2026-06-28"
+    },
+    {
+      "id": "handoff-content-distribution-daily-board",
+      "from": "contentDesk",
+      "to": "distributionDesk",
+      "status": "active",
+      "summary": "Distribution Desk reads the live posting board in docs/content-projection.md and never posts externally without James.",
+      "nextCheck": "2026-06-29",
+      "lastUpdated": "2026-06-28"
+    },
+    {
+      "id": "handoff-analytics-command-queue-signals",
+      "from": "analyticsDesk",
+      "to": "commandCenter",
+      "status": "waiting_for_live_signals",
+      "summary": "Analytics Desk should report real signal gaps before changing queue priority.",
+      "nextCheck": "2026-07-03",
+      "lastUpdated": "2026-06-28"
+    },
+    {
+      "id": "handoff-content-distribution-channel-native-topic-packet",
+      "from": "contentDesk",
+      "to": "distributionDesk",
+      "status": "active",
+      "summary": "Every approved topic should become a channel-native packet, with short-form video as a required asset and written/static variants adapted per channel.",
+      "nextCheck": "2026-07-02",
+      "lastUpdated": "2026-06-28"
+    }
+  ],
+  "postingBoard": {
+    "source": "docs/content-projection.md#live-posting-board",
+    "currentMode": "manual_review_required",
+    "today": "2026-06-28",
+    "nextPostingDate": "2026-06-29",
+    "dailyRule": "James checks the dated row in docs/content-projection.md. If status is ready_to_post, post it manually. If status is hold or draft, do not post it externally."
+  }
+}

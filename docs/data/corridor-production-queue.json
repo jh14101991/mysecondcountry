@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "description": "Machine-readable corridor queue for high-intent tax, visa, residency, and money-in-motion pages. Corridors drive revenue and content focus.",
+  "sourceOfTruth": {
+    "operatingLedger": "docs/msc-operating-ledger.md",
+    "fence": "FENCE.md",
+    "contentProjection": "docs/content-projection.md",
+    "revenueModel": "docs/revenue-model.md"
+  },
+  "statusValues": [
+    "candidate",
+    "researching",
+    "source_gap",
+    "page_cluster_ready",
+    "content_packet_ready",
+    "adviser_sourcing",
+    "intro_ready_gated",
+    "live_revenue_test",
+    "paused",
+    "retired"
+  ],
+  "activeCorridor": "pt-ifici-nhr-replacement",
+  "queue": [
+    {
+      "id": "pt-ifici-nhr-replacement",
+      "label": "Portugal IFICI and NHR replacement",
+      "country": "Portugal",
+      "priority": 1,
+      "status": "adviser_sourcing",
+      "readerFear": "The old NHR answer is stale and the reader cannot tell if IFICI applies.",
+      "moneyMoment": "Reader discovers eligibility is narrow and needs a Portugal tax professional.",
+      "targetQueries": [
+        "Portugal NHR ended what replaced it",
+        "Portugal IFICI eligibility",
+        "Portugal NHR replacement 2026",
+        "is Portugal NHR still available"
+      ],
+      "pageFamilies": ["rule", "question", "topic", "tool", "comparison"],
+      "professionalType": "Lisbon cross-border tax adviser publishing on IFICI or NHR closure.",
+      "introBlockStatus": "built_gated_off",
+      "emailCaptureStatus": "built_provider_endpoint_placeholder",
+      "pricingHypothesis": "Free first-month introductions to prove lead quality, then flat fee per accepted introduction.",
+      "firstSignalThreshold": "One adviser agrees to receive fenced introductions and at least one qualified reader requests contact.",
+      "killCondition": "Qualified readers do not request intros or vetted advisers will not pay after a trial.",
+      "requiredPages": [
+        "Portugal NHR closed: what the IFICI replacement actually requires",
+        "Is Portugal's NHR tax regime still available?",
+        "Portugal IFICI eligibility checklist",
+        "Portugal IFICI vs old NHR"
+      ],
+      "contentOutputs": [
+        "stale_answer_correction",
+        "source_card",
+        "newsletter_field_note",
+        "short_video_script"
+      ]
+    },
+    {
+      "id": "gr-golden-visa-tiers",
+      "label": "Greece golden visa tier changes",
+      "country": "Greece",
+      "priority": 2,
+      "status": "candidate",
+      "readerFear": "The reader still thinks Greece has a general 250k real-estate floor.",
+      "moneyMoment": "Investor budget no longer fits the old public answer and must restructure.",
+      "targetQueries": [
+        "Greece golden visa minimum investment 2026",
+        "Greece golden visa 250000 still available",
+        "Greece golden visa 800000 400000 tiers"
+      ],
+      "pageFamilies": ["rule", "question", "topic", "comparison"],
+      "professionalType": "Greek immigration lawyer or investment-residency firm with direct Greece experience.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "Later corridor, per accepted intro only after traffic proves.",
+      "firstSignalThreshold": "Source page gets search or correction traffic and at least one reader clicks source or signup.",
+      "killCondition": "No search, source-click, signup, or adviser interest after a fair content push.",
+      "requiredPages": [
+        "Greece golden visa: the EUR 250,000 floor that no longer exists",
+        "What is Greece's golden visa minimum investment in Athens in 2026?",
+        "Greece vs Portugal golden visa"
+      ],
+      "contentOutputs": ["rule_change_alert", "source_card", "stale_answer_correction"]
+    },
+    {
+      "id": "gr-article-5b-pensioner-flat-tax",
+      "label": "Greece Article 5B pensioner flat tax",
+      "country": "Greece",
+      "priority": 3,
+      "status": "page_cluster_ready",
+      "readerFear": "The reader knows the 7 percent headline but not the disqualifiers, deadline, or exit year.",
+      "moneyMoment": "Borderline pensioner needs a Greek cross-border tax adviser before moving.",
+      "targetQueries": [
+        "who qualifies Greece 7 percent pensioner tax",
+        "Greece 7 percent flat tax deadline",
+        "what happens when Greece 7 percent pension tax expires"
+      ],
+      "pageFamilies": ["rule", "question", "tool", "comparison"],
+      "professionalType": "Greek cross-border tax adviser for pensioners and foreign residents.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "Potential adviser intro after page cluster gets traffic.",
+      "firstSignalThreshold": "One source-click or signup cluster around Article 5B pages.",
+      "killCondition": "Traffic reads but no source clicks, signups, or advisor-interest signal.",
+      "requiredPages": [
+        "Greece foreign-pensioner flat-tax regime",
+        "Who does not qualify for Greece's 7 percent flat tax for foreign pensioners",
+        "What happens when Greece's 7 percent pensioner tax expires",
+        "Greece 7 percent pension tax checklist"
+      ],
+      "contentOutputs": ["dealbreaker_thread", "source_card", "newsletter_field_note"]
+    },
+    {
+      "id": "gr-digital-nomad-consular-only",
+      "label": "Greece digital nomad consular application change",
+      "country": "Greece",
+      "priority": 4,
+      "status": "researching",
+      "readerFear": "The reader may arrive in Greece believing in-country application is still possible.",
+      "moneyMoment": "Procedural mistake forces a consular route and professional help.",
+      "targetQueries": [
+        "can I apply for Greece digital nomad visa inside Greece",
+        "Greece digital nomad visa consulate 2026",
+        "Greece digital nomad visa income requirement"
+      ],
+      "pageFamilies": ["rule", "question", "tool"],
+      "professionalType": "Greek immigration lawyer with digital nomad visa experience.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "Hold until official source and demand are proven.",
+      "firstSignalThreshold": "Official source verified and stale-answer corrections produce visits.",
+      "killCondition": "Law/date cannot be verified from official source.",
+      "requiredPages": [
+        "Greece digital nomad visa: in-country applications ended",
+        "What disqualifies you from Greece's digital nomad visa"
+      ],
+      "contentOutputs": ["rule_change_alert", "stale_answer_correction"]
+    },
+    {
+      "id": "es-golden-visa-abolition",
+      "label": "Spain golden visa abolition",
+      "country": "Spain",
+      "priority": 5,
+      "status": "candidate",
+      "readerFear": "The reader sees old golden visa articles and does not know the route ended.",
+      "moneyMoment": "Pending or alternative route questions require a Spanish immigration professional.",
+      "targetQueries": [
+        "Spain golden visa abolished 2025",
+        "can I still get a Spanish golden visa",
+        "Spain golden visa property investment still valid"
+      ],
+      "pageFamilies": ["question", "rule", "comparison"],
+      "professionalType": "Spanish immigration lawyer with investor and pending-application experience.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "Later corridor, useful AEO and adviser referral if traffic appears.",
+      "firstSignalThreshold": "Abolition answer page earns source clicks or AI-crawler attention.",
+      "killCondition": "No traffic signal after source-card and correction push.",
+      "requiredPages": [
+        "Can I still get a Spanish golden visa?",
+        "Spain abolished its golden visa on 3 April 2025",
+        "Greece vs Portugal golden visa after Spain's abolition"
+      ],
+      "contentOutputs": ["rule_change_alert", "source_card"]
+    },
+    {
+      "id": "es-beckham-law",
+      "label": "Spain Beckham Law",
+      "country": "Spain",
+      "priority": 6,
+      "status": "candidate",
+      "readerFear": "High earner sees 24 percent headline without disqualifiers and income ceiling.",
+      "moneyMoment": "Reader needs professional confirmation before structuring employment or relocation.",
+      "targetQueries": [
+        "Spain Beckham Law maximum income",
+        "who qualifies for Beckham Law Spain",
+        "Spain Beckham Law remote worker"
+      ],
+      "pageFamilies": ["rule", "question", "comparison"],
+      "professionalType": "Spanish tax adviser for expatriate regime applications.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "High-value but later, needs official AEAT source quality.",
+      "firstSignalThreshold": "One high-intent page gets source clicks or signup.",
+      "killCondition": "Eligibility nuance cannot be sourced cleanly without legal interpretation.",
+      "requiredPages": [
+        "What disqualifies you from Spain's Beckham Law",
+        "Spain Beckham Law income ceiling",
+        "Greece 7 percent vs Portugal IFICI vs Spain Beckham"
+      ],
+      "contentOutputs": ["dealbreaker_thread", "comparison_source_card"]
+    },
+    {
+      "id": "it-southern-pensioner-7-percent",
+      "label": "Italy southern pensioner 7 percent regime",
+      "country": "Italy",
+      "priority": 7,
+      "status": "candidate",
+      "readerFear": "The reader knows Italy has a 7 percent regime but not which towns or constraints matter.",
+      "moneyMoment": "Retiree needs tax and place fit before choosing southern Italy.",
+      "targetQueries": [
+        "Italy 7 percent pensioner tax",
+        "southern Italy pensioner flat tax towns",
+        "retire in Lecce tax"
+      ],
+      "pageFamilies": ["rule", "place", "comparison"],
+      "professionalType": "Italian cross-border tax adviser serving foreign pensioners.",
+      "introBlockStatus": "not_built",
+      "emailCaptureStatus": "not_configured",
+      "pricingHypothesis": "Potential founder-dogfooding corridor after Greece and Portugal.",
+      "firstSignalThreshold": "Italy pages produce signups or source clicks.",
+      "killCondition": "Traffic or professional availability is too weak after initial cluster.",
+      "requiredPages": [
+        "Italy pensioner 7 percent flat tax",
+        "Lecce place dossier",
+        "Italy vs Greece pensioner flat tax"
+      ],
+      "contentOutputs": ["field_test", "source_card"]
+    }
+  ]
+}

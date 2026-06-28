@@ -1,0 +1,485 @@
+{
+  "version": 1,
+  "description": "Machine-readable place production queue for My Second Country. Candidates are processed daily through the canonical variable matrix. Publishing is evidence-gated.",
+  "sourceOfTruth": {
+    "operatingLedger": "docs/msc-operating-ledger.md",
+    "matrixContract": "docs/data/variable-matrix-contract.md",
+    "variableRegistry": "docs/data/variable-registry.md"
+  },
+  "activeFocus": {
+    "geography": "Crete",
+    "reason": "Dogfooding relevance, existing Chania pilot, clear place-depth cluster, and strong relocation intent.",
+    "started": "2026-06-28"
+  },
+  "defaultPublishTier": "standard",
+  "statusValues": [
+    "candidate",
+    "researching",
+    "source_gap",
+    "data_bundle_ready",
+    "dossier_draft",
+    "review_needed",
+    "published",
+    "content_projected",
+    "refresh_due",
+    "retired"
+  ],
+  "coverageStatuses": [
+    "local",
+    "regional",
+    "national",
+    "inherited_national",
+    "inherited_regional",
+    "proxy",
+    "relational",
+    "unavailable",
+    "blocked",
+    "deferred"
+  ],
+  "publishThresholds": {
+    "pilot": {
+      "variablesEvaluated": 40,
+      "populatedCitedValues": 20,
+      "localOrRegionalValues": 6
+    },
+    "standard": {
+      "variablesEvaluated": 80,
+      "populatedCitedValues": 35,
+      "localOrRegionalValues": 12
+    },
+    "flagship": {
+      "variablesEvaluated": 120,
+      "populatedCitedValues": 55,
+      "localOrRegionalValues": 20
+    }
+  },
+  "queue": [
+    {
+      "id": "gr-crete-region",
+      "placeName": "Crete",
+      "country": "Greece",
+      "region": "Crete",
+      "granularity": "region",
+      "priority": 1,
+      "weeklyFocus": "Crete",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Parent region needed for Chania and future Crete town pages.",
+      "intentQueries": [
+        "best places to live in Crete",
+        "Crete vs mainland Greece living",
+        "moving to Crete family"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-crete-chania",
+      "placeName": "Chania",
+      "country": "Greece",
+      "region": "Crete",
+      "granularity": "town",
+      "priority": 2,
+      "weeklyFocus": "Crete",
+      "publishTier": "standard",
+      "status": "dossier_draft",
+      "reason": "Existing pilot town page, should be upgraded to full matrix-backed dossier.",
+      "intentQueries": [
+        "living in Chania Crete",
+        "Chania vs Heraklion expat",
+        "retire in Chania Greece"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": "Parent Crete region is not yet in the dataset, so town uniqueness is currently skipped.",
+      "contentOutputs": [
+        "source_card",
+        "newsletter_block",
+        "short_video_script",
+        "stale_answer_angle"
+      ]
+    },
+    {
+      "id": "gr-crete-heraklion",
+      "placeName": "Heraklion",
+      "country": "Greece",
+      "region": "Crete",
+      "granularity": "town",
+      "priority": 3,
+      "weeklyFocus": "Crete",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Natural Chania comparison, larger airport and hospital access create useful local contrast.",
+      "intentQueries": [
+        "Heraklion vs Chania living",
+        "living in Heraklion Crete",
+        "best city in Crete for expats"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-crete-rethymno",
+      "placeName": "Rethymno",
+      "country": "Greece",
+      "region": "Crete",
+      "granularity": "town",
+      "priority": 4,
+      "weeklyFocus": "Crete",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Middle-Crete lifestyle contrast between Chania and Heraklion.",
+      "intentQueries": ["living in Rethymno Crete", "Rethymno expat life", "Rethymno vs Chania"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-crete-agios-nikolaos",
+      "placeName": "Agios Nikolaos",
+      "country": "Greece",
+      "region": "Crete",
+      "granularity": "town",
+      "priority": 5,
+      "weeklyFocus": "Crete",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Eastern Crete coastal candidate with retirement and family-life relevance.",
+      "intentQueries": [
+        "living in Agios Nikolaos Crete",
+        "retire Agios Nikolaos Greece",
+        "Agios Nikolaos expat"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-attica-athens",
+      "placeName": "Athens",
+      "country": "Greece",
+      "region": "Attica",
+      "granularity": "town",
+      "priority": 10,
+      "weeklyFocus": "Attica",
+      "publishTier": "flagship",
+      "status": "candidate",
+      "reason": "High search demand and strongest Greek city comparison anchor.",
+      "intentQueries": [
+        "living in Athens Greece",
+        "Athens expat cost of living",
+        "Athens vs Lisbon living"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-central-macedonia-thessaloniki",
+      "placeName": "Thessaloniki",
+      "country": "Greece",
+      "region": "Central Macedonia",
+      "granularity": "town",
+      "priority": 11,
+      "weeklyFocus": "Greece cities",
+      "publishTier": "flagship",
+      "status": "candidate",
+      "reason": "Second Greek city, strong contrast with Athens and Crete.",
+      "intentQueries": [
+        "living in Thessaloniki",
+        "Thessaloniki vs Athens expat",
+        "retire in Thessaloniki Greece"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-peloponnese-nafplio",
+      "placeName": "Nafplio",
+      "country": "Greece",
+      "region": "Peloponnese",
+      "granularity": "town",
+      "priority": 12,
+      "weeklyFocus": "Peloponnese",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "High lifestyle relevance and clear town-level contrast with Athens.",
+      "intentQueries": ["living in Nafplio Greece", "retire in Nafplio", "Nafplio expat life"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-peloponnese-kalamata",
+      "placeName": "Kalamata",
+      "country": "Greece",
+      "region": "Peloponnese",
+      "granularity": "town",
+      "priority": 13,
+      "weeklyFocus": "Peloponnese",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Airport, climate, and cost contrast in a popular southern Greece candidate.",
+      "intentQueries": ["living in Kalamata Greece", "Kalamata expat", "retire Kalamata Greece"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "gr-ionian-corfu-town",
+      "placeName": "Corfu Town",
+      "country": "Greece",
+      "region": "Ionian Islands",
+      "granularity": "town",
+      "priority": 14,
+      "weeklyFocus": "Ionian Islands",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Island candidate with different rainfall, airport, and international community profile.",
+      "intentQueries": ["living in Corfu Town", "Corfu expat life", "retire in Corfu Greece"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "pt-lisbon",
+      "placeName": "Lisbon",
+      "country": "Portugal",
+      "region": "Lisbon",
+      "granularity": "town",
+      "priority": 30,
+      "weeklyFocus": "Portugal IFICI",
+      "publishTier": "flagship",
+      "status": "candidate",
+      "reason": "Primary city for Portugal IFICI and NHR replacement demand.",
+      "intentQueries": ["moving to Lisbon tax", "Portugal IFICI Lisbon", "living in Lisbon expat"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "pt-porto",
+      "placeName": "Porto",
+      "country": "Portugal",
+      "region": "Norte",
+      "granularity": "town",
+      "priority": 31,
+      "weeklyFocus": "Portugal IFICI",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Portugal comparison anchor against Lisbon.",
+      "intentQueries": [
+        "living in Porto Portugal",
+        "Porto vs Lisbon expat",
+        "Porto Portugal tax expat"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "es-valencia",
+      "placeName": "Valencia",
+      "country": "Spain",
+      "region": "Valencian Community",
+      "granularity": "town",
+      "priority": 50,
+      "weeklyFocus": "Spain Mediterranean",
+      "publishTier": "flagship",
+      "status": "candidate",
+      "reason": "High relocation demand and strong comparison candidate for families and remote workers.",
+      "intentQueries": [
+        "living in Valencia Spain",
+        "Valencia vs Malaga expat",
+        "move to Valencia family"
+      ],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "es-malaga",
+      "placeName": "Malaga",
+      "country": "Spain",
+      "region": "Andalusia",
+      "granularity": "town",
+      "priority": 51,
+      "weeklyFocus": "Spain Mediterranean",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Southern Spain coastal candidate with strong expat and tax-regime context.",
+      "intentQueries": ["living in Malaga Spain", "Malaga expat life", "retire in Malaga Spain"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    },
+    {
+      "id": "it-apulia-lecce",
+      "placeName": "Lecce",
+      "country": "Italy",
+      "region": "Apulia",
+      "granularity": "town",
+      "priority": 70,
+      "weeklyFocus": "Southern Italy",
+      "publishTier": "standard",
+      "status": "candidate",
+      "reason": "Founder dogfooding relevance and Italy southern pensioner regime context.",
+      "intentQueries": ["living in Lecce Italy", "retire in Lecce", "Lecce vs Bari expat"],
+      "requiredVariableGroups": [
+        "identity",
+        "money",
+        "tax_residency",
+        "climate",
+        "travel_connectivity",
+        "health_family_schooling",
+        "safety_rights",
+        "nature_environment",
+        "culture_services"
+      ],
+      "sourceGapReason": null,
+      "contentOutputs": []
+    }
+  ]
+}

@@ -1,17 +1,542 @@
-# docs/content-projection.md
+# Content and presence source of truth
 
-## Content projection: Place to channel
+This is the main source of truth for My Second Country posting, content, and public presence.
 
-Every piece of public content derives from a `Place` object in `packages/data`. Nothing is written freehand. The pipeline reads a `Place`, pulls its `CitedValue` fields, and renders into one or more channel outputs. This file defines the projection contract for each channel, the fence rule, fence test assertion, and the 6-week seed calendar.
+Every public output derives from cited source data. Nothing is written freehand from vibes. The pipeline reads `Place`, `Regime`, comparison, or source-change data, pulls its `CitedValue` fields, and renders one or more channel outputs.
+
+The operating rule:
+
+**One monthly recording and scheduling day. Four weekly frameworks. Every daily post is a scheduled projection of those frameworks. No daily manual content habit.**
+
+This file defines:
+
+- the public positioning;
+- the monthly founder-touch cadence;
+- the daily, weekly, and monthly publishing rhythm;
+- the channel projection contracts;
+- the fence rule and test assertions;
+- the invariants every content generator must satisfy.
+
+Do not create a competing posting calendar, social strategy doc, or presence source of truth. If the content operating model changes, update this file.
 
 ---
 
+## Positioning
+
+My Second Country is the cited relocation field desk for people comparing countries before they pay professionals.
+
+Short social version:
+
+**Cited relocation screens for people choosing a second country.**
+
+Founder and couple frame:
+
+James and Amanda are relocators sharing sourced data, not advisers. The brand is the durable trust object. The founders can appear as user-zero and field-testers, but the product must not depend on them becoming gurus.
+
+The public posture:
+
+- source-backed, not personality-led;
+- screening intelligence, not advice;
+- dated facts, visible confidence, primary-source links;
+- one weekly framework projected across every channel;
+- daily-looking presence produced from a monthly batch.
+
+Do not copy the sovereign-guru posture used by citizenship and residency influencers. Copy the operating machine: memorable category, repeatable frameworks, owned audience, free guide, proof artifact, paid-intent test.
+
+## Monthly batch operating model
+
+The content machine is built for one serious founder-touch day per month.
+
+The public cadence can look daily or weekly. The human work must be batched.
+
+### Short-form video is a core asset
+
+Short-form video is not a secondary recycle format. Every weekly framework should be planned as
+a video-led topic packet unless the subject is unsafe, under-sourced, or better held as an
+internal note.
+
+The default order is:
+
+1. Pick the cited topic.
+2. Write the short-video hook and proof beats.
+3. Create the source card.
+4. Adapt the same topic into X or Threads, LinkedIn, newsletter, and site movement.
+5. Schedule or hold each variant based on the gate.
+
+This prevents the common failure where the site and written posts exist, but video becomes a
+later chore.
+
+### Channel-native topic packet
+
+Every topic should project into the same channel set, but not as the same pasted caption. The
+topic is shared. The format changes.
+
+Minimum packet for one topic:
+
+| Channel | Required variant | Default shape | Gate |
+|---|---|---|---|
+| TikTok | 9:16 short video | 20 to 60 second source-led explainer with one clear proof point | cited topic and fence |
+| Instagram Reels | 9:16 short video | same master video, center-safe text, cover frame, caption with fence | cited topic and fence |
+| YouTube Shorts | vertical or square short video | evergreen search title, 45 to 90 second version when the topic needs more context | cited topic and fence |
+| X or Threads | thread or short post | punchy claim, source trail, reply question | cited topic or method post |
+| LinkedIn | native video or text post | credibility angle, professional reader, less slang, clear source discipline | cited topic or method post |
+| Instagram or Threads static | source card or carousel | value, source, verified date, confidence, fence | source card ready |
+| Newsletter | field note | one question, sourced answer, caveat, link target | cited topic |
+| Website | durable movement | page update, source note, guide section, waitlist, or dossier teaser | page or packet ready |
+
+Minimum viable weekly packet:
+
+- 1 master vertical video;
+- 2 caption variants, one discovery-led and one credibility-led;
+- 1 X or Threads thread;
+- 1 LinkedIn version;
+- 1 source card;
+- 1 newsletter field note or draft;
+- 1 site movement or explicit hold reason;
+- 1 audience-learning question.
+
+If a topic cannot produce the video and source-card pair, it is probably not ready as a weekly
+framework. It may still be a small daily method post.
+
+### Platform assumptions
+
+Last checked: 2026-06-28.
+
+- YouTube Shorts accepts square or vertical videos up to three minutes, for uploads after
+  2024-10-15. Source: <https://support.google.com/youtube/answer/15424877>.
+- Instagram Reels should be treated as 9:16 full-screen video. Center important text because
+  previews and grids crop differently. Source: <https://www.facebook.com/business/help/103816146375741>.
+- TikTok should be treated as 9:16 vertical-first video. Source: <https://ads.tiktok.com/help/article/tiktok-auction-in-feed-ads>.
+- LinkedIn supports native video with broad aspect-ratio support and up to 10 minutes on Pages,
+  but MSC should usually use short native video or a text post with a professional proof angle.
+  Source: <https://www.linkedin.com/help/linkedin/answer/a1311816>.
+
+### Monthly inputs
+
+Before the monthly content day, the content system prepares a packet:
+
+- 4 flagship frameworks;
+- 4 master short-video scripts;
+- 8 to 12 short-video cutdown prompts or shot notes;
+- verified source links;
+- source screenshots or extractable source-card data;
+- confidence notes;
+- low-confidence and stale-data warnings;
+- thread drafts;
+- short-post drafts;
+- newsletter drafts;
+- short-video scripts;
+- source-card copy;
+- website CTA targets;
+- guide or dossier update candidates;
+- fence and disclosure checks.
+
+The monthly content day cannot be the day we discover what is true from scratch. Source research and CitedValue verification happen before the batch day.
+
+### Monthly founder-touch day
+
+Use one day to approve, record, and schedule.
+
+Morning:
+
+- choose the final 4 monthly frameworks;
+- review the source packet;
+- cut any weak or under-sourced angle;
+- choose the CTA target for each week.
+
+Late morning:
+
+- record 8 to 12 short clips;
+- for each weekly framework, record one main 45 to 75 second explainer;
+- record one shorter hook clip per framework;
+- optionally record one James view, one Amanda view, or one household-decision view;
+- keep face small and evidence large.
+
+Afternoon:
+
+- approve 4 X threads;
+- approve 12 to 20 short posts;
+- approve 4 LinkedIn posts;
+- approve 4 newsletter issues or issue drafts;
+- approve 4 source cards;
+- approve video captions and descriptions;
+- approve any guide or dossier teaser copy.
+
+Late afternoon:
+
+- schedule the month;
+- export the batch script packet and archive it;
+- record one short internal note on what the next month should test.
+
+James should not wake up needing to invent a post. If a presence surface requires daily manual input, redesign it.
+
+## Public cadence
+
+### Live posting board
+
+This section is the daily posting source of truth. Do not create a second calendar elsewhere.
+Content Desk owns this board. Distribution Desk reads it before any channel plan. Command Center
+reviews it in the weekly packet.
+
+Status values:
+
+- `ready_to_post`: James can post manually after a quick read.
+- `draft_needs_source`: do not post until the cited source or packet is attached.
+- `hold_until_page_gate`: do not post externally until the relevant page or evidence bundle is
+  ready.
+- `posted`: already posted, with the result or link added when available.
+
+Until the first town page passes the page gate, the public schedule should use source-literacy
+and build-in-public material. It should not make place-specific relocation claims.
+
+#### Current daily board
+
+| Date | Day | Channel | What James should post | Source or asset | Status | Owner |
+|---|---|---|---|---|---|---|
+| 2026-06-29 | Monday | X or Threads, LinkedIn optional | Why My Second Country uses dated sources, confidence labels, and a not-advice fence before ranking places. | Method post from `CITATIONS.md` and `FENCE.md`; no place claim. | ready_to_post | Content Desk |
+| 2026-06-30 | Tuesday | X or Threads | National vs local facts: why country-level rules should be labeled nationally while daily-life data is proven locally. | Method post from `docs/data/variable-matrix-contract.md`. | ready_to_post | Content Desk |
+| 2026-07-01 | Wednesday | X or Threads | The first page is Chania, but the unit is the evidence bundle: what has to be known before a page counts. | Method post from `docs/msc-operating-ledger.md` and `DEFINITION_OF_DONE.md`. | ready_to_post | Content Desk |
+| 2026-07-02 | Thursday | X or Threads, Instagram story optional | The airport test, toddler test, winter test, and pharmacy test are questions, not advice. | Field-note framing; no factual place claim unless Data Desk attaches a cited value. | draft_needs_source | Content Desk |
+| 2026-07-03 | Friday | X or Threads | Ask: which Crete comparison should be screened after Chania, Heraklion, Rethymno, or Agios Nikolaos? | Audience-learning post; no claim beyond queue options. | ready_to_post | Distribution Desk |
+| 2026-07-04 | Saturday | Instagram or Threads | Source-card preview: what a cited relocation fact card will show: value, source, date, confidence, and fence. | Source-card method preview; no place claim. | ready_to_post | Design Desk |
+| 2026-07-05 | Sunday | None required | No required post. Capture replies and questions if any. | Manual notes only. | hold_until_page_gate | Command Center |
+| 2026-07-06 | Monday | X or Threads, LinkedIn optional | If Chania data is ready: publish the first Chania source-trail angle. If not: post the missing-data lesson. | Chania bundle or Data Desk gap report. | hold_until_page_gate | Content Desk |
+| 2026-07-07 | Tuesday | X or Threads | Portugal IFICI stale-answer angle: what changed, what needs checking, and why source dates matter. | Corridor packet from `docs/data/corridor-production-queue.json`; official-source check needed. | draft_needs_source | Revenue Desk |
+| 2026-07-08 | Wednesday | X or Threads | Source trail post for the strongest verified Chania or Crete variable. | Data Desk cited value required. | draft_needs_source | Data Desk |
+| 2026-07-09 | Thursday | Instagram, Threads, or short video draft | The household-decision version of the current weekly screen. | Founder script only after cited packet exists. | hold_until_page_gate | Content Desk |
+| 2026-07-10 | Friday | X or Threads | Weekly recap: what was verified, what stayed unknown, and what will be checked next. | Room state plus queue updates. | draft_needs_source | Command Center |
+| 2026-07-11 | Saturday | Instagram or Threads | Recycle the best source-card or method post from the week. | Best performing ready asset. | hold_until_page_gate | Distribution Desk |
+| 2026-07-12 | Sunday | None required | No required post. Prepare next weekly packet. | Manual notes only. | hold_until_page_gate | Command Center |
+
+Daily rule for James: post only the dated row for today if the status is `ready_to_post`.
+If the row is `draft_needs_source` or `hold_until_page_gate`, ask the owning room to clear it
+or skip the day. The system should never force a daily manual invention habit.
+
+#### Ready draft copy
+
+Use these as the current drafts for rows marked `ready_to_post`. Content Desk should replace
+them with generated channel assets once the content pipeline is producing output files.
+
+2026-06-29:
+
+```text
+My Second Country is being built around a simple rule: no relocation claim gets published without a source, a date, a confidence label, and a clear fence.
+
+That makes the product slower at first, but safer and more useful once pages start stacking.
+
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
+```
+
+2026-06-30:
+
+```text
+One MSC rule: national facts should stay national.
+
+If a visa or tax rule applies at country level, a town page should say that plainly. The local layer is where the town has to prove itself: housing, transport, health access, family life, services, winter, internet, and source gaps.
+
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
+```
+
+2026-07-01:
+
+```text
+The first MSC page target is Chania, but the real unit is not "a page."
+
+The unit is an evidence bundle: cited values, source dates, confidence, missing-data notes, and a clear split between national, regional, local, proxy, and unavailable facts.
+
+No bundle, no page.
+
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
+```
+
+2026-07-03:
+
+```text
+We are building Crete first as a connected set, not random city pages.
+
+After Chania, which comparison would be most useful to screen next?
+
+A. Heraklion
+B. Rethymno
+C. Agios Nikolaos
+D. the whole Crete region page first
+
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
+```
+
+2026-07-04:
+
+```text
+A useful relocation fact card needs more than a number.
+
+It needs:
+value
+source
+verified date
+confidence
+granularity
+and what the number cannot tell you
+
+That is the artifact MSC is being built around.
+
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
+```
+
+### Daily surface
+
+Daily output is scheduled from the monthly batch. It should feel active, but not require daily founder work.
+
+Monday:
+
+- publish the flagship framework;
+- post the X thread;
+- post the LinkedIn version;
+- publish the source-card image;
+- point to the relevant page, guide, or dossier waitlist.
+
+Tuesday:
+
+- publish the strongest short cutdown;
+- post an Instagram or Threads version using the source card;
+- publish or queue one short video;
+- reply to a small number of high-signal posts only if there is a useful sourced comment.
+
+Wednesday:
+
+- publish the source-trail post;
+- show what the sources say;
+- update or link the relevant website page;
+- continue the newsletter draft or scheduled issue from the same framework.
+
+Thursday:
+
+- publish a field note or household-decision angle;
+- use the airport test, toddler test, winter test, pharmacy test, car-free test, or similar life proxy;
+- label field notes as field notes, not facts.
+
+Friday:
+
+- send or publish the weekly field note;
+- post the recap;
+- ask one demand-sensing question, such as which comparison to screen next.
+
+Saturday:
+
+- recycle the best asset in another format;
+- post a light visual version to Instagram, Threads, or Shorts;
+- do not create new strategy.
+
+Sunday:
+
+- no required posting;
+- the scheduled system may post, but founder work should be off unless a monthly batch day lands here.
+
+### Weekly unit
+
+Each week has one main field screen.
+
+The weekly framework skeleton:
+
+1. The reader question.
+2. The tempting simple answer.
+3. The sourced answer.
+4. The dealbreakers.
+5. What changed or needs rechecking.
+6. The exact sources.
+7. The CTA to the page, guide, newsletter, or dossier teaser.
+
+Weekly outputs:
+
+- 1 flagship X thread;
+- 3 to 5 short posts;
+- 1 LinkedIn post;
+- 1 newsletter field note;
+- 1 master short video projected to TikTok, Reels, Shorts, and LinkedIn where appropriate;
+- 1 to 2 cutdowns or alternate hooks;
+- 1 source-card visual;
+- 1 website movement, such as a new page, updated page, source refresh, CTA, or guide section;
+- 1 audience-learning note.
+
+### Monthly unit
+
+Each month should produce:
+
+- 4 flagship frameworks;
+- 4 newsletter issues or field notes;
+- 8 to 12 short videos;
+- 12 to 20 short social posts;
+- 4 LinkedIn posts;
+- 4 source cards;
+- 1 month-in-sources issue;
+- 1 free-guide update or guide capture improvement;
+- 1 paid-dossier proof asset or fake-door update;
+- 1 signal review.
+
+Monthly signal review asks:
+
+- Which buyer type pulled: retiree, remote worker, founder, young family, recent exiter?
+- Which geography pulled?
+- Which channel generated owned-list growth?
+- Which content produced source-page clicks?
+- Did people ask for advice, or did they use the product?
+- Which data gap should drive next month's source work?
+
+## Content pillars
+
+### Rule changes
+
+What changed in visa, tax, residency, cost, or source availability.
+
+Use when:
+
+- a government page changes;
+- a tax or visa route is updated;
+- an old source becomes stale;
+- a claim gets downgraded.
+
+### Country comparisons
+
+Specific country comparisons by named constraint, not broad best-country claims.
+
+Examples:
+
+- Greece vs Portugal vs Spain for a young family.
+- Italy vs Greece if winter and airport access matter.
+- Cyprus vs Malta if English access is the first filter.
+
+### Place-fit tests
+
+Life-proxy formats that make the product feel real.
+
+Examples:
+
+- airport test;
+- toddler test;
+- February test;
+- pharmacy test;
+- car-free week test;
+- pediatrician test.
+
+These are field notes. They do not become CitedValues unless backed by sources.
+
+### Money-in-motion screens
+
+High-intent screens for people with real financial constraints.
+
+Examples:
+
+- pension-income screens;
+- rent-budget comparisons;
+- foreign-source income regimes;
+- digital-nomad income floors;
+- founder-exit regime comparisons.
+
+Never compute an individualized tax, visa, or financial answer.
+
+### Source literacy
+
+Teach readers how to read the product.
+
+Examples:
+
+- why a figure is high, medium, or low confidence;
+- why national data appears on a town page;
+- how source dates work;
+- why a page renders a staleness warning;
+- how a CitedValue becomes a source card.
+
+## Signature formats
+
+Use these repeatable formats before inventing new ones:
+
+1. The cited screen.
+2. The three-country knife fight.
+3. The rule-change alert.
+4. The looks-good-until post.
+5. The confidence audit.
+6. The source trail.
+7. The field test.
+8. The source screenshot carousel.
+9. The buyer-type screen.
+10. The not-a-ranking ranking.
+11. The place myth check.
+12. The month in sources.
+13. The redacted dossier teaser.
+
+## Short-video script patterns
+
+Use these before inventing new video formats.
+
+### Source trail short
+
+Best for rule changes, tax or visa changes, and stale-answer corrections.
+
+Structure:
+
+1. Hook: "The answer people repeat is stale."
+2. Show the source name and date.
+3. Explain one thing that changed or needs checking.
+4. State what MSC can and cannot conclude.
+5. End with the fence.
+
+### Place-fit short
+
+Best for Chania, Crete, and future place pages.
+
+Structure:
+
+1. Hook: "Before ranking this place, check one constraint."
+2. Name the life proxy, such as airport, winter, toddler, pharmacy, or car-free week.
+3. Show the cited value or say the local source is still missing.
+4. Explain why unknown is not zero.
+5. End with the fence.
+
+### Confidence audit short
+
+Best for source literacy and trust building before the first page ships.
+
+Structure:
+
+1. Hook: "This number is not equally trustworthy everywhere."
+2. Show high, medium, low, proxy, or unavailable.
+3. Explain the source date and granularity.
+4. Show how that affects a page or comparison.
+5. End with the fence.
+
+### Dossier teaser short
+
+Best once a page or paid-intent artifact exists.
+
+Structure:
+
+1. Hook: "This is what a cited relocation screen shows before you pay anyone."
+2. Show three evidence blocks.
+3. Show one source gap.
+4. Show the next professional-verification step.
+5. End with the fence.
+
+## Source card
+
+The source card is the recurring visual asset.
+
+Every flagship framework should create one card with:
+
+- the question;
+- the short sourced answer;
+- source name;
+- verified date;
+- confidence;
+- source URL or page URL;
+- the not-advice fence.
+
+This is the My Second Country equivalent of a creator framework. It makes the evidence visible and gives every channel a recognisable artifact.
+
 ## The fence rule
 
-Every output MUST contain the liability fence string verbatim. The canonical fence string is defined once in `packages/engine/src/fence.ts` and imported by every renderer:
+Every output MUST contain the liability fence string verbatim. The canonical fence string lives in `packages/web/src/lib/fence.ts`, reflecting `FENCE.md`; renderers import it, never copy it:
 
 ```
-Sourced data only. Not legal, tax, visa, or financial advice. Verify all claims with a licensed professional and the official source before making any decision.
+Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.
 ```
 
 A Vitest test in `packages/engine/src/__tests__/fence.test.ts` asserts that the fence string is present in the output of every channel renderer: `generatePage`, `generateVideoScript`, `generateSocialPost`, `generateNewsletterBlurb`. If any renderer omits the fence, the test suite fails and the GitHub Actions cron will not open a PR.
@@ -20,16 +545,34 @@ The on-camera couple are "relocators sharing sourced data." They do not give adv
 
 ---
 
-## Monetization and positioning (base case)
+## Monetization and presence posture
 
-Monetization is deferred until there is traffic; the launch artifact (Phase A0, ADR-0015) ships entirely free. When it turns on, the base case is affiliate referral fees to LICENSED professionals, embedded in the relevant cited claim, never framed as advice:
+Monetization is deferred until there is traffic; the launch artifact (Phase A0, ADR-0015) ships entirely free.
 
-- immigration lawyers and regulated advisers, on residency and visa pages
-- cross-border / expat tax advisors, on tax-regime pages
-- golden-visa and residency-by-investment firms, on investment-threshold pages
-- international health insurers, on healthcare pages
+For presence work, optimize for:
 
-These are high-intent, high-value referrals that fit the audience (people with real money in motion) and the fence: we already route the reader to a licensed professional, so the referral is the safe call to action. moveBuddha-style affiliate is the proven model in the category. The paid dossier / Pro tier is secondary, validated later with the Stripe fake-door; it is not the base case.
+- owned-list growth;
+- source-page clicks;
+- guide capture;
+- paid cited-dossier fake-door intent;
+- future monitoring or freshness products.
+
+ADR-0007 still governs accepted affiliate mechanics. ADR-0018 is the proposed challenger that demotes affiliate to a quarantined floor and promotes the paid cited dossier / freshness moat. Until ADR-0018 is accepted, do not silently change code-level monetization rules. In content and presence, however, do not lead with affiliate. Treat affiliate as a disclosed commodity adjacency, never the public promise.
+
+Permitted affiliate surfaces, once approved, are commodity adjacencies:
+
+- currency transfer;
+- expat insurance;
+- SIM, banking, or moving logistics;
+- other non-rule utilities.
+
+Barred affiliate surfaces:
+
+- tax rule claims;
+- visa and residency rule claims;
+- legal interpretation;
+- "best adviser" style recommendations;
+- any placement that makes a cited claim look commercially biased.
 
 Every affiliate link renders only through `AffiliateLink.astro` (`rel="sponsored noopener"`, visible disclosure above the fold, Plausible click event), and only once the program has an `approvedDate` (Phase C). No affiliate value renders on a page before the program is approved.
 
@@ -37,12 +580,6 @@ Every affiliate link renders only through `AffiliateLink.astro` (`rel="sponsored
 
 - The wave to be early on is AI-citation-era cited relocation data: the clean, dated, sourced signal that Perplexity and AI Overviews quote. Every page is built to be that cited source (schema.org, llms.txt, dated citations). This is the wedge against noisy, affiliate-captured incumbents, the Nomads.com / Hotelist move: normalise messy public data into a clean cited signal.
 - Build-in-public, the couple's real relocation as content, is a slow 2 to 3 year PARALLEL track, not a launch lever. The launch needs no audience.
-
-### Fence source of truth (correction)
-
-The canonical fence string lives in `packages/web/src/lib/fence.ts` (the FENCE.md verbatim text); renderers import it, never copy it. The earlier reference in this file to `packages/engine/src/fence.ts` predates the shipped layout; treat the web `fence.ts` as authoritative.
-
----
 
 ## Channel projection contracts
 
@@ -124,7 +661,7 @@ Rules:
 
 - One surprising `CitedValue` per post. The hook must name the source inline: "According to [sourceName]..." or "[Stat], per [sourceName] ([verifiedDate])."
 - The fence string appears as the last line of the post, before hashtags.
-- Posts never use the word "advice," "recommend," or "suggest." The generator has a string guard that throws if these appear in the output.
+- Outside the canonical fence string, posts never use "recommend" or "suggest," and never use "advice" except to preserve the required fence. The generator guard checks the generated hook and body before the fence is appended.
 - Instagram/Threads use the fence in the caption. LinkedIn uses it as the last paragraph.
 - The generator does not auto-post. It writes `.json` to `packages/content/output/social/[platform]/[slug]-[date].json`. James reviews and schedules manually or via a future Buffer/Loomly integration.
 
@@ -214,142 +751,104 @@ These tests run in the cron pipeline before any PR is opened. A failure blocks t
 
 ---
 
-## 6-week seed calendar
+## Monthly production template
 
-### Format key
+Use this as the default monthly schedule. The exact countries and source topics change, but the structure stays stable.
 
-- `P` = programmatic page (Astro static, deployed)
-- `V` = video script JSON + batch-record note
-- `S` = social post JSON (Instagram/Threads unless noted)
-- `N` = newsletter issue
-- `R` = rough/ephemeral format (see note below)
+### Month packet
 
-### Rough/ephemeral format note
+| Slot | Framework | Primary output | Secondary outputs |
+|---|---|---|---|
+| Week 1 | Dealbreaker comparison | X thread, source card | LinkedIn, short video, newsletter |
+| Week 2 | Rule-change or source-change alert | X thread, source trail | short posts, newsletter, page update |
+| Week 3 | Place-fit or buyer-type screen | video, source card | X thread, Instagram carousel, field note |
+| Week 4 | Money-in-motion or dossier teaser | X thread, redacted proof asset | LinkedIn, newsletter, fake-door CTA |
 
-At least one `R` per week. This is a deliberately low-production output: a static screenshot of a single `CitedValue` card with the fence visible, posted as a Stories frame or a plain-text Threads post with no editing. It exercises the pipeline end-to-end with near-zero founder effort and signals to the algorithm before the polished video is edited. The `R` format is generated by a separate renderer (`packages/content/src/generators/roughCard.ts`) that produces a 1080x1920 PNG via Satori, not Remotion.
+### Week 1 default
 
-### Batch-record note
+Theme: broad comparison with a clear dealbreaker.
 
-James and Amanda record video in batches, not daily. The calendar marks which weeks contain a video script. Before each batch session, James exports all `V` scripts for that batch window as a single PDF from `packages/content/output/scripts/batch-[date].pdf` (a tsx script renders this). The calendar below shows two batch sessions: end of week 1 and end of week 4.
+Example: Greece vs Portugal vs Spain is the wrong first question. Start with the dealbreakers.
 
----
+Outputs:
 
-### Week 1: Greece foundation (batch record session 1, end of week)
+- flagship thread;
+- source card;
+- short video;
+- newsletter field note;
+- relevant compare-page CTA.
 
-**Theme:** Introduce the project and the Greece-first frame. Three Greek towns go live. First video introduces James and Amanda as relocators sharing sourced data on Greece.
+### Week 2 default
 
-| Day | Output | Description |
-|---|---|---|
-| Mon | `P` Nafplio, Greece | Full cited page: cost, visa, climate, internet |
-| Mon | `R` Nafplio cost card | Rough card: monthly budget figure, fence visible, Threads plain-text |
-| Wed | `P` Chania, Crete | Full cited page |
-| Wed | `S` Chania sun hours | "According to Meteoblue, Chania averages X sun hours/year. Sourced data, not advice." |
-| Thu | `P` Thessaloniki | Full cited page |
-| Thu | `S` Thessaloniki cost vs Athens | One cited comparison, fence in caption |
-| Fri | `V` Nafplio intro script | Hook: housing cost; beats: cost, D7 visa threshold, climate; fence in caption and slate |
-| Fri | `S` Video teaser | Still frame from Nafplio script with cited hook and fence |
-| Fri | `N` Issue 1 | Headline: "First figures: three Greek towns, all cited." Blurbs for Nafplio, Chania, Thessaloniki. Fence in footer. |
+Theme: what changed or what needs rechecking.
 
-Batch record session: Nafplio script only (one location, ~90 seconds). Record raw, edit in week 2.
+Example: Portugal's tax story changed. Here is the source trail.
 
----
+Outputs:
 
-### Week 2: Greece depth + first rough comparison
+- rule-change thread;
+- source screenshot carousel;
+- page update or staleness note;
+- short posts on the most important source detail;
+- newsletter note.
 
-**Theme:** Add two more Greek towns. First cross-town comparison social. First ephemeral poll format.
+### Week 3 default
 
-| Day | Output | Description |
-|---|---|---|
-| Mon | `P` Kalamata | Full cited page |
-| Mon | `R` D7 visa threshold card | Rough card: the income requirement figure, fence visible, Instagram Stories |
-| Tue | `S` Kalamata vs Nafplio rent | Cited comparison, both source names inline |
-| Wed | `P` Paros | Full cited page (island granularity; note island-premium on housing) |
-| Wed | `S` Paros internet speed | Surprising low-confidence flag visible in caption ("confidence: 0.6, verify this") |
-| Thu | `V` Chania vs Kalamata script | Two-place comparison script; beats: cost, climate, visa; fence in caption |
-| Thu | `R` Chania vs Kalamata rough card | 1080x1920 side-by-side of two key CitedValues, fence at bottom |
-| Fri | `N` Issue 2 | Freshest updated fields from any of the 5 live Greek towns. Fence in footer. |
+Theme: life-fit or buyer-type screen.
 
-No new batch session this week. Nafplio video from week 1 is edited and scheduled for publish mid-week.
+Example: The airport test for Southern Europe.
 
----
+Outputs:
 
-### Week 3: First non-Greek European page + newsletter growth frame
+- short video led by field-test framing;
+- source card or field-note card;
+- X thread;
+- Instagram or Threads carousel;
+- guide section candidate.
 
-**Theme:** One page outside Greece (Portugal or Spain, whichever has better seed data per `docs/data/SOURCES.md`) signals the broader Europe scope. Social introduces the project frame.
+### Week 4 default
 
-| Day | Output | Description |
-|---|---|---|
-| Mon | `P` Lisbon, Portugal (or Valencia, Spain) | Full cited page, same schema as Greek pages |
-| Mon | `R` Lisbon/Valencia cost card | Rough card with fence, posted as Threads reply to the week 1 Nafplio post |
-| Tue | `S` Greece vs Portugal cost | One-line cited comparison; both source names; fence |
-| Wed | `S` "Why Greece first?" | Text post citing the D7 visa income threshold vs Portugal NHR change; fence in caption |
-| Thu | `V` "Why we looked at Greece first" script | Founder-context video; beats: D7 visa data, cost index, climate data; no advice; fence in voiceover slate and caption |
-| Thu | `R` Visa threshold comparison card | Greece D7 vs Portugal D8 figures, both cited, fence at base |
-| Fri | `N` Issue 3 | Leads with the new European comparison. Fence in footer. Newsletter sign-up CTA added to page footer this week. |
+Theme: paid-dossier proof or money-in-motion screen.
 
-Chania vs Kalamata video from week 2 publishes this week.
+Example: What a cited relocation screen would show for one buyer type.
 
----
+Outputs:
 
-### Week 4: Stripe fake-door + screening engine live (batch record session 2)
+- redacted dossier teaser;
+- X thread;
+- LinkedIn credibility post;
+- newsletter recap;
+- fake-door CTA when legally and operationally cleared.
 
-**Theme:** The Astro island screening engine goes live. Stripe fake-door is wired. Social and video drive to the screening tool.
+### Month-in-sources issue
 
-| Day | Output | Description |
-|---|---|---|
-| Mon | `P` Screening engine page (`/screen`) | Astro island live; no form data stored; Stripe fake-door CTA for "full report" |
-| Mon | `S` "We built a screening tool" | Screenshot of the island UI, cited that it pulls from the dataset, fence |
-| Tue | `R` Screening tool rough walkthrough | 15-second screen-record rough video of the island, no editing, posted as Reel |
-| Wed | `P` Two new Greek towns (from the candidate list in `docs/data/greece-seed.md`) | Pages 6 and 7 |
-| Wed | `S` New town social (one of the two) | Cited hook from whichever town has the most surprising `CitedValue` |
-| Thu | `V` "How we screen a town" script | James walks through the island live; beats: what data we pull, how confidence works, the fence; Amanda reads the fence slate aloud |
-| Fri | `N` Issue 4 | Leads with the screening tool launch. Fence in footer. |
+Publish once per month.
 
-Batch record session: "Why we looked at Greece first" script (week 3) + "How we screen a town" script (week 4). Record both in one session. Edit over two weeks.
+Sections:
 
----
+- what changed;
+- what was verified;
+- what got downgraded;
+- what is still low confidence;
+- what pages shipped;
+- what readers asked for next;
+- what next month's source work will check.
 
-### Week 5: First claimed affiliate link + cost-of-living deep cut
-
-**Theme:** First affiliate-linked content (e.g., Wise for currency transfer, Numbeo cited as source). Cost-of-living deep cut on housing in one Greek town. Newsletter crosses 100 subscribers if referral loop is active.
-
-| Day | Output | Description |
-|---|---|---|
-| Mon | `P` Housing deep-cut: Nafplio | Expanded housing section: rental ranges by area, cited from local listing aggregators + `verifiedDate` |
-| Mon | `S` Nafplio rent range | Cited range with source name and date; fence; affiliate link to Wise in bio note |
-| Tue | `R` Housing card: Nafplio | Rough card with the rent range figure, fence, and "see full data at [url]" |
-| Wed | `P` Two more European towns (Portugal interior or Spanish coast) | Expanding the Europe index |
-| Wed | `S` European town social | Cited hook |
-| Thu | `V` Nafplio housing deep cut script | Beats: rental range, buyer market overview (cited), D7 income vs rent; fence in slate and caption; Wise mentioned as a tool (not endorsed, cited as a common expat tool) |
-| Fri | `N` Issue 5 | Housing focus. Affiliate link disclosure in footer alongside fence. |
-
----
-
-### Week 6: Consolidation + first self-referential transparency post
-
-**Theme:** Publish a transparency post about how the dataset works (cites the CitedValue schema, explains the confidence field, explains the fence). This is both content and trust-building. No new towns; consolidate quality on existing pages.
-
-| Day | Output | Description |
-|---|---|---|
-| Mon | `S` "How we cite data" | Explains CitedValue fields, confidence, verifiedDate; screenshot of a real card; fence |
-| Mon | `R` Rough "behind the scenes" card | Screenshot of a raw JSON CitedValue, fence at base, posted as Threads |
-| Tue | `P` /how-we-cite page | Static Astro page explaining the citation schema, the fence rule, and links to FENCE.md and CITATIONS.md |
-| Wed | `S` Update: one Greek town re-verified | If any field has been re-verified since week 1, a post announcing the update with old vs new value and new verifiedDate |
-| Thu | `V` "How we source this data" script | Amanda-led; beats: what CitedValue is, how we handle low-confidence data, the fence; no advice; fence in slate and caption |
-| Thu | `R` Confidence badge explainer card | Shows a low-confidence card with yellow badge, explains what it means, fence |
-| Fri | `N` Issue 6 | Transparency theme. Links to /how-we-cite. Fence in footer. 6-week review note: which places were most visited, which `CitedValue` fields had the most updates. |
+This is the public maintenance artifact. It turns freshness into trust.
 
 ---
 
 ## Projection invariants (summary)
 
 1. No output ships without a `CitedValue` source for every claim it makes.
-2. The fence string in `packages/engine/src/fence.ts` is the single source of truth; renderers import it, never copy it.
+2. The fence string in `packages/web/src/lib/fence.ts` is the single source of truth; renderers import it, never copy it.
 3. The fence test must pass before any cron PR is opened.
-4. Social posts never use "advice," "recommend," or "suggest"; the generator throws on these words.
+4. Social post hooks and bodies never use "recommend" or "suggest," and never use "advice" except inside the canonical fence; the generator checks this before appending the fence.
 5. Video scripts name speakers as relocators, not advisors; the script template enforces the speaker label format.
 6. Newsletter issues only include places with a `CitedValue` updated in the last 14 days; stale places are silently excluded.
-7. Rough/ephemeral formats are generated by `roughCard.ts` using Satori; they do not go through Remotion and require no editing.
-8. Batch recording is driven by the calendar's `V` entries; James exports a batch PDF before each session using `tsx scripts/export-batch-scripts.ts`.
+7. Source-card and rough formats are generated from CitedValue fields; they do not require a fresh design pass.
+8. Recording, review, and scheduling happen in one monthly founder-touch day; daily presence is scheduled from that batch.
 9. Affiliate links are disclosed in the newsletter footer and in any social post that includes one; the disclosure is a field in `SocialPost` and `NewsletterIssue`, not optional copy.
 10. The screening engine island never stores form data; it is purely client-side logic reading the static dataset.
+11. A monthly content packet must exist before the founder-touch day; the batch day is for choosing, recording, approving, and scheduling, not for discovering source truth.
+12. Every weekly framework must point back to one durable product surface: a page, guide, newsletter capture, source update, or dossier teaser.
