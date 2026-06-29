@@ -113,8 +113,9 @@ Tracked user-agent families:
 
 The standalone parser is `scripts/parse-ai-crawlers.ts`. The weekly digest calls the same parser
 and reports a conservative "AI crawler sightings" section. Production logging uses the connected
-Vercel project Blob store via `BLOB_STORE_ID` and the runtime OIDC token. To enable the GitHub
-digest reader, set the GitHub secret `BLOB_READ_WRITE_TOKEN` to the Vercel Blob read/write token.
+Vercel project Blob store, but the middleware runtime does not currently expose Vercel's automatic
+OIDC token. Set `BLOB_READ_WRITE_TOKEN` in both the Vercel project environment and the GitHub
+secret so production logging and the weekly digest can read/write the same private Blob store.
 
 **Baseline rule:** zero hits is a real result only when the digest says the Blob reader is
 configured. If the digest says `BLOB_READ_WRITE_TOKEN` is missing, the pipeline is not measuring.
