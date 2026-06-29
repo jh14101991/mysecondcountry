@@ -13,6 +13,7 @@ import FactsTable from "../../components/FactsTable.astro";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Masthead from "../../components/Masthead.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
+import SourcesList from "../../components/SourcesList.astro";
 import Base from "../../layouts/Base.astro";
 import { buildDateline, monthYearLabel } from "../../lib/cited.ts";
 import {
@@ -138,6 +139,22 @@ if (place.safety) {
   });
 }
 
+// Direct child places (regions, towns) for the "Regions and towns" links.
+const childPlaces = places.filter((p) => p.parentId === place.id);
+
+// Sources on this page: deduplicated by URL, ordered by first appearance.
+const pageSources: { url: string; name: string; verifiedDate: string }[] = [];
+const seenSourceUrls = new Set<string>();
+for (const { cited } of allFacts) {
+  if (seenSourceUrls.has(cited.sourceUrl)) continue;
+  seenSourceUrls.add(cited.sourceUrl);
+  pageSources.push({
+    url: cited.sourceUrl,
+    name: cited.sourceName,
+    verifiedDate: cited.verifiedDate,
+  });
+}
+
 const jsonLd = [
   placeJsonLd(place, SITE),
   placeDatasetJsonLd(place, SITE),
@@ -213,48 +230,122 @@ const jsonLd = [
       <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
       <p>
         Every figure above is a cited claim: a value, the named source, the date we last verified
-        it, and a confidence mark. Verified means an official statistical body or primary law. Good
-        means an official authority read through a secondary. Limited means a directional figure to
-        check yourself. A national figure shown for a town is labelled as such; we do not pass a
-        country average off as a local one.
+        it, and a confidence mark. A high mark means an official statistical body or primary law.
+        Medium means an official authority read through a secondary source. Low means a directional
+        figure to check yourself. A national figure shown for a town is labelled as such; we do not
+        pass a country average off as a local one.
       </p>
     </section>
+
+    {
+      childPlaces.length > 0 && (
+        <section aria-labelledby="regions-h" class="regions">
+          <SectionHeading as="h2" id="regions-h">
+            Regions and towns in {place.name}
+          </SectionHeading>
+          <ul class="regions-list">
+            {childPlaces.map((child) => (
+              <li>
+                <a href={placePath(child)}>{child.name}</a>
+                <span class="regions-gran">{child.granularity}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <SourcesList sources={pageSources} heading="Sources on this page" />
 
     {/* Screening island placeholder. No client JavaScript yet; the interactive
         screener mounts here in a later phase. */}
     <div id="screening-island" data-place-id={place.id} hidden></div>
   </article>
 
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="shell">
+      <div class="cta-card">
+        <span class="overline cta-eyebrow">Build my shortlist</span>
+        <h2 id="cta-heading" class="display-section cta-headline">Find where you fit, on the evidence.</h2>
+        <p class="cta-sub">
+          Tell us your income, visa needs, and what you want from a place. You get back a sourced
+          shortlist of countries, regions, and towns, every figure cited.
+        </p>
+        <div class="cta-actions">
+          <a href="/screener" class="btn-primary">
+            Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="/compare/greece-portugal-spain" class="text-link">Compare countries</a>
+        </div>
+        <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
+      </div>
+    </div>
+  </section>
+
   <style>
     .lede {
-      max-width: var(--measure);
-      font-family: var(--font-serif);
+      max-width: 62ch;
+      font-family: var(--f-ui);
       font-size: 1.2rem;
       line-height: 1.55;
-      color: var(--muted-strong);
+      color: var(--ink-soft);
       margin: 0 0 0.5rem;
     }
     .section-note {
-      max-width: var(--measure);
-      color: var(--muted-foreground);
-      font-family: var(--font-serif);
+      max-width: 62ch;
+      color: var(--stone);
+      font-family: var(--f-ui);
       font-size: 0.98rem;
     }
     .how-to-read {
       margin-top: 3rem;
-      padding: 1.4rem 1.5rem;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--hairline-soft);
     }
     .how-to-read :global(.section-heading--heading) {
       margin-top: 0;
     }
     .how-to-read p {
-      max-width: var(--measure);
+      max-width: 62ch;
       margin: 0;
-      font-family: var(--font-serif);
-      color: var(--muted-strong);
+      font-family: var(--f-ui);
+      color: var(--ink-soft);
+    }
+    .regions {
+      margin-top: 2.5rem;
+    }
+    .regions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.75rem;
+    }
+    .regions-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .regions-list a {
+      font-family: var(--f-display);
+      font-size: 1.125rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .regions-list a:hover {
+      color: var(--accent-dark);
+      text-decoration: underline;
+    }
+    .regions-gran {
+      font-family: var(--f-mono);
+      font-size: var(--t-meta);
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
   </style>
 </Base>

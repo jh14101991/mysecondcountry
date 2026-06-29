@@ -1,512 +1,452 @@
 ---
-import FenceBlock from "../components/FenceBlock.astro";
-import Base from "../layouts/Base.astro";
-
-const SITE = "https://mysecondcountry.com";
-const title = "Where should I live? A free, cited relocation screener";
-const description =
-  "Enter your budget, climate, visa, and tax constraints and get a cited, ranked shortlist of Greece, Portugal, and Spain. Every figure is sourced and dated. It shows how each country's published rules match what you entered; it never tells you what to do.";
-const canonical = `${SITE}/screener`;
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "My Second Country relocation screener",
-  applicationCategory: "Lifestyle",
-  operatingSystem: "Web",
-  url: canonical,
-  isAccessibleForFree: true,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
-  description,
-};
+import { FENCE_PRIMARY } from "../lib/fence.ts";
 ---
 
-<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <article data-page="screener">
-    <p class="kicker">Free screener</p>
-    <h1>Where should you live?</h1>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Second Country · Screener</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <FenceBlock hasLegalClaims={true} />
+<!-- SHARED FOUNDATION + SECTION LIBRARY -->
+<link rel="stylesheet" href="/mockups/_msc-system.css">
 
-    <p class="lede">{description}</p>
+<style is:global>
+/* ============================================================
+   GATE 21 — SCREENER (situation input)  [PRODUCT register]
+   The product's front door: a calm, instrument-like single screen
+   that collects a reader's situation and, on submit, would build
+   their cited shortlist (gate 22). Product register: fixed,
+   predictable spacing, no marketing choreography, accessible
+   labelled inputs, an exit on the chrome. Shared: product-header
+   (gate 2), scenario chips (gate 11), form controls, fence, the
+   four provenance components, minimal footer. Page-unique below:
+   the numbered field plates, the EUR affix input, the "what the
+   engine reads" sample ledger. Real cited figures only.
+   ============================================================ */
+body { background: var(--paper); }
 
+.screener { max-width: 760px; margin: 0 auto; padding: clamp(40px,6vw,72px) 0 clamp(64px,9vw,120px); }
+
+.screener-intro .overline { margin-bottom: 14px; }
+.screener-intro .display-mid { margin-bottom: 16px; }
+
+/* scenario entry (gate 11 chips) */
+.screener-scenario { margin-top: clamp(30px,4vw,44px); }
+.field-eyebrow {
+  display: block;
+  font-family: var(--f-ui); font-size: var(--t-meta); font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--stone);
+  margin-bottom: 12px;
+}
+.screener-hint { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.5; margin-top: 12px; max-width: 60ch; }
+
+/* the instrument: numbered hairline plates, fixed rhythm */
+.screener-form { margin-top: clamp(34px,4.6vw,54px); display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
+
+.plate { border: 1px solid var(--hairline-soft); border-radius: 10px; background: transparent; padding: clamp(22px,3vw,32px); }
+.plate__head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 16px; margin-bottom: clamp(18px,2.4vw,24px); border-bottom: 1px solid var(--hairline-soft); }
+.plate__num { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--pop-ink); letter-spacing: 0.06em; flex: 0 0 auto; }
+.plate__titles { display: flex; flex-direction: column; gap: 4px; }
+.plate__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: 1.5rem; line-height: 1.14; letter-spacing: -0.018em; color: var(--ink); }
+.plate__sub { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.45; }
+
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px,2.4vw,26px); }
+.field { display: flex; flex-direction: column; }
+.field--wide { grid-column: 1 / -1; }
+
+/* select: shared field-input look + a quiet caret */
+select.field-input {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5' stroke='%236E675C' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+@media (forced-colors: active) { select.field-input { appearance: auto; background-image: none; padding-right: 14px; } }
+
+/* mono EUR-affixed numeric input (a figure, so it is mono) */
+.field-affix { display: flex; align-items: stretch; border: 1px solid var(--hairline-soft); border-radius: 10px; overflow: hidden; background: var(--paper); }
+.field-affix:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.field-affix__pre, .field-affix__post { display: inline-flex; align-items: center; padding: 0 14px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); background: var(--paper-stone); white-space: nowrap; }
+.field-affix input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 12px 12px; min-height: 48px; font-family: var(--f-mono); font-size: var(--t-body); color: var(--ink); font-variant-numeric: tabular-nums; }
+.field-affix input:focus-visible { outline: none; }
+
+/* chip fields inside a plate (multi-select: priorities + dealbreakers) */
+.chips-field + .chips-field { margin-top: clamp(20px,2.6vw,28px); }
+/* dealbreakers read quieter: terracotta hairline when chosen, not a full ink fill,
+   so the hierarchy is situation -> priorities -> optional constraints */
+.chip--deal:has(input:checked) { background: transparent; color: var(--pop-ink); border-color: var(--pop); }
+
+/* primary action row */
+.screener-actions { margin-top: clamp(30px,3.8vw,42px); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+
+.screener-fence { margin-top: clamp(28px,3.6vw,40px); }
+.screener-fence__second { color: var(--stone); font-size: var(--t-bodysm); margin-top: 6px; }
+
+/* "what the engine reads" — a small sample of the live, cited dataset,
+   rendered as real DataFigure rows (reusing the shared ledger pattern) */
+.reads { margin-top: clamp(46px,6vw,72px); padding-top: clamp(30px,4vw,44px); border-top: 1px solid var(--hairline-soft); }
+.reads .overline { margin-bottom: 10px; }
+.reads__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.5rem,2.4vw,1.875rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.reads__note { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.55; margin-top: 10px; max-width: 62ch; }
+.reads .ledger { margin-top: clamp(18px,2.4vw,28px); }
+
+@media (max-width: 640px) {
+  .field-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- PRODUCT / SCREENER NAV (shared, gate 2). Two-stop journey: your situation -> your shortlist. -->
+<header class="product-header" role="banner">
+  <div class="shell">
+    <div class="product-header-inner">
+
+      <a class="brand-wordmark product-brand" href="/" aria-label="My Second Country home (exit screener)">
+        <img class="brand-icon" src="/brand/monogram.svg" alt="" width="36" height="36">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <span class="brand-name">My Second Country</span>
+      </a>
+
+      <nav class="product-progress" aria-label="Screener progress">
+        <div class="product-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="2" aria-label="Step 1 of 2, Your situation">
+          <span class="product-step is-current" aria-hidden="true"></span>
+          <span class="product-step" aria-hidden="true"></span>
+        </div>
+        <span class="product-step-label">Step 1 of 2 · Your situation</span>
+      </nav>
+
+      <div class="product-exit">
+        <a href="/">
+          Save and exit
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="shell">
     <div class="screener">
-      <form id="screener-form" aria-label="Screening constraints">
-        <fieldset>
-          <legend>Your constraints</legend>
 
-          <div class="field">
-            <label for="profile">Start as</label>
-            <select id="profile" name="profile">
-              <!-- Options populated by island script from PROFILES -->
-            </select>
+      <!-- intro / framing -->
+      <header class="screener-intro">
+        <span class="overline">Step 1 · Your situation</span>
+        <h1 class="display-mid">Where could you live?</h1>
+        <p class="standfirst">Set your situation. The engine screens Greece, Portugal, and Spain against published rules and returns a source-cited shortlist. About two minutes. It screens, it does not advise.</p>
+      </header>
+
+      <!-- scenario entry (gate 11 chips) -->
+      <section class="screener-scenario" aria-labelledby="scenario-label">
+        <span class="field-eyebrow" id="scenario-label">Start with what you want</span>
+        <div class="chip-row" role="radiogroup" aria-labelledby="scenario-label">
+          <label class="chip"><input type="radio" name="scenario" value="lower-taxes" checked> Lower my taxes</label>
+          <label class="chip"><input type="radio" name="scenario" value="remote-work"> Work remotely</label>
+          <label class="chip"><input type="radio" name="scenario" value="retire-abroad"> Retire abroad</label>
+          <label class="chip"><input type="radio" name="scenario" value="exploring"> Just exploring</label>
+        </div>
+        <p class="screener-hint">Optional. It sets sensible defaults below; change anything you like.</p>
+      </section>
+
+      <!-- the instrument -->
+      <form class="screener-form" action="/shortlists" method="get" novalidate>
+
+        <!-- 01 — who's moving -->
+        <section class="plate" aria-labelledby="plate1-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">01</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate1-title">Who's moving</h2>
+              <span class="plate__sub">Drives which visa and residency routes are open to you.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field field--wide">
+              <span class="field-label" id="household-label">Who is relocating</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="household-label">
+                <label class="chip"><input type="radio" name="household" value="single" checked> Just me</label>
+                <label class="chip"><input type="radio" name="household" value="couple"> A couple</label>
+                <label class="chip"><input type="radio" name="household" value="family"> Family with children</label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="citizenship">Citizenship or status</label>
+              <select class="field-input" id="citizenship" name="citizenship">
+                <option>EU or EEA citizen</option>
+                <option>UK citizen</option>
+                <option>US citizen</option>
+                <option>Other non-EU citizen</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="age">Age band <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></label>
+              <select class="field-input" id="age" name="age">
+                <option value="">No preference</option>
+                <option>Under 35</option>
+                <option>35 to 49</option>
+                <option>50 to 64</option>
+                <option>65 or older</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 — money -->
+        <section class="plate" aria-labelledby="plate2-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">02</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate2-title">Money</h2>
+              <span class="plate__sub">Sets which tax regimes and places are realistic before screening.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="income">Main income</label>
+              <select class="field-input" id="income" name="income">
+                <option>Employment</option>
+                <option>Self-employed or freelance</option>
+                <option>Remote salary</option>
+                <option>Company profits</option>
+                <option>Pension</option>
+                <option>Investments</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="budget">Net monthly budget, after tax (EUR / mo)</label>
+              <div class="field-affix">
+                <span class="field-affix__pre" aria-hidden="true">EUR</span>
+                <input id="budget" name="budget" type="text" inputmode="numeric" placeholder="3,500" aria-describedby="budget-suffix">
+                <span class="field-affix__post" id="budget-suffix">/ mo</span>
+              </div>
+            </div>
+            <div class="field field--wide">
+              <span class="field-label" id="taxpriority-label">Tax priority</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="taxpriority-label">
+                <label class="chip"><input type="radio" name="taxpriority" value="lower" checked> Lower my tax</label>
+                <label class="chip"><input type="radio" name="taxpriority" value="simple"> Keep it simple</label>
+                <label class="chip"><input type="radio" name="taxpriority" value="no-view"> No strong view</label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 03 — place -->
+        <section class="plate" aria-labelledby="plate3-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">03</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate3-title">Place</h2>
+              <span class="plate__sub">What you want from day-to-day life there.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field field--wide">
+              <span class="field-label" id="climate-label">Climate</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="climate-label">
+                <label class="chip"><input type="radio" name="climate" value="warm-winters" checked> Warm winters</label>
+                <label class="chip"><input type="radio" name="climate" value="four-seasons"> Four seasons</label>
+                <label class="chip"><input type="radio" name="climate" value="no-preference"> No preference</label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="language">Language comfort</label>
+              <select class="field-input" id="language" name="language">
+                <option>English is enough to start</option>
+                <option>Willing to learn the local language</option>
+                <option>Already fluent in one</option>
+                <option>No preference</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="healthcare">Healthcare</label>
+              <select class="field-input" id="healthcare" name="healthcare">
+                <option>Strong public healthcare matters</option>
+                <option>Private cover is fine</option>
+                <option>No strong view</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 04 — priorities and constraints -->
+        <section class="plate" aria-labelledby="plate4-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">04</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate4-title">Priorities and constraints</h2>
+              <span class="plate__sub">What the shortlist should weigh, and anything it must not break.</span>
+            </div>
           </div>
 
-          <div class="field">
-            <label>
-              <input type="checkbox" id="lgbtq" name="lgbtq" />
-              Add LGBTQ+ overlay
-            </label>
-            <p class="hint">Nudges English proficiency and safety weighting. The acceptance/legal variable lands in a later slice.</p>
+          <div class="chips-field">
+            <span class="field-label" id="matters-label">What matters most</span>
+            <div class="chip-row" role="group" aria-labelledby="matters-label">
+              <label class="chip"><input type="checkbox" name="matters" value="cost" checked> Cost of living</label>
+              <label class="chip"><input type="checkbox" name="matters" value="tax" checked> Tax</label>
+              <label class="chip"><input type="checkbox" name="matters" value="visa"> Visa</label>
+              <label class="chip"><input type="checkbox" name="matters" value="residency"> Residency</label>
+              <label class="chip"><input type="checkbox" name="matters" value="climate" checked> Climate</label>
+              <label class="chip"><input type="checkbox" name="matters" value="healthcare"> Healthcare</label>
+              <label class="chip"><input type="checkbox" name="matters" value="safety"> Safety</label>
+            </div>
           </div>
 
-          <div class="field">
-            <label for="income">Provable net monthly income (EUR)</label>
-            <input
-              type="number"
-              id="income"
-              name="income"
-              min="0"
-              step="100"
-              placeholder="e.g. 4000 (leave blank to skip the visa check)"
-            />
-            <p class="hint">Used only to compare against each country's published digital nomad visa income floor.</p>
+          <div class="chips-field">
+            <span class="field-label" id="deal-label">Dealbreakers <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></span>
+            <div class="chip-row" role="group" aria-labelledby="deal-label">
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="dnv"> Needs a digital-nomad visa</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="citizenship"> Path to citizenship</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="public-health"> Public healthcare access</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="warm"> Warm winters required</label>
+            </div>
           </div>
 
-          <div id="filters"></div>
-        </fieldset>
+          <div class="field-grid" style="margin-top:clamp(20px,2.6vw,28px);">
+            <div class="field">
+              <label class="field-label" for="timeline">Timeline</label>
+              <select class="field-input" id="timeline" name="timeline">
+                <option>Within 6 months</option>
+                <option>6 to 12 months</option>
+                <option>1 to 2 years</option>
+                <option>Just researching</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- primary action -->
+        <div class="screener-actions">
+          <button type="submit" class="form-submit">
+            Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a href="/screener" class="text-link">Clear and start over</a>
+        </div>
       </form>
 
-      <section class="results" aria-live="polite" aria-label="Screening results">
-        <div id="results"></div>
-      </section>
-    </div>
+      <!-- the fence, at body-text size -->
+      <div class="liability-note screener-fence" role="note" aria-label="Disclaimer">
+        <span class="liability-mark">Note</span>
+        <div>
+          <p class="liability-text">{FENCE_PRIMARY}</p>
+          <p class="liability-text screener-fence__second">It screens against published rules and shows every figure with its source, verified date, and confidence.</p>
+        </div>
+      </div>
 
-    <p class="method">
-      How it works: you pick a profile, which surfaces the variables most relevant to your
-      situation. Each country's published figures are matched against your constraints, then
-      weighted by source confidence (a low-confidence figure counts for less). The score is the
-      confidence-weighted share of your stated criteria that match. It is a screening signal, not
-      a recommendation. Open any country's <a href="/compare/greece-portugal-spain">full cited
-      comparison</a> to check every source yourself.
-    </p>
-  </article>
+      <!-- what the engine reads: a real, cited sample of the dataset -->
+      <section class="reads" aria-labelledby="reads-title">
+        <span class="overline">What the engine reads</span>
+        <h2 class="reads__title" id="reads-title">A sample of the dataset, with its sources.</h2>
+        <p class="reads__note">Every figure carries its source, the date it was verified, and a confidence mark, filled for high, half for medium, open for low. Expand any source to read the line it came from.</p>
 
-  <style>
-    .kicker {
-      font-size: 0.82rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--terracotta-dark);
-      margin: 0 0 0.3rem;
-    }
-    .lede {
-      max-width: var(--measure);
-      font-size: 1.12rem;
-      line-height: 1.55;
-      color: var(--ink-soft);
-      margin: 0 0 1.5rem;
-    }
-    .screener {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      gap: 2rem;
-      align-items: start;
-    }
-    @media (max-width: 46rem) {
-      .screener {
-        grid-template-columns: 1fr;
-      }
-    }
-    fieldset {
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      padding: 1.2rem 1.3rem 1.4rem;
-      background: var(--paper-2);
-    }
-    legend {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 600;
-      padding: 0 0.4rem;
-    }
-    .field {
-      margin-top: 1rem;
-    }
-    .field label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-    .field select {
-      width: 100%;
-      padding: 0.55rem 0.7rem;
-      border: 1px solid var(--rule);
-      border-radius: 6px;
-      font-size: 1rem;
-      background: var(--paper);
-    }
-    .field input[type="number"] {
-      width: 100%;
-      padding: 0.55rem 0.7rem;
-      border: 1px solid var(--rule);
-      border-radius: 6px;
-      font-size: 1rem;
-      background: var(--paper);
-    }
-    .field input[type="range"] {
-      width: 100%;
-      accent-color: var(--terracotta);
-    }
-    .field input[type="checkbox"] {
-      margin-right: 0.4rem;
-    }
-    .field output {
-      font-weight: 700;
-      color: var(--terracotta-dark);
-    }
-    .hint {
-      margin: 0.3rem 0 0;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-    }
-    .method {
-      max-width: var(--measure);
-      margin-top: 2.5rem;
-      color: var(--ink-soft);
-      font-size: 0.95rem;
-    }
-    /* Result cards are injected client-side via innerHTML, so they do not carry Astro's
-       scoped style hash. These selectors must be :global to reach them. */
-    :global(.rank-card) {
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--terracotta);
-      border-radius: 8px;
-      padding: 1.1rem 1.2rem;
-      margin-bottom: 1rem;
-      background: var(--paper);
-    }
-    :global(.rank-head) {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    :global(.rank-name) {
-      font-family: var(--serif);
-      font-size: 1.45rem;
-      font-weight: 600;
-    }
-    :global(.rank-name a) {
-      color: var(--ink);
-      text-decoration: none;
-    }
-    :global(.rank-score) {
-      font-family: var(--serif);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--terracotta-dark);
-    }
-    :global(.rank-sub) {
-      color: var(--ink-soft);
-      font-size: 0.92rem;
-      margin: 0.2rem 0 0.8rem;
-    }
-    :global(.rank-dims) {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 0.35rem;
-    }
-    :global(.rank-dims li) {
-      display: flex;
-      gap: 0.5rem;
-      font-size: 0.92rem;
-      line-height: 1.4;
-    }
-    :global(.rank-dims .mark) {
-      flex: none;
-      font-weight: 700;
-      min-width: 3.2rem;
-    }
-    :global(.mark-yes) {
-      color: #1f5132;
-    }
-    :global(.mark-no) {
-      color: #7a1f1f;
-    }
-    :global(.warn) {
-      margin-top: 0.7rem;
-      font-size: 0.85rem;
-      color: #7a1f1f;
-    }
-    :global(.mark-nodata) { color: var(--ink-soft); font-style: italic; }
-    :global(.cbadge) { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem;
-      text-transform: uppercase; letter-spacing: 0.02em; padding: 0.05rem 0.4rem; border-radius: 999px;
-      border: 1px solid var(--rule); margin-left: 0.4rem; }
-    :global(.cbadge-high) { color: #1f5132; border-color: #9ec9ac; background: #eef6f0; }
-    :global(.cbadge-medium) { color: #6b4a12; border-color: #d9c08a; background: #f8f1de; }
-    :global(.cbadge-low) { color: #7a1f1f; border-color: #d9a3a3; background: #f8e9e9; }
-    :global(.rank-src) { display: block; font-size: 0.8rem; color: var(--ink-soft); margin-top: 0.15rem; }
-  </style>
+        <div class="ledger">
+          <section class="ledger-group">
 
-  <script>
-    import {
-      places,
-      PROFILES,
-      LGBTQ_OVERLAY,
-      composeProfile,
-      variableByKey,
-      placeVariables,
-      type Profile,
-    } from "@where/data";
-    import { applyFilters, scoreByProfile, type ActiveFilter } from "@where/engine";
-
-    const countries = places.filter((p) => p.granularity === "country");
-
-    const form = document.getElementById("screener-form") as HTMLFormElement;
-    const resultsEl = document.getElementById("results") as HTMLElement;
-    const profileSelect = document.getElementById("profile") as HTMLSelectElement;
-    const lgbtqCheckbox = document.getElementById("lgbtq") as HTMLInputElement;
-    const incomeInput = document.getElementById("income") as HTMLInputElement;
-    const filtersContainer = document.getElementById("filters") as HTMLDivElement;
-
-    // Thin wrapper so callers skip the plausible cast every time.
-    function track(event: string, props: Record<string, unknown>): void {
-      const w = window as unknown as { plausible?: (e: string, o?: { props?: Record<string, unknown> }) => void };
-      w.plausible?.(event, { props });
-    }
-
-    // Populate the profile selector
-    for (const p of PROFILES) {
-      const opt = document.createElement("option");
-      opt.value = p.id;
-      opt.textContent = p.label;
-      if (p.id === "budgetRetiree") opt.selected = true;
-      profileSelect.appendChild(opt);
-    }
-
-    const RANGE_CONFIG: Record<string, { min: number; max: number; step: number; def: number }> = {
-      cost_price_level:    { min: 70,   max: 110,  step: 1,    def: 90 },
-      top_income_tax_rate: { min: 0,    max: 60,   step: 1,    def: 46 },
-      summer_high:         { min: 20,   max: 45,   step: 0.5,  def: 33 },
-      gpi_score:           { min: 1,    max: 3.5,  step: 0.05, def: 1.7 },
-      air_quality_pm25:    { min: 0,    max: 50,   step: 1,    def: 25 },
-      winter_high:         { min: 0,    max: 25,   step: 0.5,  def: 12 },
-      annual_sunshine:     { min: 1500, max: 3500, step: 25,   def: 2800 },
-      physicians_per_1k:   { min: 0,    max: 8,    step: 0.1,  def: 5 },
-      english_proficiency: { min: 0,    max: 700,  step: 10,   def: 500 },
-      cafe_density:        { min: 0,    max: 500,  step: 10,   def: 100 },
-      gym_density:         { min: 0,    max: 200,  step: 5,    def: 40 },
-    };
-
-    function esc(s: string): string {
-      return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
-    }
-
-    function placeHref(p: (typeof countries)[number]): string {
-      return `/places/${[...p.ancestry.map((a) => a.slug), p.slug].join("/")}`;
-    }
-
-    function getComposed(): ReturnType<typeof composeProfile> {
-      const base = PROFILES.find((p) => p.id === profileSelect.value) ?? PROFILES[0];
-      return composeProfile(base as Profile, lgbtqCheckbox.checked ? LGBTQ_OVERLAY : undefined);
-    }
-
-    function renderFilterControls(): void {
-      const composed = getComposed();
-      const html: string[] = [];
-
-      for (const key of composed.surfaced) {
-        const def = variableByKey(key);
-        if (def === undefined) continue;
-
-        if (key === "dnv_income_floor") {
-          html.push(
-            `<div class="field"><p class="hint">Digital nomad visa floor: uses your income above.</p></div>`,
-          );
-          continue;
-        }
-
-        if (def.filterType === "range") {
-          const cfg = RANGE_CONFIG[key];
-          if (cfg === undefined) continue;
-          const outId = `out-${key}`;
-          const unit = def.unit ? ` ${esc(def.unit)}` : "";
-          html.push(`
-            <div class="field">
-              <label for="range-${esc(key)}">${esc(def.label)} <output id="${outId}">${cfg.def}</output>${unit}</label>
-              <input type="range" id="range-${esc(key)}" data-vkey="${esc(key)}"
-                min="${cfg.min}" max="${cfg.max}" step="${cfg.step}" value="${cfg.def}" />
-              <p class="hint">${unit.trim() ? `Unit: ${esc(def.unit ?? "")}. ` : ""}Source: ${esc(def.source.name)}</p>
-            </div>`);
-          continue;
-        }
-
-        if (def.filterType === "boolean") {
-          html.push(`
-            <div class="field">
-              <label><input type="checkbox" data-vkey="${esc(key)}" /> ${esc(def.label)}</label>
-              <p class="hint">Check to require this is available. Source: ${esc(def.source.name)}</p>
-            </div>`);
-          continue;
-        }
-
-        // filterType === "select" or range key missing RANGE_CONFIG: skip gracefully
-      }
-
-      filtersContainer.innerHTML = html.join("");
-
-      // Wire up live output labels for the newly rendered sliders
-      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='range']")) {
-        const key = input.dataset.vkey;
-        if (key === undefined) continue;
-        const out = document.getElementById(`out-${key}`);
-        if (out === null) continue;
-        const sync = () => { out.textContent = input.value; };
-        input.addEventListener("input", sync);
-        sync();
-      }
-    }
-
-    function render(): void {
-      const composed = getComposed();
-      const incomeRaw = incomeInput.value === "" ? undefined : Number(incomeInput.value);
-      const income = incomeRaw !== undefined && Number.isFinite(incomeRaw) && incomeRaw > 0 ? incomeRaw : undefined;
-
-      // Build criteria from surfaced range sliders
-      const criteria: Record<string, { min?: number; max?: number }> = {};
-      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='range'][data-vkey]")) {
-        const key = input.dataset.vkey;
-        if (key === undefined) continue;
-        const v = Number(input.value);
-        if (!Number.isFinite(v)) continue;
-        const def = variableByKey(key);
-        if (def === undefined) continue;
-        if (def.direction === "higherBetter") {
-          criteria[key] = { min: v };
-        } else if (def.direction === "lowerBetter") {
-          criteria[key] = { max: v };
-        }
-        // neutral: no criterion set
-      }
-
-      // dnv_income_floor: driven by income input
-      if (composed.surfaced.includes("dnv_income_floor") && income !== undefined) {
-        criteria.dnv_income_floor = { max: income };
-      }
-
-      // Build activeFilters from dealBreakers + checked boolean controls
-      const activeFilters: ActiveFilter[] = [];
-
-      // The web applies deal-breakers as hard applyFilters entries and does not read the
-      // engine's dealBreakerFailed flag in slice 1. The "in" op is not used by any
-      // slice-1 preset and is skipped here.
-      for (const db of composed.dealBreakers) {
-        if (db.op === "<=") {
-          activeFilters.push({ key: db.key, max: db.value as number });
-        } else if (db.op === ">=") {
-          activeFilters.push({ key: db.key, min: db.value as number });
-        } else if (db.op === "==") {
-          activeFilters.push({ key: db.key, equals: db.value as string | boolean });
-        }
-        // "in": skip in slice 1
-      }
-
-      for (const input of filtersContainer.querySelectorAll<HTMLInputElement>("input[type='checkbox'][data-vkey]")) {
-        if (input.checked) {
-          activeFilters.push({ key: input.dataset.vkey as string, requireData: true });
-        }
-      }
-
-      const survivors = applyFilters(countries, activeFilters);
-      const ranked = survivors
-        .map((place) => ({ place, result: scoreByProfile(place, composed, criteria) }))
-        .sort((a, b) => b.result.score - a.result.score);
-
-      resultsEl.innerHTML = ranked
-        .map(({ place, result }, i) => {
-          const vars = placeVariables(place);
-          let matchCount = 0;
-          let usedCount = 0;
-
-          const dimRows = composed.surfaced.map((key) => {
-            const def = variableByKey(key);
-            const label = def ? esc(def.label) : esc(key);
-            const cited = vars[key];
-
-            if (cited === undefined || cited.value === undefined) {
-              return `<li><span class="mark mark-nodata">no data</span><span>${label}: not gathered for this place yet.</span></li>`;
-            }
-
-            usedCount += 1;
-            const criterion = criteria[key];
-            const direction = def ? def.direction : "neutral";
-            let match = true;
-            if (criterion !== undefined && direction !== "neutral" && typeof cited.value === "number") {
-              match =
-                (criterion.min === undefined || cited.value >= criterion.min) &&
-                (criterion.max === undefined || cited.value <= criterion.max);
-            }
-            if (match) matchCount += 1;
-
-            const markClass = match ? "mark-yes" : "mark-no";
-            const markText = match ? "match" : "no";
-            const unit = def?.unit ? esc(def.unit) : "";
-            const valueStr = typeof cited.value === "boolean" ? (cited.value ? "yes" : "no") : esc(String(cited.value));
-
-            let boundNote = "";
-            if (criterion !== undefined) {
-              if (criterion.min !== undefined) boundNote = ` (your min: ${criterion.min}${unit ? " " + unit : ""})`;
-              else if (criterion.max !== undefined) boundNote = ` (your max: ${criterion.max}${unit ? " " + unit : ""})`;
-            }
-
-            const confidenceIcon = cited.confidence === "high" ? "●" : cited.confidence === "medium" ? "◐" : "○";
-            const confidenceText = cited.confidence === "high" ? "verified source" : cited.confidence === "medium" ? "good source" : "low confidence, verify";
-            const badge = `<span class="cbadge cbadge-${esc(cited.confidence)}">${confidenceIcon} ${confidenceText}</span>`;
-            const srcLink = `<a href="${esc(cited.sourceUrl)}" rel="noopener nofollow" target="_blank">${esc(cited.sourceName)}</a>`;
-            const srcLine = `<span class="rank-src">${srcLink} Verified ${esc(cited.verifiedDate)}${badge}</span>`;
-
-            return `<li><span class="mark ${markClass}">${markText}</span><span>${label}: ${valueStr}${unit ? " " + unit : ""}${boundNote}${srcLine}</span></li>`;
-          });
-
-          const sub = `Matches ${matchCount} of ${usedCount} of your stated criteria. Score is the confidence-weighted share. Not a recommendation.`;
-
-          return `
-            <div class="rank-card">
-              <div class="rank-head">
-                <span class="rank-name">#${i + 1} <a href="${placeHref(place)}">${esc(place.name)}</a></span>
-                <span class="rank-score">${result.score}</span>
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Cost of living, EU price-level index (EU27 = 100)</div>
+                <div class="lrow__value">86.6</div>
               </div>
-              <p class="rank-sub">${esc(sub)}</p>
-              <ul class="rank-dims">${dimRows.join("")}</ul>
-            </div>`;
-        })
-        .join("");
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc1">Eurostat tec00120 · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Portugal shown; Greece 87.4, Spain 91.6 on the same index (EU average = 100).</p>
+              <div class="cite-panel-wrap" id="rc1" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Portugal price level index for actual individual consumption (EU27 = 100): 86.6 in 2025 (100 = EU average)."</blockquote>
+                <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener noreferrer">View source at ec.europa.eu</a>
+              </div></div></div>
+            </div>
 
-      track("Screener Run", { profile: profileSelect.value, top: ranked[0]?.place.id ?? "none" });
-    }
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Greece, foreign-pensioner flat tax (Article 5B)</div>
+                <div class="lrow__value">7<span class="lrow__unit">%</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc2">PwC Tax Summaries · 2026-06-25</button>
+              </div>
+              <p class="lrow__note">Flat 7% on foreign-source income, up to 15 years; apply by 31 March.</p>
+              <div class="cite-panel-wrap" id="rc2" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Every tax year, individuals will pay tax at a rate of 7% on their foreign-sourced income, with exhaustion of the tax liability for this income."</blockquote>
+                <a href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">View source at taxsummaries.pwc.com</a>
+              </div></div></div>
+            </div>
 
-    function onProfileChange(): void {
-      renderFilterControls();
-      render();
-      track("Profile Selected", { profile: profileSelect.value, overlay: lgbtqCheckbox.checked });
-    }
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Greece, digital-nomad visa, minimum net income</div>
+                <div class="lrow__value">3,500<span class="lrow__unit">€ / mo</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc3">Greek Migration Ministry · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Plus 20% for a spouse and 15% per child.</p>
+              <div class="cite-panel-wrap" id="rc3" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child."</blockquote>
+                <a href="https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/" target="_blank" rel="noopener noreferrer">View source at migration.gov.gr</a>
+              </div></div></div>
+            </div>
 
-    profileSelect.addEventListener("change", onProfileChange);
-    lgbtqCheckbox.addEventListener("change", onProfileChange);
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Chania, Crete, July average high</div>
+                <div class="lrow__value">30.5<span class="lrow__unit">°C</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc4">Chania (Souda) normals (Wikipedia) · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Reported, not verified against a primary source.</p>
+              <div class="cite-panel-wrap" id="rc4" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 30.5 C in July, the hottest month."</blockquote>
+                <a href="https://en.wikipedia.org/wiki/Chania" target="_blank" rel="noopener noreferrer">View source at en.wikipedia.org</a>
+              </div></div></div>
+            </div>
 
-    // Delegated listener: fires once per settled filter interaction (slider release or checkbox toggle).
-    // Added once at init so it survives filtersContainer innerHTML replacements.
-    filtersContainer.addEventListener("change", (e) => {
-      const target = e.target as HTMLElement;
-      const key = target.dataset?.vkey;
-      if (key) track("Filter Used", { key });
-    });
+          </section>
+        </div>
+      </section>
 
-    let t: ReturnType<typeof setTimeout> | undefined;
-    form.addEventListener("input", (e) => {
-      const target = e.target as HTMLElement;
-      // Profile/lgbtq changes are handled by their own listeners (re-render controls)
-      // Other inputs just re-run render
-      if (target.id !== "profile" && target.id !== "lgbtq") {
-        window.clearTimeout(t);
-        t = setTimeout(render, 250);
-      }
-    });
+    </div>
+  </div>
+</main>
 
-    // Initial render
-    onProfileChange();
-  </script>
-</Base>
+<!-- minimal footer (product register): the legal strip only, no scene -->
+<footer class="footer-legalstrip" role="contentinfo" style="border-top:1px solid var(--hairline-soft);">
+  <div class="shell">
+    <p class="footer-fence">{FENCE_PRIMARY}</p>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 My Second Country</span>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="/sources">Sources</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/mockups/_msc-system.js" is:inline></script>
+
+</body>
+</html>

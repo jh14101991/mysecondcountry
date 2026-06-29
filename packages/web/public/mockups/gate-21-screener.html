@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Second Country · Gate 21: Screener (situation input)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- SHARED FOUNDATION + SECTION LIBRARY -->
+<link rel="stylesheet" href="_msc-system.css">
+
+<style>
+/* ============================================================
+   GATE 21 — SCREENER (situation input)  [PRODUCT register]
+   The product's front door: a calm, instrument-like single screen
+   that collects a reader's situation and, on submit, would build
+   their cited shortlist (gate 22). Product register: fixed,
+   predictable spacing, no marketing choreography, accessible
+   labelled inputs, an exit on the chrome. Shared: product-header
+   (gate 2), scenario chips (gate 11), form controls, fence, the
+   four provenance components, minimal footer. Page-unique below:
+   the numbered field plates, the EUR affix input, the "what the
+   engine reads" sample ledger. Real cited figures only.
+   ============================================================ */
+body { background: var(--paper); }
+
+.screener { max-width: 760px; margin: 0 auto; padding: clamp(40px,6vw,72px) 0 clamp(64px,9vw,120px); }
+
+.screener-intro .overline { margin-bottom: 14px; }
+.screener-intro .display-mid { margin-bottom: 16px; }
+
+/* scenario entry (gate 11 chips) */
+.screener-scenario { margin-top: clamp(30px,4vw,44px); }
+.field-eyebrow {
+  display: block;
+  font-family: var(--f-ui); font-size: var(--t-meta); font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--stone);
+  margin-bottom: 12px;
+}
+.screener-hint { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.5; margin-top: 12px; max-width: 60ch; }
+
+/* the instrument: numbered hairline plates, fixed rhythm */
+.screener-form { margin-top: clamp(34px,4.6vw,54px); display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
+
+.plate { border: 1px solid var(--hairline-soft); border-radius: 10px; background: transparent; padding: clamp(22px,3vw,32px); }
+.plate__head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 16px; margin-bottom: clamp(18px,2.4vw,24px); border-bottom: 1px solid var(--hairline-soft); }
+.plate__num { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--pop-ink); letter-spacing: 0.06em; flex: 0 0 auto; }
+.plate__titles { display: flex; flex-direction: column; gap: 4px; }
+.plate__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: 1.5rem; line-height: 1.14; letter-spacing: -0.018em; color: var(--ink); }
+.plate__sub { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.45; }
+
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px,2.4vw,26px); }
+.field { display: flex; flex-direction: column; }
+.field--wide { grid-column: 1 / -1; }
+
+/* select: shared field-input look + a quiet caret */
+select.field-input {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5' stroke='%236E675C' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+@media (forced-colors: active) { select.field-input { appearance: auto; background-image: none; padding-right: 14px; } }
+
+/* mono EUR-affixed numeric input (a figure, so it is mono) */
+.field-affix { display: flex; align-items: stretch; border: 1px solid var(--hairline-soft); border-radius: 10px; overflow: hidden; background: var(--paper); }
+.field-affix:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.field-affix__pre, .field-affix__post { display: inline-flex; align-items: center; padding: 0 14px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); background: var(--paper-stone); white-space: nowrap; }
+.field-affix input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 12px 12px; min-height: 48px; font-family: var(--f-mono); font-size: var(--t-body); color: var(--ink); font-variant-numeric: tabular-nums; }
+.field-affix input:focus-visible { outline: none; }
+
+/* chip fields inside a plate (multi-select: priorities + dealbreakers) */
+.chips-field + .chips-field { margin-top: clamp(20px,2.6vw,28px); }
+/* dealbreakers read quieter: terracotta hairline when chosen, not a full ink fill,
+   so the hierarchy is situation -> priorities -> optional constraints */
+.chip--deal:has(input:checked) { background: transparent; color: var(--pop-ink); border-color: var(--pop); }
+
+/* primary action row */
+.screener-actions { margin-top: clamp(30px,3.8vw,42px); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+
+.screener-fence { margin-top: clamp(28px,3.6vw,40px); }
+.screener-fence__second { color: var(--stone); font-size: var(--t-bodysm); margin-top: 6px; }
+
+/* "what the engine reads" — a small sample of the live, cited dataset,
+   rendered as real DataFigure rows (reusing the shared ledger pattern) */
+.reads { margin-top: clamp(46px,6vw,72px); padding-top: clamp(30px,4vw,44px); border-top: 1px solid var(--hairline-soft); }
+.reads .overline { margin-bottom: 10px; }
+.reads__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.5rem,2.4vw,1.875rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.reads__note { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.55; margin-top: 10px; max-width: 62ch; }
+.reads .ledger { margin-top: clamp(18px,2.4vw,28px); }
+
+@media (max-width: 640px) {
+  .field-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- PRODUCT / SCREENER NAV (shared, gate 2). Two-stop journey: your situation -> your shortlist. -->
+<header class="product-header" role="banner">
+  <div class="shell">
+    <div class="product-header-inner">
+
+      <a class="brand-wordmark product-brand" href="#" aria-label="My Second Country home (exit screener)">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <span class="brand-name">My Second Country</span>
+      </a>
+
+      <div class="product-progress">
+        <div class="product-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="2" aria-label="Step 1 of 2, Your situation">
+          <span class="product-step is-current" aria-hidden="true"></span>
+          <span class="product-step" aria-hidden="true"></span>
+        </div>
+        <span class="product-step-label">Step 1 of 2 · Your situation</span>
+      </div>
+
+      <div class="product-exit">
+        <a href="#">
+          Save and exit
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="shell">
+    <div class="screener">
+
+      <!-- intro / framing -->
+      <header class="screener-intro">
+        <span class="overline">Step 1 · Your situation</span>
+        <h1 class="display-mid">Where could you live?</h1>
+        <p class="standfirst">Set your situation. The engine screens Greece, Portugal, and Spain against published rules and returns a source-cited shortlist. About two minutes. It screens, it does not advise.</p>
+      </header>
+
+      <!-- scenario entry (gate 11 chips) -->
+      <section class="screener-scenario" aria-labelledby="scenario-label">
+        <span class="field-eyebrow" id="scenario-label">Start with what you want</span>
+        <div class="chip-row" role="radiogroup" aria-labelledby="scenario-label">
+          <label class="chip"><input type="radio" name="scenario" value="lower-taxes" checked> Lower my taxes</label>
+          <label class="chip"><input type="radio" name="scenario" value="remote-work"> Work remotely</label>
+          <label class="chip"><input type="radio" name="scenario" value="retire-abroad"> Retire abroad</label>
+          <label class="chip"><input type="radio" name="scenario" value="exploring"> Just exploring</label>
+        </div>
+        <p class="screener-hint">Optional. It sets sensible defaults below; change anything you like.</p>
+      </section>
+
+      <!-- the instrument -->
+      <form class="screener-form" action="#" method="post" novalidate>
+
+        <!-- 01 — who's moving -->
+        <section class="plate" aria-labelledby="plate1-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">01</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate1-title">Who's moving</h2>
+              <span class="plate__sub">Drives which visa and residency routes are open to you.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field field--wide">
+              <span class="field-label" id="household-label">Who is relocating</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="household-label">
+                <label class="chip"><input type="radio" name="household" value="single" checked> Just me</label>
+                <label class="chip"><input type="radio" name="household" value="couple"> A couple</label>
+                <label class="chip"><input type="radio" name="household" value="family"> Family with children</label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="citizenship">Citizenship or status</label>
+              <select class="field-input" id="citizenship" name="citizenship">
+                <option>EU or EEA citizen</option>
+                <option>UK citizen</option>
+                <option>US citizen</option>
+                <option>Other non-EU citizen</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="age">Age band <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></label>
+              <select class="field-input" id="age" name="age">
+                <option value="">No preference</option>
+                <option>Under 35</option>
+                <option>35 to 49</option>
+                <option>50 to 64</option>
+                <option>65 or older</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 — money -->
+        <section class="plate" aria-labelledby="plate2-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">02</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate2-title">Money</h2>
+              <span class="plate__sub">Sets which tax regimes and places are realistic before screening.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="income">Main income</label>
+              <select class="field-input" id="income" name="income">
+                <option>Employment</option>
+                <option>Self-employed or freelance</option>
+                <option>Remote salary</option>
+                <option>Company profits</option>
+                <option>Pension</option>
+                <option>Investments</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="budget">Net monthly budget, after tax (EUR / mo)</label>
+              <div class="field-affix">
+                <span class="field-affix__pre" aria-hidden="true">EUR</span>
+                <input id="budget" name="budget" type="text" inputmode="numeric" placeholder="3,500" aria-describedby="budget-suffix">
+                <span class="field-affix__post" id="budget-suffix">/ mo</span>
+              </div>
+            </div>
+            <div class="field field--wide">
+              <span class="field-label" id="taxpriority-label">Tax priority</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="taxpriority-label">
+                <label class="chip"><input type="radio" name="taxpriority" value="lower" checked> Lower my tax</label>
+                <label class="chip"><input type="radio" name="taxpriority" value="simple"> Keep it simple</label>
+                <label class="chip"><input type="radio" name="taxpriority" value="no-view"> No strong view</label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 03 — place -->
+        <section class="plate" aria-labelledby="plate3-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">03</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate3-title">Place</h2>
+              <span class="plate__sub">What you want from day-to-day life there.</span>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field field--wide">
+              <span class="field-label" id="climate-label">Climate</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="climate-label">
+                <label class="chip"><input type="radio" name="climate" value="warm-winters" checked> Warm winters</label>
+                <label class="chip"><input type="radio" name="climate" value="four-seasons"> Four seasons</label>
+                <label class="chip"><input type="radio" name="climate" value="no-preference"> No preference</label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="language">Language comfort</label>
+              <select class="field-input" id="language" name="language">
+                <option>English is enough to start</option>
+                <option>Willing to learn the local language</option>
+                <option>Already fluent in one</option>
+                <option>No preference</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="healthcare">Healthcare</label>
+              <select class="field-input" id="healthcare" name="healthcare">
+                <option>Strong public healthcare matters</option>
+                <option>Private cover is fine</option>
+                <option>No strong view</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- 04 — priorities and constraints -->
+        <section class="plate" aria-labelledby="plate4-title">
+          <div class="plate__head">
+            <span class="plate__num" aria-hidden="true">04</span>
+            <div class="plate__titles">
+              <h2 class="plate__title" id="plate4-title">Priorities and constraints</h2>
+              <span class="plate__sub">What the shortlist should weigh, and anything it must not break.</span>
+            </div>
+          </div>
+
+          <div class="chips-field">
+            <span class="field-label" id="matters-label">What matters most</span>
+            <div class="chip-row" role="group" aria-labelledby="matters-label">
+              <label class="chip"><input type="checkbox" name="matters" value="cost" checked> Cost of living</label>
+              <label class="chip"><input type="checkbox" name="matters" value="tax" checked> Tax</label>
+              <label class="chip"><input type="checkbox" name="matters" value="visa"> Visa</label>
+              <label class="chip"><input type="checkbox" name="matters" value="residency"> Residency</label>
+              <label class="chip"><input type="checkbox" name="matters" value="climate" checked> Climate</label>
+              <label class="chip"><input type="checkbox" name="matters" value="healthcare"> Healthcare</label>
+              <label class="chip"><input type="checkbox" name="matters" value="safety"> Safety</label>
+            </div>
+          </div>
+
+          <div class="chips-field">
+            <span class="field-label" id="deal-label">Dealbreakers <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></span>
+            <div class="chip-row" role="group" aria-labelledby="deal-label">
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="dnv"> Needs a digital-nomad visa</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="citizenship"> Path to citizenship</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="public-health"> Public healthcare access</label>
+              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="warm"> Warm winters required</label>
+            </div>
+          </div>
+
+          <div class="field-grid" style="margin-top:clamp(20px,2.6vw,28px);">
+            <div class="field">
+              <label class="field-label" for="timeline">Timeline</label>
+              <select class="field-input" id="timeline" name="timeline">
+                <option>Within 6 months</option>
+                <option>6 to 12 months</option>
+                <option>1 to 2 years</option>
+                <option>Just researching</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- primary action -->
+        <div class="screener-actions">
+          <button type="submit" class="form-submit">
+            Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a href="#" class="text-link">Clear and start over</a>
+        </div>
+      </form>
+
+      <!-- the fence, at body-text size -->
+      <div class="liability-note screener-fence" role="note" aria-label="Disclaimer">
+        <span class="liability-mark">Note</span>
+        <div>
+          <p class="liability-text">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
+          <p class="liability-text screener-fence__second">It screens against published rules and shows every figure with its source, verified date, and confidence.</p>
+        </div>
+      </div>
+
+      <!-- what the engine reads: a real, cited sample of the dataset -->
+      <section class="reads" aria-labelledby="reads-title">
+        <span class="overline">What the engine reads</span>
+        <h2 class="reads__title" id="reads-title">A sample of the dataset, with its sources.</h2>
+        <p class="reads__note">Every figure carries its source, the date it was verified, and a confidence mark, filled for high, half for medium, open for low. Expand any source to read the line it came from.</p>
+
+        <div class="ledger">
+          <section class="ledger-group">
+
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Cost of living, EU price-level index (EU27 = 100)</div>
+                <div class="lrow__value">86.6</div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc1">Eurostat tec00120 · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Portugal shown; Greece 87.4, Spain 91.6 on the same index (EU average = 100).</p>
+              <div class="cite-panel-wrap" id="rc1" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Portugal price level index for actual individual consumption (EU27 = 100): 86.6 in 2025 (100 = EU average)."</blockquote>
+                <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener noreferrer">View source at ec.europa.eu</a>
+              </div></div></div>
+            </div>
+
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Greece, foreign-pensioner flat tax (Article 5B)</div>
+                <div class="lrow__value">7<span class="lrow__unit">%</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc2">PwC Tax Summaries · 2026-06-25</button>
+              </div>
+              <p class="lrow__note">Flat 7% on foreign-source income, up to 15 years; apply by 31 March.</p>
+              <div class="cite-panel-wrap" id="rc2" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Every tax year, individuals will pay tax at a rate of 7% on their foreign-sourced income, with exhaustion of the tax liability for this income."</blockquote>
+                <a href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">View source at taxsummaries.pwc.com</a>
+              </div></div></div>
+            </div>
+
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Greece, digital-nomad visa, minimum net income</div>
+                <div class="lrow__value">3,500<span class="lrow__unit">€ / mo</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc3">Greek Migration Ministry · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Plus 20% for a spouse and 15% per child.</p>
+              <div class="cite-panel-wrap" id="rc3" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child."</blockquote>
+                <a href="https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/" target="_blank" rel="noopener noreferrer">View source at migration.gov.gr</a>
+              </div></div></div>
+            </div>
+
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Chania, Crete, July average high</div>
+                <div class="lrow__value">30.5<span class="lrow__unit">°C</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc4">Chania (Souda) normals (Wikipedia) · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Reported, not verified against a primary source.</p>
+              <div class="cite-panel-wrap" id="rc4" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 30.5 C in July, the hottest month."</blockquote>
+                <a href="https://en.wikipedia.org/wiki/Chania" target="_blank" rel="noopener noreferrer">View source at en.wikipedia.org</a>
+              </div></div></div>
+            </div>
+
+          </section>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<!-- minimal footer (product register): the legal strip only, no scene -->
+<footer class="footer-legalstrip" role="contentinfo" style="border-top:1px solid var(--hairline-soft);">
+  <div class="shell">
+    <p class="footer-fence">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 My Second Country</span>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Sources</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="_msc-system.js"></script>
+
+</body>
+</html>

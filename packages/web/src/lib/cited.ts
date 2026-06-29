@@ -6,11 +6,15 @@
  */
 import type { CitedValue, Confidence, Granularity } from "@where/data";
 
-/** Confidence display: glyph + word. Canonical vocabulary (DESIGN.md section 5, Chips). */
-export const CONFIDENCE_DISPLAY: Record<Confidence, { glyph: string; word: string }> = {
-  high: { glyph: "✓", word: "Verified" },
-  medium: { glyph: "~", word: "Good" },
-  low: { glyph: "○", word: "Limited" },
+/**
+ * Confidence display word. v5 Broadsheet Ledger vocabulary: the level itself reads as the
+ * word (high / medium / low), paired with the square mark rendered by ConfidenceMark.astro
+ * (filled / half / open square). Never colour alone (DESIGN.md "Colour-Plus-Mark Rule").
+ */
+export const CONFIDENCE_DISPLAY: Record<Confidence, { word: string }> = {
+  high: { word: "high" },
+  medium: { word: "medium" },
+  low: { word: "low" },
 };
 
 /** Printed beneath every low-confidence figure (FENCE.md, DESIGN.md). Never hidden. */

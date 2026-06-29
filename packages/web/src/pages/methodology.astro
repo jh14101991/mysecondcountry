@@ -1,0 +1,391 @@
+---
+import { placeById } from "@where/data";
+import ConfidenceMark from "../components/ConfidenceMark.astro";
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+import { articleJsonLd, breadcrumbJsonLd, definedTermJsonLd, maxVerifiedDate } from "../lib/jsonld.ts";
+
+const SITE = "https://mysecondcountry.com";
+const title = "Methodology: how My Second Country cites relocation facts";
+const description =
+  "How My Second Country turns cited facts into screening records, confidence marks, freshness checks, and source-led comparison pages.";
+const canonical = `${SITE}/methodology`;
+
+const portugal = placeById("pt");
+const greece = placeById("gr");
+if (!portugal || !greece) throw new Error("Methodology needs Portugal and Greece data");
+
+const worked = portugal.costOfLiving.priceLevelIndexEU27;
+const taxExample = greece.tax?.specialRegime;
+if (!taxExample) throw new Error("Methodology needs Greece tax regime data");
+
+const maxDate = maxVerifiedDate([worked, taxExample]);
+const breadcrumbItems = [
+  { name: "Home", href: "/" },
+  { name: "Methodology", href: "/methodology" },
+];
+
+const confidenceTerms = [
+  {
+    name: "high",
+    text: "Primary or official source, or a direct statistical source with a current verification date.",
+  },
+  {
+    name: "medium",
+    text: "Credible secondary source, professional summary, or official page that still needs tighter primary-source reconciliation.",
+  },
+  {
+    name: "low",
+    text: "Useful signal that is not yet verified against a primary source. It stays visible, labelled, and weighted accordingly.",
+  },
+];
+
+const jsonLd = [
+  articleJsonLd({
+    url: canonical,
+    headline: title,
+    description,
+    dateModified: maxDate,
+    siteUrl: SITE,
+  }),
+  breadcrumbJsonLd(breadcrumbItems, SITE),
+  definedTermJsonLd({
+    url: canonical,
+    name: "My Second Country cited value contract",
+    description:
+      "Every factual value carries a source URL, source name, verified date, confidence tier, and granularity.",
+    siteUrl: SITE,
+  }),
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${canonical}#confidence`,
+    name: "My Second Country confidence tiers",
+    hasDefinedTerm: confidenceTerms.map((term) => ({
+      "@type": "DefinedTerm",
+      name: term.name,
+      description: term.text,
+      inDefinedTermSet: `${canonical}#confidence`,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article class="method-page" data-page="methodology">
+    <nav class="mini-crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Methodology</span>
+    </nav>
+
+    <header class="method-head">
+      <p class="overline">Methodology</p>
+      <h1>How the engine works, and how it cites.</h1>
+      <p class="standfirst">
+        A reader gives a situation. The engine screens it against published records and
+        returns a ranked, source-cited shortlist of countries, regions, and towns.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="method-section" aria-labelledby="method-steps">
+      <p class="overline">The method</p>
+      <h2 id="method-steps">From situation to cited shortlist.</h2>
+      <div class="method-steps">
+        <article class="method-step">
+          <span class="method-step__num num">01</span>
+          <div>
+            <h3>Collect the cited values</h3>
+            <p>
+              Every fact that could be wrong is stored as a cited value: value, source URL,
+              source name, verified date, confidence, and geographic scope.
+            </p>
+          </div>
+        </article>
+        <article class="method-step">
+          <span class="method-step__num num">02</span>
+          <div>
+            <h3>Screen against selected constraints</h3>
+            <p>
+              Profiles surface the variables that matter for the scenario. Dealbreakers are
+              applied as filters. Scores are calculated only across the selected criteria.
+            </p>
+          </div>
+        </article>
+        <article class="method-step">
+          <span class="method-step__num num">03</span>
+          <div>
+            <h3>Show the calculation</h3>
+            <p>
+              Each result names the matching and missing dimensions. No-data rows are separate
+              from low scores, and low-confidence figures remain visible.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="figure-contract">
+      <p class="overline">The contract</p>
+      <h2 id="figure-contract">How a figure is built.</h2>
+      <p class="body-prose">
+        A number is not treated as self-explanatory. The page records what it measures,
+        where it came from, when it was checked, and how much confidence it deserves.
+      </p>
+
+      <div class="anatomy">
+        <div class="anatomy__value">
+          <strong class="num">{worked.value}</strong>
+          <span>Portugal cost of living, EU price-level index.</span>
+        </div>
+        <div class="anatomy__fields">
+          <div>
+            <span>source</span>
+            <p>{worked.sourceName}</p>
+          </div>
+          <div>
+            <span>verified</span>
+            <p class="num">{worked.verifiedDate}</p>
+          </div>
+          <div>
+            <span>confidence</span>
+            <p><ConfidenceMark level={worked.confidence} /></p>
+          </div>
+          <div>
+            <span>scope</span>
+            <p>{worked.granularity}</p>
+          </div>
+          <div>
+            <span>excerpt</span>
+            <p>{worked.excerpt}</p>
+          </div>
+          <div>
+            <span>source link</span>
+            <p><a href={worked.sourceUrl} rel="noopener nofollow" target="_blank">Open source</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="confidence-heading">
+      <p class="overline">Confidence</p>
+      <h2 id="confidence-heading">Confidence is a visible part of the interface.</h2>
+      <div class="confidence-list">
+        {
+          confidenceTerms.map((term) => (
+            <article class="confidence-row">
+              <h3><ConfidenceMark level={term.name as "high" | "medium" | "low"} /></h3>
+              <p>{term.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="freshness-heading">
+      <p class="overline">Freshness</p>
+      <h2 id="freshness-heading">Freshness windows are stricter for high-liability claims.</h2>
+      <p class="body-prose">
+        Tax, visa, and residency values use a short freshness window. If a value ages out,
+        the page should show a warning before treating it as current.
+      </p>
+      <div class="freshness-note">
+        <span class="num">90 days</span>
+        <p>Default freshness window for tax, visa, and residency values unless a field sets a stricter one.</p>
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="artifacts-heading">
+      <p class="overline">Machine-readable artifacts</p>
+      <h2 id="artifacts-heading">The same facts feed humans and crawlers.</h2>
+      <div class="artifact-list">
+        <a href="/sources">Sources index</a>
+        <a href="/compare/greece-portugal-spain">Comparison dataset</a>
+        <a href="/data/regimes/foreign-pensioner-flat-tax.json">Regime JSON</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </section>
+  </article>
+
+  <style>
+    .method-page {
+      padding-bottom: 3rem;
+    }
+
+    .mini-crumb {
+      display: flex;
+      gap: 0.55rem;
+      margin-bottom: 2rem;
+      color: var(--stone);
+      font: 500 var(--t-meta) var(--f-mono);
+    }
+
+    .mini-crumb a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .method-head h1 {
+      max-width: 14ch;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.03;
+    }
+
+    .method-section {
+      margin-top: clamp(44px, 6vw, 78px);
+    }
+
+    .method-section h2 {
+      max-width: 18ch;
+      margin: 0 0 1rem;
+      font-size: clamp(1.75rem, 3vw, 2.45rem);
+      line-height: 1.08;
+    }
+
+    .method-steps,
+    .confidence-list,
+    .artifact-list {
+      border-top: 1px solid var(--ink);
+    }
+
+    .method-step,
+    .confidence-row {
+      display: grid;
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: clamp(18px, 3vw, 34px);
+      padding: clamp(20px, 3vw, 30px) 0;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .method-step__num {
+      color: var(--pop-ink);
+      font-size: 0.9rem;
+    }
+
+    .method-step h3,
+    .confidence-row h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.35rem;
+    }
+
+    .method-step p,
+    .confidence-row p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.62;
+    }
+
+    .anatomy {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      gap: clamp(24px, 5vw, 56px);
+      margin-top: 1.6rem;
+      padding: clamp(24px, 4vw, 42px);
+      border: 1px solid var(--hairline-soft);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+
+    .anatomy__value {
+      padding-right: clamp(18px, 3vw, 34px);
+      border-right: 1px solid var(--hairline-soft);
+    }
+
+    .anatomy__value strong {
+      display: block;
+      color: var(--pop-ink);
+      font-size: clamp(3.4rem, 9vw, 5.8rem);
+      line-height: 0.95;
+    }
+
+    .anatomy__value span {
+      display: block;
+      margin-top: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .anatomy__fields {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .anatomy__fields div {
+      display: grid;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+
+    .anatomy__fields span {
+      color: var(--stone);
+      font: 500 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .anatomy__fields p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .freshness-note {
+      display: grid;
+      grid-template-columns: 8rem minmax(0, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      padding: 1.2rem 1.3rem;
+      border: 1px solid var(--hairline-soft);
+      border-radius: 4px;
+      background: var(--paper-warm);
+    }
+
+    .freshness-note span {
+      color: var(--pop-ink);
+      font-weight: 700;
+    }
+
+    .freshness-note p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .artifact-list {
+      display: grid;
+      margin-top: 1.4rem;
+    }
+
+    .artifact-list a {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--hairline-soft);
+      color: var(--accent-dark);
+      font-family: var(--f-mono);
+      text-decoration: none;
+    }
+
+    @media (max-width: 720px) {
+      .method-step,
+      .confidence-row,
+      .anatomy,
+      .freshness-note {
+        grid-template-columns: 1fr;
+      }
+
+      .anatomy__value {
+        padding-right: 0;
+        padding-bottom: 1.25rem;
+        border-right: 0;
+        border-bottom: 1px solid var(--hairline-soft);
+      }
+
+      .anatomy__fields div {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+    }
+  </style>
+</Base>

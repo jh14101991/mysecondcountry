@@ -1,0 +1,142 @@
+---
+/**
+ * EmailCapture: a thin, UNSTYLED email-list signup. Wiring only; the design thread styles it
+ * later via the `.email-capture` / `.email-capture__*` class hooks without touching this logic.
+ *
+ * Props: none. Reads EMAIL_FORM_ACTION from src/lib/monetisation.ts. The form is a standard HTML
+ * POST with a single `email` field, so it works with no JavaScript on a static page. The founder
+ * sets the real endpoint in monetisation.ts.
+ */
+import { EMAIL_FORM_ACTION } from "../lib/monetisation.ts";
+
+const emailCaptureLive = !EMAIL_FORM_ACTION.includes("REPLACE.example");
+---
+
+{
+  emailCaptureLive && (
+    <section class="email-capture" aria-labelledby="email-capture-h">
+      <h2 id="email-capture-h" class="email-capture__heading">Get told when these rules change</h2>
+      <p class="email-capture__note">
+        We track the figures and rules on this page and email you when one changes. No spam, and you can
+        unsubscribe anytime.
+      </p>
+      <form class="email-capture__form" action={EMAIL_FORM_ACTION} method="post">
+        <label class="email-capture__label" for="email-capture-input">Email address</label>
+        <input
+          class="email-capture__input"
+          id="email-capture-input"
+          type="email"
+          name="email"
+          autocomplete="email"
+          required
+          placeholder="you@example.com"
+        />
+        <button class="email-capture__submit" type="submit">Email me changes</button>
+      </form>
+    </section>
+  )
+}
+
+<style>
+  .email-capture {
+    margin: clamp(32px, 4vw, 48px) 0;
+    padding: clamp(22px, 3vw, 30px);
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+    background: var(--paper-warm);
+  }
+
+  .email-capture__heading {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--f-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+  }
+
+  .email-capture__note {
+    max-width: 56ch;
+    margin: 10px 0 0;
+    color: var(--ink-soft);
+    font-size: var(--t-body);
+    line-height: 1.6;
+  }
+
+  .email-capture__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .email-capture__label {
+    display: block;
+    width: 100%;
+    color: var(--stone);
+    font-size: var(--t-meta);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .email-capture__input {
+    flex: 1 1 16rem;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    font: var(--t-body) var(--f-ui);
+  }
+
+  .email-capture__input::placeholder {
+    color: var(--stone);
+  }
+
+  .email-capture__input:focus-visible {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .email-capture__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 26px;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-btn);
+    background: var(--accent);
+    color: var(--paper);
+    font: 700 var(--t-body) var(--f-ui);
+    cursor: pointer;
+    transition:
+      background 150ms var(--ease),
+      box-shadow 150ms var(--ease),
+      transform 150ms var(--ease);
+  }
+
+  .email-capture__submit:hover {
+    background: var(--accent-dark);
+    box-shadow: 0 4px 14px rgba(26, 24, 19, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .email-capture__submit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 560px) {
+    .email-capture__input,
+    .email-capture__submit {
+      flex-basis: 100%;
+      width: 100%;
+    }
+  }
+</style>

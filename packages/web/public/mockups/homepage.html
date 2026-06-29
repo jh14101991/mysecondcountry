@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Second Country · A second country, decided on evidence.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "My Second Country",
+    "url": "https://mysecondcountry.com/",
+    "description": "Cited relocation intelligence: every cost, tax, visa, residency, climate, healthcare, and safety figure is a sourced, dated claim with a confidence mark that links to its primary source."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. We screen published rules and show you sourced figures. We are not lawyers or tax advisers; for the decision itself we point you to professionals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which countries can I compare?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the compare page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How current is the data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every figure shows the date we last verified it and how confident we are. Rule-based figures like tax and visa rules are rechecked more often than slow-moving ones like climate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does it cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Building a shortlist is free. We may earn a fee only if you choose an introduction we suggest, and we disclose it before you decide. Nothing pays for placement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from the usual sites?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "They give you a number. We give you the number plus its source, its date, and our confidence in it, so you can check us rather than take our word."
+        }
+      }
+    ]
+  }
+]
+</script>
+
+<!-- SHARED FOUNDATION + SECTION LIBRARY -->
+<link rel="stylesheet" href="_msc-system.css">
+
+<style>
+/* ============================================================
+   FULL HOMEPAGE — assembled from the locked section mockups
+   (gates 12-17) + the shared CTA band. Section CSS concatenated
+   below; each section keeps its own prefixed classes. Band rhythm
+   alternates paper / paper-warm down the page.
+   ============================================================ */
+/* ===== gate-12-hero.html ===== */
+/* ============================================================
+   GATE 12 — HOMEPAGE HERO (full-bleed engraving + LIVE shortlist)
+   The engraving (Chania harbour) bleeds full-width and dissolves
+   into the page via multiply (the footer device): background layer +
+   soft paper veil over the top so the copy stays crisp. The promise
+   sits over the open water on the left; on the right, a real product
+   glimpse: a working "Your shortlist" demo driven by the locked
+   scenario chips (gate 11). Choosing a situation re-ranks the three
+   places with the relevant cited figure each (real source/date/
+   confidence, citation on tap). All figures from packages/data/src.
+   On lock -> generalise the footer scene into a shared `.eng-band`.
+   ============================================================ */
+.hero-band {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(to bottom, var(--paper) 8%, rgba(252,252,252,0.5) 38%, rgba(252,252,252,0.08) 66%, rgba(252,252,252,0) 84%),
+    url("img/engravings/hero.png");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center 42%;
+  background-size: 100% 100%, cover;
+  background-blend-mode: normal, multiply;
+  min-height: clamp(580px, 64vw, 860px);
+  padding: clamp(40px, 6vw, 84px) 0 clamp(40px, 6vw, 76px);
+}
+
+.hero-band__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+  min-height: clamp(440px, 48vw, 660px);
+}
+
+.hero-copy { max-width: 34rem; display: flex; flex-direction: column; gap: 26px; }
+.hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+/* ---- the live shortlist artifact (LOCKED size, premium) ----
+   Fixed width; every scenario renders to the same height because the
+   chips, the ranked-by caption, and three uniform rows are constant.
+   Row meta is single-line (ellipsis) so switching options never reflows.
+   Citations reset closed on each render, so size is stable across
+   options; a citation a user opens expands below, identically each time. */
+.ls {
+  justify-self: end;
+  width: min(100%, 452px);
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 22px;
+  padding: clamp(22px, 2vw, 28px);
+  box-shadow: 0 14px 50px rgba(26,24,19,0.14), 0 2px 8px rgba(26,24,19,0.05);
+}
+
+.ls__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline-soft); }
+.ls__label { margin: 0; font-family: var(--f-mono); font-size: var(--t-meta); font-weight: 400; color: var(--ink-soft); letter-spacing: 0.12em; text-transform: uppercase; }
+.ls__for { font-family: var(--f-ui); font-size: var(--t-meta); color: var(--stone); }
+.ls__for strong { color: var(--pop-ink); font-weight: 700; }
+
+.ls__chips { margin-top: 16px; gap: 8px; }
+.ls__chips .chip { font-size: 0.8rem; padding: 9px 14px; }
+/* min-height inherits the system .chip 44px floor (touch target) */
+
+.ls__rankedby { margin-top: 16px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); letter-spacing: 0.02em; }
+
+.ls__list { list-style: none; margin: 8px 0 0; padding: 0; }
+/* rows are persistent elements reordered with a FLIP animation on
+   scenario change (handled in JS); height stays constant. */
+.ls__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  column-gap: 14px;
+  align-items: center;
+  padding: 13px 12px;
+  margin: 3px -12px 0;
+  border-radius: 14px;
+  transition: background 200ms var(--ease);
+}
+.ls__row:hover { background: var(--paper-warm); }
+/* rank-1 carries no winner styling: the rank numeral conveys sort order
+   only (no endorsement), per the no-recommendation doctrine. */
+
+.ls__rank {
+  grid-row: 1; align-self: center;
+  width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: 0.72rem; color: var(--stone);
+  border: 1px solid var(--hairline-soft); border-radius: 999px;
+  transition: background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease);
+}
+
+.ls__main { grid-row: 1; min-width: 0; }
+.ls__placeline { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ls__placename { font-family: var(--f-display); font-optical-sizing: auto; font-size: 1.08rem; color: var(--ink); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ls__meta { display: block; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ls__right { grid-row: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; text-align: right; }
+.ls__val { font-family: var(--f-mono); font-size: 1.3rem; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; line-height: 1.05; }
+.ls__unit { font-family: var(--f-mono); font-size: var(--t-meta); font-weight: 400; color: var(--stone); margin-left: 2px; }
+.ls__prov { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.ls__conf { display: inline-flex; align-items: center; gap: 5px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
+.ls__conf svg { flex-shrink: 0; }
+.ls__sep { color: var(--hairline-soft); font-size: var(--t-meta); }
+
+.cite.ls__cite { display: inline; position: relative; border: none; background: none; padding: 0; min-width: 0; min-height: 0; color: var(--stone); font-size: var(--t-meta); line-height: 1.4; }
+/* transparent hit-area enlarges the inline Source toggle's tap target
+   without changing the refined provenance row layout */
+.cite.ls__cite::before { content: ""; position: absolute; inset: -10px -6px; }
+.cite.ls__cite::after {
+  content: ""; display: inline-block; width: 5px; height: 5px; margin-left: 5px; vertical-align: middle;
+  border-right: 1.4px solid currentColor; border-bottom: 1.4px solid currentColor;
+  transform: rotate(45deg) translateY(-1px); transition: transform 200ms var(--ease);
+}
+.cite.ls__cite[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(1px); }
+.cite.ls__cite:hover, .cite.ls__cite:focus-visible { color: var(--accent); text-decoration: underline; }
+
+.ls__panel { grid-column: 1 / -1; grid-row: 2; }
+.ls__panel.cite-panel-wrap.open { margin-top: 11px; }
+.ls__panel .cite-panel { max-width: none; }
+
+.ls__more { margin-top: 16px; display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-bodysm); }
+
+/* phone: copy on paper at top, artifact below, engraving dissolving beneath */
+@media (max-width: 860px) {
+  .hero-band {
+    min-height: 0;
+    padding-bottom: clamp(200px, 52vw, 340px);
+    background-size: 100% 100%, 150% auto;
+    background-position: top center, bottom center;
+  }
+  .hero-band__inner { display: block; min-height: 0; }
+  .hero-copy { max-width: none; margin-bottom: 30px; }
+  .ls { justify-self: stretch; width: 100%; }
+}
+
+/* ===== gate-13-problem.html ===== */
+/* ============================================================
+   GATE 13 — THE PROBLEM ("anatomy of a number")
+   No cards, no illustration. The wow is a single real cited figure
+   exploded into everything that stands behind it (source, verified
+   date, confidence, basis, fence), connected by fine leader lines
+   that draw in on scroll, like a precise scientific / data-journalism
+   figure. The turn names the enemy: most numbers you find carry none
+   of this. Type + real cited data only. On lock -> homepage build.
+   ============================================================ */
+.problem { background: var(--paper-warm); padding: clamp(72px, 10vw, 144px) 0; border-top: 1px solid var(--hairline-soft); overflow: hidden; }
+
+.problem-head { max-width: 64ch; }
+.problem-head .display-section { margin: 10px 0 0; max-width: 20ch; }
+.problem-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 54ch; margin-top: 18px; }
+
+/* ---- the anatomy diagram ---- */
+.anatomy {
+  margin-top: clamp(52px, 7vw, 96px);
+  display: grid;
+  grid-template-columns: auto clamp(30px, 5vw, 76px) minmax(0, 1fr);
+  align-items: center;
+}
+
+.anatomy__fig { text-align: right; padding-right: 2px; }
+.anatomy__figlabel { display: block; font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.06em; text-transform: uppercase; color: var(--stone); margin-bottom: 12px; }
+.anatomy__num { font-family: var(--f-mono); font-weight: 500; font-size: clamp(5.25rem, 15vw, 11.5rem); line-height: 0.8; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.035em; display: inline-block; }
+.anatomy__unit { font-size: 0.32em; color: var(--stone); margin-left: 0.06em; letter-spacing: 0; }
+
+.anatomy__stem { height: 1.5px; background: var(--accent); align-self: center; }
+
+.anatomy__rows { border-left: 1.5px solid var(--accent); margin: 0; }
+.anatomy__row { position: relative; display: grid; grid-template-columns: 8em minmax(0, 1fr); align-items: baseline; gap: 4px 16px; padding: clamp(13px, 1.5vw, 19px) 0 clamp(13px, 1.5vw, 19px) clamp(22px, 2.2vw, 36px); }
+.anatomy__row + .anatomy__row { border-top: 1px solid var(--hairline-soft); }
+/* the leader tick that connects the bracket to each row, drawn on reveal */
+.anatomy__row::before { content: ""; position: absolute; left: 0; top: 50%; height: 1.5px; width: clamp(16px, 2.2vw, 30px); background: var(--accent); transform: translateY(-50%) scaleX(0); transform-origin: left center; transition: transform 520ms var(--ease); }
+.anatomy__row.in::before { transform: translateY(-50%) scaleX(1); }
+.anatomy__k { font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone); }
+.anatomy__v { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink); line-height: 1.45; }
+.anatomy__v--quote { margin: 0; font-family: var(--f-display); font-optical-sizing: auto; font-style: italic; color: var(--ink-soft); line-height: 1.4; }
+.anatomy__conf { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-mono); font-size: var(--t-bodysm); color: var(--ink-soft); }
+.anatomy__conf svg { flex-shrink: 0; }
+.anatomy__link { color: var(--accent); text-decoration: none; }
+.anatomy__link:hover, .anatomy__link:focus-visible { text-decoration: underline; }
+.anatomy__link svg { margin-left: 4px; vertical-align: -1px; }
+
+.problem-kicker { margin-top: clamp(30px, 4vw, 48px); font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.4rem, 2.6vw, 2.1rem); line-height: 1.34; letter-spacing: -0.016em; color: var(--ink-soft); max-width: 32ch; }
+.problem-kicker b { font-weight: 400; font-style: normal; color: var(--pop-ink); }
+
+@media (max-width: 760px) {
+  .anatomy { grid-template-columns: 1fr; }
+  .anatomy__fig { text-align: left; padding-right: 0; }
+  .anatomy__stem { display: none; }
+  .anatomy__rows { margin-top: 28px; }
+  .anatomy__row { grid-template-columns: 1fr; gap: 3px; }
+  .anatomy__k { margin-bottom: 1px; }
+}
+
+/* ===== gate-14-howitworks.html ===== */
+/* ============================================================
+   GATE 14 — HOW IT WORKS (type + evidence led, three steps)
+   No stock icons, no illustration. Big mono step numerals on a
+   broadsheet baseline rule, Newsreader titles, tight copy, and each
+   step grounded in a REAL artifact: the actual input chips, the real
+   source families we cite, and a real cited result. Input -> sources
+   -> output, shown with evidence. On lock -> homepage build.
+   ============================================================ */
+.howit { background: var(--paper); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
+
+.howit-head { max-width: 62ch; }
+.howit-head .display-section { margin: 10px 0 0; max-width: 22ch; }
+.howit-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 56ch; margin-top: 18px; }
+
+.howit-steps { margin-top: clamp(46px, 6vw, 84px); display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid var(--ink); }
+@media (max-width: 760px) { .howit-steps { grid-template-columns: 1fr; } }
+
+.step { display: flex; flex-direction: column; padding: clamp(26px, 2.6vw, 38px) clamp(22px, 2.2vw, 34px) clamp(8px, 1vw, 14px); }
+.step:first-child { padding-left: 0; }
+.step:last-child { padding-right: 0; }
+.step + .step { border-left: 1px solid var(--hairline-soft); }
+@media (max-width: 760px) {
+  .step { padding: clamp(28px, 6vw, 40px) 0 clamp(20px, 4vw, 28px); }
+  .step + .step { border-left: none; border-top: 1px solid var(--hairline-soft); }
+}
+
+.step__num { font-family: var(--f-mono); font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 500; color: var(--ink); letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.step__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: var(--t-sub); line-height: 1.18; letter-spacing: -0.018em; color: var(--ink); margin: 16px 0 0; }
+.step__body { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.6; margin: 10px 0 0; max-width: 34ch; }
+
+.step__art { margin-top: auto; padding-top: clamp(22px, 2.4vw, 30px); }
+.step__artlabel { display: block; font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); margin-bottom: 12px; }
+
+/* step 1 — input chips (static glimpse of the scenario picker) */
+.step-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.step-chip { font-family: var(--f-ui); font-size: var(--t-meta); font-weight: 500; color: var(--ink); background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 999px; padding: 7px 13px; }
+.step-chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+
+/* step 2 — the real source families */
+.step-sources { display: flex; flex-wrap: wrap; gap: 8px; }
+.step-src { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); border: 1px solid var(--hairline-soft); border-radius: 6px; padding: 5px 9px; }
+
+/* step 3 — a real cited result (open, ledger style, no card) */
+.step-result__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.step-result__place { font-family: var(--f-display); font-optical-sizing: auto; font-size: 1.05rem; color: var(--ink); line-height: 1.2; }
+.step-result__val { font-family: var(--f-mono); font-size: 1.0625rem; font-weight: 500; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.step-result__unit { font-family: var(--f-mono); font-size: var(--t-meta); font-weight: 400; color: var(--stone); margin-left: 4px; }
+.step-result__prov { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 9px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
+.step-result__conf { display: inline-flex; align-items: center; gap: 5px; }
+.step-result__conf svg { flex-shrink: 0; }
+.step-result__sep { color: var(--hairline-soft); }
+
+/* ===== gate-18-bento.html ===== */
+/* ============================================================
+   GATE 18 — HOW TO READ IT (bento)
+   A gapless tile grid that teaches the SYSTEM (not shown as a
+   standalone anywhere else): the confidence marks, the dimensions
+   every country gets, and the source/date/confidence triad. Breaks
+   the middle type-run with a real visual grid. One
+   bordered grid with shared hairlines, never floating cards. On a
+   stone band so it reads as a third tone between paper and warm.
+   On lock -> homepage build (placed after "how it works").
+   ============================================================ */
+.bento-band { background: var(--paper-stone); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
+.bento-head { max-width: 44ch; }
+.bento-head .display-section { margin: 10px 0 0; max-width: 20ch; }
+.bento-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 52ch; margin-top: 16px; }
+
+.bento {
+  margin-top: clamp(40px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-areas:
+    "conf dims"
+    "conf triad";
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.bento__tile { padding: clamp(22px, 2.5vw, 34px); }
+.bento__tile--conf { grid-area: conf; border-right: 1px solid var(--hairline-soft); }
+.bento__tile--dims { grid-area: dims; border-bottom: 1px solid var(--hairline-soft); }
+.bento__tile--triad { grid-area: triad; }
+
+@media (max-width: 720px) {
+  .bento { grid-template-columns: 1fr; grid-template-areas: "conf" "dims" "triad"; }
+  .bento__tile--conf { border-right: none; border-bottom: 1px solid var(--hairline-soft); }
+  .bento__tile--triad { border-bottom: 1px solid var(--hairline-soft); }
+}
+
+.bento__label { display: block; font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); }
+.bento__h { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: 1.35rem; line-height: 1.2; letter-spacing: -0.014em; color: var(--ink); margin: 8px 0 0; }
+
+.bento__conf { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.bento__conf li { display: grid; grid-template-columns: 7.5em 1fr; gap: 4px 14px; align-items: baseline; }
+@media (max-width: 460px) { .bento__conf li { grid-template-columns: 1fr; gap: 2px; } }
+.bento__mk { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-mono); font-size: var(--t-bodysm); color: var(--ink); white-space: nowrap; }
+.bento__mk svg { flex-shrink: 0; }
+.bento__gl { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.5; }
+
+.bento__dims { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.bento__dim { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--ink-soft); border: 1px solid var(--hairline-soft); border-radius: 999px; padding: 5px 12px; }
+
+.bento__triad { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.6; margin-top: 16px; max-width: 34ch; }
+.bento__triad b { color: var(--ink); font-weight: 500; }
+
+/* ===== gate-15-coverage.html ===== */
+/* ============================================================
+   GATE 15 — WHERE IT RUNS DEEPEST (coverage + compare glimpse)
+   Merges the old "see a real result" + "coverage": honest scope
+   (Greece, Portugal, Spain deep today; global ambition) PROVEN with a
+   real cited side-by-side comparison, the depth/decision the hero's
+   shortlist never shows. Reuses the locked comparison-table component
+   (gate 8) in a lighter homepage glimpse (source named, no expandable
+   panel; full cited version on the compare page). Figures vary from
+   earlier sections (cost / tax / sunshine / safety, not 7% again).
+   On lock -> homepage build.
+   ============================================================ */
+.coverage { background: var(--paper-warm); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
+
+.coverage-head { max-width: 64ch; }
+.coverage-head .display-section { margin: 10px 0 0; max-width: 18ch; }
+.coverage-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 60ch; margin-top: 18px; }
+
+/* homepage glimpse: the shared comparison table, not sticky here, lighter cells */
+.coverage-sample { margin-top: clamp(40px, 5vw, 64px); font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); }
+.coverage .ctable { margin-top: 14px; max-width: none; }
+.coverage .ctable-head { position: static; }
+.cov-src { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
+
+.coverage-foot { margin-top: clamp(26px, 3vw, 38px); display: flex; align-items: baseline; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; }
+.coverage-note { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); line-height: 1.6; max-width: 56ch; }
+.coverage-link { font-family: var(--f-ui); font-size: var(--t-body); font-weight: 700; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.coverage-link:hover, .coverage-link:focus-visible { text-decoration: underline; }
+
+/* ===== gate-16-who.html ===== */
+/* ============================================================
+   GATE 16 — WHO MAKES THIS (the people + the integrity stance)
+   Type-led, evergreen (no country names, no figures). A founders'
+   note in the Newsreader italic analyst voice carries the human/why;
+   a tight hairline list of integrity promises carries the trust we
+   pulled out of the cut "why trust it" pillars, including the honest-
+   money stance (screening not advice, nothing buys a ranking, fees
+   disclosed). On lock -> homepage build.
+   ============================================================ */
+.who { background: var(--paper); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
+
+.who-inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(40px, 6vw, 92px); align-items: start; }
+@media (max-width: 860px) { .who-inner { grid-template-columns: 1fr; gap: clamp(40px, 8vw, 56px); } }
+
+.who-head .display-section { margin: 10px 0 0; max-width: 18ch; }
+.who-note { margin-top: clamp(26px, 3vw, 38px); }
+.who-note p { margin-top: 0.6em; }
+.who-note p:first-child { margin-top: 0; }
+.who-sign { margin-top: clamp(22px, 2.4vw, 30px); font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.04em; color: var(--stone); }
+
+.who-right { padding-top: clamp(6px, 1vw, 14px); }
+.who-right__label { display: block; font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); margin-bottom: 4px; }
+
+.integrity { list-style: none; margin: 0; padding: 0; }
+.integrity__item { padding: clamp(18px, 2vw, 24px) 0; border-top: 1px solid var(--hairline-soft); }
+.integrity__item:first-child { border-top: 1.5px solid var(--ink); }
+.integrity__item:last-child { padding-bottom: 0; }
+.integrity__lead { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.22; letter-spacing: -0.014em; color: var(--ink); display: flex; align-items: baseline; gap: 12px; }
+.integrity__lead::before { content: ""; flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: var(--pop); transform: translateY(-0.18em); }
+.integrity__gloss { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.6; margin: 9px 0 0 19px; max-width: 48ch; }
+
+/* ===== gate-17-faq.html ===== */
+/* ============================================================
+   GATE 17 — QUESTIONS ANSWERED (compact FAQ, broadsheet Q|A)
+   Type-led, evergreen, no cards. A definition-list layout: question
+   left, answer right, hairline-divided, like a glossary. Handles the
+   objections (advice, cost, currency, difference) and the coverage
+   question NEUTRALLY (points to the live, data-driven list rather
+   than naming a roster). On lock -> homepage build; the homepage then
+   closes with the shared CTA band (gate 6) + footer.
+   ============================================================ */
+.faq { background: var(--paper-warm); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
+
+.faq-head { max-width: 30ch; }
+.faq-head .display-section { margin: 10px 0 0; }
+
+.faq-list { margin-top: clamp(40px, 5vw, 68px); border-top: 1.5px solid var(--ink); }
+.faq-item { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(12px, 3vw, 56px); align-items: start; padding: clamp(22px, 2.6vw, 32px) 0; border-bottom: 1px solid var(--hairline-soft); }
+@media (max-width: 720px) { .faq-item { grid-template-columns: 1fr; gap: 10px; padding: clamp(22px, 6vw, 28px) 0; } }
+
+.faq-q { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.25rem, 1.9vw, 1.6rem); line-height: 1.22; letter-spacing: -0.016em; color: var(--ink); }
+.faq-a { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.62; max-width: 56ch; }
+.faq-a a { color: var(--accent); text-decoration: none; }
+.faq-a a:hover, .faq-a a:focus-visible { text-decoration: underline; }
+
+/* ===== homepage overrides ===== */
+/* Closing CTA — imageless, type-led.
+   Place imagery on this page lives in the hero, the mid-page engraving
+   moments, and the footer. The closing invitation is an ACTION surface,
+   so per the locked register split it stays type-and-evidence-led: a
+   quiet warm broadsheet card, framed by a fine inset rule for craft, the
+   wow from type and scale rather than a scene. */
+.cta-card {
+  background-color: var(--paper-warm);
+  background-image: none;
+}
+.cta-card::before {
+  content: "";
+  position: absolute;
+  inset: clamp(13px, 1.5vw, 20px);
+  border: 1px solid var(--hairline-soft);
+  border-radius: calc(var(--radius-card) - 14px);
+  pointer-events: none;
+  z-index: 0;
+}
+.cta-card > * { position: relative; z-index: 1; }
+.cta-eyebrow { margin-bottom: 0; }
+@media (max-width: 520px) {
+  .cta-card { background-image: none; }
+  .cta-card::before { inset: 11px; }
+}
+
+/* ===== mid-page engraving band (evergreen "anywhere") =====
+   Full-bleed engraving on a pure-paper ground (multiply drops the white),
+   a soft paper veil keeps the centred line legible. The site's signature
+   image device, reused once mid-page; a different global location from the
+   hero (Amalfi), the Alps block above, and the footer (Greek coast). */
+.place-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-top: 1px solid var(--hairline-soft);
+  border-bottom: 1px solid var(--hairline-soft);
+  background-color: var(--paper);
+  display: flex;
+  align-items: center;
+  min-height: clamp(360px, 44vw, 560px);
+}
+/* engraving on its own oversized layer so the subtle parallax never exposes
+   an edge; background-blend multiply drops its white ground onto the paper. */
+.place-band__bg {
+  position: absolute;
+  inset: -72px 0;
+  z-index: 0;
+  background-color: var(--paper);
+  background-image: url("img/engravings/benefit-3.png"); /* benefit-3.png = Japan coastal village scene */
+  background-position: center 34%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+/* soft paper veil keeps the centred line legible (sits above the engraving,
+   below the copy, and does not move with the parallax). */
+.place-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(58% 74% at 50% 52%, rgba(252,252,252,0.90) 0%, rgba(252,252,252,0.36) 46%, rgba(252,252,252,0) 78%);
+}
+.place-band .shell { position: relative; z-index: 2; }
+.place-band-inner {
+  max-width: 52ch;
+  margin-inline: auto;
+  text-align: center;
+  padding-block: clamp(56px, 8vw, 112px);
+}
+.place-band-line {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 3.4vw, 2.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 18ch;
+  margin: 0 auto 16px;
+}
+.place-band-sub {
+  font-family: var(--f-ui);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .place-band::after {
+    background: radial-gradient(98% 88% at 50% 52%, rgba(252,252,252,0.94) 0%, rgba(252,252,252,0.82) 54%, rgba(252,252,252,0) 92%);
+  }
+}
+
+/* the mid-page Alps place block sits on a warm band (class, not inline) */
+.benefit--warm { background: var(--paper-warm); }
+
+/* evergreen qualifier under the footer coverage list (not a fixed roster) */
+.footer-cov-note { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.01em; color: var(--stone); }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <div class="shell">
+    <div class="site-header-inner">
+      <a class="brand-wordmark" href="#" aria-label="My Second Country home">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <span class="brand-name">My Second Country</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="#">How it works</a>
+        <a class="nav-link" href="#">Compare</a>
+        <a class="nav-link" href="#">Methodology</a>
+        <a class="nav-link" href="#">About</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#" class="btn-primary">Build my shortlist
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="nav-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="#">How it works</a>
+      <a class="nav-link" href="#">Compare</a>
+      <a class="nav-link" href="#">Methodology</a>
+      <a class="nav-link" href="#">About</a>
+      <a href="#" class="btn-primary">Build my shortlist</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+<!-- ===== gate-12-hero.html ===== -->
+<section class="hero-band" aria-labelledby="hero-heading">
+  <div class="shell hero-band__inner">
+
+    <!-- promise + action, over the open water -->
+    <div class="hero-copy">
+      <div class="hero-load" style="transition-delay:0ms;">
+        <span class="overline">Cited relocation intelligence</span>
+        <h1 id="hero-heading" class="display-hero">A second country,<br>decided on evidence.</h1>
+      </div>
+      <p class="standfirst hero-load" style="transition-delay:80ms;">
+        Put your situation in. Get back a shortlist of countries, regions, and towns, each figure shown with its source, its verified date, and a confidence mark.
+      </p>
+      <div class="hero-actions hero-load" style="transition-delay:160ms;">
+        <a href="#" class="btn-primary">
+          Build my shortlist
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="text-link">See the methodology</a>
+      </div>
+    </div>
+
+    <!-- the live shortlist artifact (interactive) -->
+    <aside class="ls hero-load" style="transition-delay:240ms;" aria-label="Sample shortlist, interactive">
+      <div class="ls__head">
+        <h2 class="ls__label">Your shortlist</h2>
+        <span class="ls__for">for <strong id="ls-scenario-name">lower my taxes</strong></span>
+      </div>
+
+      <div class="chip-row ls__chips" role="radiogroup" aria-label="Your situation">
+        <label class="chip"><input type="radio" name="ls-scenario" value="tax" autocomplete="off" checked> Lower my taxes</label>
+        <label class="chip"><input type="radio" name="ls-scenario" value="remote" autocomplete="off"> Work remotely</label>
+        <label class="chip"><input type="radio" name="ls-scenario" value="retire" autocomplete="off"> Retire abroad</label>
+      </div>
+
+      <p class="ls__rankedby" id="ls-rankedby" aria-live="polite"></p>
+      <ol class="ls__list" id="ls-list" aria-live="polite"></ol>
+
+      <a class="ls__more text-link" href="#">See the full comparison
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ===== gate-13-problem.html ===== -->
+<section class="problem" aria-labelledby="problem-heading">
+  <div class="shell">
+
+    <header class="problem-head" data-reveal style="--i:0">
+      <span class="overline">The problem</span>
+      <h2 id="problem-heading" class="display-section">Most relocation numbers can't be checked.</h2>
+      <p class="problem-lead">A figure is only worth what stands behind it. Here is one of ours, in full.</p>
+    </header>
+
+    <div class="anatomy">
+      <div class="anatomy__fig" data-reveal style="--i:0">
+        <span class="anatomy__figlabel">Greece · foreign-pensioner flat tax</span>
+        <span class="anatomy__num">7<span class="anatomy__unit">%</span></span>
+      </div>
+
+      <div class="anatomy__stem" data-reveal style="--i:0" aria-hidden="true"></div>
+
+      <dl class="anatomy__rows" aria-label="Anatomy of one cited figure">
+        <div class="anatomy__row" data-reveal style="--i:1">
+          <dt class="anatomy__k">Source</dt>
+          <dd class="anatomy__v"><a class="anatomy__link" href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Greece<svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></dd>
+        </div>
+        <div class="anatomy__row" data-reveal style="--i:2">
+          <dt class="anatomy__k">Verified</dt>
+          <dd class="anatomy__v"><span class="num" style="font-family:var(--f-mono)">2026-06-24</span></dd>
+        </div>
+        <div class="anatomy__row" data-reveal style="--i:3">
+          <dt class="anatomy__k">Confidence</dt>
+          <dd class="anatomy__v"><span class="anatomy__conf"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span></dd>
+        </div>
+        <div class="anatomy__row" data-reveal style="--i:4">
+          <dt class="anatomy__k">Basis</dt>
+          <dd class="anatomy__v">Article 5B, foreign-source pension income, up to 15 years</dd>
+        </div>
+        <div class="anatomy__row" data-reveal style="--i:5">
+          <dt class="anatomy__k">Excerpt</dt>
+          <dd class="anatomy__v"><blockquote class="anatomy__v--quote" cite="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives">"7 percent on foreign-sourced income (Art 5B), each for up to 15 fiscal years."</blockquote></dd>
+        </div>
+      </dl>
+    </div>
+
+    <p class="problem-kicker" data-reveal style="--i:6">What you usually get is the number and nothing else: <b>undated, unsourced, and quietly sponsored.</b> We publish everything behind it.</p>
+
+  </div>
+</section>
+
+<!-- ===== gate-14-howitworks.html ===== -->
+<section class="howit" aria-labelledby="howit-heading">
+  <div class="shell">
+
+    <header class="howit-head" data-reveal style="--i:0">
+      <span class="overline">How it works</span>
+      <h2 id="howit-heading" class="display-section">From your situation to a sourced shortlist.</h2>
+      <p class="howit-lead">No account, no sales call. You answer a few questions, we screen your situation against published rules, and you get back a shortlist you can check yourself.</p>
+    </header>
+
+    <div class="howit-steps">
+
+      <div class="step" data-reveal style="--i:0">
+        <span class="step__num">01</span>
+        <h3 class="step__title">Tell us your situation</h3>
+        <p class="step__body">Household, citizenship, income, and what you want from a place. About two minutes, no account needed.</p>
+        <div class="step__art">
+          <span class="step__artlabel">You pick</span>
+          <div class="step-chips">
+            <span class="step-chip is-on">Lower my taxes</span>
+            <span class="step-chip">Work remotely</span>
+            <span class="step-chip">Retire abroad</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" data-reveal style="--i:1">
+        <span class="step__num">02</span>
+        <h3 class="step__title">Screened against published rules</h3>
+        <p class="step__body">We match it to visa, tax, cost, climate, healthcare, and safety data, every figure from a named public source.</p>
+        <div class="step__art">
+          <span class="step__artlabel">We cite</span>
+          <div class="step-sources">
+            <span class="step-src">Eurostat</span>
+            <span class="step-src">PwC</span>
+            <span class="step-src">Migration ministries</span>
+            <span class="step-src">WHO</span>
+            <span class="step-src">GPI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" data-reveal style="--i:2">
+        <span class="step__num">03</span>
+        <h3 class="step__title">A sourced shortlist</h3>
+        <p class="step__body">Countries, regions, and towns sorted by the metric you chose, each figure shown with its source, date, and confidence.</p>
+        <div class="step__art">
+          <span class="step__artlabel">You get</span>
+          <div class="step-result">
+            <div class="step-result__row">
+              <span class="step-result__place">Lisbon, Portugal</span>
+              <span class="step-result__val">86.6<span class="step-result__unit">cost index</span></span>
+            </div>
+            <div class="step-result__prov">
+              <span class="step-result__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+              <span class="step-result__sep" aria-hidden="true">·</span>
+              <span>Eurostat</span>
+              <span class="step-result__sep" aria-hidden="true">·</span>
+              <span>2026-06-24</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== MID-PAGE PLACE BLOCK (Alps engraving, gate-10 .benefit) ===== -->
+<section class="benefit benefit--warm" aria-labelledby="payoff-heading">
+  <div class="shell">
+    <div class="benefit-grid">
+      <div class="benefit-figure" data-reveal data-img-reveal style="--i:0">
+        <img class="engraving" src="img/engravings/who.png" alt="" aria-hidden="true"
+             onerror="this.style.display='none';this.closest('.benefit-figure').classList.add('no-img');">
+      </div>
+      <div class="benefit-text" data-reveal style="--i:1">
+        <span class="overline">Why the rigour</span>
+        <h2 id="payoff-heading" class="benefit-headline">Evidence is the means. A place is the point.</h2>
+        <p class="body-prose">Every cited figure, every linked source, every confidence mark is here for one reason: so the place you choose is one you understand before you move. We screen and show the work. Which life fits is yours to decide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== gate-18-bento.html ===== -->
+<section class="bento-band" aria-labelledby="bento-heading">
+  <div class="shell">
+
+    <header class="bento-head" data-reveal style="--i:0">
+      <span class="overline">How to read it</span>
+      <h2 id="bento-heading" class="display-section">Every figure shows its work.</h2>
+      <p class="bento-lead">A quick key to the marks you will see on every number, so you can check us rather than trust us.</p>
+    </header>
+
+    <div class="bento" data-reveal style="--i:1">
+
+      <div class="bento__tile bento__tile--conf">
+        <span class="bento__label">Confidence</span>
+        <h3 class="bento__h">How sure we are</h3>
+        <ul class="bento__conf">
+          <li>
+            <span class="bento__mk"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+            <span class="bento__gl">Verified against a primary source.</span>
+          </li>
+          <li>
+            <span class="bento__mk"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="bento__gl">From a credible source, not yet checked against the primary.</span>
+          </li>
+          <li>
+            <span class="bento__mk"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+            <span class="bento__gl">Reported, and shown as uncertain. Low means unsure, not bad.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bento__tile bento__tile--dims">
+        <span class="bento__label">Every country</span>
+        <h3 class="bento__h">Seven dimensions</h3>
+        <div class="bento__dims">
+          <span class="bento__dim">Cost</span>
+          <span class="bento__dim">Tax</span>
+          <span class="bento__dim">Visa</span>
+          <span class="bento__dim">Residency</span>
+          <span class="bento__dim">Climate</span>
+          <span class="bento__dim">Healthcare</span>
+          <span class="bento__dim">Safety</span>
+        </div>
+      </div>
+
+      <div class="bento__tile bento__tile--triad">
+        <span class="bento__label">Every figure</span>
+        <h3 class="bento__h">Carries its receipts</h3>
+        <p class="bento__triad">A <b>source</b> you can open, the <b>date</b> we last checked it, and an honest <b>confidence</b> mark.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== gate-15-coverage.html ===== -->
+<section class="coverage" aria-labelledby="coverage-heading">
+  <div class="shell">
+
+    <header class="coverage-head" data-reveal style="--i:0">
+      <span class="overline">Compare on the evidence</span>
+      <h2 id="coverage-heading" class="display-section">Weigh any country, like for like.</h2>
+      <p class="coverage-lead">Every place we cover is screened across the same dimensions, cost, tax, visa, residency, climate, healthcare, and safety, with every figure sourced, dated, and confidence-marked. So you can compare them on the same evidence base.</p>
+    </header>
+
+    <p class="coverage-sample" data-reveal style="--i:1">A sample comparison · every figure verified through 2026-06-28</p>
+    <div class="ctable" role="table" aria-label="Sample comparison: Greece, Portugal, Spain" data-reveal style="--i:1">
+      <div class="ctable-head" role="row">
+        <div class="ctable-corner" role="columnheader">Indicator</div>
+        <div class="ctable-country" role="columnheader">Greece</div>
+        <div class="ctable-country" role="columnheader">Portugal</div>
+        <div class="ctable-country" role="columnheader">Spain</div>
+      </div>
+
+      <div class="crow" role="row">
+        <div class="crow-label" role="rowheader">
+          <span class="crow-label__name">Cost of living</span>
+          <span class="crow-label__meta">Price level index, EU27 = 100. Lower is cheaper.</span>
+        </div>
+        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">87.4</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">86.6</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">91.6</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
+      </div>
+
+      <div class="crow" role="row">
+        <div class="crow-label" role="rowheader">
+          <span class="crow-label__name">Top income tax rate</span>
+          <span class="crow-label__meta">Headline top marginal rate, before any special regime.</span>
+        </div>
+        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">44<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">48<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">47<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
+      </div>
+
+      <div class="crow" role="row">
+        <div class="crow-label" role="rowheader">
+          <span class="crow-label__name">Average annual sunshine</span>
+          <span class="crow-label__meta">Capital as a national proxy.</span>
+        </div>
+        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,773<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">HNMS</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,792.8<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IPMA</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,744<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">AEMET</span></div></div></div>
+      </div>
+
+      <div class="crow" role="row">
+        <div class="crow-label" role="rowheader">
+          <span class="crow-label__name">Global Peace Index (2024)</span>
+          <span class="crow-label__meta">IEP score. Lower is more peaceful.</span>
+        </div>
+        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.793</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.372</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
+        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.597</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="coverage-foot" data-reveal style="--i:2">
+      <p class="coverage-note">A country goes live only once every figure clears the same bar, so coverage widens deliberately. Greece, Portugal, and Spain are shown above as one example.</p>
+      <a class="coverage-link" href="gate-08-compare.html">See the full comparison, every figure cited
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== MID-PAGE ENGRAVING BAND (Japan engraving, evergreen) ===== -->
+<section class="place-band" aria-labelledby="anywhere-heading">
+  <div class="place-band__bg" data-parallax-img="0.08" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="place-band-inner" data-reveal style="--i:0">
+      <span class="overline">Anywhere you're weighing</span>
+      <h2 id="anywhere-heading" class="place-band-line">One standard, every place on the map.</h2>
+      <p class="place-band-sub">Coverage grows every week. The bar never moves: every figure is cited, every source is linked, and every number carries a confidence mark.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== gate-16-who.html ===== -->
+<section class="who" aria-labelledby="who-heading">
+  <div class="shell">
+    <div class="who-inner">
+
+      <div class="who-left">
+        <div class="who-head" data-reveal style="--i:0">
+          <span class="overline">Who makes this</span>
+          <h2 id="who-heading" class="display-section">Built by people who got tired of guessing.</h2>
+        </div>
+        <div class="who-note analyst-note" data-reveal style="--i:1">
+          <p>We kept hitting the same wall: relocation figures with no source, no date, and a quiet affiliate behind them. So we built the opposite: a screening engine where every number carries its source, its date, and a confidence mark.</p>
+          <p>We are not advisers, and we are not for sale.</p>
+        </div>
+        <p class="who-sign" data-reveal style="--i:2">The founders, My Second Country</p>
+      </div>
+
+      <div class="who-right" data-reveal style="--i:1">
+        <span class="who-right__label">How we stay honest</span>
+        <ul class="integrity">
+          <li class="integrity__item">
+            <p class="integrity__lead">We screen, we don't advise.</p>
+            <p class="integrity__gloss">You get sourced figures and the published rules. The decision, and the professional you make it with, stay yours.</p>
+          </li>
+          <li class="integrity__item">
+            <p class="integrity__lead">Nothing can buy a ranking.</p>
+            <p class="integrity__gloss">No country, visa programme, or firm can pay for placement. The data is the data.</p>
+          </li>
+          <li class="integrity__item">
+            <p class="integrity__lead">When we earn, you see it first.</p>
+            <p class="integrity__gloss">If you choose an introduction we suggest, we may earn a fee. We disclose it before you decide, and no fee can affect a ranking.</p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== gate-17-faq.html ===== -->
+<section class="faq" aria-labelledby="faq-heading">
+  <div class="shell">
+
+    <header class="faq-head" data-reveal style="--i:0">
+      <span class="overline">Questions answered</span>
+      <h2 id="faq-heading" class="display-section">The honest answers.</h2>
+    </header>
+
+    <dl class="faq-list" aria-labelledby="faq-heading">
+      <div class="faq-item" data-reveal style="--i:0">
+        <dt class="faq-q">Is this advice?</dt>
+        <dd class="faq-a">No. We screen published rules and show you sourced figures. We are not lawyers or tax advisers; for the decision itself we point you to professionals.</dd>
+      </div>
+      <div class="faq-item" data-reveal style="--i:1">
+        <dt class="faq-q">Which countries can I compare?</dt>
+        <dd class="faq-a">A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the <a href="gate-08-compare.html">compare page</a>.</dd>
+      </div>
+      <div class="faq-item" data-reveal style="--i:2">
+        <dt class="faq-q">How current is the data?</dt>
+        <dd class="faq-a">Every figure shows the date we last verified it and how confident we are. Rule-based figures like tax and visa rules are rechecked more often than slow-moving ones like climate.</dd>
+      </div>
+      <div class="faq-item" data-reveal style="--i:3">
+        <dt class="faq-q">What does it cost?</dt>
+        <dd class="faq-a">Building a shortlist is free. We may earn a fee only if you choose an introduction we suggest, and we disclose it before you decide. Nothing pays for placement.</dd>
+      </div>
+      <div class="faq-item" data-reveal style="--i:4">
+        <dt class="faq-q">How is this different from the usual sites?</dt>
+        <dd class="faq-a">They give you a number. We give you the number plus its source, its date, and our confidence in it, so you can check us rather than take our word.</dd>
+      </div>
+    </dl>
+
+  </div>
+</section>
+
+<!-- ===== CLOSING CTA BAND (shared gate 6) ===== -->
+<section class="cta-section" aria-labelledby="cta-heading">
+  <div class="shell">
+    <div class="cta-card">
+      <span class="overline cta-eyebrow">Decide on evidence</span>
+      <h2 id="cta-heading" class="display-section cta-headline">Start with your situation.</h2>
+      <p class="cta-sub">Tell us your income, your visa needs, and what you want from a place. You get back a sourced shortlist of countries, regions, and towns, every figure cited.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Build my shortlist
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" class="text-link">See the methodology</a>
+      </div>
+      <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-eng" role="contentinfo">
+  <div class="footer-scene">
+    <div class="shell">
+      <div class="footer-top" data-reveal style="--i:0">
+        <div>
+          <a href="#" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
+          <p class="footer-tagline">Cited relocation intelligence. Countries, regions, and towns, screened on evidence.</p>
+        </div>
+        <nav class="footer-cols" aria-label="Footer">
+          <div>
+            <span class="footer-col-label">Product</span>
+            <ul class="footer-links">
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Build my shortlist</a></li>
+              <li><a href="#">Compare</a></li>
+              <li><a href="#">Methodology</a></li>
+            </ul>
+          </div>
+          <div>
+            <span class="footer-col-label">Coverage</span>
+            <ul class="footer-links">
+              <li><a href="#">Greece</a></li>
+              <li><a href="#">Portugal</a></li>
+              <li><a href="#">Spain</a></li>
+              <li><a href="#">All countries</a></li>
+            </ul>
+            <span class="footer-cov-note">A growing set, adding weekly.</span>
+          </div>
+          <div>
+            <span class="footer-col-label">Company</span>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Sources</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legalstrip">
+    <div class="shell">
+      <p class="footer-fence">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 My Second Country</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="_msc-system.js"></script>
+<script>
+/* GATE 12 — live shortlist demo (homepage-unique). Scenario chips
+   re-rank the three places with the relevant cited figure; citations
+   expand on tap. All figures are real, from packages/data/src. */
+(function () {
+  'use strict';
+  var listEl = document.getElementById('ls-list');
+  var nameEl = document.getElementById('ls-scenario-name');
+  var rankedByEl = document.getElementById('ls-rankedby');
+  if (!listEl) return;
+
+  var DATE = '2026-06-24';
+  var PLACES = {
+    gr: { name: 'Chania, Crete', country: 'Greece' },
+    pt: { name: 'Lisbon', country: 'Portugal' },
+    es: { name: 'Valencia', country: 'Spain' }
+  };
+
+  var CONF = {
+    medium: '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>',
+    high: '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>'
+  };
+
+  var SCEN = {
+    tax: {
+      name: 'lower my taxes',
+      rankedBy: 'Ranked by lowest special-regime rate',
+      rows: [
+        { k: 'gr', val: '7', unit: '%', q: 'Pensioner, Art 5B', conf: 'medium', src: 'PwC Tax Summaries', host: 'taxsummaries.pwc.com', url: 'https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives', ex: '7 percent on foreign-sourced income (Art 5B), up to 15 fiscal years.' },
+        { k: 'pt', val: '20', unit: '%', q: 'IFICI regime', conf: 'medium', src: 'PwC Tax Summaries', host: 'taxsummaries.pwc.com', url: 'https://taxsummaries.pwc.com/portugal/individual/significant-developments', ex: 'IFICI provides a special 20 percent rate on eligible category A and B income.' },
+        { k: 'es', val: '24', unit: '%', q: 'Beckham regime', conf: 'medium', src: 'PwC Tax Summaries', host: 'taxsummaries.pwc.com', url: 'https://taxsummaries.pwc.com/spain/individual/other-issues', ex: '24 percent for the first 600,000 euros of taxable income, then 47 percent.' }
+      ]
+    },
+    remote: {
+      name: 'work remotely',
+      rankedBy: 'Ranked by lowest visa income floor',
+      rows: [
+        { k: 'es', val: '2,849', unit: '€/mo', q: 'Telework visa', conf: 'medium', src: 'Spain SMI, Real Decreto 126/2026', host: 'boe.es', url: 'https://www.boe.es/buscar/doc.php?id=BOE-A-2026-3815', date: '2026-06-28', ex: 'Spain telework visa: minimum income 200 percent of the SMI; the 2026 SMI is 17,094 euros/year (Real Decreto 126/2026), about 2,849 euros per month.' },
+        { k: 'gr', val: '3,500', unit: '€/mo', q: 'Nomad permit', conf: 'medium', src: 'Greek Migration Ministry', host: 'migration.gov.gr', url: 'https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/', ex: 'Greece digital nomad permit: minimum net monthly income 3,500 euros.' },
+        { k: 'pt', val: '3,680', unit: '€/mo', q: 'D8 visa', conf: 'medium', src: 'AIMA (Nomadas Digitais)', host: 'aima.gov.pt', url: 'https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe', date: '2026-06-28', ex: 'Portugal D8: about 3,680 euros per month in 2026 (4x the minimum wage, RMMG 920 euros, Decreto-Lei 139/2025), assessed by AIMA.' }
+      ]
+    },
+    retire: {
+      name: 'retire abroad',
+      rankedBy: 'Ranked by safety, Global Peace Index',
+      rows: [
+        { k: 'pt', val: '1.372', unit: '', q: 'Rank 7 of 163', conf: 'medium', src: 'IEP Global Peace Index 2024', host: 'visionofhumanity.org', url: 'https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf', ex: 'Portugal 2024 Global Peace Index 1.372 (rank 7 of 163). Lower is more peaceful.' },
+        { k: 'es', val: '1.597', unit: '', q: 'Rank 23 of 163', conf: 'medium', src: 'IEP Global Peace Index 2024', host: 'visionofhumanity.org', url: 'https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf', ex: 'Spain 2024 Global Peace Index 1.597 (rank 23 of 163). Lower is more peaceful.' },
+        { k: 'gr', val: '1.793', unit: '', q: 'Rank 40 of 163', conf: 'medium', src: 'IEP Global Peace Index 2024', host: 'visionofhumanity.org', url: 'https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf', ex: 'Greece 2024 Global Peace Index 1.793 (rank 40 of 163). Lower is more peaceful.' }
+      ]
+    }
+  };
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  var KEYS = ['gr', 'pt', 'es'];
+  var rows = {};   // place key -> persistent <li> (reordered, not recreated, for the FLIP)
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function cellHTML(place, rankNum, r) {
+    var id = 'ls-cp-' + r.k;
+    var unit = r.unit ? '<span class="ls__unit">' + esc(r.unit) + '</span>' : '';
+    return '<span class="ls__rank">' + rankNum + '</span>' +
+      '<div class="ls__main">' +
+        '<span class="ls__placeline"><span class="ls__placename">' + esc(place.name) + '</span></span>' +
+        '<span class="ls__meta">' + esc(place.country) + ' · ' + esc(r.q) + '</span>' +
+      '</div>' +
+      '<div class="ls__right">' +
+        '<span class="ls__val">' + esc(r.val) + unit + '</span>' +
+        '<span class="ls__prov">' +
+          '<span class="ls__conf" aria-label="Confidence: ' + r.conf + '">' + CONF[r.conf] + r.conf + '</span>' +
+          '<span class="ls__sep" aria-hidden="true">·</span>' +
+          '<button class="cite ls__cite" aria-expanded="false" aria-controls="' + id + '">Source</button>' +
+        '</span>' +
+      '</div>' +
+      '<div class="ls__panel cite-panel-wrap" id="' + id + '" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">' +
+        '<p class="cite-panel__where">' + esc(r.src) + ' · ' + (r.date || DATE) + '</p>' +
+        '<blockquote>"' + esc(r.ex) + '"</blockquote>' +
+        '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">View source at ' + esc(r.host) + '</a>' +
+      '</div></div></div>';
+  }
+
+  KEYS.forEach(function (k) {
+    var li = document.createElement('li');
+    li.className = 'ls__row';
+    li.setAttribute('data-k', k);
+    rows[k] = li;
+    listEl.appendChild(li);
+  });
+
+  function apply(key, animate) {
+    var s = SCEN[key];
+    nameEl.textContent = s.name;
+    rankedByEl.textContent = s.rankedBy;
+
+    var first = {};
+    if (animate && !prefersReduced) {
+      KEYS.forEach(function (k) { first[k] = rows[k].getBoundingClientRect().top; });
+    }
+
+    /* update content + reorder the persistent rows into ranked order */
+    s.rows.forEach(function (r, i) {
+      var li = rows[r.k];
+      li.innerHTML = cellHTML(PLACES[r.k], i + 1, r);
+      li.classList.toggle('is-top', i === 0);
+      listEl.appendChild(li);
+    });
+
+    /* FLIP: invert to old position, then release to animate to the new one */
+    if (animate && !prefersReduced) {
+      KEYS.forEach(function (k) {
+        var li = rows[k];
+        var dy = first[k] - li.getBoundingClientRect().top;
+        if (dy) { li.style.transition = 'none'; li.style.transform = 'translateY(' + dy + 'px)'; li.style.willChange = 'transform'; }
+      });
+      requestAnimationFrame(function () {
+        KEYS.forEach(function (k) {
+          var li = rows[k];
+          li.style.transition = 'transform 520ms var(--ease)';
+          li.style.transform = '';
+          /* release the compositor layer once the slide settles */
+          li.addEventListener('transitionend', function clr() { li.style.willChange = 'auto'; li.removeEventListener('transitionend', clr); }, { once: true });
+        });
+      });
+    }
+  }
+
+  document.querySelectorAll('input[name="ls-scenario"]').forEach(function (radio) {
+    radio.addEventListener('change', function () { if (radio.checked) apply(radio.value, true); });
+  });
+  var taxRadio = document.querySelector('input[name="ls-scenario"][value="tax"]');
+  if (taxRadio) taxRadio.checked = true;
+
+  /* citation expand (delegated; rows persist, panels reset closed on re-render) */
+  listEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.cite');
+    if (!btn) return;
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!panel) return;
+    var exp = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!exp));
+    panel.classList.toggle('open', !exp);
+  });
+
+  apply('tax', false);
+}());
+</script>
+
+</body>
+</html>

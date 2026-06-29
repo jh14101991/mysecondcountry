@@ -11,6 +11,7 @@ import { regimeEligibilityCards } from "@where/engine";
 import Breadcrumb from "../../../components/Breadcrumb.astro";
 import CiteThis from "../../../components/CiteThis.astro";
 import ClaimCard from "../../../components/ClaimCard.astro";
+import ConfidenceMark from "../../../components/ConfidenceMark.astro";
 import DirectAnswer from "../../../components/DirectAnswer.astro";
 import FactsTable from "../../../components/FactsTable.astro";
 import FaqItem from "../../../components/FaqItem.astro";
@@ -18,8 +19,11 @@ import FenceBlock from "../../../components/FenceBlock.astro";
 import Masthead from "../../../components/Masthead.astro";
 import RelatedLinks from "../../../components/RelatedLinks.astro";
 import SectionHeading from "../../../components/SectionHeading.astro";
+import EmailCapture from "../../../components/EmailCapture.astro";
+import IntroRequest from "../../../components/IntroRequest.astro";
 import Base from "../../../layouts/Base.astro";
 import { buildDateline, monthYearLabel } from "../../../lib/cited.ts";
+import { showIntro } from "../../../lib/monetisation.ts";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -102,6 +106,15 @@ const factRows = [
   { label: "Maximum regime duration", cited: regime.durationYears, unit: "years" },
 ];
 
+// Alternatives: every other published regime, linked to its page. Evergreen.
+const altRegimeLinks = regimes
+  .filter((r) => r.id !== regime.id)
+  .map((r) => {
+    const cSlug = placeById(r.countryId)?.slug;
+    return cSlug ? { label: `${r.name}`, href: `/${cSlug}/tax/${r.slug}` } : null;
+  })
+  .filter((l): l is { label: string; href: string } => l !== null);
+
 const citeLines = allFacts.map(({ path, cited }) => ({
   sourceName: cited.sourceName,
   verifiedDate: cited.verifiedDate,
@@ -155,6 +168,21 @@ const jsonLd = [
 
     <p class="lede">{regime.summary}</p>
 
+    <div class="rate-figure">
+      <span class="overline">Headline rate</span>
+      <p class="rate-figure__val num">{rateDisplay}</p>
+      <p class="rate-figure__basis">
+        on {regime.incomeBasis}, for up to {regime.durationYears.value} years
+      </p>
+      <p class="rate-figure__prov">
+        <ConfidenceMark level={regime.headlineRate.confidence} />
+        <a href={regime.headlineRate.sourceUrl} target="_blank" rel="noopener nofollow">
+          {regime.headlineRate.sourceName}
+        </a>
+        <span class="rate-figure__date">verified {regime.headlineRate.verifiedDate}</span>
+      </p>
+    </div>
+
     <DirectAnswer question={`How does the ${regime.name} work?`}>
       <p>
         {countryName} {rateApplies} under this regime, for up to {regime.durationYears.value} years
@@ -179,6 +207,8 @@ const jsonLd = [
         }
       </ul>
     </section>
+
+    {showIntro(regime.id) && <IntroRequest pageId={regime.id} corridorLabel="Portugal IFICI" />}
 
     <section aria-labelledby="headline-facts-h">
       <SectionHeading as="h2" id="headline-facts-h">Headline facts</SectionHeading>
@@ -209,30 +239,95 @@ const jsonLd = [
       ]}
     />
 
+    {altRegimeLinks.length > 0 && (
+      <RelatedLinks heading="Alternative regimes" links={altRegimeLinks} />
+    )}
+
+    <EmailCapture />
+
     <section aria-labelledby="how-to-read-h" class="how-to-read">
       <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
       <p>
         Every figure above is a cited claim: a value, the named source, the date we last verified
-        it, and a confidence mark. Verified means an official statistical body or primary law. Good
-        means an official authority read through a secondary. Limited means a directional figure to
-        check yourself.
+        it, and a confidence mark. A high mark means an official statistical body or primary law.
+        Medium means an official authority read through a secondary source. Low means a directional
+        figure to check yourself.
       </p>
     </section>
   </article>
 
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="shell">
+      <div class="cta-card">
+        <span class="overline cta-eyebrow">Build my shortlist</span>
+        <h2 id="cta-heading" class="display-section cta-headline">See where this regime fits your move.</h2>
+        <p class="cta-sub">
+          Tell us your income, visa needs, and what you want from a place. You get back a sourced
+          shortlist of countries, regions, and towns, every figure cited.
+        </p>
+        <div class="cta-actions">
+          <a href="/screener" class="btn-primary">
+            Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href={`/places/${country}`} class="text-link">{countryName} dossier</a>
+        </div>
+        <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
+      </div>
+    </div>
+  </section>
+
   <style>
     .lede {
-      max-width: var(--measure);
-      font-family: var(--font-serif);
+      max-width: 62ch;
+      font-family: var(--f-ui);
       font-size: 1.05rem;
       line-height: 1.6;
-      color: var(--muted-strong);
+      color: var(--ink-soft);
       margin: 0 0 0.5rem;
     }
+    .rate-figure {
+      margin: 1.75rem 0 2.25rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .rate-figure__val {
+      font-family: var(--f-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1;
+      color: var(--ink);
+      margin: 0.5rem 0 0;
+    }
+    .rate-figure__basis {
+      font-family: var(--f-ui);
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin: 0.6rem 0 0;
+      max-width: 50ch;
+    }
+    .rate-figure__prov {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      font-family: var(--f-mono);
+      font-size: var(--t-meta);
+      color: var(--stone);
+    }
+    .rate-figure__prov a {
+      color: var(--accent);
+    }
+    .rate-figure__date {
+      color: var(--stone);
+    }
     .section-note {
-      max-width: var(--measure);
-      color: var(--muted-foreground);
-      font-family: var(--font-serif);
+      max-width: 62ch;
+      color: var(--stone);
+      font-family: var(--f-ui);
       font-size: 0.98rem;
       margin-bottom: 1.2rem;
     }
@@ -241,23 +336,21 @@ const jsonLd = [
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 1rem;
+      gap: 0;
     }
     .how-to-read {
       margin-top: 3rem;
-      padding: 1.4rem 1.5rem;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--hairline-soft);
     }
     .how-to-read :global(.section-heading--heading) {
       margin-top: 0;
     }
     .how-to-read p {
-      max-width: var(--measure);
+      max-width: 62ch;
       margin: 0;
-      font-family: var(--font-serif);
-      color: var(--muted-strong);
+      font-family: var(--f-ui);
+      color: var(--ink-soft);
     }
   </style>
 </Base>

@@ -8,9 +8,11 @@ import CiteThis from "../components/CiteThis.astro";
 import ClaimCard from "../components/ClaimCard.astro";
 import ComparisonCell from "../components/ComparisonCell.astro";
 import DirectAnswer from "../components/DirectAnswer.astro";
+import EmailCapture from "../components/EmailCapture.astro";
 import FactsTable from "../components/FactsTable.astro";
 import FaqItem from "../components/FaqItem.astro";
 import FenceBlock from "../components/FenceBlock.astro";
+import IntroRequest from "../components/IntroRequest.astro";
 import Masthead from "../components/Masthead.astro";
 import RelatedLinks from "../components/RelatedLinks.astro";
 import SectionHeading from "../components/SectionHeading.astro";
@@ -84,22 +86,22 @@ const leaders = [
   <div class="swatch-grid">
     {[
       { token: "--paper",             label: "--paper" },
-      { token: "--card",              label: "--card" },
-      { token: "--panel",             label: "--panel" },
+      { token: "--paper-warm",        label: "--paper-warm" },
+      { token: "--paper-stone",       label: "--paper-stone" },
+      { token: "--paper-2",           label: "--paper-2" },
+      { token: "--surface",           label: "--surface" },
       { token: "--ink",               label: "--ink" },
-      { token: "--muted-foreground",  label: "--muted-foreground" },
-      { token: "--primary",           label: "--primary" },
-      { token: "--primary-deep",      label: "--primary-deep" },
-      { token: "--gr",                label: "--gr (greece)" },
-      { token: "--pt",                label: "--pt (portugal)" },
-      { token: "--es",                label: "--es (spain)" },
-      { token: "--conf-verified",     label: "--conf-verified" },
-      { token: "--conf-good",         label: "--conf-good" },
-      { token: "--conf-low",          label: "--conf-low" },
-      { token: "--fence-bg",          label: "--fence-bg" },
+      { token: "--ink-soft",          label: "--ink-soft" },
+      { token: "--stone",             label: "--stone" },
+      { token: "--hairline-soft",     label: "--hairline-soft" },
+      { token: "--accent",            label: "--accent" },
+      { token: "--accent-dark",       label: "--accent-dark" },
+      { token: "--tint-clay",         label: "--tint-clay" },
+      { token: "--pop",               label: "--pop" },
+      { token: "--pop-ink",           label: "--pop-ink" },
     ].map(({ token, label }) => (
       <div class="swatch">
-        <div class="swatch-box" style={`background: var(${token}); border: 1px solid var(--rule);`}></div>
+        <div class="swatch-box" style={`background: var(${token}); border: 1px solid var(--hairline-soft);`}></div>
         <code class="swatch-label">{label}</code>
       </div>
     ))}
@@ -108,27 +110,27 @@ const leaders = [
   <SectionHeading as="h3">Typography tokens</SectionHeading>
   <div class="type-stack">
     <div class="type-row">
-      <code class="type-token">--font-display</code>
-      <p class="type-sample" style="font-family: var(--font-display); font-size: 2rem; font-weight: 400; margin:0; line-height:1.1;">
+      <code class="type-token">--f-display</code>
+      <p class="type-sample" style="font-family: var(--f-display); font-size: 2rem; font-weight: 400; margin:0; line-height:1.1;">
         Relocation intelligence, cited
       </p>
     </div>
     <div class="type-row">
-      <code class="type-token">--font-serif</code>
-      <p class="type-sample" style="font-family: var(--font-serif); font-size: 1.0625rem; margin:0; line-height:1.65;">
+      <code class="type-token">--f-ui</code>
+      <p class="type-sample" style="font-family: var(--f-ui); font-size: 1.0625rem; margin:0; line-height:1.65;">
         Every figure on this page links to its primary source and carries a verified date.
         The data is screened, not advice.
       </p>
     </div>
     <div class="type-row">
-      <code class="type-token">--font-ui</code>
-      <p class="type-sample" style="font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin:0;">
-        Verified label
+      <code class="type-token">--f-ui label</code>
+      <p class="type-sample" style="font-family: var(--f-ui); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin:0;">
+        Source label
       </p>
     </div>
     <div class="type-row">
-      <code class="type-token">--font-mono</code>
-      <p class="type-sample" style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 500; font-variant-numeric: tabular-nums; margin:0;">
+      <code class="type-token">--f-mono</code>
+      <p class="type-sample" style="font-family: var(--f-mono); font-size: 1.35rem; font-weight: 500; font-variant-numeric: tabular-nums; margin:0;">
         1,234.5
       </p>
     </div>
@@ -177,14 +179,14 @@ const leaders = [
   </div>
 
   <!-- CitedValue: low confidence -->
-  <SectionHeading as="h3">CitedValue: low confidence (January high, Limited tier)</SectionHeading>
+  <SectionHeading as="h3">CitedValue: low confidence (January high)</SectionHeading>
   <div class="demo-block">
     <table class="demo-table">
       <caption>Greece: cited figures</caption>
       <tbody>
         <tr>
           <th scope="row">Average January high</th>
-          <CitedValue cited={lowCited} unit="°C" as="td" />
+          <CitedValue cited={lowCited} unit="C" as="td" />
         </tr>
       </tbody>
     </table>
@@ -212,7 +214,7 @@ const leaders = [
       rows={[
         { label: "Price level index, EU27=100", cited: gr.costOfLiving.priceLevelIndexEU27, unit: "EU27=100" },
         { label: "Digital nomad visa, minimum net income", cited: gr.residency!.digitalNomadVisa, unit: "EUR/month" },
-        { label: "Average January high", cited: gr.climate.averageJanuaryHighC, unit: "°C" },
+        { label: "Average January high", cited: gr.climate.averageJanuaryHighC, unit: "C" },
         { label: "Special tax regime", cited: gr.tax!.specialRegime!, prose: true },
       ]}
     />
@@ -408,12 +410,26 @@ const leaders = [
       note="Scores are relative among Greece, Portugal, and Spain. Every number is sourced in the dataset."
     />
   </div>
+
+  <SectionHeading as="h3">EmailCapture</SectionHeading>
+  <div class="demo-block demo-block--plain">
+    <EmailCapture />
+  </div>
+
+  <SectionHeading as="h3">IntroRequest: gated component</SectionHeading>
+  <div class="demo-block">
+    <IntroRequest pageId="styleguide-preview" corridorLabel="Portugal IFICI" />
+    <p class="demo-note">
+      IntroRequest is imported here so its v5 styles compile, but it renders no form while
+      INTRO_LIVE is false. That is the production safety gate.
+    </p>
+  </div>
 </Base>
 
 <style>
   .sg-intro {
-    font-family: var(--font-serif);
-    color: var(--muted-foreground);
+    font-family: var(--f-ui);
+    color: var(--ink-soft);
     font-size: 0.95rem;
     max-width: 52rem;
     margin: 0 0 2rem;
@@ -435,12 +451,12 @@ const leaders = [
   .swatch-box {
     width: 100%;
     height: 3.5rem;
-    border-radius: var(--radius-sm);
+    border-radius: 4px;
   }
   .swatch-label {
-    font-family: var(--font-mono);
+    font-family: var(--f-mono);
     font-size: 0.7rem;
-    color: var(--muted-foreground);
+    color: var(--stone);
     word-break: break-all;
   }
 
@@ -452,15 +468,15 @@ const leaders = [
   }
   .type-row {
     padding: 1rem 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
   }
   .type-token {
     display: block;
-    font-family: var(--font-mono);
+    font-family: var(--f-mono);
     font-size: 0.7rem;
-    color: var(--muted-foreground);
+    color: var(--stone);
     margin-bottom: 0.5rem;
   }
   .type-sample {
@@ -470,14 +486,19 @@ const leaders = [
   /* ── Demo blocks ─────────────────────────────────────────────────────── */
   .demo-block {
     padding: 1.5rem;
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
     margin-bottom: 1.5rem;
   }
   .demo-block--flush {
     padding: 0;
     overflow: hidden;
+  }
+  .demo-block--plain {
+    padding: 0;
+    background: transparent;
+    border: 0;
   }
 
   /* ── Demo tables ─────────────────────────────────────────────────────── */
@@ -498,11 +519,11 @@ const leaders = [
     text-align: left;
     vertical-align: top;
     padding: 0.9rem 1rem 0.9rem 0;
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-weight: 600;
     font-size: 0.95rem;
     color: var(--ink);
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--hairline-soft);
     width: 38%;
   }
 
@@ -523,24 +544,24 @@ const leaders = [
     text-align: left;
     vertical-align: top;
     padding: 0.9rem 1rem 0.9rem 0;
-    font-family: var(--font-ui);
+    font-family: var(--f-ui);
     font-weight: 600;
     font-size: 0.875rem;
     color: var(--ink);
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--hairline-soft);
     width: 28%;
   }
   .demo-comp-table td {
     vertical-align: top;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--hairline-soft);
     width: 36%;
   }
 
   .demo-note {
-    font-family: var(--font-serif);
+    font-family: var(--f-display);
     font-size: 0.82rem;
     font-style: italic;
-    color: var(--muted-foreground);
+    color: var(--stone);
     margin: 0.75rem 0 0;
   }
 </style>

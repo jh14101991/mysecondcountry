@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Second Country · Gate 27: Sources index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- SHARED FOUNDATION + SECTION LIBRARY -->
+<link rel="stylesheet" href="_msc-system.css">
+
+<!-- GATE 9 — SOURCES LIST: all styles are LOCKED in the shared
+     _msc-system.css ("SOURCES LIST (gate 9)") and the search/filter
+     behaviour in _msc-system.js. This mockup carries no page CSS or
+     JS; it consumes the shared system, proving the migration. -->
+<style>
+/* GATE 27 — SOURCES INDEX: reuses the LOCKED gate-9 sources list
+   (styles + search/filter in the shared system) and adds a freshness
+   section and the shared CTA band. */
+.csfresh { margin-top: clamp(36px,4.5vw,56px); padding-top: clamp(22px,2.8vw,30px); border-top: 1px solid var(--hairline-soft); }
+.csfresh__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.5rem,2.4vw,1.875rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.csfresh__text { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.66; margin-top: 12px; max-width: 70ch; }
+.csfresh__link { margin-top: 14px; }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- shared nav -->
+<header class="site-header" role="banner">
+  <div class="shell">
+    <div class="site-header-inner">
+      <a class="brand-wordmark" href="#" aria-label="My Second Country home">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <span class="brand-name">My Second Country</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="#">How it works</a>
+        <a class="nav-link" href="#">Compare</a>
+        <a class="nav-link" href="#">Methodology</a>
+        <a class="nav-link" href="#">About</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#" class="btn-primary">Build my shortlist
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="nav-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="#">How it works</a>
+      <a class="nav-link" href="#">Compare</a>
+      <a class="nav-link" href="#">Methodology</a>
+      <a class="nav-link" href="#">About</a>
+      <a href="#" class="btn-primary">Build my shortlist</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="shell">
+    <article class="sources">
+
+      <nav class="breadcrumb sources-bc" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span aria-current="page">Sources</span>
+          </li>
+        </ol>
+      </nav>
+
+      <header class="sources-head">
+        <span class="overline">Sources</span>
+        <h1 class="display-section">Where every figure comes from</h1>
+        <p class="sources-summary">Every figure on this site traces to one of these. Each is dated and confidence-marked, and links straight to the original. Search or filter by what you care about.</p>
+      </header>
+
+      <div class="liability-note sources-fence" role="note" aria-label="Disclaimer">
+        <span class="liability-mark">Note</span>
+        <p class="liability-text">Sourced screening, not legal, tax, or financial advice; verify with a professional.</p>
+      </div>
+
+      <div class="src-controls">
+        <div class="src-search-wrap">
+          <span class="src-search-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <label class="sr-only-label" for="src-search">Search sources</label>
+          <input class="src-search" id="src-search" type="search" placeholder="Search sources, e.g. Eurostat, tax, Wikipedia" autocomplete="off">
+        </div>
+        <div class="srcfilter" role="group" aria-label="Filter by dimension">
+        <button class="srcfilter__btn" type="button" data-dim="all" aria-pressed="true">All</button>
+        <button class="srcfilter__btn" type="button" data-dim="cost" aria-pressed="false">Cost of living</button>
+        <button class="srcfilter__btn" type="button" data-dim="tax" aria-pressed="false">Tax</button>
+        <button class="srcfilter__btn" type="button" data-dim="visa" aria-pressed="false">Visa</button>
+        <button class="srcfilter__btn" type="button" data-dim="residency" aria-pressed="false">Residency</button>
+        <button class="srcfilter__btn" type="button" data-dim="climate" aria-pressed="false">Climate</button>
+        <button class="srcfilter__btn" type="button" data-dim="healthcare" aria-pressed="false">Healthcare</button>
+        <button class="srcfilter__btn" type="button" data-dim="safety" aria-pressed="false">Safety</button>
+        </div>
+        <p class="src-count" id="src-count" aria-live="polite">Showing 19 of 19 sources</p>
+      </div>
+
+      <div class="src-groups">
+      <section class="src-group" data-dim="cost">
+        <h2 class="src-group__label">Cost of living<span class="src-group__count">1</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="cost" data-text="eurostat, price level index for actual individual consumption (tec00120, eu27 = 100) price level index for greece, portugal, and spain. ec.europa.eu">
+          <a class="src__name" href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener noreferrer">Eurostat, price level index for actual individual consumption (tec00120, EU27 = 100)<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Price level index for Greece, Portugal, and Spain.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">ec.europa.eu</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="tax">
+        <h2 class="src-group__label">Tax<span class="src-group__count">6</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, greece, taxes on personal income greece top personal income tax rate. taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Greece, taxes on personal income<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Greece top personal income tax rate.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, greece, other tax credits and incentives greece non-dom (art 5a) and 7% foreign-pensioner (art 5b) regimes. taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Greece, other tax credits and incentives<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Greece non-dom (Art 5A) and 7% foreign-pensioner (Art 5B) regimes.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-25</span>
+          </div>
+        </li>
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, portugal, taxes on personal income portugal top personal income tax rate. taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/portugal/individual/taxes-on-personal-income" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Portugal, taxes on personal income<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Portugal top personal income tax rate.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, portugal, significant developments portugal ifici regime, the nhr successor. taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/portugal/individual/significant-developments" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Portugal, significant developments<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Portugal IFICI regime, the NHR successor.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-25</span>
+          </div>
+        </li>
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, spain, taxes on personal income spain top personal income tax rate. taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/spain/individual/taxes-on-personal-income" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Spain, taxes on personal income<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Spain top personal income tax rate.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="tax" data-text="pwc worldwide tax summaries, spain, other issues spain beckham regime (art 93 lirpf). taxsummaries.pwc.com">
+          <a class="src__name" href="https://taxsummaries.pwc.com/spain/individual/other-issues" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries, Spain, other issues<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Spain Beckham regime (Art 93 LIRPF).</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">taxsummaries.pwc.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="visa">
+        <h2 class="src-group__label">Visa<span class="src-group__count">3</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="visa" data-text="hellenic ministry of migration and asylum, digital nomad residence permit (law 5038/2023) greece digital nomad visa income floor. migration.gov.gr">
+          <a class="src__name" href="https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/" target="_blank" rel="noopener noreferrer">Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Law 5038/2023)<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Greece digital nomad visa income floor.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">migration.gov.gr</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="visa" data-text="aima, portugal d8 digital nomad visa (nomadas digitais) portugal d8 income floor (4x the minimum wage, rmmg 920 euros, decreto-lei 139/2025), assessed by aima. aima.gov.pt">
+          <a class="src__name" href="https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe" target="_blank" rel="noopener noreferrer">AIMA, Portugal D8 remote-work residence (Nomadas Digitais)<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Portugal D8 income floor (4x the minimum wage; RMMG 920 euros, Decreto-Lei 139/2025), assessed by AIMA.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">aima.gov.pt</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-28</span>
+          </div>
+        </li>
+        <li class="src" data-dim="visa" data-text="spain smi real decreto 126/2026 telework digital nomad visa spain telework visa income floor (200% of the smi, 2026). boe.es">
+          <a class="src__name" href="https://www.boe.es/buscar/doc.php?id=BOE-A-2026-3815" target="_blank" rel="noopener noreferrer">Spain SMI (Real Decreto 126/2026); telework visa floor is 200% of SMI<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Spain telework visa income floor (200% of the SMI; 2026 SMI per Real Decreto 126/2026).</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">boe.es</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-28</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="residency">
+        <h2 class="src-group__label">Residency<span class="src-group__count">3</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="residency" data-text="hellenic ministry of migration and asylum, investor residence permit (golden visa) greece golden visa investment tiers. migration.gov.gr">
+          <a class="src__name" href="https://migration.gov.gr/en/golden-visa/" target="_blank" rel="noopener noreferrer">Hellenic Ministry of Migration and Asylum, investor residence permit (Golden Visa)<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Greece golden visa investment tiers.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">migration.gov.gr</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="residency" data-text="global citizen solutions, portugal golden visa (ari) after the 2023 mais habitacao reform portugal golden visa routes after real estate was removed. globalcitizensolutions.com">
+          <a class="src__name" href="https://www.globalcitizensolutions.com/portugal-golden-visa/" target="_blank" rel="noopener noreferrer">Global Citizen Solutions, Portugal golden visa (ARI) after the 2023 Mais Habitacao reform<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Portugal golden visa routes after real estate was removed.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">globalcitizensolutions.com</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="residency" data-text="la moncloa (government of spain press office), end of the golden visa spain golden visa abolition, 3 april 2025. lamoncloa.gob.es">
+          <a class="src__name" href="https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/vivienda-agenda-urbana/paginas/2025/020425-fin-golden-visa.aspx" target="_blank" rel="noopener noreferrer">La Moncloa (Government of Spain press office), end of the golden visa<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Spain golden visa abolition, 3 April 2025.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">lamoncloa.gob.es</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="climate">
+        <h2 class="src-group__label">Climate<span class="src-group__count">4</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="climate" data-text="gloh2o koppen-geiger climate classification (beck et al. 2023) köppen climate class for greece, portugal, and spain. gloh2o.org">
+          <a class="src__name" href="https://www.gloh2o.org/koppen/" target="_blank" rel="noopener noreferrer">GloH2O Koppen-Geiger climate classification (Beck et al. 2023)<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Köppen climate class for Greece, Portugal, and Spain.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">gloh2o.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="climate" data-text="athens climate normals, via wikipedia greece january and july highs (athens as proxy). en.wikipedia.org">
+          <a class="src__name" href="https://en.wikipedia.org/wiki/Athens" target="_blank" rel="noopener noreferrer">Athens climate normals, via Wikipedia<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Greece January and July highs (Athens as proxy).</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">en.wikipedia.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="climate" data-text="lisbon climate normals (ipma 1981-2010), via wikipedia portugal january and july highs (lisbon as proxy). en.wikipedia.org">
+          <a class="src__name" href="https://en.wikipedia.org/wiki/Climate_of_Lisbon" target="_blank" rel="noopener noreferrer">Lisbon climate normals (IPMA 1981-2010), via Wikipedia<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Portugal January and July highs (Lisbon as proxy).</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">en.wikipedia.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        <li class="src" data-dim="climate" data-text="madrid climate normals (aemet 1991-2020, retiro), via wikipedia spain january and july highs (madrid as proxy). en.wikipedia.org">
+          <a class="src__name" href="https://en.wikipedia.org/wiki/Madrid" target="_blank" rel="noopener noreferrer">Madrid climate normals (AEMET 1991-2020, Retiro), via Wikipedia<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Spain January and July highs (Madrid as proxy).</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">en.wikipedia.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="healthcare">
+        <h2 class="src-group__label">Healthcare<span class="src-group__count">1</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="healthcare" data-text="who global health observatory, medical doctors per 10,000, via wikipedia physicians per 1,000 for greece, portugal, and spain. en.wikipedia.org">
+          <a class="src__name" href="https://en.wikipedia.org/wiki/List_of_countries_by_number_of_physicians" target="_blank" rel="noopener noreferrer">WHO Global Health Observatory, medical doctors per 10,000, via Wikipedia<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Physicians per 1,000 for Greece, Portugal, and Spain.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">en.wikipedia.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+
+      <section class="src-group" data-dim="safety">
+        <h2 class="src-group__label">Safety<span class="src-group__count">1</span></h2>
+        <ul class="src-list">
+        <li class="src" data-dim="safety" data-text="institute for economics and peace, global peace index 2024 global peace index score for greece, portugal, and spain. visionofhumanity.org">
+          <a class="src__name" href="https://www.visionofhumanity.org/wp-content/uploads/2024/06/GPI-2024-web.pdf" target="_blank" rel="noopener noreferrer">Institute for Economics and Peace, Global Peace Index 2024<svg class="src__ext" width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="src__covers">Global Peace Index score for Greece, Portugal, and Spain.</p>
+          <div class="src__prov">
+            <span class="src__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__host">visionofhumanity.org</span>
+            <span class="src__sep" aria-hidden="true">·</span>
+            <span class="src__date">verified2026-06-24</span>
+          </div>
+        </li>
+        </ul>
+      </section>
+        <p class="src-empty" id="src-empty" hidden>No sources match that search. Clear the search or pick a different filter.</p>
+      </div>
+
+      <p class="sources-foot">19 sources behind the figures shown for Greece, Portugal, and Spain, all verified 2026-06-24. Confidence: filled = high, half = medium, open = low. Rule-based sources (tax, visa, residency) are re-checked more often than slow-moving ones (climate normals). Climate readings use each capital as a national proxy, so they are low confidence.</p>
+
+      <section class="csfresh" aria-labelledby="fresh-title">
+        <h2 class="csfresh__title" id="fresh-title">How fresh these are</h2>
+        <p class="csfresh__text">Rule-based sources, tax, visa, and residency, are re-checked on a tighter cycle than slow-moving ones like climate normals and the peace index. Each figure carries its own verified date; when one passes its refresh window, a staleness banner is shown, not hidden. The engine never silently serves a stale number.</p>
+        <p class="csfresh__link"><a href="gate-26-methodology.html" class="text-link">Read the full methodology
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="margin-left:4px;vertical-align:middle;"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></p>
+      </section>
+
+    </article>
+  </div>
+  <section class="cta-section" aria-labelledby="cta-title">
+    <div class="shell">
+      <div class="cta-card">
+        <span class="overline" style="margin-bottom:0;">Decide on evidence</span>
+        <h2 class="display-mid cta-headline" id="cta-title">Every figure, back to its source.</h2>
+        <p class="cta-sub">Set what matters to you and the engine screens it against these published sources, every figure shown with its date and confidence.</p>
+        <div class="cta-actions">
+          <a href="gate-21-screener.html" class="btn-primary">Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="cta-reassure">Free to start. It screens, it does not advise.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- shared footer -->
+<footer class="footer-eng" role="contentinfo">
+  <div class="footer-scene">
+    <div class="shell">
+      <div class="footer-top">
+        <div>
+          <a href="#" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
+          <p class="footer-tagline">Cited relocation intelligence. Countries, regions, and towns, screened on evidence.</p>
+        </div>
+        <nav class="footer-cols" aria-label="Footer">
+          <div>
+            <span class="footer-col-label">Product</span>
+            <ul class="footer-links">
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Build my shortlist</a></li>
+              <li><a href="#">Compare</a></li>
+              <li><a href="#">Methodology</a></li>
+            </ul>
+          </div>
+          <div>
+            <span class="footer-col-label">Coverage</span>
+            <ul class="footer-links">
+              <li><a href="#">Greece</a></li>
+              <li><a href="#">Portugal</a></li>
+              <li><a href="#">Spain</a></li>
+              <li><a href="#">All countries</a></li>
+            </ul>
+          </div>
+          <div>
+            <span class="footer-col-label">Company</span>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Sources</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legalstrip">
+    <div class="shell">
+      <p class="footer-fence">Sourced screening, not legal, tax, or financial advice; verify with a professional.</p>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 My Second Country</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="_msc-system.js"></script>
+
+</body>
+</html>

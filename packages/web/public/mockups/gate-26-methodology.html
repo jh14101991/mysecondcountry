@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Second Country · Gate 26: Methodology (how we cite)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- SHARED FOUNDATION + SECTION LIBRARY -->
+<link rel="stylesheet" href="_msc-system.css">
+
+<style>
+/* ============================================================
+   GATE 26 — METHODOLOGY / HOW WE CITE  [EDITORIAL, the trust page]
+   How the engine turns a situation into a ranked, source-cited
+   shortlist; what the confidence marks mean; how figures stay fresh;
+   what answer engines can quote. Type-and-evidence-led, no decorative
+   illustration (a data/trust surface): the worked "anatomy of a
+   figure" (the gate-13 device, calm here, no scroll choreography)
+   dissects one real DataFigure into its provenance. Real cited
+   values only (no rent figures: none exist in the dataset).
+   ============================================================ */
+body { background: var(--paper); }
+
+.method-page { max-width: 760px; margin: 0 auto; padding: clamp(28px,4vw,44px) 0 clamp(56px,7vw,96px); }
+.mp-head .display-section { margin: 8px 0 14px; }
+.mp-standfirst { font-family: var(--f-ui); font-size: clamp(var(--t-lead),1.4vw,1.18rem); color: var(--ink-soft); line-height: 1.55; max-width: 60ch; }
+.mp-fence { margin-top: clamp(22px,3vw,30px); }
+
+.msec { margin-top: clamp(46px,6vw,80px); }
+.msec .overline { margin-bottom: 10px; }
+.msec__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.7rem,2.8vw,2.25rem); line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); }
+.msec__intro { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.66; margin-top: 14px; max-width: 64ch; }
+
+/* the method: numbered editorial rows, not icon cards */
+.method-steps { margin-top: clamp(24px,3.2vw,36px); border-top: 1px solid var(--ink); }
+.method-step { display: grid; grid-template-columns: auto 1fr; column-gap: clamp(18px,2.6vw,32px); padding: clamp(22px,2.8vw,30px) 0; border-bottom: 1px solid var(--hairline-soft); }
+.method-step__num { font-family: var(--f-mono); font-size: 1.25rem; font-weight: 500; color: var(--stone); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.method-step__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: 1.4rem; letter-spacing: -0.014em; color: var(--ink); margin-bottom: 8px; }
+.method-step__text { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.62; max-width: 60ch; }
+.method-note { margin-top: clamp(22px,3vw,30px); padding: clamp(18px,2.4vw,24px) clamp(20px,2.6vw,26px); background: var(--paper-warm); border: 1px solid var(--hairline-soft); border-radius: 14px; }
+.method-note__text { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.6; max-width: 70ch; }
+.method-note__text strong { color: var(--ink); font-weight: 700; }
+
+/* worked figure: the anatomy of one DataFigure (calm, no animation) */
+.anatomy { margin-top: clamp(24px,3.2vw,36px); padding: clamp(26px,3.4vw,40px); border: 1px solid var(--hairline-soft); border-radius: 10px; background: var(--surface); display: grid; grid-template-columns: minmax(0,0.8fr) 1.4fr; gap: clamp(28px,4vw,56px); align-items: start; }
+.anatomy__valwrap { border-right: 1px solid var(--hairline-soft); padding-right: clamp(20px,3vw,36px); }
+.anatomy__val { font-family: var(--f-mono); font-size: clamp(3.2rem,7vw,4.6rem); font-weight: 500; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
+.anatomy__label { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.45; margin-top: 14px; }
+.anatomy__fields { display: grid; gap: clamp(14px,1.8vw,18px); }
+.afield { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: baseline; }
+.afield__key { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); letter-spacing: 0.06em; text-transform: uppercase; }
+.afield__val { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink); line-height: 1.5; }
+.afield__val.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.afield__conf { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
+.afield__val blockquote { font-style: italic; color: var(--ink-soft); border-left: 2px solid var(--hairline-soft); padding-left: 12px; margin: 0; }
+.afield__val a { color: var(--accent); font-family: var(--f-mono); font-size: var(--t-meta); text-decoration: underline; word-break: break-word; }
+@media (max-width: 640px) {
+  .anatomy { grid-template-columns: 1fr; gap: 24px; }
+  .anatomy__valwrap { border-right: none; border-bottom: 1px solid var(--hairline-soft); padding-right: 0; padding-bottom: 20px; }
+  .afield { grid-template-columns: 84px 1fr; }
+}
+
+/* confidence definitions ledger */
+.conf-defs { margin-top: clamp(24px,3.2vw,36px); }
+.conf-def { display: grid; grid-template-columns: 150px 1fr; gap: clamp(14px,2.4vw,28px); padding: clamp(18px,2.2vw,24px) 0; border-bottom: 1px solid var(--hairline-soft); align-items: baseline; }
+.conf-def:first-child { border-top: 1px solid var(--hairline-soft); }
+.conf-def__mark { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: var(--t-bodysm); color: var(--ink); }
+.conf-def__text { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.55; }
+@media (max-width: 560px) { .conf-def { grid-template-columns: 1fr; gap: 8px; } }
+
+/* freshness: example staleness banner (calm, never red) */
+.stale-banner { margin-top: clamp(22px,3vw,30px); display: flex; align-items: flex-start; gap: 12px; padding: clamp(16px,2.2vw,22px); background: var(--paper-stone); border: 1px solid var(--hairline-soft); border-radius: 12px; }
+.stale-banner__mark { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--pop-ink); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; padding-top: 2px; }
+.stale-banner__text { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.55; }
+
+/* answer-engine artifacts: plain links in a ledger */
+.artifacts { margin-top: clamp(24px,3.2vw,36px); border-top: 1px solid var(--hairline-soft); }
+.artifact { display: grid; grid-template-columns: 200px 1fr; gap: clamp(14px,2.4vw,28px); padding: clamp(16px,2vw,22px) 0; border-bottom: 1px solid var(--hairline-soft); align-items: baseline; }
+.artifact__link { font-family: var(--f-mono); font-size: var(--t-bodysm); color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 7px; }
+.artifact__link:hover, .artifact__link:focus-visible { text-decoration: underline; }
+.artifact__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.artifact__desc { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.5; }
+@media (max-width: 560px) { .artifact { grid-template-columns: 1fr; gap: 6px; } }
+
+.dsrc-list { list-style: none; margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- shared nav (gate 1) -->
+<header class="site-header" role="banner">
+  <div class="shell">
+    <div class="site-header-inner">
+      <a class="brand-wordmark" href="#" aria-label="My Second Country home">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <span class="brand-name">My Second Country</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="#">How it works</a>
+        <a class="nav-link" href="#">Compare</a>
+        <a class="nav-link" href="#">Methodology</a>
+        <a class="nav-link" href="#">About</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#" class="btn-primary">Build my shortlist
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="nav-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="#">How it works</a>
+      <a class="nav-link" href="#">Compare</a>
+      <a class="nav-link" href="#">Methodology</a>
+      <a class="nav-link" href="#">About</a>
+      <a href="#" class="btn-primary">Build my shortlist</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="shell">
+    <div class="method-page">
+
+      <!-- header -->
+      <header class="mp-head">
+        <span class="overline">Methodology</span>
+        <h1 class="display-section">How the engine works, and how it cites.</h1>
+        <p class="mp-standfirst">You give a situation. The engine screens it against published rules and returns a ranked, source-cited shortlist of countries, regions, and towns. Every figure is shown with its source, verified date, and confidence.</p>
+        <div class="liability-note mp-fence" role="note" aria-label="Disclaimer">
+          <span class="liability-mark">Note</span>
+          <p class="liability-text">Sourced screening, not legal, tax, or financial advice; verify with a professional.</p>
+        </div>
+      </header>
+
+      <!-- the method -->
+      <section class="msec" aria-labelledby="method-title">
+        <span class="overline">The method</span>
+        <h2 class="msec__title" id="method-title">From your situation to a cited shortlist.</h2>
+        <div class="method-steps">
+          <div class="method-step">
+            <span class="method-step__num">01</span>
+            <div>
+              <h3 class="method-step__title">Situation</h3>
+              <p class="method-step__text">You describe your situation: income, household, work status, must-haves, and dealbreakers. Nothing here is advice; it is the input to a screen.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <span class="method-step__num">02</span>
+            <div>
+              <h3 class="method-step__title">Screen against published rules</h3>
+              <p class="method-step__text">Each candidate place is scored across seven dimensions, cost of living, tax, visa, residency, climate, healthcare, and safety, using published rules and figures. Scores are computed only on the dimensions you weighted, then renormalised to those dimensions, so a place is never penalised for a dimension you chose to ignore.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <span class="method-step__num">03</span>
+            <div>
+              <h3 class="method-step__title">Ranked, cited shortlist</h3>
+              <p class="method-step__text">The output is a ranked shortlist of countries, regions, and towns. Each ranking is traceable to the figures behind it, and each figure carries its source, verified date, and confidence.</p>
+            </div>
+          </div>
+        </div>
+        <div class="method-note">
+          <p class="method-note__text"><strong>Dealbreakers are applied as a separate filter, not as a score.</strong> A place that fails a dealbreaker is removed from the shortlist before ranking; it is never quietly outweighed.</p>
+        </div>
+      </section>
+
+      <!-- a worked figure -->
+      <section class="msec" aria-labelledby="figure-title">
+        <span class="overline">The contract</span>
+        <h2 class="msec__title" id="figure-title">How a figure is built.</h2>
+        <p class="msec__intro">Every number on the site is the same shape: a value, the source it came from, the date it was last verified, a confidence mark, the basis it measures, and the exact line it was drawn from. Here is one, taken apart.</p>
+
+        <div class="anatomy">
+          <div class="anatomy__valwrap">
+            <div class="anatomy__val" aria-labelledby="anatomy-label">86.6</div>
+            <p class="anatomy__label" id="anatomy-label">Portugal cost of living, EU price-level index (EU27 = 100).</p>
+          </div>
+          <div class="anatomy__fields">
+            <div class="afield">
+              <span class="afield__key">Source</span>
+              <span class="afield__val">Eurostat, price level index for actual individual consumption (tec00120)</span>
+            </div>
+            <div class="afield">
+              <span class="afield__key">Verified</span>
+              <span class="afield__val mono">2026-06-24</span>
+            </div>
+            <div class="afield">
+              <span class="afield__key">Confidence</span>
+              <span class="afield__val"><span class="afield__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span> &nbsp;Primary source, verified within the last six months.</span>
+            </div>
+            <div class="afield">
+              <span class="afield__key">Basis</span>
+              <span class="afield__val">Actual individual consumption, 2025, where the EU27 average = 100.</span>
+            </div>
+            <div class="afield">
+              <span class="afield__key">Excerpt</span>
+              <span class="afield__val">
+                <blockquote>"Portugal price level index for actual individual consumption (EU27 = 100): 86.6 in 2025 (100 = EU average)."</blockquote>
+                <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener noreferrer">View source at ec.europa.eu</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p class="msec__intro">The same contract holds for every figure, at its true confidence:</p>
+        <div class="ledger">
+          <section class="ledger-group">
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Cost of living, EU price-level index: Greece and Spain</div>
+                <div class="lrow__value">87.4 · 91.6</div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="m1">Eurostat tec00120 · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">EU27 = 100; Greece 87.4, Spain 91.6.</p>
+              <div class="cite-panel-wrap" id="m1" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."</blockquote>
+                <blockquote>"Spain price level index for actual individual consumption (EU27 = 100): 91.6 in 2025 (100 = EU average)."</blockquote>
+                <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table" target="_blank" rel="noopener noreferrer">View source at ec.europa.eu</a>
+              </div></div></div>
+            </div>
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Greece, foreign-pensioner flat tax (Article 5B)</div>
+                <div class="lrow__value">7<span class="lrow__unit">%</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="m2">PwC Tax Summaries · 2026-06-25</button>
+              </div>
+              <p class="lrow__note">Up to 15 years; apply by 31 March.</p>
+              <div class="cite-panel-wrap" id="m2" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Every tax year, individuals will pay tax at a rate of 7% on their foreign-sourced income, with exhaustion of the tax liability for this income."</blockquote>
+                <a href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">View source at taxsummaries.pwc.com</a>
+              </div></div></div>
+            </div>
+            <div class="lrow">
+              <div class="lrow__top">
+                <div class="lrow__label">Chania, Crete, July average high</div>
+                <div class="lrow__value">30.5<span class="lrow__unit">°C</span></div>
+              </div>
+              <div class="lrow__prov">
+                <span class="lrow__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
+                <span class="lrow__sep" aria-hidden="true">·</span>
+                <button class="cite lrow__cite" aria-expanded="false" aria-controls="m3">Chania (Souda) normals (Wikipedia) · 2026-06-24</button>
+              </div>
+              <p class="lrow__note">Reported, not verified against a primary source.</p>
+              <div class="cite-panel-wrap" id="m3" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
+                <blockquote>"Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 30.5 C in July, the hottest month."</blockquote>
+                <a href="https://en.wikipedia.org/wiki/Chania" target="_blank" rel="noopener noreferrer">View source at en.wikipedia.org</a>
+              </div></div></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- confidence marks -->
+      <section class="msec" aria-labelledby="conf-title">
+        <span class="overline">Confidence</span>
+        <h2 class="msec__title" id="conf-title">What the confidence marks mean.</h2>
+        <div class="conf-defs">
+          <div class="conf-def">
+            <span class="conf-def__mark"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>High</span>
+            <p class="conf-def__text">Primary source, verified within the last six months.</p>
+          </div>
+          <div class="conf-def">
+            <span class="conf-def__mark"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>Medium</span>
+            <p class="conf-def__text">Dated, or drawn from a secondary source.</p>
+          </div>
+          <div class="conf-def">
+            <span class="conf-def__mark"><svg width="11" height="11" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>Low</span>
+            <p class="conf-def__text">Modeled, or not yet verified against a primary source. Low is calm, not a warning; it is never shown in red.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- freshness -->
+      <section class="msec" aria-labelledby="fresh-title">
+        <span class="overline">Freshness</span>
+        <h2 class="msec__title" id="fresh-title">A figure is never quietly stale.</h2>
+        <p class="msec__intro">Figures are re-checked on a schedule. Each one is treated as stale after a set window past its verified date. When a figure passes that window, a staleness banner is shown, not hidden. The engine never silently serves a stale number.</p>
+        <div class="stale-banner" role="note" aria-label="Example staleness banner">
+          <span class="stale-banner__mark">Past refresh</span>
+          <p class="stale-banner__text">This figure was last verified 2026-04-15 and is past its refresh window. Treat it as indicative until re-checked.</p>
+        </div>
+      </section>
+
+      <!-- answer-engine artifacts -->
+      <section class="msec" aria-labelledby="artifacts-title">
+        <span class="overline">For answer engines</span>
+        <h2 class="msec__title" id="artifacts-title">What a machine can quote.</h2>
+        <p class="msec__intro">The same evidence is published in machine-readable form, so an answer engine can quote a claim with its source intact.</p>
+        <div class="artifacts">
+          <div class="artifact">
+            <a class="artifact__link" href="#"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 1.5h4l2.5 2.5v9h-9V1.5h2.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>llms.txt</a>
+            <p class="artifact__desc">A plain-text map of what this site states and where each claim is sourced.</p>
+          </div>
+          <div class="artifact">
+            <a class="artifact__link" href="#"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 1.5h4l2.5 2.5v9h-9V1.5h2.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>regime JSON</a>
+            <p class="artifact__desc">The canonical machine-readable tax and residency regime data the pages are projected from.</p>
+          </div>
+          <div class="artifact">
+            <a class="artifact__link" href="#"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 1.5h4l2.5 2.5v9h-9V1.5h2.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Dataset JSON-LD</a>
+            <p class="artifact__desc">Structured metadata describing the dataset, its sources, and its dates.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- the fence -->
+      <section class="msec" aria-labelledby="fence-title">
+        <span class="overline">The fence</span>
+        <h2 class="msec__title" id="fence-title">It screens. It does not advise.</h2>
+        <p class="msec__intro">The engine reports published rules and the figures behind them. It does not recommend a country, a regime, or a move, and it takes no affiliate position on what it screens. Anything consequential is routed to a licensed professional, behind this line.</p>
+        <div class="liability-note" role="note" aria-label="Disclaimer" style="margin-top:clamp(20px,2.6vw,28px);">
+          <span class="liability-mark">Note</span>
+          <p class="liability-text">Sourced screening, not legal, tax, or financial advice; verify with a professional.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- shared CTA band (gate 6) -->
+  <section class="cta-section" aria-labelledby="cta-title">
+    <div class="shell">
+      <div class="cta-card">
+        <span class="overline" style="margin-bottom:0;">Decide on evidence</span>
+        <h2 class="display-mid cta-headline" id="cta-title">See it work on your situation.</h2>
+        <p class="cta-sub">Set what matters to you and the engine screens it against published rules, every figure shown with its source.</p>
+        <div class="cta-actions">
+          <a href="gate-21-screener.html" class="btn-primary">Build my shortlist
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="cta-reassure">Free to start. It screens, it does not advise.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- shared footer (gate 3) -->
+<footer class="footer-eng" role="contentinfo">
+  <div class="footer-scene">
+    <div class="shell">
+      <div class="footer-top">
+        <div>
+          <a href="#" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
+          <p class="footer-tagline">Cited relocation intelligence. Countries, regions, and towns, screened on evidence.</p>
+        </div>
+        <nav class="footer-cols" aria-label="Footer">
+          <div>
+            <span class="footer-col-label">Product</span>
+            <ul class="footer-links">
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Build my shortlist</a></li>
+              <li><a href="#">Compare</a></li>
+              <li><a href="#">Methodology</a></li>
+            </ul>
+          </div>
+          <div>
+            <span class="footer-col-label">Coverage</span>
+            <ul class="footer-links">
+              <li><a href="#">Greece</a></li>
+              <li><a href="#">Portugal</a></li>
+              <li><a href="#">Spain</a></li>
+              <li><a href="#">All countries</a></li>
+            </ul>
+          </div>
+          <div>
+            <span class="footer-col-label">Company</span>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Sources</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legalstrip">
+    <div class="shell">
+      <p class="footer-fence">Sourced screening, not legal, tax, or financial advice; verify with a professional.</p>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 My Second Country · Page reviewed 2026-06-25</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Sources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="_msc-system.js"></script>
+
+</body>
+</html>

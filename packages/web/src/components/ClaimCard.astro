@@ -1,6 +1,6 @@
 ---
 import type { CitedValue } from "@where/data";
-import { CONFIDENCE_DISPLAY } from "../lib/cited.ts";
+import ConfidenceMark from "./ConfidenceMark.astro";
 
 /**
  * One card for a published eligibility condition or a dealbreaker. The framing carries the
@@ -14,16 +14,12 @@ interface Props {
   variant?: "eligibility" | "dealbreaker";
 }
 const { framing, cited, variant = "eligibility" } = Astro.props;
-const conf = CONFIDENCE_DISPLAY[cited.confidence];
 ---
 
 <li class:list={["claim-card", `claim-card--${variant}`]}>
   <p class="claim-framing">{framing}</p>
   <div class="claim-meta">
-    <span class="conf-badge" data-confidence={cited.confidence} aria-label={`Confidence: ${conf.word}`}>
-      <span class="conf-glyph" aria-hidden="true">{conf.glyph}</span>
-      <span>{conf.word}</span>
-    </span>
+    <ConfidenceMark level={cited.confidence} />
     <span class="claim-provenance">
       <a href={cited.sourceUrl} rel="noopener nofollow" target="_blank">{cited.sourceName}</a>
       <span class="claim-verified">Verified {cited.verifiedDate}</span>
@@ -34,18 +30,16 @@ const conf = CONFIDENCE_DISPLAY[cited.confidence];
 
 <style>
   .claim-card {
-    padding: 1.1rem 1.25rem;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-    background: var(--card);
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--hairline-soft);
     list-style: none;
   }
   .claim-card--dealbreaker {
-    border-top: 2px solid var(--conf-low);
+    border-top: 2px solid var(--pop);
   }
   .claim-framing {
     margin: 0 0 0.75rem;
-    font-family: var(--font-serif);
+    font-family: var(--f-display);
     font-size: 1rem;
     line-height: 1.55;
     color: var(--ink);
@@ -56,53 +50,27 @@ const conf = CONFIDENCE_DISPLAY[cited.confidence];
     align-items: flex-start;
     gap: 0.6rem;
   }
-  .conf-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
+  .claim-meta :global(.conf) {
     flex-shrink: 0;
-    font-family: var(--font-ui);
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.28rem 0.5rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid;
-  }
-  .conf-glyph {
-    font-size: 0.8rem;
-    line-height: 1;
-  }
-  .conf-badge[data-confidence="high"] {
-    color: var(--conf-verified);
-    border-color: color-mix(in oklch, var(--conf-verified) 38%, transparent);
-  }
-  .conf-badge[data-confidence="medium"] {
-    color: var(--conf-good);
-    border-color: color-mix(in oklch, var(--conf-good) 38%, transparent);
-  }
-  .conf-badge[data-confidence="low"] {
-    color: var(--conf-low);
-    border-color: color-mix(in oklch, var(--conf-low) 38%, transparent);
   }
   .claim-provenance {
     display: flex;
     flex-direction: column;
+    font-family: var(--f-mono);
     font-size: 0.88rem;
   }
   .claim-verified {
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
+    font-family: var(--f-mono);
+    color: var(--stone);
     font-size: 0.78rem;
     margin-top: 0.1rem;
   }
   .claim-excerpt {
     margin: 0.75rem 0 0;
     padding-left: 0.8rem;
-    border-left: 1px solid var(--rule);
-    color: var(--muted-foreground);
-    font-family: var(--font-serif);
+    border-left: 1px solid var(--hairline-soft);
+    color: var(--stone);
+    font-family: var(--f-display);
     font-size: 0.9rem;
     line-height: 1.5;
     font-style: italic;
