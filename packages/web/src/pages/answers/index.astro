@@ -23,17 +23,48 @@ const jsonLd = [
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <h1>Cited answers</h1>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Answers</span>
+    </nav>
 
-  <FenceBlock hasLegalClaims={true} />
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Answers</p>
+      <h1 class="corridor-title">Questions with a source attached.</h1>
+      <p class="corridor-lead">
+        Short answers for high-friction relocation questions, each tied to the cited
+        rule or figure behind it.
+      </p>
+    </header>
 
-  <ul>
-    {
-      qa.map((entry) => (
-        <li>
-          <a href={`/answers/${entry.slug}`}>{entry.question}</a>
-        </li>
-      ))
-    }
-  </ul>
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="answer-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{qa.length} live</p>
+          <h2 id="answer-files">Cited answers</h2>
+        </div>
+        <p class="corridor-section-note">
+          Answers are compact by design. Follow the source record when the decision
+          needs professional review.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          qa.map((entry) => (
+            <a class="corridor-card" href={`/answers/${entry.slug}`}>
+              <span class="corridor-card__meta">{entry.category}</span>
+              <div>
+                <h3 class="corridor-card__title">{entry.question}</h3>
+                <p class="corridor-card__copy">{entry.answer}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
 </Base>

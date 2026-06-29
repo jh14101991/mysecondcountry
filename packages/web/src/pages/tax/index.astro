@@ -27,21 +27,48 @@ const jsonLd = [
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <h1>Tax regimes</h1>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Tax regimes</span>
+    </nav>
 
-  <FenceBlock hasLegalClaims={true} />
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Tax</p>
+      <h1 class="corridor-title">Tax regimes, source by source.</h1>
+      <p class="corridor-lead">
+        Special tax routes for foreign residents and pensioners, kept separate from
+        country rankings and shown with their headline claims.
+      </p>
+    </header>
 
-  <ul>
-    {
-      regimes.map((regime) => {
-        const country = placeById(regime.countryId);
-        const href = country ? `/${country.slug}/tax/${regime.slug}` : "#";
-        return (
-          <li>
-            <a href={href}>{regime.name}</a>
-          </li>
-        );
-      })
-    }
-  </ul>
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="tax-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{resolvedRegimes.length} live</p>
+          <h2 id="tax-files">Regime files</h2>
+        </div>
+        <p class="corridor-section-note">
+          These files screen published rules. They do not replace tax advice, and they
+          should be checked against official sources before action.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          resolvedRegimes.map(({ regime, country }) => (
+            <a class="corridor-card" href={`/${country.slug}/tax/${regime.slug}`}>
+              <span class="corridor-card__meta">{country.name}</span>
+              <div>
+                <h3 class="corridor-card__title">{regime.name}</h3>
+                <p class="corridor-card__copy">{regime.summary}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
 </Base>

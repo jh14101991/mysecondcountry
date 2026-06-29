@@ -23,17 +23,47 @@ const jsonLd = [
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <h1>Tools</h1>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Tools</span>
+    </nav>
 
-  <FenceBlock hasLegalClaims={true} />
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Tools</p>
+      <h1 class="corridor-title">Checklists with the rule beside them.</h1>
+      <p class="corridor-lead">
+        Tools turn a cited rule into a practical screen, while keeping the source and
+        requirement visible.
+      </p>
+    </header>
 
-  <ul>
-    {
-      tools.map((tool) => (
-        <li>
-          <a href={`/tools/${tool.slug}`}>{tool.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="tool-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{tools.length} live</p>
+          <h2 id="tool-files">Tool files</h2>
+        </div>
+        <p class="corridor-section-note">
+          These tools are for early screening. They do not decide eligibility.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          tools.map((tool) => (
+            <a class="corridor-card" href={`/tools/${tool.slug}`}>
+              <span class="corridor-card__meta">{tool.toolType}</span>
+              <div>
+                <h3 class="corridor-card__title">{tool.title}</h3>
+                <p class="corridor-card__copy">{tool.intro}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
 </Base>
