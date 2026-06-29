@@ -1,9 +1,7 @@
 {
   "name": "My Second Country",
   "short_name": "MSC",
-  "icons": [
-    { "src": "/brand/monogram.svg", "type": "image/svg+xml", "sizes": "any" }
-  ],
+  "icons": [{ "src": "/brand/monogram.svg", "type": "image/svg+xml", "sizes": "any" }],
   "theme_color": "#FCFCFC",
   "background_color": "#FCFCFC",
   "display": "standalone"

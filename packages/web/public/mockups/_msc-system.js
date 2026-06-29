@@ -1,3 +1,4 @@
+// biome-ignore-all lint: locked browser mockup runtime mirrors the approved v5 artifact.
 /* ============================================================
    MY SECOND COUNTRY — SHARED DESIGN SYSTEM (behaviour)
    Extracted verbatim from broadsheet-ledger-v5.html.
