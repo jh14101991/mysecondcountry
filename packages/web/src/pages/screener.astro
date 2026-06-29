@@ -29,7 +29,7 @@ import FenceBlock from "../components/FenceBlock.astro";
 
 <style is:global>
 /* ============================================================
-   GATE 21 — SCREENER (situation input)  [PRODUCT register]
+   GATE 21, SCREENER (situation input)  [PRODUCT register]
    The product's front door: a calm, instrument-like single screen
    that collects a reader's situation and, on submit, would build
    their cited shortlist (gate 22). Product register: fixed,
@@ -56,11 +56,19 @@ body { background: var(--paper); }
   margin-bottom: 12px;
 }
 .screener-hint { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.5; margin-top: 12px; max-width: 60ch; }
+.scoring-note { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--stone); line-height: 1.55; margin: 14px 0 0; max-width: 62ch; }
+.context-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  width: fit-content; margin-bottom: 12px; padding: 5px 8px;
+  border: 1px solid var(--hairline-soft); border-radius: 999px;
+  font-family: var(--f-mono); font-size: 0.72rem; color: var(--stone);
+  background: var(--paper-stone);
+}
 
 /* the instrument: numbered hairline plates, fixed rhythm */
 .screener-form { margin-top: clamp(34px,4.6vw,54px); display: flex; flex-direction: column; gap: clamp(18px,2.4vw,26px); }
 
-.plate { border: 1px solid var(--hairline-soft); border-radius: 10px; background: transparent; padding: clamp(22px,3vw,32px); }
+.plate { border: 1px solid var(--hairline-soft); border-radius: 8px; background: transparent; padding: clamp(22px,3vw,32px); }
 .plate__head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 16px; margin-bottom: clamp(18px,2.4vw,24px); border-bottom: 1px solid var(--hairline-soft); }
 .plate__num { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--pop-ink); letter-spacing: 0.06em; flex: 0 0 auto; }
 .plate__titles { display: flex; flex-direction: column; gap: 4px; }
@@ -98,12 +106,47 @@ select.field-input {
 /* primary action row */
 .screener-actions { margin-top: clamp(30px,3.8vw,42px); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
 
+.details-panel {
+  margin-top: clamp(20px,2.8vw,30px);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 8px;
+  background: transparent;
+}
+.details-panel > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 56px;
+  padding: 0 clamp(18px,2.6vw,28px);
+  font-family: var(--f-ui);
+  font-weight: 700;
+  color: var(--ink);
+}
+.details-panel > summary::-webkit-details-marker { display: none; }
+.details-panel > summary::after {
+  content: "+";
+  font-family: var(--f-mono);
+  color: var(--pop-ink);
+}
+.details-panel > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.details-panel[open] > summary {
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.details-panel[open] > summary::after { content: "-"; }
+.details-panel__body { padding: clamp(18px,2.6vw,28px); }
+
 .screener-fence { margin-top: clamp(28px,3.6vw,40px); }
 .screener-intro .screener-fence { margin-top: clamp(18px,2.8vw,28px); }
 .screener-fence .fence { margin: 0; }
 .screener-fence__second { color: var(--stone); font-size: var(--t-bodysm); margin-top: 6px; }
 
-/* "what the engine reads" — a small sample of the live, cited dataset,
+/* "what the engine reads": a small sample of the live, cited dataset,
    rendered as real DataFigure rows (reusing the shared ledger pattern) */
 .reads { margin-top: clamp(46px,6vw,72px); padding-top: clamp(30px,4vw,44px); border-top: 1px solid var(--hairline-soft); }
 .reads .overline { margin-bottom: 10px; }
@@ -148,6 +191,12 @@ select.field-input {
   .product-exit a svg {
     width: 16px;
     height: 16px;
+  }
+  .product-header .nav-toggle {
+    flex: 0 0 auto;
+  }
+  .product-header .nav-menu {
+    margin-top: 12px;
   }
   .product-progress {
     gap: 10px;
@@ -227,12 +276,28 @@ select.field-input {
       </nav>
 
       <div class="product-exit">
-        <a href="/" aria-label="Save and exit screener">
-          Save and exit
+        <a href="/" aria-label="Exit screener">
+          Exit
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
       </div>
 
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+    </div>
+    <div class="nav-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="/compare/greece-portugal-spain">Compare</a>
+      <a class="nav-link" href="/shortlists">Shortlists</a>
+      <a class="nav-link" href="/guides">Guides</a>
+      <a class="nav-link" href="/sources">Sources</a>
+      <a href="/screener" class="btn-primary">
+        Build my shortlist
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </header>
@@ -244,207 +309,134 @@ select.field-input {
       <!-- intro / framing -->
       <header class="screener-intro">
         <span class="overline">Step 1 · Your situation</span>
-        <h1 class="display-mid">Where could you live?</h1>
+        <h1 class="display-mid">Build a source-cited shortlist</h1>
         <div class="screener-fence">
           <FenceBlock hasLegalClaims={true} />
         </div>
-        <p class="standfirst">Set your situation. The engine screens Greece, Portugal, and Spain against published rules and returns a source-cited shortlist. About two minutes. It screens, it does not advise.</p>
+        <p class="standfirst">Enter the few limits the public screener shape will use. This version opens a live cited shortlist example, not a dynamic result from these fields.</p>
       </header>
 
-      <!-- scenario entry (gate 11 chips) -->
-      <section class="screener-scenario" aria-labelledby="scenario-label">
-        <span class="field-eyebrow" id="scenario-label">Start with what you want</span>
-        <div class="chip-row" role="radiogroup" aria-labelledby="scenario-label">
-          <label class="chip"><input type="radio" name="scenario" value="lower-taxes" checked> Lower my taxes</label>
-          <label class="chip"><input type="radio" name="scenario" value="remote-work"> Work remotely</label>
-          <label class="chip"><input type="radio" name="scenario" value="retire-abroad"> Retire abroad</label>
-          <label class="chip"><input type="radio" name="scenario" value="exploring"> Just exploring</label>
-        </div>
-        <p class="screener-hint">Optional. It sets sensible defaults below; change anything you like.</p>
-      </section>
-
       <!-- the instrument -->
-      <form class="screener-form" action="/shortlists" method="get" novalidate>
+      <form class="screener-form" action="/shortlists/eu-residency-under-3700-a-month" method="get" novalidate>
 
-        <!-- 01 — who's moving -->
-        <section class="plate" aria-labelledby="plate1-title">
+        <section class="plate" aria-labelledby="minimum-title">
           <div class="plate__head">
             <span class="plate__num" aria-hidden="true">01</span>
             <div class="plate__titles">
-              <h2 class="plate__title" id="plate1-title">Who's moving</h2>
-              <span class="plate__sub">Drives which visa and residency routes are open to you.</span>
-            </div>
-          </div>
-          <div class="field-grid">
-            <div class="field field--wide">
-              <span class="field-label" id="household-label">Who is relocating</span>
-              <div class="chip-row" role="radiogroup" aria-labelledby="household-label">
-                <label class="chip"><input type="radio" name="household" value="single" checked> Just me</label>
-                <label class="chip"><input type="radio" name="household" value="couple"> A couple</label>
-                <label class="chip"><input type="radio" name="household" value="family"> Family with children</label>
-              </div>
-            </div>
-            <div class="field">
-              <label class="field-label" for="citizenship">Citizenship or status</label>
-              <select class="field-input" id="citizenship" name="citizenship">
-                <option>EU or EEA citizen</option>
-                <option>UK citizen</option>
-                <option>US citizen</option>
-                <option>Other non-EU citizen</option>
-              </select>
-            </div>
-            <div class="field">
-              <label class="field-label" for="age">Age band <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></label>
-              <select class="field-input" id="age" name="age">
-                <option value="">No preference</option>
-                <option>Under 35</option>
-                <option>35 to 49</option>
-                <option>50 to 64</option>
-                <option>65 or older</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        <!-- 02 — money -->
-        <section class="plate" aria-labelledby="plate2-title">
-          <div class="plate__head">
-            <span class="plate__num" aria-hidden="true">02</span>
-            <div class="plate__titles">
-              <h2 class="plate__title" id="plate2-title">Money</h2>
-              <span class="plate__sub">Sets which tax regimes and places are realistic before screening.</span>
+              <h2 class="plate__title" id="minimum-title">Minimum scoring inputs</h2>
+              <span class="plate__sub">These fields map to the current engine dimensions.</span>
             </div>
           </div>
           <div class="field-grid">
             <div class="field">
-              <label class="field-label" for="income">Main income</label>
-              <select class="field-input" id="income" name="income">
-                <option>Employment</option>
-                <option>Self-employed or freelance</option>
-                <option>Remote salary</option>
-                <option>Company profits</option>
-                <option>Pension</option>
-                <option>Investments</option>
-              </select>
-            </div>
-            <div class="field">
-              <label class="field-label" for="budget">Net monthly budget, after tax (EUR / mo)</label>
+              <label class="field-label" for="provableMonthlyIncomeEUR">Provable net monthly income (EUR)</label>
               <div class="field-affix">
                 <span class="field-affix__pre" aria-hidden="true">EUR</span>
-                <input id="budget" name="budget" type="text" inputmode="numeric" placeholder="3,500" aria-describedby="budget-suffix">
-                <span class="field-affix__post" id="budget-suffix">/ mo</span>
+                <input id="provableMonthlyIncomeEUR" name="provableMonthlyIncomeEUR" type="text" inputmode="numeric" placeholder="3,500" aria-describedby="income-suffix">
+                <span class="field-affix__post" id="income-suffix">/ mo</span>
               </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="maxPriceLevelIndexEU27">Cost ceiling, EU27 price index</label>
+              <select class="field-input" id="maxPriceLevelIndexEU27" name="maxPriceLevelIndexEU27">
+                <option value="90">90 or lower</option>
+                <option value="100" selected>100 or lower</option>
+                <option value="115">115 or lower</option>
+                <option value="">No ceiling</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="maxIncomeTaxRate">Income-tax ceiling</label>
+              <select class="field-input" id="maxIncomeTaxRate" name="maxIncomeTaxRate">
+                <option value="35">35% or lower</option>
+                <option value="45" selected>45% or lower</option>
+                <option value="50">50% or lower</option>
+                <option value="">No ceiling</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="minJanuaryHighC">January high floor</label>
+              <select class="field-input" id="minJanuaryHighC" name="minJanuaryHighC">
+                <option value="10">10°C or warmer</option>
+                <option value="14" selected>14°C or warmer</option>
+                <option value="18">18°C or warmer</option>
+                <option value="">No floor</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="maxJulyHighC">July high ceiling</label>
+              <select class="field-input" id="maxJulyHighC" name="maxJulyHighC">
+                <option value="28">28°C or cooler</option>
+                <option value="32" selected>32°C or cooler</option>
+                <option value="36">36°C or cooler</option>
+                <option value="">No ceiling</option>
+              </select>
             </div>
             <div class="field field--wide">
-              <span class="field-label" id="taxpriority-label">Tax priority</span>
-              <div class="chip-row" role="radiogroup" aria-labelledby="taxpriority-label">
-                <label class="chip"><input type="radio" name="taxpriority" value="lower" checked> Lower my tax</label>
-                <label class="chip"><input type="radio" name="taxpriority" value="simple"> Keep it simple</label>
-                <label class="chip"><input type="radio" name="taxpriority" value="no-view"> No strong view</label>
+              <label class="field-label" for="minAnnualSunHours">Annual sunshine floor <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></label>
+              <select class="field-input" id="minAnnualSunHours" name="minAnnualSunHours">
+                <option value="">No floor</option>
+                <option value="2200">2,200 hours or more</option>
+                <option value="2600">2,600 hours or more</option>
+                <option value="3000">3,000 hours or more</option>
+              </select>
+            </div>
+          </div>
+          <p class="scoring-note">These controls show the intended scoring shape. The current public action opens the live EU residency shortlist; it does not consume these entries yet. Unknown values are excluded from scoring rather than counted as zero.</p>
+        </section>
+
+        <details class="details-panel">
+          <summary>Non-scoring context</summary>
+          <div class="details-panel__body">
+            <span class="context-tag">Not scored in this version</span>
+            <div class="field-grid">
+              <div class="field field--wide">
+                <span class="field-label" id="scenario-label">Reader scenario</span>
+                <div class="chip-row" role="radiogroup" aria-labelledby="scenario-label">
+                  <label class="chip"><input type="radio" name="scenario" value="lower-taxes" checked> Lower tax exposure</label>
+                  <label class="chip"><input type="radio" name="scenario" value="remote-work"> Remote work</label>
+                  <label class="chip"><input type="radio" name="scenario" value="retire-abroad"> Retiring abroad</label>
+                  <label class="chip"><input type="radio" name="scenario" value="exploring"> Early research</label>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label" for="passportStatus">Passport or status</label>
+                <select class="field-input" id="passportStatus" name="passportStatus">
+                  <option>EU or EEA citizen</option>
+                  <option>UK citizen</option>
+                  <option>US citizen</option>
+                  <option>Other non-EU citizen</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="household">Household</label>
+                <select class="field-input" id="household" name="household">
+                  <option>One adult</option>
+                  <option>Couple</option>
+                  <option>Family with children</option>
+                </select>
               </div>
             </div>
           </div>
-        </section>
-
-        <!-- 03 — place -->
-        <section class="plate" aria-labelledby="plate3-title">
-          <div class="plate__head">
-            <span class="plate__num" aria-hidden="true">03</span>
-            <div class="plate__titles">
-              <h2 class="plate__title" id="plate3-title">Place</h2>
-              <span class="plate__sub">What you want from day-to-day life there.</span>
-            </div>
-          </div>
-          <div class="field-grid">
-            <div class="field field--wide">
-              <span class="field-label" id="climate-label">Climate</span>
-              <div class="chip-row" role="radiogroup" aria-labelledby="climate-label">
-                <label class="chip"><input type="radio" name="climate" value="warm-winters" checked> Warm winters</label>
-                <label class="chip"><input type="radio" name="climate" value="four-seasons"> Four seasons</label>
-                <label class="chip"><input type="radio" name="climate" value="no-preference"> No preference</label>
-              </div>
-            </div>
-            <div class="field">
-              <label class="field-label" for="language">Language comfort</label>
-              <select class="field-input" id="language" name="language">
-                <option>English is enough to start</option>
-                <option>Willing to learn the local language</option>
-                <option>Already fluent in one</option>
-                <option>No preference</option>
-              </select>
-            </div>
-            <div class="field">
-              <label class="field-label" for="healthcare">Healthcare</label>
-              <select class="field-input" id="healthcare" name="healthcare">
-                <option>Strong public healthcare matters</option>
-                <option>Private cover is fine</option>
-                <option>No strong view</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        <!-- 04 — priorities and constraints -->
-        <section class="plate" aria-labelledby="plate4-title">
-          <div class="plate__head">
-            <span class="plate__num" aria-hidden="true">04</span>
-            <div class="plate__titles">
-              <h2 class="plate__title" id="plate4-title">Priorities and constraints</h2>
-              <span class="plate__sub">What the shortlist should weigh, and anything it must not break.</span>
-            </div>
-          </div>
-
-          <div class="chips-field">
-            <span class="field-label" id="matters-label">What matters most</span>
-            <div class="chip-row" role="group" aria-labelledby="matters-label">
-              <label class="chip"><input type="checkbox" name="matters" value="cost" checked> Cost of living</label>
-              <label class="chip"><input type="checkbox" name="matters" value="tax" checked> Tax</label>
-              <label class="chip"><input type="checkbox" name="matters" value="visa"> Visa</label>
-              <label class="chip"><input type="checkbox" name="matters" value="residency"> Residency</label>
-              <label class="chip"><input type="checkbox" name="matters" value="climate" checked> Climate</label>
-              <label class="chip"><input type="checkbox" name="matters" value="healthcare"> Healthcare</label>
-              <label class="chip"><input type="checkbox" name="matters" value="safety"> Safety</label>
-            </div>
-          </div>
-
-          <div class="chips-field">
-            <span class="field-label" id="deal-label">Dealbreakers <span style="text-transform:none;font-weight:400;color:var(--stone);">(optional)</span></span>
-            <div class="chip-row" role="group" aria-labelledby="deal-label">
-              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="dnv"> Needs a digital-nomad visa</label>
-              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="citizenship"> Path to citizenship</label>
-              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="public-health"> Public healthcare access</label>
-              <label class="chip chip--deal"><input type="checkbox" name="dealbreakers" value="warm"> Warm winters required</label>
-            </div>
-          </div>
-
-          <div class="field-grid" style="margin-top:clamp(20px,2.6vw,28px);">
-            <div class="field">
-              <label class="field-label" for="timeline">Timeline</label>
-              <select class="field-input" id="timeline" name="timeline">
-                <option>Within 6 months</option>
-                <option>6 to 12 months</option>
-                <option>1 to 2 years</option>
-                <option>Just researching</option>
-              </select>
-            </div>
-          </div>
-        </section>
+        </details>
 
         <!-- primary action -->
         <div class="screener-actions">
           <button type="submit" class="form-submit">
-            Build my shortlist
+            Open EU residency shortlist
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <a href="/screener" class="text-link">Clear and start over</a>
         </div>
       </form>
 
-      <!-- what the engine reads: a real, cited sample of the dataset -->
-      <section class="reads" aria-labelledby="reads-title">
+      <!-- what the engine reads: a compact cited sample, below the first action -->
+      <details class="reads details-panel">
+        <summary>Source sample and confidence key</summary>
+        <div class="details-panel__body">
         <span class="overline">What the engine reads</span>
-        <h2 class="reads__title" id="reads-title">A sample of the dataset, with its sources.</h2>
-        <p class="reads__note">Every figure carries its source, the date it was verified, and a confidence mark, filled for high, half for medium, open for low. Expand any source to read the line it came from.</p>
+        <h2 class="reads__title" id="reads-title">A compact sample of the dataset, with sources.</h2>
+        <p class="reads__note">Each shown figure carries its source, verified date, and confidence mark: filled for high, half for medium, open for low. Open a source to read the line it came from.</p>
 
         <div class="ledger">
           <section class="ledger-group">
@@ -476,7 +468,7 @@ select.field-input {
                 <span class="lrow__sep" aria-hidden="true">·</span>
                 <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc2">PwC Tax Summaries · 2026-06-25</button>
               </div>
-              <p class="lrow__note">Flat 7% on foreign-source income, up to 15 years; apply by 31 March.</p>
+              <p class="lrow__note">Flat 7% on foreign-source income, up to 15 years; published application deadline: 31 March.</p>
               <div class="cite-panel-wrap" id="rc2" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
                 <blockquote>"Every tax year, individuals will pay tax at a rate of 7% on their foreign-sourced income, with exhaustion of the tax liability for this income."</blockquote>
                 <a href="https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives" target="_blank" rel="noopener noreferrer">View source at taxsummaries.pwc.com</a>
@@ -500,26 +492,10 @@ select.field-input {
               </div></div></div>
             </div>
 
-            <div class="lrow">
-              <div class="lrow__top">
-                <div class="lrow__label">Chania, Crete, July average high</div>
-                <div class="lrow__value">30.5<span class="lrow__unit">°C</span></div>
-              </div>
-              <div class="lrow__prov">
-                <span class="lrow__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span>
-                <span class="lrow__sep" aria-hidden="true">·</span>
-                <button class="cite lrow__cite" aria-expanded="false" aria-controls="rc4">Chania (Souda) normals (Wikipedia) · 2026-06-24</button>
-              </div>
-              <p class="lrow__note">Reported, not verified against a primary source.</p>
-              <div class="cite-panel-wrap" id="rc4" role="region" aria-label="Citation details"><div class="cite-panel-inner"><div class="cite-panel">
-                <blockquote>"Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 30.5 C in July, the hottest month."</blockquote>
-                <a href="https://en.wikipedia.org/wiki/Chania" target="_blank" rel="noopener noreferrer">View source at en.wikipedia.org</a>
-              </div></div></div>
-            </div>
-
           </section>
         </div>
-      </section>
+        </div>
+      </details>
 
     </div>
   </div>
