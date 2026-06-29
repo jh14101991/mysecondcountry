@@ -30,6 +30,65 @@ const guideItems = [
   ...tools.map((tool) => ({ name: tool.title, url: `${SITE}/tools/${tool.slug}` })),
 ];
 
+const guideGroups = [
+  {
+    id: "shortlist-questions",
+    kicker: "Task",
+    title: "Answer a shortlist question",
+    readiness: "Published answers",
+    note:
+      "Use these when a question can be answered without opening a full country or town dossier.",
+    entries: qa.map((entry) => ({
+      href: `/answers/${entry.slug}`,
+      title: entry.question,
+      copy: entry.answer,
+      meta: entry.category,
+    })),
+  },
+  {
+    id: "tax-residency-checks",
+    kicker: "Task",
+    title: "Check a tax or residency route",
+    readiness: "Published high-liability pages",
+    note:
+      "These entries carry provenance cues because tax, visa, and residency claims need source inspection.",
+    entries: regimeCards.map((entry) => ({
+      href: entry.href,
+      title: entry.title,
+      copy: entry.copy,
+      meta: entry.meta,
+    })),
+  },
+  {
+    id: "explainers",
+    kicker: "Task",
+    title: "Understand the context behind a row",
+    readiness: "Published explainers",
+    note:
+      "Use these when the comparison table is too compressed for the next reader question.",
+    entries: topics.map((topic) => ({
+      href: `/topics/${topic.slug}`,
+      title: topic.title,
+      copy: topic.metaDescription,
+      meta: topic.countryId ? "Country context" : "General context",
+    })),
+  },
+  {
+    id: "checklists",
+    kicker: "Task",
+    title: "Work through a checklist",
+    readiness: "Published tools",
+    note:
+      "Tools show which requirements are official claims and where each requirement comes from.",
+    entries: tools.map((tool) => ({
+      href: `/tools/${tool.slug}`,
+      title: tool.title,
+      copy: tool.intro,
+      meta: tool.toolType,
+    })),
+  },
+].filter((group) => group.entries.length > 0);
+
 const jsonLd = [
   itemListJsonLd({
     url: canonical,
@@ -61,108 +120,51 @@ const jsonLd = [
 
     <FenceBlock hasLegalClaims={true} />
 
-    <section class="corridor-section" aria-labelledby="answer-guides">
-      <div class="corridor-section-head">
-        <div>
-          <p class="corridor-kicker">Answers</p>
-          <h2 id="answer-guides">Cited answers</h2>
-        </div>
-        <p class="corridor-section-note">
-          Short, source-backed answers to the questions that usually appear before a
-          country makes or leaves a shortlist.
-        </p>
-      </div>
-      <div class="corridor-grid">
-        {
-          qa.map((entry) => (
-            <a class="corridor-card" href={`/answers/${entry.slug}`}>
-              <span class="corridor-card__meta">{entry.category}</span>
-              <div>
-                <h3 class="corridor-card__title">{entry.question}</h3>
-                <p class="corridor-card__copy">{entry.answer}</p>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="corridor-section" aria-labelledby="tax-guides">
-      <div class="corridor-section-head">
-        <div>
-          <p class="corridor-kicker">Tax</p>
-          <h2 id="tax-guides">Tax regimes</h2>
-        </div>
-        <p class="corridor-section-note">
-          Programme pages for headline rates, duration, eligibility, and the source
-          caveats that matter before speaking with a professional adviser.
-        </p>
-      </div>
-      <div class="corridor-grid">
-        {
-          regimeCards.map((entry) => (
-            <a class="corridor-card" href={entry.href}>
-              <span class="corridor-card__meta">{entry.meta}</span>
-              <div>
-                <h3 class="corridor-card__title">{entry.title}</h3>
-                <p class="corridor-card__copy">{entry.copy}</p>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="corridor-section" aria-labelledby="topic-guides">
-      <div class="corridor-section-head">
-        <div>
-          <p class="corridor-kicker">Topics</p>
-          <h2 id="topic-guides">Rule explainers</h2>
-        </div>
-        <p class="corridor-section-note">
-          Longer context where a single source row is too compressed for the reader's
-          next question.
-        </p>
-      </div>
-      <div class="corridor-grid">
-        {
-          topics.map((topic) => (
-            <a class="corridor-card" href={`/topics/${topic.slug}`}>
-              <span class="corridor-card__meta">{topic.countryId ? "Country topic" : "General topic"}</span>
-              <div>
-                <h3 class="corridor-card__title">{topic.title}</h3>
-                <p class="corridor-card__copy">{topic.metaDescription}</p>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="corridor-section" aria-labelledby="tool-guides">
-      <div class="corridor-section-head">
-        <div>
-          <p class="corridor-kicker">Tools</p>
-          <h2 id="tool-guides">Checklists</h2>
-        </div>
-        <p class="corridor-section-note">
-          Step-by-step screens that show which requirements are official claims and
-          where each requirement comes from.
-        </p>
-      </div>
-      <div class="corridor-grid">
-        {
-          tools.map((tool) => (
-            <a class="corridor-card" href={`/tools/${tool.slug}`}>
-              <span class="corridor-card__meta">{tool.toolType}</span>
-              <div>
-                <h3 class="corridor-card__title">{tool.title}</h3>
-                <p class="corridor-card__copy">{tool.intro}</p>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </section>
+    {
+      guideGroups.map((group) => (
+        <section class="corridor-section" aria-labelledby={group.id}>
+          <div class="corridor-section-head">
+            <div>
+              <p class="corridor-kicker">{group.kicker}</p>
+              <h2 id={group.id}>{group.title}</h2>
+              <p class="corridor-readiness">{group.readiness}</p>
+            </div>
+            <p class="corridor-section-note">{group.note}</p>
+          </div>
+          <div class="corridor-grid">
+            {group.entries.map((entry) => (
+              <a class="corridor-card" href={entry.href}>
+                <span class="corridor-card__meta">{entry.meta} / {group.readiness}</span>
+                <div>
+                  <h3 class="corridor-card__title">{entry.title}</h3>
+                  <p class="corridor-card__copy">{entry.copy}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </article>
+
+  <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+
+    .corridor-readiness {
+      margin: 0.45rem 0 0;
+      color: var(--stone);
+      font: 600 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
 </Base>

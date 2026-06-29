@@ -8,7 +8,7 @@ const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/places`;
 const title = "Places | My Second Country";
 const description =
-  "The countries, regions, and towns currently covered by My Second Country, with every live page tied to cited data.";
+  "The countries, regions, and towns currently covered by My Second Country, grouped by readiness state and source status.";
 
 const countryPlaces = places.filter((place) => place.granularity === "country");
 const regionPlaces = places.filter((place) => place.granularity === "region");
@@ -27,13 +27,118 @@ const jsonLd = [
   }),
 ];
 
-function placeScope(place: (typeof places)[number]): string {
+type Place = (typeof places)[number];
+type ReadinessEntry = {
+  href?: string;
+  title: string;
+  copy: string;
+  meta: string;
+  linked: boolean;
+};
+
+function placeScope(place: Place): string {
   if (place.granularity === "country") return "Country file";
   if (place.granularity === "region") return `Region in ${place.country}`;
   return place.ancestry.length > 0
     ? `Town in ${place.ancestry.map((item) => item.name).join(", ")}`
     : "Town file";
 }
+
+const heldPaths = new Set(["/places/greece/crete/chania"]);
+const sourceGapPaths = new Set(["/places/greece/crete"]);
+const chaniaPath = "/places/greece/crete/chania";
+const heldChania = places.find((place) => placePath(place) === chaniaPath);
+const sourceGapPlaces = places.filter((place) => sourceGapPaths.has(placePath(place)));
+const publishedPlaces = places.filter((place) => {
+  const path = placePath(place);
+  return !heldPaths.has(path) && !sourceGapPaths.has(path);
+});
+
+const readinessGroups: {
+  id: string;
+  label: string;
+  count: number;
+  note: string;
+  entries: ReadinessEntry[];
+}[] = [
+  {
+    id: "published",
+    label: "Published",
+    count: publishedPlaces.length,
+    note:
+      "Published files are live evidence surfaces. Country files can support comparisons and screener context.",
+    entries: publishedPlaces.map((place) => ({
+      href: placePath(place),
+      title: place.name,
+      copy: place.description,
+      meta: `${placeScope(place)} / published`,
+      linked: true,
+    })),
+  },
+  {
+    id: "held",
+    label: "Held",
+    count: 1,
+    note:
+      "Held means visible coverage only. It is not a finished town dossier and it has not cleared the page gate.",
+    entries: [
+      {
+        href: heldChania ? chaniaPath : "/sources",
+        title: heldChania?.name ?? "Chania",
+        copy:
+          "Coverage-only. Chania stays held until the Crete region and Chania town evidence bundles clear for publication.",
+        meta: "Town file / held coverage",
+        linked: true,
+      },
+    ],
+  },
+  {
+    id: "upcoming",
+    label: "Upcoming",
+    count: 2,
+    note:
+      "Upcoming means the route is not current coverage. It waits for a source-backed place file.",
+    entries: [
+      {
+        title: "Next Greek town file",
+        copy: "Queued after the first town page clears the published-page gate.",
+        meta: "Town file / upcoming",
+        linked: false,
+      },
+      {
+        title: "Portugal and Spain local coverage",
+        copy: "Country files are live. Local pages wait for town-level source bundles.",
+        meta: "Town files / upcoming",
+        linked: false,
+      },
+    ],
+  },
+  {
+    id: "source-gap",
+    label: "Source gap",
+    count: Math.max(1, sourceGapPlaces.length),
+    note:
+      "Source gap means a required evidence layer is not yet strong enough for a published local claim.",
+    entries:
+      sourceGapPlaces.length > 0
+        ? sourceGapPlaces.map((place) => ({
+            title: place.name,
+            copy:
+              "Regional support layer for future town pages. It stays out of the published group until the source gate clears.",
+            meta: `${placeScope(place)} / source gap`,
+            linked: false,
+          }))
+        : [
+            {
+              title: "Crete regional evidence bundle",
+              copy:
+                "Regional support layer for Chania. It stays out of the published group until the source gate clears.",
+              meta: "Region file / source gap",
+              linked: false,
+            },
+          ],
+  },
+];
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
@@ -46,90 +151,218 @@ function placeScope(place: (typeof places)[number]): string {
 
     <header class="corridor-hero">
       <p class="corridor-kicker">Coverage</p>
-      <h1 class="corridor-title">Places with a file open.</h1>
+      <h1 class="corridor-title">Coverage by readiness state.</h1>
       <p class="corridor-lead">
-        A place appears here only when it has a source-backed record in the product.
-        Some countries are broad anchors. Town pages go deeper and carry their own local facts.
+        A place can be published, held, upcoming, or blocked by a source gap. Town
+        pages need local evidence before they count as finished coverage.
       </p>
     </header>
 
     <FenceBlock hasLegalClaims={true} />
 
-    <section class="corridor-section" aria-labelledby="country-files">
+    {
+      readinessGroups.map((group) => (
+        <section class="corridor-section" aria-labelledby={`coverage-${group.id}`} id={group.id}>
+          <div class="corridor-section-head">
+            <div>
+              <p class="corridor-count">{group.count} {group.label.toLowerCase()}</p>
+              <h2 id={`coverage-${group.id}`}>{group.label}</h2>
+            </div>
+            <p class="corridor-section-note">{group.note}</p>
+          </div>
+          <div class="corridor-grid">
+            {group.entries.map((entry) =>
+              entry.linked && entry.href ? (
+                <a class="corridor-card" href={entry.href}>
+                  <span class="corridor-card__meta">{entry.meta}</span>
+                  <div>
+                    <h3 class="corridor-card__title">{entry.title}</h3>
+                    <p class="corridor-card__copy">{entry.copy}</p>
+                  </div>
+                </a>
+              ) : (
+                <article class="corridor-card corridor-card--static">
+                  <span class="corridor-card__meta">{entry.meta}</span>
+                  <div>
+                    <h3 class="corridor-card__title">{entry.title}</h3>
+                    <p class="corridor-card__copy">{entry.copy}</p>
+                  </div>
+                </article>
+              ),
+            )}
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="corridor-section" aria-labelledby="place-index">
       <div class="corridor-section-head">
         <div>
-          <p class="corridor-count">{countryPlaces.length} live</p>
-          <h2 id="country-files">Countries</h2>
+          <p class="corridor-kicker">Index</p>
+          <h2 id="place-index">Country, region, and town index</h2>
         </div>
         <p class="corridor-section-note">
-          Country files hold the national context used by comparisons, shortlists, and
-          tax regime pages.
+          The index keeps each place level distinct because country, region, and town
+          evidence support different claims.
         </p>
       </div>
-      <div class="corridor-grid">
-        {
-          countryPlaces.map((place) => (
-            <a class="corridor-card" href={placePath(place)}>
-              <span class="corridor-card__meta">{placeScope(place)}</span>
-              <div>
-                <h3 class="corridor-card__title">{place.name}</h3>
-                <p class="corridor-card__copy">{place.description}</p>
-              </div>
-            </a>
-          ))
-        }
+      <div class="coverage-index">
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            {countryPlaces.map((place) => (
+              <li><a href={placePath(place)}>{place.name}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Regions</h3>
+          {regionPlaces.length > 0 ? (
+            <ul>
+              {regionPlaces.map((place) => (
+                <li>
+                  {sourceGapPaths.has(placePath(place)) ? (
+                    <span>{place.name} source gap</span>
+                  ) : (
+                    <a href={placePath(place)}>{place.name}</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No published region index entries yet.</p>
+          )}
+        </div>
+        <div>
+          <h3>Towns</h3>
+          {townPlaces.length > 0 ? (
+            <ul>
+              {townPlaces.map((place) => (
+                <li>
+                  <a href={placePath(place)}>{place.name}</a>
+                  {heldPaths.has(placePath(place)) && <span> held coverage</span>}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No published town dossiers yet.</p>
+          )}
+        </div>
       </div>
     </section>
 
-    {regionPlaces.length > 0 && (
-      <section class="corridor-section" aria-labelledby="region-files">
-        <div class="corridor-section-head">
-          <div>
-            <p class="corridor-count">{regionPlaces.length} live</p>
-            <h2 id="region-files">Regions</h2>
-          </div>
-          <p class="corridor-section-note">
-            Region files bridge country-level rules and town-level living evidence.
-          </p>
+    <section class="corridor-section" aria-labelledby="held-means">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Gate</p>
+          <h2 id="held-means">Why held means held</h2>
         </div>
-        <div class="corridor-grid">
-          {regionPlaces.map((place) => (
-            <a class="corridor-card" href={placePath(place)}>
-              <span class="corridor-card__meta">{placeScope(place)}</span>
-              <div>
-                <h3 class="corridor-card__title">{place.name}</h3>
-                <p class="corridor-card__copy">{place.description}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-
-    {townPlaces.length > 0 && (
-      <section class="corridor-section" aria-labelledby="town-files">
-        <div class="corridor-section-head">
-          <div>
-            <p class="corridor-count">{townPlaces.length} live</p>
-            <h2 id="town-files">Towns</h2>
-          </div>
-          <p class="corridor-section-note">
-            Town files are the proof unit for local living claims. They need local facts,
-            not only inherited country data.
-          </p>
-        </div>
-        <div class="corridor-grid">
-          {townPlaces.map((place) => (
-            <a class="corridor-card" href={placePath(place)}>
-              <span class="corridor-card__meta">{placeScope(place)}</span>
-              <div>
-                <h3 class="corridor-card__title">{place.name}</h3>
-                <p class="corridor-card__copy">{place.description}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
+        <p class="corridor-section-note">
+          Chania remains coverage-only until the regional and town evidence bundles clear
+          the data gate. This task does not add a dossier template.
+        </p>
+      </div>
+      <p class="coverage-note">
+        Held coverage can show that work exists. It cannot carry local cost, residency,
+        tax, or living claims until those claims have source-backed town-level values.
+      </p>
+      <p class="coverage-links">
+        <a href="/sources">Inspect sources</a>
+        <a href="/methodology">Read methodology</a>
+        <a href="/compare/greece-portugal-spain">Compare countries</a>
+        <a href="/screener">Open screener</a>
+      </p>
+    </section>
   </article>
+
+  <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+
+    .corridor-card--static {
+      display: block;
+      color: inherit;
+    }
+
+    .coverage-index {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--hairline-soft);
+      border: 1px solid var(--hairline-soft);
+    }
+
+    .coverage-index > div {
+      min-width: 0;
+      padding: clamp(18px, 3vw, 26px);
+      background: var(--surface);
+    }
+
+    .coverage-index h3 {
+      margin: 0 0 0.75rem;
+      color: var(--ink);
+      font-family: var(--f-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .coverage-index ul {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .coverage-index a,
+    .coverage-links a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .coverage-index a:hover,
+    .coverage-index a:focus-visible,
+    .coverage-links a:hover,
+    .coverage-links a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .coverage-index p,
+    .coverage-note {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.62;
+    }
+
+    .coverage-index span {
+      color: var(--stone);
+      font: 600 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .coverage-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.1rem 0 0;
+      font: 600 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .coverage-index {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </Base>

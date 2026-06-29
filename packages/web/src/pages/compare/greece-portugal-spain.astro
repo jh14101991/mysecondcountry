@@ -1,8 +1,7 @@
 ---
 import type { CitedValue } from "@where/data";
 import { placeById } from "@where/data";
-import AtAGlance from "../../components/AtAGlance.astro";
-import ComparisonCell from "../../components/ComparisonCell.astro";
+import ConfidenceMark from "../../components/ConfidenceMark.astro";
 import FaqItem from "../../components/FaqItem.astro";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Masthead from "../../components/Masthead.astro";
@@ -109,288 +108,321 @@ const safeSrcRefGr = addSource(safeGr.sourceUrl, safeGr.sourceName, safeGr.verif
 const safeSrcRefPt = addSource(safePt.sourceUrl, safePt.sourceName, safePt.verifiedDate);
 const safeSrcRefEs = addSource(safeEs.sourceUrl, safeEs.sourceName, safeEs.verifiedDate);
 
-// ---- Score computation for ComparisonCell bars ----
-// normalize: t = (v - min)/(max - min); if dir=min flip t; score = Math.round(40 + 60*t)
-function radarScore(v: number, min: number, max: number, dir: "min" | "max"): number {
-  if (max === min) return 70;
-  let t = (v - min) / (max - min);
-  if (dir === "min") t = 1 - t;
-  return Math.round(40 + 60 * t);
-}
-
-// Cost scores (dir=min)
-const costScoreGr = radarScore(costGr.value as number, 86.6, 91.6, "min");
-const costScorePt = radarScore(costPt.value as number, 86.6, 91.6, "min");
-const costScoreEs = radarScore(costEs.value as number, 86.6, 91.6, "min");
-
-// Tax scores (dir=min)
-const taxScoreGr = radarScore(7, 7, 24, "min");
-const taxScorePt = radarScore(20, 7, 24, "min");
-const taxScoreEs = radarScore(24, 7, 24, "min");
-
-// Visa values and scores (dir=min)
-const visaVGr = visaGr.value as number;
-const visaVPt = visaPt.value as number;
-const visaVEs = visaEs.value as number;
-const visaMin = Math.min(visaVGr, visaVPt, visaVEs);
-const visaMax = Math.max(visaVGr, visaVPt, visaVEs);
-const visaScoreGr = radarScore(visaVGr, visaMin, visaMax, "min");
-const visaScorePt = radarScore(visaVPt, visaMin, visaMax, "min");
-const visaScoreEs = radarScore(visaVEs, visaMin, visaMax, "min");
-
-// Sunshine values and scores (dir=max)
-const sunVGr = sunGr.value as number;
-const sunVPt = sunPt.value as number;
-const sunVEs = sunEs.value as number;
-const sunMin = Math.min(sunVGr, sunVPt, sunVEs);
-const sunMax = Math.max(sunVGr, sunVPt, sunVEs);
-const sunScoreGr = radarScore(sunVGr, sunMin, sunMax, "max");
-const sunScorePt = radarScore(sunVPt, sunMin, sunMax, "max");
-const sunScoreEs = radarScore(sunVEs, sunMin, sunMax, "max");
-
-// Physician values and scores (dir=max)
-const docVGr = docGr.value as number;
-const docVPt = docPt.value as number;
-const docVEs = docEs.value as number;
-const docMin = Math.min(docVGr, docVPt, docVEs);
-const docMax = Math.max(docVGr, docVPt, docVEs);
-const docScoreGr = radarScore(docVGr, docMin, docMax, "max");
-const docScorePt = radarScore(docVPt, docMin, docMax, "max");
-const docScoreEs = radarScore(docVEs, docMin, docMax, "max");
-
-// Safety values and scores (dir=min)
-const safeVGr = safeGr.value as number;
-const safeVPt = safePt.value as number;
-const safeVEs = safeEs.value as number;
-const safeMin = Math.min(safeVGr, safeVPt, safeVEs);
-const safeMax = Math.max(safeVGr, safeVPt, safeVEs);
-const safeScoreGr = radarScore(safeVGr, safeMin, safeMax, "min");
-const safeScorePt = radarScore(safeVPt, safeMin, safeMax, "min");
-const safeScoreEs = radarScore(safeVEs, safeMin, safeMax, "min");
-
-// ---- Leader computations ----
-// Each dimension: the country with the best value leads
-// cost: min leader = PT (86.6)
-const costLeader: "gr" | "pt" | "es" = "pt";
-// tax: min leader = GR (7%)
-const taxLeader: "gr" | "pt" | "es" = "gr";
-// visa: min leader = ES (2849)
-const visaLeader: "gr" | "pt" | "es" = "es";
-// sunshine: max leader = PT (2874.9)
-const sunLeader: "gr" | "pt" | "es" = "pt";
-// physicians: max leader = GR (6.37)
-const docLeader: "gr" | "pt" | "es" = "gr";
-// safety: min leader = PT (1.372)
-const safeLeader: "gr" | "pt" | "es" = "pt";
-
-// ---- Small multiples: dot position computation ----
-function dotPos(raw: number, lo: number, span: number): number {
-  return Math.round(Math.max(0, Math.min(100, ((raw - lo) / span) * 100)));
-}
-function padRange(values: number[]): { lo: number; span: number } {
-  const mn = Math.min(...values);
-  const mx = Math.max(...values);
-  const pad = mx === mn ? 5 : (mx - mn) * 0.18;
-  return { lo: mn - pad, span: mx - mn + pad * 2 };
-}
-
-const costRaws = [costGr.value as number, costPt.value as number, costEs.value as number];
-const taxRaws = [7, 20, 24];
-const visaRaws = [visaVGr, visaVPt, visaVEs];
-const sunRaws = [sunVGr, sunVPt, sunVEs];
-const docRaws = [docVGr, docVPt, docVEs];
-const safeRaws = [safeVGr, safeVPt, safeVEs];
-
-const costRange = padRange(costRaws);
-const taxRange = padRange(taxRaws);
-const visaRange = padRange(visaRaws);
-const sunRange = padRange(sunRaws);
-const docRange = padRange(docRaws);
-const safeRange = padRange(safeRaws);
-
-// Dot positions (0=left, 100=right, left=worse, right=better for display)
-// For "lower is better" metrics, flip so leader is on the right
-function flipPos(pos: number): number {
-  return 100 - pos;
-}
-
-const multiples = [
-  {
-    label: "Cost",
-    caption: "lower is better",
-    scenarios: "remote retire",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: flipPos(dotPos(costRaws[0] ?? 0, costRange.lo, costRange.span)),
-        isLeader: costLeader === "gr",
-        value: `${costRaws[0]}`,
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: flipPos(dotPos(costRaws[1] ?? 0, costRange.lo, costRange.span)),
-        isLeader: costLeader === "pt",
-        value: `${costRaws[1]}`,
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: flipPos(dotPos(costRaws[2] ?? 0, costRange.lo, costRange.span)),
-        isLeader: costLeader === "es",
-        value: `${costRaws[2]}`,
-      },
-    ],
-  },
-  {
-    label: "Tax regime",
-    caption: "lower is better",
-    scenarios: "taxes retire",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: flipPos(dotPos(taxRaws[0] ?? 0, taxRange.lo, taxRange.span)),
-        isLeader: taxLeader === "gr",
-        value: "7%",
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: flipPos(dotPos(taxRaws[1] ?? 0, taxRange.lo, taxRange.span)),
-        isLeader: taxLeader === "pt",
-        value: "20%",
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: flipPos(dotPos(taxRaws[2] ?? 0, taxRange.lo, taxRange.span)),
-        isLeader: taxLeader === "es",
-        value: "24%",
-      },
-    ],
-  },
-  {
-    label: "Visa income floor",
-    caption: "lower is better",
-    scenarios: "remote taxes",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: flipPos(dotPos(visaRaws[0] ?? 0, visaRange.lo, visaRange.span)),
-        isLeader: visaLeader === "gr",
-        value: "€3,500",
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: flipPos(dotPos(visaRaws[1] ?? 0, visaRange.lo, visaRange.span)),
-        isLeader: visaLeader === "pt",
-        value: "€3,680",
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: flipPos(dotPos(visaRaws[2] ?? 0, visaRange.lo, visaRange.span)),
-        isLeader: visaLeader === "es",
-        value: "€2,849",
-      },
-    ],
-  },
-  {
-    label: "Sunshine",
-    caption: "higher is better",
-    scenarios: "remote retire",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: dotPos(sunRaws[0] ?? 0, sunRange.lo, sunRange.span),
-        isLeader: sunLeader === "gr",
-        value: "2,773",
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: dotPos(sunRaws[1] ?? 0, sunRange.lo, sunRange.span),
-        isLeader: sunLeader === "pt",
-        value: "2,875",
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: dotPos(sunRaws[2] ?? 0, sunRange.lo, sunRange.span),
-        isLeader: sunLeader === "es",
-        value: "2,744",
-      },
-    ],
-  },
-  {
-    label: "Physicians",
-    caption: "higher is better",
-    scenarios: "retire",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: dotPos(docRaws[0] ?? 0, docRange.lo, docRange.span),
-        isLeader: docLeader === "gr",
-        value: "6.37",
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: dotPos(docRaws[1] ?? 0, docRange.lo, docRange.span),
-        isLeader: docLeader === "pt",
-        value: "5.77",
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: dotPos(docRaws[2] ?? 0, docRange.lo, docRange.span),
-        isLeader: docLeader === "es",
-        value: "4.48",
-      },
-    ],
-  },
-  {
-    label: "Safety (GPI)",
-    caption: "lower is better",
-    scenarios: "remote retire",
-    dots: [
-      {
-        country: "gr" as const,
-        tag: "GR",
-        pos: flipPos(dotPos(safeRaws[0] ?? 0, safeRange.lo, safeRange.span)),
-        isLeader: safeLeader === "gr",
-        value: "1.793",
-      },
-      {
-        country: "pt" as const,
-        tag: "PT",
-        pos: flipPos(dotPos(safeRaws[1] ?? 0, safeRange.lo, safeRange.span)),
-        isLeader: safeLeader === "pt",
-        value: "1.372",
-      },
-      {
-        country: "es" as const,
-        tag: "ES",
-        pos: flipPos(dotPos(safeRaws[2] ?? 0, safeRange.lo, safeRange.span)),
-        isLeader: safeLeader === "es",
-        value: "1.597",
-      },
-    ],
-  },
-];
-
 const title = "Greece vs Portugal vs Spain: a cited relocation comparison";
 const description =
-  "Cost, tax, visa, sunshine, healthcare, and safety for Greece, Portugal, and Spain, every figure linked to its source with a verified date and a confidence mark. Screening intelligence, not advice.";
+  "Cost, tax, visa, sunshine, healthcare, and safety for Greece, Portugal, and Spain, every figure linked to its source with a verified date and a confidence mark. Screening intelligence, not legal, tax, immigration, or financial guidance.";
 const canonical = `${SITE}/compare/greece-portugal-spain`;
 
 const COUNTRY_NAME = { gr: "Greece", pt: "Portugal", es: "Spain" } as const;
+type CountryCode = keyof typeof COUNTRY_NAME;
+type DisplayFormat = "currency" | "euIndex" | "integer" | "decimal2" | "decimal3";
+
+const integerFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+const euIndexFormatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+});
+const decimal2Formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+const decimal3Formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 3,
+  maximumFractionDigits: 3,
+});
+const euroFormatter = new Intl.NumberFormat("en-US", {
+  currency: "EUR",
+  maximumFractionDigits: 0,
+  style: "currency",
+});
+
+function numericCitedValue(cited: CitedValue): number | null {
+  if (typeof cited.value === "number") return cited.value;
+  if (typeof cited.value === "string") {
+    const parsed = Number(cited.value.replace(/[^\d.-]/g, ""));
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+function formatCitedValue(cited: CitedValue, format: DisplayFormat): string {
+  const numericValue = numericCitedValue(cited);
+  if (numericValue === null) return String(cited.value ?? "");
+
+  switch (format) {
+    case "currency":
+      return euroFormatter.format(numericValue);
+    case "euIndex":
+      return euIndexFormatter.format(numericValue);
+    case "integer":
+      return integerFormatter.format(numericValue);
+    case "decimal2":
+      return decimal2Formatter.format(numericValue);
+    case "decimal3":
+      return decimal3Formatter.format(numericValue);
+    default:
+      return String(cited.value ?? "");
+  }
+}
+
+function scenarioCell(cited: CitedValue, format: DisplayFormat, context: string) {
+  return { cited, context, display: formatCitedValue(cited, format) };
+}
+
+function regimeRateCell(cited: CitedValue, displayRate: string, context: string) {
+  return { cited, context, display: displayRate };
+}
+
+function matrixCell(
+  cited: CitedValue,
+  format: DisplayFormat,
+  unit: string,
+  subtext: string,
+  sourceRef: number
+) {
+  return { cited, display: formatCitedValue(cited, format), sourceRef, subtext, unit };
+}
+
+function regimeRateMatrixCell(
+  cited: CitedValue,
+  displayRate: string,
+  unit: string,
+  subtext: string,
+  sourceRef: number
+) {
+  return { cited, display: displayRate, sourceRef, subtext, unit };
+}
+
+const scenarioPanels: {
+  id: "remote" | "taxes" | "retire" | "all";
+  label: string;
+  summary: string;
+  rows: {
+    label: string;
+    note: string;
+    cells: Record<CountryCode, { cited: CitedValue; display: string; context: string }>;
+  }[];
+}[] = [
+  {
+    id: "remote",
+    label: "Work remotely",
+    summary:
+      "Start with visa income floor, cost, sunshine, and safety. The complete cited matrix remains below.",
+    rows: [
+      {
+        label: "Remote-work visa income",
+        note: "Minimum net monthly income for the digital-nomad or telework residence route.",
+        cells: {
+          gr: scenarioCell(visaGr, "currency", "net monthly floor"),
+          pt: scenarioCell(visaPt, "currency", "monthly floor"),
+          es: scenarioCell(visaEs, "currency", "net monthly floor"),
+        },
+      },
+      {
+        label: "Cost of living",
+        note: "Eurostat price-level index for actual individual consumption, EU27 equals 100.",
+        cells: {
+          gr: scenarioCell(costGr, "euIndex", "EU27=100"),
+          pt: scenarioCell(costPt, "euIndex", "EU27=100"),
+          es: scenarioCell(costEs, "euIndex", "EU27=100"),
+        },
+      },
+      {
+        label: "Sunshine",
+        note: "Capital-city sunshine hours, not a national average.",
+        cells: {
+          gr: scenarioCell(sunGr, "integer", "hours per year"),
+          pt: scenarioCell(sunPt, "integer", "hours per year"),
+          es: scenarioCell(sunEs, "integer", "hours per year"),
+        },
+      },
+      {
+        label: "Safety",
+        note: "Global Peace Index score. Lower score means more peaceful in that index.",
+        cells: {
+          gr: scenarioCell(safeGr, "decimal3", "GPI score"),
+          pt: scenarioCell(safePt, "decimal3", "GPI score"),
+          es: scenarioCell(safeEs, "decimal3", "GPI score"),
+        },
+      },
+    ],
+  },
+  {
+    id: "taxes",
+    label: "Compare tax exposure",
+    summary:
+      "Start with the published regime rate and the visa income floor. These are not comparable legal routes.",
+    rows: [
+      {
+        label: "Published regime rate",
+        note: "Headline rate only. Eligibility, income type, and duration differ by country.",
+        cells: {
+          gr: regimeRateCell(taxGr, "7%", "foreign-pension regime"),
+          pt: regimeRateCell(taxPt, "20%", "IFICI"),
+          es: regimeRateCell(taxEs, "24%", "Beckham regime"),
+        },
+      },
+      {
+        label: "Remote-work visa income",
+        note: "Income-floor rules can matter before any tax route is relevant.",
+        cells: {
+          gr: scenarioCell(visaGr, "currency", "net monthly floor"),
+          pt: scenarioCell(visaPt, "currency", "monthly floor"),
+          es: scenarioCell(visaEs, "currency", "net monthly floor"),
+        },
+      },
+    ],
+  },
+  {
+    id: "retire",
+    label: "Retirement screen",
+    summary:
+      "Start with cost, healthcare capacity, safety, sunshine, and the published pension-tax route where available.",
+    rows: [
+      {
+        label: "Cost of living",
+        note: "Whole-country price-level index, useful as a first screen before local checks.",
+        cells: {
+          gr: scenarioCell(costGr, "euIndex", "EU27=100"),
+          pt: scenarioCell(costPt, "euIndex", "EU27=100"),
+          es: scenarioCell(costEs, "euIndex", "EU27=100"),
+        },
+      },
+      {
+        label: "Physicians per 1,000",
+        note: "Licensed medical doctors per 1,000 people. It does not measure appointment access.",
+        cells: {
+          gr: scenarioCell(docGr, "decimal2", "per 1,000"),
+          pt: scenarioCell(docPt, "decimal2", "per 1,000"),
+          es: scenarioCell(docEs, "decimal2", "per 1,000"),
+        },
+      },
+      {
+        label: "Safety",
+        note: "Global Peace Index score. Lower score means more peaceful in that index.",
+        cells: {
+          gr: scenarioCell(safeGr, "decimal3", "GPI score"),
+          pt: scenarioCell(safePt, "decimal3", "GPI score"),
+          es: scenarioCell(safeEs, "decimal3", "GPI score"),
+        },
+      },
+      {
+        label: "Published regime rate",
+        note: "Headline rate only. Pension treatment and eligibility need official-source review.",
+        cells: {
+          gr: regimeRateCell(taxGr, "7%", "foreign-pension regime"),
+          pt: regimeRateCell(taxPt, "20%", "IFICI"),
+          es: regimeRateCell(taxEs, "24%", "Beckham regime"),
+        },
+      },
+    ],
+  },
+  {
+    id: "all",
+    label: "All cited dimensions",
+    summary:
+      "Use this when you are ready for the full matrix. Each cell keeps source, verified date, confidence, and granularity close to the value.",
+    rows: [],
+  },
+];
+
+const countryOrder = ["gr", "pt", "es"] as const;
+
+const matrixRows: {
+  id: string;
+  scenarios: string;
+  label: string;
+  description: string;
+  note: string;
+  cells: Record<
+    CountryCode,
+    {
+      cited: CitedValue;
+      display: string;
+      unit?: string;
+      subtext: string;
+      sourceRef: number;
+    }
+  >;
+}[] = [
+  {
+    id: "cost",
+    scenarios: "remote retire",
+    label: "Cost of living",
+    description:
+      "Eurostat price level index for actual consumption. 100 is the EU average; lower is cheaper.",
+    note: "Lowest shown in this dataset: Portugal.",
+    cells: {
+      gr: matrixCell(costGr, "euIndex", "EU27=100", "Whole-country index", costSrcRef),
+      pt: matrixCell(costPt, "euIndex", "EU27=100", "Whole-country index", costSrcRef),
+      es: matrixCell(costEs, "euIndex", "EU27=100", "Whole-country index", costSrcRef),
+    },
+  },
+  {
+    id: "tax",
+    scenarios: "taxes retire",
+    label: "Published regime tax rate",
+    description:
+      "Headline rate of the published expat regime used in this comparison. These are different regimes with different eligibility.",
+    note: "Lowest shown in this dataset: Greece.",
+    cells: {
+      gr: regimeRateMatrixCell(taxGr, "7%", "flat", "Foreign-pension regime, article 5B", taxSrcRefGr),
+      pt: regimeRateMatrixCell(taxPt, "20%", "flat", "IFICI, the NHR successor", taxSrcRefPt),
+      es: regimeRateMatrixCell(taxEs, "24%", "flat", "Beckham regime, first six years", taxSrcRefEs),
+    },
+  },
+  {
+    id: "visa",
+    scenarios: "remote taxes",
+    label: "Remote-work visa income",
+    description:
+      "Minimum net monthly income for the digital-nomad or telework residence visa. Lower is more accessible.",
+    note: "Lowest shown in this dataset: Spain.",
+    cells: {
+      gr: matrixCell(visaGr, "currency", "/mo min", "Net income floor, law 5038/2023", visaSrcRefGr),
+      pt: matrixCell(visaPt, "currency", "/mo min", "Four times the minimum wage (D8)", visaSrcRefPt),
+      es: matrixCell(visaEs, "currency", "/mo min", "200% of the minimum wage (telework visa)", visaSrcRefEs),
+    },
+  },
+  {
+    id: "sunshine",
+    scenarios: "remote retire",
+    label: "Sunshine",
+    description:
+      "Mean annual sunshine hours at the capital. A single-source city figure, not a national average.",
+    note: "Highest shown in this dataset: Lisbon.",
+    cells: {
+      gr: matrixCell(sunGr, "integer", "hrs/yr", "Athens (Elliniko)", sunSrcRefGr),
+      pt: matrixCell(sunPt, "integer", "hrs/yr", "Lisbon", sunSrcRefPt),
+      es: matrixCell(sunEs, "integer", "hrs/yr", "Madrid", sunSrcRefEs),
+    },
+  },
+  {
+    id: "physicians",
+    scenarios: "retire",
+    label: "Physicians per 1,000",
+    description:
+      "Licensed medical doctors per 1,000 people (WHO 2021). Counts licensed, not only practising, doctors.",
+    note: "Highest shown in this dataset: Greece.",
+    cells: {
+      gr: matrixCell(docGr, "decimal2", "per 1,000", "WHO 2021", docSrcRefGr),
+      pt: matrixCell(docPt, "decimal2", "per 1,000", "WHO 2021", docSrcRefPt),
+      es: matrixCell(docEs, "decimal2", "per 1,000", "WHO 2021", docSrcRefEs),
+    },
+  },
+  {
+    id: "safety",
+    scenarios: "remote retire",
+    label: "Safety (Global Peace Index)",
+    description: "Global Peace Index 2024 score. Lower is more peaceful.",
+    note: "Lowest score shown in this dataset: Portugal.",
+    cells: {
+      gr: matrixCell(safeGr, "decimal3", "GPI", "Rank 40 of 163", safeSrcRefGr),
+      pt: matrixCell(safePt, "decimal3", "GPI", "Rank 7 of 163", safeSrcRefPt),
+      es: matrixCell(safeEs, "decimal3", "GPI", "Rank 23 of 163", safeSrcRefEs),
+    },
+  },
+];
 
 // Every cited cell behind the comparison grid, enriched into a machine PropertyValue.
 const measuredDims: {
@@ -403,7 +435,7 @@ const measuredDims: {
     unit: "EU27=100",
     cells: { gr: costGr, pt: costPt, es: costEs },
   },
-  { label: "best published expat tax regime", cells: { gr: taxGr, pt: taxPt, es: taxEs } },
+  { label: "published expat tax regime", cells: { gr: taxGr, pt: taxPt, es: taxEs } },
   {
     label: "remote-work visa minimum income",
     unit: "EUR per month",
@@ -440,16 +472,6 @@ const variableMeasured = measuredDims.flatMap((d) =>
   ),
 );
 
-// Leader strip cells, factual not advisory. Mirrors the grid's row leaders.
-const leaders = [
-  { label: "Cost", stat: "86.6 index", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
-  { label: "Tax regime", stat: "7% flat", country: "gr" as const, countryLabel: "🇬🇷 Greece" },
-  { label: "Visa floor", stat: "€2,849/mo", country: "es" as const, countryLabel: "🇪🇸 Spain" },
-  { label: "Sunshine", stat: "2,875 hrs", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
-  { label: "Doctors", stat: "6.37/1,000", country: "gr" as const, countryLabel: "🇬🇷 Greece" },
-  { label: "Safety", stat: "GPI rank 7", country: "pt" as const, countryLabel: "🇵🇹 Portugal" },
-];
-
 const breadcrumbItems = [
   { name: "Home", href: "/" },
   { name: "Greece vs Portugal vs Spain", href: "/compare/greece-portugal-spain" },
@@ -461,7 +483,7 @@ const faqs = [
   {
     question: "Which has the lowest special tax rate: Greece, Portugal, or Spain?",
     answer:
-      "Greece, at a flat 7% on foreign-source pension income (article 5B), against Portugal's 20% (IFICI) and Spain's 24% (Beckham). They are different regimes with different eligibility (PwC Worldwide Tax Summaries, verified 2026-06-24). Confirm yours with a licensed tax adviser.",
+      "Greece, at a flat 7% on foreign-source pension income (article 5B), against Portugal's 20% (IFICI) and Spain's 24% (Beckham). They are different regimes with different eligibility (PwC Worldwide Tax Summaries, verified 2026-06-24). Check the official source and a qualified tax professional before acting.",
   },
   {
     question: "Which has the lowest digital nomad visa income requirement?",
@@ -471,7 +493,7 @@ const faqs = [
   {
     question: "Which is the most peaceful and the cheapest of the three?",
     answer:
-      "Portugal on both: the lowest Eurostat price level of the three and the best Global Peace Index rank (7 of 163), against Greece (rank 40) and Spain (rank 23) (Eurostat and Institute for Economics and Peace, verified 2026-06-24).",
+      "Portugal on both: the lowest Eurostat price level of the three and the lowest Global Peace Index rank (7 of 163), against Greece (rank 40) and Spain (rank 23) (Eurostat and Institute for Economics and Peace, verified 2026-06-24).",
   },
 ];
 
@@ -534,7 +556,7 @@ const jsonLd = [
       id="heroSection"
       title="Greece vs Portugal vs Spain"
       dateline={dateline}
-      standfirst="Six measures, every figure sourced, dated, and confidence rated. We do not pick a winner for you."
+      standfirst="Six measures, every figure sourced, dated, and confidence rated. The page compares evidence without selecting a country."
     >
       <Fragment slot="title">Greece <em>vs</em> Portugal <em>vs</em> Spain</Fragment>
 
@@ -597,35 +619,74 @@ const jsonLd = [
       </Fragment>
     </Masthead>
 
-    <!-- ── FENCE (above tabs, above first data claim) ──────────────────── -->
+    <!-- ── FENCE (above filters, above first data claim) ───────────────── -->
     <div class="fence-wrap">
       <FenceBlock hasLegalClaims={true} />
     </div>
 
-    <!-- ── TABS ──────────────────────────────────────────────────────────── -->
+    <!-- ── SCENARIO FILTERS ──────────────────────────────────────────────── -->
     <div class="tabs-section">
-      <div class="tabs-list" role="tablist" aria-label="Filter by scenario">
-        <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="all"    aria-controls="comparison">All metrics</button>
-        <button class="tab-btn"        role="tab" aria-selected="false" data-tab="taxes"  aria-controls="comparison">Lower my taxes</button>
-        <button class="tab-btn"        role="tab" aria-selected="false" data-tab="remote" aria-controls="comparison">Work remotely</button>
-        <button class="tab-btn"        role="tab" aria-selected="false" data-tab="retire" aria-controls="comparison">Retire abroad</button>
+      <div class="tabs-list" role="group" aria-label="Filter by scenario">
+        <button class="tab-btn active" type="button" aria-pressed="true" data-filter="remote">Work remotely</button>
+        <button class="tab-btn" type="button" aria-pressed="false" data-filter="taxes">Compare tax exposure</button>
+        <button class="tab-btn" type="button" aria-pressed="false" data-filter="retire">Retirement screen</button>
+        <button class="tab-btn" type="button" aria-pressed="false" data-filter="all">All cited dimensions</button>
       </div>
     </div>
 
-    <!-- ── WHAT THE DATA SHOWS ──────────────────────────────────────────────── -->
-    <div class="shows-wrap" aria-live="polite" hidden>
-      <h2 class="shows-h2">What the data shows</h2>
-      <p class="shows-text" data-shows="taxes" hidden>Among the three special regimes, Greece has the lowest headline rate at 7% flat on foreign-source pension income (article 5B), against Portugal's 20% (IFICI) and Spain's 24% (Beckham). They are different regimes with different eligibility. Confirm yours with a licensed tax adviser.</p>
-      <p class="shows-text" data-shows="remote" hidden>Spain has the lowest digital-nomad visa income floor at €2,849 a month, with Greece at €3,500 and Portugal at €3,680. By the Eurostat price level index, Portugal is the cheapest of the three.</p>
-      <p class="shows-text" data-shows="retire" hidden>Portugal is the most peaceful of the three (Global Peace Index rank 7) and the cheapest by price level. Greece has the most doctors per person and the lowest special tax rate. Spain sits between the two on most measures.</p>
-    </div>
+    <!-- ── SCENARIO FIRST: source-adjacent values before the full matrix ───── -->
+    <section class="scenario-first" aria-labelledby="scenario-first-heading" aria-live="polite">
+      <div class="scenario-first__head">
+        <p class="scenario-kicker">Start with a concern</p>
+        <h2 id="scenario-first-heading">A smaller first read before the full table.</h2>
+        <p>
+          The first view shows only the dimensions that fit the selected concern. The full
+          table remains below for readers who need every cited row.
+        </p>
+      </div>
 
-    <!-- ── AT A GLANCE: small multiples + leader strip ────────────────────── -->
-    <AtAGlance
-      multiples={multiples}
-      leaders={leaders}
-      note="Scores are relative among these three countries. Every number is sourced in the rows below."
-    />
+      {
+        scenarioPanels.map((panel) => (
+          <div class="scenario-panel" data-scenario-panel={panel.id} hidden={panel.id !== "remote"}>
+            <div class="scenario-panel__intro">
+              <h3>{panel.label}</h3>
+              <p>{panel.summary}</p>
+            </div>
+            {panel.rows.length > 0 ? (
+              <div class="scenario-rows">
+                {panel.rows.map((row) => (
+                  <article class="scenario-row">
+                    <div class="scenario-row__measure">
+                      <h4>{row.label}</h4>
+                      <p>{row.note}</p>
+                    </div>
+                    <div class="scenario-values">
+                      {(["gr", "pt", "es"] as CountryCode[]).map((country) => {
+                        const cell = row.cells[country];
+                        return (
+                          <div class="scenario-value">
+                            <span class="scenario-value__country">{COUNTRY_NAME[country]}</span>
+                            <strong>{cell.display}</strong>
+                            <span>{cell.context}</span>
+                            <p>
+                              {cell.cited.sourceName}. Verified {cell.cited.verifiedDate}. Confidence {cell.cited.confidence}. Granularity {cell.cited.granularity}.
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p class="scenario-panel__empty">
+                The full cited matrix is shown below. Use the concern filters to narrow the first read again.
+              </p>
+            )}
+          </div>
+        ))
+      }
+    </section>
 
     <!-- ── COMPARISON ────────────────────────────────────────────────────── -->
     <section class="comparison-section" id="comparison" aria-label="Metric comparison">
@@ -650,133 +711,53 @@ const jsonLd = [
             </tr>
           </thead>
           <tbody>
-
-            <!-- Row 1: Cost of living -->
-            <tr class="metric-row row-fade" data-metric-id="cost" data-scenarios="remote retire">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Cost of living</p>
-                <p class="dim-desc">Eurostat price level index for actual consumption. 100 is the EU average; lower is cheaper.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--pt"></div>
-                  <p class="dim-leader-text dim-leader-text--pt">Portugal has the lowest price level of the three.</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={costGr} displayValue="87.4" unit="EU27=100" subtext="Whole-country index" country="gr" isLeader={costLeader === "gr"} score={costScoreGr} sourceRef={costSrcRef} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={costPt} displayValue="86.6" unit="EU27=100" subtext="Whole-country index" country="pt" isLeader={costLeader === "pt"} score={costScorePt} sourceRef={costSrcRef} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={costEs} displayValue="91.6" unit="EU27=100" subtext="Whole-country index" country="es" isLeader={costLeader === "es"} score={costScoreEs} sourceRef={costSrcRef} />
-              </td>
-            </tr>
-
-            <!-- Row 2: Tax regime -->
-            <tr class="metric-row row-fade" data-metric-id="tax" data-scenarios="taxes retire">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Best regime tax rate</p>
-                <p class="dim-desc">Headline rate of the best published expat regime. These are different regimes with different eligibility.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--gr"></div>
-                  <p class="dim-leader-text dim-leader-text--gr">Greece has the lowest headline regime rate.</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={taxGr} displayValue="7%" unit="flat" subtext="Foreign-pension regime, article 5B" country="gr" isLeader={taxLeader === "gr"} score={taxScoreGr} sourceRef={taxSrcRefGr} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={taxPt} displayValue="20%" unit="flat" subtext="IFICI, the NHR successor" country="pt" isLeader={taxLeader === "pt"} score={taxScorePt} sourceRef={taxSrcRefPt} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={taxEs} displayValue="24%" unit="flat" subtext="Beckham regime, first six years" country="es" isLeader={taxLeader === "es"} score={taxScoreEs} sourceRef={taxSrcRefEs} />
-              </td>
-            </tr>
-
-            <!-- Row 3: Remote-work visa -->
-            <tr class="metric-row row-fade" data-metric-id="visa" data-scenarios="remote taxes">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Remote-work visa income</p>
-                <p class="dim-desc">Minimum net monthly income for the digital-nomad or telework residence visa. Lower is more accessible.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--es"></div>
-                  <p class="dim-leader-text dim-leader-text--es">Spain has the lowest income floor of the three.</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={visaGr} displayValue="€3,500" unit="/mo min" subtext="Net income floor, law 5038/2023" country="gr" isLeader={visaLeader === "gr"} score={visaScoreGr} sourceRef={visaSrcRefGr} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={visaPt} displayValue="€3,680" unit="/mo min" subtext="Four times the minimum wage (D8)" country="pt" isLeader={visaLeader === "pt"} score={visaScorePt} sourceRef={visaSrcRefPt} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={visaEs} displayValue="€2,849" unit="/mo min" subtext="200% of the minimum wage (telework visa)" country="es" isLeader={visaLeader === "es"} score={visaScoreEs} sourceRef={visaSrcRefEs} />
-              </td>
-            </tr>
-
-            <!-- Row 4: Sunshine -->
-            <tr class="metric-row row-fade" data-metric-id="sunshine" data-scenarios="remote retire">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Sunshine</p>
-                <p class="dim-desc">Mean annual sunshine hours at the capital. A single-source city figure, not a national average.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--pt"></div>
-                  <p class="dim-leader-text dim-leader-text--pt">Lisbon records the most sunshine hours of the three capitals.</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={sunGr} displayValue="2,773" unit="hrs/yr" subtext="Athens (Elliniko)" country="gr" isLeader={sunLeader === "gr"} score={sunScoreGr} sourceRef={sunSrcRefGr} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={sunPt} displayValue="2,875" unit="hrs/yr" subtext="Lisbon" country="pt" isLeader={sunLeader === "pt"} score={sunScorePt} sourceRef={sunSrcRefPt} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={sunEs} displayValue="2,744" unit="hrs/yr" subtext="Madrid" country="es" isLeader={sunLeader === "es"} score={sunScoreEs} sourceRef={sunSrcRefEs} />
-              </td>
-            </tr>
-
-            <!-- Row 5: Physicians -->
-            <tr class="metric-row row-fade" data-metric-id="physicians" data-scenarios="retire">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Physicians per 1,000</p>
-                <p class="dim-desc">Licensed medical doctors per 1,000 people (WHO 2021). Counts licensed, not only practising, doctors.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--gr"></div>
-                  <p class="dim-leader-text dim-leader-text--gr">Greece has the most doctors per person of the three.</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={docGr} displayValue="6.37" unit="per 1,000" subtext="WHO 2021" country="gr" isLeader={docLeader === "gr"} score={docScoreGr} sourceRef={docSrcRefGr} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={docPt} displayValue="5.77" unit="per 1,000" subtext="WHO 2021" country="pt" isLeader={docLeader === "pt"} score={docScorePt} sourceRef={docSrcRefPt} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={docEs} displayValue="4.48" unit="per 1,000" subtext="WHO 2021" country="es" isLeader={docLeader === "es"} score={docScoreEs} sourceRef={docSrcRefEs} />
-              </td>
-            </tr>
-
-            <!-- Row 6: Safety -->
-            <tr class="metric-row row-fade" data-metric-id="safety" data-scenarios="remote retire">
-              <th scope="row" class="td-dim">
-                <p class="dim-name">Safety (Global Peace Index)</p>
-                <p class="dim-desc">Global Peace Index 2024 score. Lower is more peaceful.</p>
-                <div class="dim-leader">
-                  <div class="dim-leader-dot dim-leader-dot--pt"></div>
-                  <p class="dim-leader-text dim-leader-text--pt">Portugal is the most peaceful of the three (rank 7).</p>
-                </div>
-              </th>
-              <td class="td-country" data-label="GR">
-                <ComparisonCell cited={safeGr} displayValue="1.793" unit="GPI" subtext="Rank 40 of 163" country="gr" isLeader={safeLeader === "gr"} score={safeScoreGr} sourceRef={safeSrcRefGr} />
-              </td>
-              <td class="td-country" data-label="PT">
-                <ComparisonCell cited={safePt} displayValue="1.372" unit="GPI" subtext="Rank 7 of 163" country="pt" isLeader={safeLeader === "pt"} score={safeScorePt} sourceRef={safeSrcRefPt} />
-              </td>
-              <td class="td-country" data-label="ES">
-                <ComparisonCell cited={safeEs} displayValue="1.597" unit="GPI" subtext="Rank 23 of 163" country="es" isLeader={safeLeader === "es"} score={safeScoreEs} sourceRef={safeSrcRefEs} />
-              </td>
-            </tr>
-
+            {
+              matrixRows.map((row) => (
+                <tr class="metric-row row-fade" data-metric-id={row.id} data-scenarios={row.scenarios}>
+                  <th scope="row" class="td-dim">
+                    <p class="dim-name">{row.label}</p>
+                    <p class="dim-desc">{row.description}</p>
+                    <p class="dim-note">{row.note}</p>
+                  </th>
+                  {countryOrder.map((country) => {
+                    const cell = row.cells[country];
+                    return (
+                      <td class="td-country" data-label={country.toUpperCase()}>
+                        <div class={`matrix-cell matrix-cell--${country} country-cell`} data-country={country}>
+                          <span class="matrix-cell__country">{COUNTRY_NAME[country]}</span>
+                          <div class="matrix-cell__value">
+                            <span class="matrix-cell__number">{cell.display}</span>
+                            {cell.unit && <span class="matrix-cell__unit">{cell.unit}</span>}
+                          </div>
+                          <p class="matrix-cell__subtext">{cell.subtext}</p>
+                          <dl class="matrix-cell__meta">
+                            <div>
+                              <dt>Source</dt>
+                              <dd><a href={`#sources-${cell.sourceRef}`}>{cell.cited.sourceName}</a></dd>
+                            </div>
+                            <div>
+                              <dt>Verified</dt>
+                              <dd>{cell.cited.verifiedDate}</dd>
+                            </div>
+                            <div>
+                              <dt>Confidence</dt>
+                              <dd><ConfidenceMark level={cell.cited.confidence} /></dd>
+                            </div>
+                            <div>
+                              <dt>Granularity</dt>
+                              <dd>{cell.cited.granularity}</dd>
+                            </div>
+                          </dl>
+                          {cell.cited.confidence === "low" && (
+                            <p class="matrix-cell__note">Reported, not verified against a primary source.</p>
+                          )}
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))
+            }
           </tbody>
         </table>
       </div>
@@ -809,66 +790,34 @@ const jsonLd = [
   </div><!-- /data-page -->
 
   <script>
-    /* ── Tab switching ───────────────────────────────────────────────────── */
+    /* ── Scenario filtering ──────────────────────────────────────────────── */
+    function applyFilter(filter: string): void {
+      document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
+        const isActive = btn.dataset.filter === filter;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      document.querySelectorAll<HTMLElement>(".scenario-panel").forEach((panel) => {
+        panel.hidden = panel.dataset.scenarioPanel !== filter;
+      });
+
+      document.querySelectorAll<HTMLElement>(".metric-row").forEach((row) => {
+        if (filter === "all") {
+          row.hidden = false;
+        } else {
+          const scenarios = (row.dataset.scenarios ?? "").split(" ");
+          row.hidden = !scenarios.includes(filter);
+        }
+      });
+    }
+
     document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const tab = btn.dataset.tab ?? "all";
-
-        // Active state
-        document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((b) => {
-          const isActive = b.dataset.tab === tab;
-          b.classList.toggle("active", isActive);
-          b.setAttribute("aria-selected", isActive ? "true" : "false");
-        });
-
-        // "What the data shows" block: hidden entirely on "all", else show matching note
-        const showsWrap = document.querySelector<HTMLElement>(".shows-wrap");
-        if (showsWrap) showsWrap.hidden = tab === "all";
-        document.querySelectorAll<HTMLElement>(".shows-text").forEach((el) => {
-          el.hidden = !(tab !== "all" && el.dataset.shows === tab);
-        });
-
-        // Metric rows: show/hide by data-scenarios
-        document.querySelectorAll<HTMLElement>(".metric-row").forEach((row) => {
-          if (tab === "all") {
-            row.hidden = false;
-          } else {
-            const scenarios = (row.dataset.scenarios ?? "").split(" ");
-            row.hidden = !scenarios.includes(tab);
-          }
-        });
-
-        // Small multiples: show/hide by data-scenarios
-        document.querySelectorAll<HTMLElement>(".multiple-chart").forEach((chart) => {
-          if (tab === "all") {
-            chart.hidden = false;
-          } else {
-            const scenarios = (chart.dataset.scenarios ?? "").split(" ");
-            chart.hidden = !scenarios.includes(tab);
-          }
-        });
+        applyFilter(btn.dataset.filter ?? "remote");
       });
     });
-
-    /* ── Bar animation (IntersectionObserver) ───────────────────────────── */
-    function attachBarObservers(): void {
-      const fills = document.querySelectorAll<HTMLElement>(".bar-fill");
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              const el = e.target as HTMLElement;
-              const score = el.dataset.score ?? "40";
-              el.style.width = score + "%";
-              obs.unobserve(el);
-            }
-          });
-        },
-        { rootMargin: "-60px 0px" }
-      );
-      fills.forEach((f) => obs.observe(f));
-    }
-    attachBarObservers();
+    applyFilter("remote");
 
     /* ── Column hover dimming ────────────────────────────────────────────── */
     function attachHoverListeners(): void {
@@ -912,6 +861,17 @@ const jsonLd = [
   </script>
 
   <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+
     /* ── Keyframe animations ────────────────────────────────────────────── */
     @keyframes fadeSlideUp {
       from { opacity: 0; transform: translateY(22px); }
@@ -997,7 +957,7 @@ const jsonLd = [
     }
     @media (min-width: 640px) { .fence-wrap { padding: 0 2rem; } }
 
-    /* ── TABS ─────────────────────────────────────────────────────────────── */
+    /* ── SCENARIO FILTERS ───────────────────────────────────────────────── */
     .tabs-section {
       max-width: 80rem;
       margin: 0 auto;
@@ -1038,6 +998,21 @@ const jsonLd = [
     .tab-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
     @media (max-width: 639px) {
+      .scenario-first__head,
+      .scenario-panel__intro,
+      .scenario-row,
+      .scenario-values {
+        grid-template-columns: 1fr;
+      }
+
+      .scenario-first__head {
+        align-items: start;
+      }
+
+      .scenario-value {
+        padding: 13px 12px;
+      }
+
       .tabs-list {
         flex-wrap: wrap;
         overflow-x: visible;
@@ -1061,33 +1036,168 @@ const jsonLd = [
       }
     }
 
-    /* ── WHAT THE DATA SHOWS ─────────────────────────────────────────────── */
-    .shows-wrap {
+    /* ── SCENARIO FIRST ─────────────────────────────────────────────────── */
+    .scenario-first {
       max-width: 80rem;
       margin: 0 auto;
-      padding: 0 1.25rem;
+      padding: clamp(24px, 4vw, 44px) 1.25rem clamp(28px, 4vw, 52px);
     }
-    @media (min-width: 640px) { .shows-wrap { padding: 0 2rem; } }
+    @media (min-width: 640px) { .scenario-first { padding-inline: 2rem; } }
 
-    .shows-h2 {
-      font-size: 0.5625rem;
+    .scenario-first__head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(18px, 4vw, 48px);
+      align-items: end;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .scenario-kicker {
+      margin: 0 0 8px;
       font-family: var(--font-ui);
+      font-size: 0.5625rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       color: var(--muted-foreground);
-      margin: 16px 0 6px;
     }
 
-    .shows-text {
+    .scenario-first__head h2 {
+      max-width: 16ch;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.08;
+    }
+
+    .scenario-first__head p:last-child {
+      max-width: 54ch;
+      margin: 0;
+      color: var(--muted-strong);
+      line-height: 1.62;
+    }
+
+    .scenario-panel {
+      padding-top: clamp(20px, 3vw, 34px);
+      animation: fadeSlideUp 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .scenario-panel[hidden] {
+      display: none;
+    }
+
+    .scenario-panel__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(16px, 3vw, 42px);
+      margin-bottom: 18px;
+    }
+
+    .scenario-panel__intro h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .scenario-panel__intro p,
+    .scenario-panel__empty {
+      margin: 0;
       font-family: var(--font-serif);
-      font-size: 13px;
+      font-size: 0.95rem;
       font-weight: 300;
       font-style: italic;
-      line-height: 1.65;
       color: var(--muted-strong);
-      margin: 0 0 4px;
-      animation: fadeSlideUp 0.3s cubic-bezier(0.16,1,0.3,1) both;
+      line-height: 1.62;
+    }
+
+    .scenario-rows {
+      display: grid;
+      gap: 14px;
+    }
+
+    .scenario-row {
+      display: grid;
+      grid-template-columns: minmax(12rem, 0.55fr) minmax(0, 1.45fr);
+      gap: clamp(16px, 3vw, 32px);
+      padding: 18px 0;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .scenario-row__measure h4 {
+      margin: 0 0 6px;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-foreground);
+    }
+
+    .scenario-row__measure p {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+
+    .scenario-values {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .scenario-value {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--rule-soft);
+      background: color-mix(in oklch, var(--paper), var(--surface) 54%);
+    }
+
+    .scenario-value__country,
+    .scenario-value span:not(.scenario-value__country) {
+      display: block;
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .scenario-value strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: clamp(1.35rem, 2vw, 1.9rem);
+      line-height: 1;
+    }
+
+    .scenario-value span:not(.scenario-value__country) {
+      margin-top: 5px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .scenario-value p {
+      margin: 12px 0 0;
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 639px) {
+      .scenario-first__head,
+      .scenario-panel__intro,
+      .scenario-row,
+      .scenario-values {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ── COMPARISON ───────────────────────────────────────────────────────── */
@@ -1200,6 +1310,135 @@ const jsonLd = [
       padding: 0;
     }
 
+    .matrix-cell {
+      display: grid;
+      gap: 9px;
+      min-width: 0;
+      padding: 20px 12px;
+      transition: opacity 0.2s var(--ease);
+    }
+
+    @media (min-width: 640px) {
+      .matrix-cell {
+        padding: 22px 16px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .matrix-cell {
+        padding: 24px;
+      }
+    }
+
+    .matrix-cell__country {
+      display: none;
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .matrix-cell__value {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .matrix-cell__number {
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .matrix-cell__unit {
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .matrix-cell__subtext {
+      margin: 0;
+      color: var(--muted-strong);
+      font-family: var(--font-serif);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .matrix-cell__meta {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding-top: 3px;
+    }
+
+    .matrix-cell__meta div {
+      display: grid;
+      grid-template-columns: minmax(4.7rem, 0.42fr) minmax(0, 1fr);
+      gap: 8px;
+      min-width: 0;
+      align-items: baseline;
+    }
+
+    .matrix-cell__meta dt {
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .matrix-cell__meta dd {
+      min-width: 0;
+      margin: 0;
+      color: var(--muted-strong);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .matrix-cell__meta a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .matrix-cell__meta a:hover,
+    .matrix-cell__meta a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .matrix-cell__note {
+      margin: 0;
+      color: var(--muted-foreground);
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 639px) {
+      .matrix-cell {
+        padding: 8px 1.25rem 18px;
+      }
+
+      .matrix-cell__country {
+        display: block;
+      }
+
+      .matrix-cell__meta div {
+        grid-template-columns: minmax(5.6rem, 0.32fr) minmax(0, 1fr);
+      }
+    }
+
     .dim-name {
       font-size: 0.625rem;
       font-weight: 600;
@@ -1218,30 +1457,14 @@ const jsonLd = [
       color: var(--muted-foreground);
       margin: 0;
     }
-    .dim-leader {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 12px;
-    }
-    .dim-leader-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .dim-leader-dot--gr { background: var(--gr); }
-    .dim-leader-dot--pt { background: var(--pt); }
-    .dim-leader-dot--es { background: var(--es); }
-    .dim-leader-text {
+    .dim-note {
+      margin: 12px 0 0;
+      color: var(--muted-strong);
       font-size: 0.6875rem;
       font-weight: 500;
       font-family: var(--font-ui);
       line-height: 1.4;
-      margin: 0;
     }
-    .dim-leader-text--gr { color: var(--gr); }
-    .dim-leader-text--pt { color: var(--pt); }
-    .dim-leader-text--es { color: var(--es); }
 
     /* ── sr-only ─────────────────────────────────────────────────────────── */
     .sr-only {
