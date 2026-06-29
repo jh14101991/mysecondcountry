@@ -963,7 +963,7 @@ html:not(.js) .hero-load {
    GLOBAL NAV  (gate 1 — locked 2026-06-27)
    Three zones: wordmark left / links centered / "Build my
    shortlist" pill right. Sticky, solid paper (no glassmorphism),
-   hairline base. Collapses to an accessible toggle menu < 860px;
+   hairline base. Collapses to an accessible toggle menu at 940px;
    toggle behaviour is in _msc-system.js. (Product surfaces use a
    focused variant with a step indicator — gate 2.)
    Markup reference: mockups/gate-01-nav.html
@@ -1037,7 +1037,7 @@ html:not(.js) .hero-load {
 .nav-toggle { display: none; }
 .nav-menu { display: none; }
 
-@media (max-width: 860px) {
+@media (max-width: 940px) {
   .site-header-inner { grid-template-columns: 1fr auto; }
   .nav-links { display: none; }
   .nav-cta { display: none; }

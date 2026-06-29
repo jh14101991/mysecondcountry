@@ -3,11 +3,14 @@ import { join } from "node:path";
 import {
   canonicalUrlForRoute,
   hasHumanDiscoverability,
+  heldPlaceDossierArtifacts,
   isPubliclyRequired,
   loadRouteContract,
-  parseSitemapLocs,
+  normalizedSitemapRouteSet,
   routeBriefExists,
   routeIsBuilt,
+  routeToDistFile,
+  sitemapRoutesMissingFromContract,
 } from "./lib/route-contract.js";
 
 const distRoot = "packages/web/dist";
@@ -26,7 +29,14 @@ if (!existsSync(distRoot)) {
 const sitemapPath = join(distRoot, "sitemap.xml");
 const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, "utf8") : "";
 if (!sitemap) fail("sitemap.xml is missing from the built site.");
-const sitemapLocs = parseSitemapLocs(sitemap);
+const sitemapRouteSet = normalizedSitemapRouteSet(sitemap);
+for (const loc of sitemapRouteSet.rejectedLocs) {
+  fail(`${loc}: sitemap loc must not include query or hash variants`);
+}
+const sitemapRoutesMissingFromContractList = sitemapRoutesMissingFromContract(sitemap, contract);
+for (const route of sitemapRoutesMissingFromContractList) {
+  fail(`${route}: sitemap route missing from docs/design/routes.json`);
+}
 
 for (const entry of contract.routes) {
   if (!entry.route.startsWith("/")) fail(`${entry.route}: route must start with /`);
@@ -46,11 +56,18 @@ for (const entry of contract.routes) {
   }
 
   const canonical = canonicalUrlForRoute(entry.route);
-  if (entry.sitemap && !sitemapLocs.has(canonical)) {
+  if (entry.sitemap && !sitemapRouteSet.routes.has(entry.route)) {
     fail(`${entry.route}: sitemap missing ${canonical}`);
   }
-  if (!entry.sitemap && sitemapLocs.has(canonical)) {
+  if (!entry.sitemap && sitemapRouteSet.routes.has(entry.route)) {
     fail(`${entry.route}: sitemap includes route marked sitemap=false`);
+  }
+
+  if (entry.status === "held" && entry.route.startsWith("/places/") && routeIsBuilt(entry.route)) {
+    const html = readFileSync(routeToDistFile(entry.route, distRoot), "utf8");
+    for (const artifact of heldPlaceDossierArtifacts(html)) {
+      fail(`${entry.route}: held place route contains full dossier artifact: ${artifact}`);
+    }
   }
 }
 

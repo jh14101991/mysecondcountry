@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 export type RouteStatus = "live" | "held" | "planned" | "internal";
 export type RouteSurface =
@@ -39,6 +40,19 @@ const routeSurfaces = new Set<RouteSurface>([
   "legal",
   "trust",
 ]);
+
+function defaultRouteContractPath(): string {
+  const cwd = process.cwd();
+  const candidates = [
+    join(cwd, "docs/design/routes.json"),
+    join(cwd, "../docs/design/routes.json"),
+    join(cwd, "../../docs/design/routes.json"),
+    fileURLToPath(new URL("../../docs/design/routes.json", import.meta.url)),
+  ];
+  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0];
+}
+
+export const DEFAULT_ROUTE_CONTRACT_PATH = defaultRouteContractPath();
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -151,7 +165,7 @@ export function validateRouteContract(contract: unknown): RouteContract {
   };
 }
 
-export function loadRouteContract(path = "docs/design/routes.json"): RouteContract {
+export function loadRouteContract(path = DEFAULT_ROUTE_CONTRACT_PATH): RouteContract {
   const raw = readFileSync(path, "utf8");
   return validateRouteContract(JSON.parse(raw));
 }
@@ -166,6 +180,94 @@ export function canonicalUrlForRoute(
 export function parseSitemapLocs(sitemap: string): Set<string> {
   const locPattern = /<loc>\s*([^<]+?)\s*<\/loc>/g;
   return new Set(Array.from(sitemap.matchAll(locPattern), ([, loc]) => loc.trim()));
+}
+
+function canonicalVariantLoc(loc: string, origin: string): string | null {
+  const expectedOrigin = origin.replace(/\/+$/, "");
+  try {
+    const url = new URL(loc);
+    if (url.origin === expectedOrigin && (url.search || url.hash)) return loc;
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+export function routeFromCanonicalUrl(
+  loc: string,
+  origin = "https://mysecondcountry.com",
+): string | null {
+  const expectedOrigin = origin.replace(/\/+$/, "");
+  let url: URL;
+  try {
+    url = new URL(loc);
+  } catch {
+    return null;
+  }
+  if (url.origin !== expectedOrigin) return null;
+  if (url.search || url.hash) return null;
+  if (url.pathname === "/") return "/";
+  return url.pathname.replace(/\/+$/, "");
+}
+
+export interface NormalizedSitemapRouteSet {
+  routes: Set<string>;
+  rejectedLocs: string[];
+}
+
+export function normalizedSitemapRouteSet(
+  sitemap: string,
+  origin = "https://mysecondcountry.com",
+): NormalizedSitemapRouteSet {
+  const routes = new Set<string>();
+  const rejectedLocs: string[] = [];
+  for (const loc of parseSitemapLocs(sitemap)) {
+    const rejected = canonicalVariantLoc(loc, origin);
+    if (rejected) {
+      rejectedLocs.push(rejected);
+      continue;
+    }
+
+    const route = routeFromCanonicalUrl(loc, origin);
+    if (route) routes.add(route);
+  }
+  return { routes, rejectedLocs };
+}
+
+export function sitemapRoutesMissingFromContract(
+  sitemap: string,
+  contract: Pick<RouteContract, "routes">,
+  origin = "https://mysecondcountry.com",
+): string[] {
+  const contractRoutes = new Set(contract.routes.map((entry) => entry.route));
+  const missingRoutes = new Set<string>();
+  for (const route of normalizedSitemapRouteSet(sitemap, origin).routes) {
+    if (!contractRoutes.has(route)) missingRoutes.add(route);
+  }
+  return [...missingRoutes].sort();
+}
+
+export function routeIsHeld(contract: Pick<RouteContract, "routes">, route: string): boolean {
+  return contract.routes.some((entry) => entry.route === route && entry.status === "held");
+}
+
+const heldPlaceDossierArtifactChecks: { label: string; pattern: RegExp }[] = [
+  { label: "Dataset JSON-LD #dataset", pattern: /#dataset/ },
+  { label: "Dataset JSON-LD variableMeasured", pattern: /variableMeasured/ },
+  { label: "facts-table", pattern: /<table[^>]*\bfacts-table\b/ },
+  { label: "place-data-table", pattern: /<table[^>]*\bplace-data-table\b/ },
+  { label: "Sources on this page", pattern: /Sources on this page/ },
+  { label: "screening-island", pattern: /screening-island/ },
+  {
+    label: "normal dossier CTA",
+    pattern: /class="[^"]*\bcta-section\b|Find where you fit,\s*on the evidence\./,
+  },
+];
+
+export function heldPlaceDossierArtifacts(html: string): string[] {
+  return heldPlaceDossierArtifactChecks
+    .filter((check) => check.pattern.test(html))
+    .map((check) => check.label);
 }
 
 export function routeToDistFile(route: string, distRoot = "packages/web/dist"): string {
@@ -190,9 +292,15 @@ export function hasHumanDiscoverability(entry: RouteContractEntry): boolean {
     "primaryNav",
     "homepage",
     "footer",
+    "answers",
+    "compare",
     "guides",
+    "shortlists",
     "sources",
     "places",
+    "tax",
+    "topics",
+    "tools",
     "related",
   ]);
   return entry.discoverability.some((channel) => humanChannels.has(channel));

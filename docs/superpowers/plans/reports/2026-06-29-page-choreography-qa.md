@@ -17,10 +17,10 @@ Date: 2026-06-29
 - `corepack pnpm --filter @where/web build`: pass
 - `corepack pnpm verify:build`: pass
 - `corepack pnpm verify:links`: pass
-- `corepack pnpm verify:routes`: pass
-- `corepack pnpm test`: fail, blocked by dirty Data Desk/City Matrix state outside this page choreography commit set. Current failing assertion is `packages/data/src/place-bundles/__tests__/index.test.ts`, `gr-crete-region:surface_water_density` expected `coverageStatus` `blocked` but found `proxy`.
+- `corepack pnpm verify:routes`: pass, 41 contract routes checked against the built sitemap
+- `corepack pnpm test`: fail in dirty City Matrix work outside the page choreography commit set. Latest failing assertion is `scripts/__tests__/run-city-matrix-adapters.test.ts`, where `wildfire_egress_proxy` is expected in the adapter output registry but is not registered.
 - `corepack pnpm verify:data`: fail on known Chania uniqueness gate. `gr-crete-chania` has 0 cited fields that differ from `gr-crete`, and needs 4.
-- `corepack pnpm qa:visual`: fail only on held Chania route. `/places/greece/crete/chania` has one reveal element hidden at desktop, tablet, and mobile, plus tablet horizontal overflow.
+- `corepack pnpm qa:visual`: pass, 115 rendered checks across the expanded page-choreography route set
 
 ## Rendered evidence
 
@@ -30,10 +30,11 @@ Screenshots are in `output/visual-qa/2026-06-29-page-choreography/`.
 
 Chania dossier implementation remains blocked until Data Desk clears the parent region and town bundle handoff or Command Center records an explicit override.
 
-The page choreography pass did not implement the Chania dossier template. The public places hub marks Chania as held coverage, not a finished dossier.
+The page choreography pass did not implement the Chania dossier template. The route contract marks Chania as held coverage, and the built-route guard blocks held place routes from rendering fact tables, source tables, dataset JSON-LD, measured variables, the screening island, or the normal place CTA.
 
 ## Residual risks
 
-- Root test verification is not clean in this dirty worktree because uncommitted Data Desk/City Matrix work is being discovered by the workspace test runner.
-- The held Chania route still renders enough page structure to fail visual QA. This should be resolved by Data Desk/Page Factory when the held coverage route or dossier gate is addressed.
-- `verify:data` continues to block publication on the known Chania-vs-Crete uniqueness gate.
+- `verify:data` continues to block Chania publication on the known Chania-vs-Crete uniqueness gate.
+- Root test verification is not clean in this dirty worktree because uncommitted City Matrix adapter work is being discovered by the workspace test runner.
+- The repo still contains unrelated dirty Data Desk, City Matrix, mockup, and operations files outside the page choreography commit set.
+- Do not start the dossier page template system until Data Desk or Command Center clears the Chania gate.

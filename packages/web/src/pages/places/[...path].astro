@@ -9,7 +9,7 @@ import {
   places,
 } from "@where/data";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import FactsTable from "../../components/FactsTable.astro";
+import CitedValue from "../../components/CitedValue.astro";
 import FenceBlock from "../../components/FenceBlock.astro";
 import Masthead from "../../components/Masthead.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
@@ -23,6 +23,7 @@ import {
   placeDatasetJsonLd,
   placeJsonLd,
 } from "../../lib/jsonld.ts";
+import { loadRouteContract, routeIsHeld } from "../../../../../scripts/lib/route-contract.ts";
 
 export function getStaticPaths() {
   return places.map((place) => ({
@@ -37,17 +38,28 @@ interface Props {
 const { place } = Astro.props;
 
 const SITE = "https://mysecondcountry.com";
-const canonical = `${SITE}${placePath(place)}`;
-const hasLegalClaims = Boolean(place.residency || place.tax);
-const title = `${place.name}: cited cost, climate, residency and tax facts | My Second Country`;
+const routePath = placePath(place);
+const canonical = `${SITE}${routePath}`;
+const routeContract = loadRouteContract();
+const isHeldCoverage = routeIsHeld(routeContract, routePath);
+const heldCoverageDescription = `${place.name} coverage is held while its evidence bundle remains under publication review. No local dossier facts are published yet.`;
+const pageDescription = isHeldCoverage ? heldCoverageDescription : place.description;
+const hasLegalClaims = !isHeldCoverage && Boolean(place.residency || place.tax);
+const title = isHeldCoverage
+  ? `${place.name}: coverage held pending source review | My Second Country`
+  : `${place.name}: cited cost, climate, residency and tax facts | My Second Country`;
 
-const allFacts = collectCitedValues(place);
-const maxDate = maxVerifiedDate(allFacts.map((f) => f.cited));
+const allFacts: ReturnType<typeof collectCitedValues> = isHeldCoverage
+  ? []
+  : collectCitedValues(place);
+const maxDate = isHeldCoverage ? "2026-06-29" : maxVerifiedDate(allFacts.map((f) => f.cited));
 const uniqueSources = new Set(allFacts.map((f) => f.cited.sourceUrl));
-const dateline = buildDateline({
-  citedLabel: monthYearLabel(maxDate),
-  sourceCount: uniqueSources.size,
-});
+const dateline = isHeldCoverage
+  ? "Coverage held, publication gate active"
+  : buildDateline({
+      citedLabel: monthYearLabel(maxDate),
+      sourceCount: uniqueSources.size,
+    });
 
 // Self-activating staleness banner: if any claim has aged past its window before a
 // refresh merges, the banner appears automatically at build time (FENCE.md).
@@ -77,7 +89,7 @@ const breadcrumbItems = [
       return validPaths.has(path) ? { name: ancestor.name, href: path } : null;
     })
     .filter((c): c is { name: string; href: string } => c !== null),
-  { name: place.name, href: placePath(place) },
+  { name: place.name, href: routePath },
 ];
 
 interface Row {
@@ -155,135 +167,262 @@ for (const { cited } of allFacts) {
   });
 }
 
-const jsonLd = [
-  placeJsonLd(place, SITE),
-  placeDatasetJsonLd(place, SITE),
-  articleJsonLd({
-    url: canonical,
-    headline: place.name,
-    description: place.description,
-    dateModified: maxDate,
-    siteUrl: SITE,
-  }),
-  breadcrumbJsonLd(breadcrumbItems, SITE),
-];
+const heldPlaceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "@id": canonical,
+  name: place.name,
+  url: canonical,
+};
+
+const jsonLd = isHeldCoverage
+  ? [
+      heldPlaceJsonLd,
+      articleJsonLd({
+        url: canonical,
+        headline: `${place.name} coverage held`,
+        description: pageDescription,
+        dateModified: maxDate,
+        siteUrl: SITE,
+      }),
+      breadcrumbJsonLd(breadcrumbItems, SITE),
+    ]
+  : [
+      placeJsonLd(place, SITE),
+      placeDatasetJsonLd(place, SITE),
+      articleJsonLd({
+        url: canonical,
+        headline: place.name,
+        description: pageDescription,
+        dateModified: maxDate,
+        siteUrl: SITE,
+      }),
+      breadcrumbJsonLd(breadcrumbItems, SITE),
+    ];
 ---
 
-<Base title={title} description={place.description} canonical={canonical} jsonLd={jsonLd}>
-  <article>
+<Base title={title} description={pageDescription} canonical={canonical} jsonLd={jsonLd}>
+  <article class:list={[isHeldCoverage && "held-coverage"]}>
     <Breadcrumb items={breadcrumbItems} />
 
     <Masthead variant="place" title={place.name} dateline={dateline} />
 
     <FenceBlock hasLegalClaims={hasLegalClaims} staleDays={staleDays} />
 
-    <p class="lede">{place.description}</p>
-
-    <section aria-labelledby="cost-climate-h">
-      <SectionHeading as="h2" id="cost-climate-h">Cost and climate</SectionHeading>
-      <FactsTable
-        caption={`Cited cost and climate facts for ${place.name}`}
-        rows={costClimate}
-        placeGranularity={place.granularity}
-        placeName={place.name}
-      />
-    </section>
-
     {
-      residencyTax.length > 0 && (
-        <section aria-labelledby="residency-tax-h">
-          <SectionHeading as="h2" id="residency-tax-h">
-            Residency and tax
-          </SectionHeading>
-          <p class="section-note">
-            These are published national rules reported from their source on the verified date.
-            They are not advice and they change. Confirm your own position with a licensed
-            professional and the official source.
-          </p>
-          <FactsTable
-            caption={`Cited residency and tax facts for ${place.name}`}
-            rows={residencyTax}
-            placeGranularity={place.granularity}
-            placeName={place.name}
-          />
-        </section>
+      isHeldCoverage ? (
+        <>
+          <section class="hold-panel" aria-labelledby="held-state-h">
+            <p class="held-kicker">Coverage hold</p>
+            <SectionHeading as="h2" id="held-state-h">
+              This is not a town dossier yet
+            </SectionHeading>
+            <p class="lede">{heldCoverageDescription}</p>
+            <p>
+              The route stays public so the coverage map has a stable {place.name} status page. It
+              does not publish local cost, residency, tax, climate, healthcare, or living claims.
+            </p>
+          </section>
+
+          <section class="held-grid" aria-labelledby="held-gate-h">
+            <div class="held-box">
+              <SectionHeading as="h2" id="held-gate-h">
+                What is held
+              </SectionHeading>
+              <ul class="held-list">
+                <li>Local fact tables</li>
+                <li>Town source table</li>
+                <li>Dataset JSON-LD and measured variables</li>
+                <li>Answer-first dossier summary</li>
+              </ul>
+            </div>
+            <div class="held-box">
+              <SectionHeading as="h2" id="held-next-h">
+                Gate to clear
+              </SectionHeading>
+              <ul class="held-list">
+                <li>Parent-region evidence bundle clears publication review</li>
+                <li>Town evidence bundle clears publication review</li>
+                <li>Page Factory renders the dossier from cited town evidence</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="held-next-actions" aria-labelledby="held-actions-h">
+            <SectionHeading as="h2" id="held-actions-h">
+              Available routes
+            </SectionHeading>
+            <p>
+              The current public surfaces still show the source standard, country-level comparison,
+              and screening boundary.
+            </p>
+            <div class="held-actions">
+              <a href="/sources" class="btn-primary">Inspect sources</a>
+              <a href="/methodology" class="text-link">Read methodology</a>
+              <a href="/compare/greece-portugal-spain" class="text-link">Compare countries</a>
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          <p class="lede">{place.description}</p>
+
+          <section aria-labelledby="cost-climate-h">
+            <SectionHeading as="h2" id="cost-climate-h">Cost and climate</SectionHeading>
+            <table class="place-data-table">
+              <caption class="place-data-caption">
+                Cited cost and climate facts for {place.name}
+              </caption>
+              <tbody>
+                {costClimate.map((row) => (
+                  <tr>
+                    <th scope="row" class="place-data-th">
+                      {row.label}
+                    </th>
+                    <CitedValue
+                      cited={row.cited}
+                      unit={row.unit}
+                      prose={row.prose}
+                      placeGranularity={place.granularity}
+                      placeName={place.name}
+                      as="td"
+                    />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          {residencyTax.length > 0 && (
+            <section aria-labelledby="residency-tax-h">
+              <SectionHeading as="h2" id="residency-tax-h">
+                Residency and tax
+              </SectionHeading>
+              <p class="section-note">
+                These are published national rules reported from their source on the verified date.
+                They are not advice and they change. Confirm your own position with a licensed
+                professional and the official source.
+              </p>
+              <table class="place-data-table">
+                <caption class="place-data-caption">
+                  Cited residency and tax facts for {place.name}
+                </caption>
+                <tbody>
+                  {residencyTax.map((row) => (
+                    <tr>
+                      <th scope="row" class="place-data-th">
+                        {row.label}
+                      </th>
+                      <CitedValue
+                        cited={row.cited}
+                        unit={row.unit}
+                        prose={row.prose}
+                        placeGranularity={place.granularity}
+                        placeName={place.name}
+                        as="td"
+                      />
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          )}
+
+          {healthSafety.length > 0 && (
+            <section aria-labelledby="health-safety-h">
+              <SectionHeading as="h2" id="health-safety-h">
+                Healthcare and safety
+              </SectionHeading>
+              <table class="place-data-table">
+                <caption class="place-data-caption">
+                  Cited healthcare and safety facts for {place.name}
+                </caption>
+                <tbody>
+                  {healthSafety.map((row) => (
+                    <tr>
+                      <th scope="row" class="place-data-th">
+                        {row.label}
+                      </th>
+                      <CitedValue
+                        cited={row.cited}
+                        unit={row.unit}
+                        prose={row.prose}
+                        placeGranularity={place.granularity}
+                        placeName={place.name}
+                        as="td"
+                      />
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          )}
+
+          <section aria-labelledby="how-to-read-h" class="how-to-read">
+            <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
+            <p>
+              Every figure above is a cited claim: a value, the named source, the date we last
+              verified it, and a confidence mark. A high mark means an official statistical body or
+              primary law. Medium means an official authority read through a secondary source. Low
+              means a directional figure to check yourself. A national figure shown for a town is
+              labelled as such; we do not pass a country average off as a local one.
+            </p>
+          </section>
+
+          {childPlaces.length > 0 && (
+            <section aria-labelledby="regions-h" class="regions">
+              <SectionHeading as="h2" id="regions-h">
+                Regions and towns in {place.name}
+              </SectionHeading>
+              <ul class="regions-list">
+                {childPlaces.map((child) => (
+                  <li>
+                    <a href={placePath(child)}>{child.name}</a>
+                    <span class="regions-gran">{child.granularity}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <SourcesList sources={pageSources} heading="Sources on this page" />
+
+          {/* Screening island placeholder. No client JavaScript yet; the interactive
+              screener mounts here in a later phase. */}
+          <div id="screening-island" data-place-id={place.id} hidden></div>
+        </>
       )
     }
-
-    {
-      healthSafety.length > 0 && (
-        <section aria-labelledby="health-safety-h">
-          <SectionHeading as="h2" id="health-safety-h">
-            Healthcare and safety
-          </SectionHeading>
-          <FactsTable
-            caption={`Cited healthcare and safety facts for ${place.name}`}
-            rows={healthSafety}
-            placeGranularity={place.granularity}
-            placeName={place.name}
-          />
-        </section>
-      )
-    }
-
-    <section aria-labelledby="how-to-read-h" class="how-to-read">
-      <SectionHeading as="h2" id="how-to-read-h">How to read this page</SectionHeading>
-      <p>
-        Every figure above is a cited claim: a value, the named source, the date we last verified
-        it, and a confidence mark. A high mark means an official statistical body or primary law.
-        Medium means an official authority read through a secondary source. Low means a directional
-        figure to check yourself. A national figure shown for a town is labelled as such; we do not
-        pass a country average off as a local one.
-      </p>
-    </section>
-
-    {
-      childPlaces.length > 0 && (
-        <section aria-labelledby="regions-h" class="regions">
-          <SectionHeading as="h2" id="regions-h">
-            Regions and towns in {place.name}
-          </SectionHeading>
-          <ul class="regions-list">
-            {childPlaces.map((child) => (
-              <li>
-                <a href={placePath(child)}>{child.name}</a>
-                <span class="regions-gran">{child.granularity}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <SourcesList sources={pageSources} heading="Sources on this page" />
-
-    {/* Screening island placeholder. No client JavaScript yet; the interactive
-        screener mounts here in a later phase. */}
-    <div id="screening-island" data-place-id={place.id} hidden></div>
   </article>
 
-  <section class="cta-section" aria-labelledby="cta-heading">
-    <div class="shell">
-      <div class="cta-card">
-        <span class="overline cta-eyebrow">Build my shortlist</span>
-        <h2 id="cta-heading" class="display-section cta-headline">Find where you fit, on the evidence.</h2>
-        <p class="cta-sub">
-          Tell us your income, visa needs, and what you want from a place. You get back a sourced
-          shortlist of countries, regions, and towns, every figure cited.
-        </p>
-        <div class="cta-actions">
-          <a href="/screener" class="btn-primary">
-            Build my shortlist
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <a href="/compare/greece-portugal-spain" class="text-link">Compare countries</a>
+  {
+    !isHeldCoverage && (
+      <section class="cta-section" aria-labelledby="cta-heading">
+        <div class="shell">
+          <div class="cta-card">
+            <span class="overline cta-eyebrow">Build my shortlist</span>
+            <h2 id="cta-heading" class="display-section cta-headline">
+              Find where you fit, on the evidence.
+            </h2>
+            <p class="cta-sub">
+              Tell us your income, visa needs, and what you want from a place. You get back a
+              sourced shortlist of countries, regions, and towns, every figure cited.
+            </p>
+            <div class="cta-actions">
+              <a href="/screener" class="btn-primary">
+                Build my shortlist
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a href="/compare/greece-portugal-spain" class="text-link">Compare countries</a>
+            </div>
+            <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
+          </div>
         </div>
-        <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
-      </div>
-    </div>
-  </section>
+      </section>
+    )
+  }
 
   <style>
     .lede {
@@ -299,6 +438,101 @@ const jsonLd = [
       color: var(--stone);
       font-family: var(--f-ui);
       font-size: 0.98rem;
+    }
+    .place-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      border-top: 1px solid var(--hairline-soft);
+    }
+    .place-data-caption {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .place-data-th {
+      width: 38%;
+      text-align: left;
+      vertical-align: top;
+      padding: 0.9rem 1rem 0.9rem 0;
+      font-family: var(--f-ui);
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .hold-panel {
+      margin: 2.4rem 0;
+      padding: clamp(1.4rem, 3vw, 2rem);
+      border: 1px solid var(--hairline-soft);
+      border-left: 5px solid var(--accent);
+      background: var(--paper-2);
+    }
+    .hold-panel :global(.section-heading--heading) {
+      margin-top: 0;
+    }
+    .hold-panel p:not(.held-kicker) {
+      max-width: 66ch;
+      margin: 0.8rem 0 0;
+      font-family: var(--f-ui);
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .held-kicker {
+      margin: 0 0 0.85rem;
+      font-family: var(--f-mono);
+      font-size: var(--t-meta);
+      color: var(--stone);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .held-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .held-box {
+      border-top: 1px solid var(--hairline-soft);
+      padding-top: 1rem;
+    }
+    .held-box :global(.section-heading--heading),
+    .held-next-actions :global(.section-heading--heading) {
+      margin-top: 0;
+    }
+    .held-list {
+      margin: 1rem 0 0;
+      padding-left: 1.2rem;
+      font-family: var(--f-ui);
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+    .held-list li + li {
+      margin-top: 0.45rem;
+    }
+    .held-next-actions {
+      margin-top: 2.5rem;
+      padding-top: 1.35rem;
+      border-top: 1px solid var(--hairline-soft);
+    }
+    .held-next-actions p {
+      max-width: 62ch;
+      margin: 0;
+      font-family: var(--f-ui);
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .held-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem 1.25rem;
+      margin-top: 1.2rem;
     }
     .how-to-read {
       margin-top: 3rem;
@@ -346,6 +580,25 @@ const jsonLd = [
       color: var(--stone);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+    }
+    @media (max-width: 720px) {
+      .held-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    @media (max-width: 38rem) {
+      .place-data-table,
+      .place-data-table tbody,
+      .place-data-table tr,
+      .place-data-th {
+        display: block;
+        width: 100%;
+      }
+      .place-data-th {
+        padding-bottom: 0.2rem;
+        border-bottom: none;
+      }
     }
   </style>
 </Base>
