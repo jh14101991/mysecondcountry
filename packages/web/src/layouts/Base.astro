@@ -14,6 +14,8 @@ interface Props {
 const { title, description, canonical, jsonLd, fullBleed = false, noindex = false } = Astro.props;
 const year = 2026;
 const countries = places.filter((p) => p.granularity === "country");
+const normalizedPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isLegalRoute = ["/privacy", "/terms", "/affiliate-disclosure"].includes(normalizedPath);
 const primaryNav = [
   { href: "/compare/greece-portugal-spain", label: "Compare" },
   { href: "/shortlists", label: "Shortlists" },
@@ -53,6 +55,113 @@ const primaryNav = [
     <link rel="mask-icon" href="/brand/monogram.svg" color="#1D3A5F" />
     <link rel="apple-touch-icon" href="/brand/social-avatar.svg" />
     <link rel="manifest" href="/site.webmanifest" />
+    <style is:global>
+      .legal-page {
+        max-width: 100%;
+        overflow-x: clip;
+      }
+
+      .legal-page .legal-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+        max-width: 100%;
+      }
+
+      .legal-page .legal-links a {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+        padding: 0.55rem 0.75rem;
+        border: 1px solid rgba(29, 58, 95, 0.24);
+        border-radius: 4px;
+        color: inherit;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+      }
+
+      .legal-page .legal-links a:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
+      }
+
+      .legal-page .corridor-title,
+      .legal-page .corridor-lead,
+      .legal-page .corridor-section-note,
+      .legal-page .corridor-card__copy {
+        overflow-wrap: anywhere;
+      }
+
+      @media (max-width: 1024px) {
+        .legal-page .corridor-section-head,
+        .legal-page .corridor-grid,
+        .legal-page .corridor-card {
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .legal-page .corridor-grid {
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 960px) {
+        .legal-route .site-header-inner {
+          grid-template-columns: 1fr auto;
+        }
+
+        .legal-route .nav-links,
+        .legal-route .nav-cta {
+          display: none;
+        }
+
+        .legal-route .nav-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          justify-self: end;
+          width: 44px;
+          height: 44px;
+          border: 1px solid var(--stone);
+          border-radius: var(--radius-btn);
+          background: transparent;
+          color: var(--ink);
+          cursor: pointer;
+        }
+
+        .legal-route .nav-menu {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          margin-top: 14px;
+          padding-top: 14px;
+          border-top: 1px solid var(--hairline-soft);
+        }
+
+        .legal-route .nav-menu[hidden] {
+          display: none;
+        }
+
+        .legal-route .nav-menu .nav-link {
+          padding: 13px 2px;
+          font-size: 1.125rem;
+        }
+
+        .legal-route .nav-menu .btn-primary {
+          margin-top: 12px;
+          justify-content: center;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .legal-page .legal-links {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
     {
       jsonLd && (
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
@@ -74,7 +183,7 @@ const primaryNav = [
         };
     </script>
   </head>
-  <body>
+  <body class:list={[isLegalRoute && "legal-route"]}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" role="banner">
       <div class="shell">
@@ -169,7 +278,7 @@ const primaryNav = [
       </div>
       <div class="footer-legalstrip">
         <div class="shell">
-          <p class="footer-fence">Sourced screening, not legal or financial advice; verify with a professional.</p>
+          <p class="footer-fence">Sourced screening, not legal, tax, immigration, financial, or individualized relocation advice. Verify with official sources and qualified professionals.</p>
           <div class="footer-bottom">
             <span class="footer-copy">&copy; {year} My Second Country</span>
             <div class="footer-legal">
@@ -177,6 +286,8 @@ const primaryNav = [
               <a href="/screening-notice">Screening notice</a>
               <a href="/privacy">Privacy</a>
               <a href="/terms">Terms</a>
+              <a href="/affiliate-disclosure">Affiliate disclosure</a>
+              <a href="/methodology">Methodology</a>
               <a href="/sources">Sources</a>
             </div>
           </div>

@@ -6,7 +6,7 @@ const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/terms`;
 const title = "Terms | My Second Country";
 const description =
-  "Terms for using My Second Country, a cited relocation-screening product that is not legal, tax, immigration, or financial advice.";
+  "Terms for using My Second Country, a cited screening product that is not legal, tax, immigration, financial, or individualized relocation advice.";
 ---
 
 <Base title={title} description={description} canonical={canonical}>
@@ -18,12 +18,18 @@ const description =
     </nav>
 
     <header class="corridor-hero">
-      <p class="corridor-kicker">Legal</p>
-      <h1 class="corridor-title">Terms.</h1>
+      <h1 class="corridor-title">Terms</h1>
       <p class="corridor-lead">
-        Use My Second Country as a screening tool for published information, not as a
-        decision maker, adviser, or substitute for professional review.
+        My Second Country reports cited screening intelligence from named sources. It is
+        not legal, tax, immigration, financial, or individualized relocation advice.
       </p>
+      <nav class="legal-links" aria-label="Related legal and source links">
+        <a href="/privacy">Privacy</a>
+        <a href="/affiliate-disclosure">Affiliate disclosure</a>
+        <a href="/screening-notice">Screening notice</a>
+        <a href="/sources">Sources</a>
+        <a href="/methodology">Methodology</a>
+      </nav>
     </header>
 
     <FenceBlock hasLegalClaims={true} />
