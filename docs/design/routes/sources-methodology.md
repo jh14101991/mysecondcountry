@@ -11,7 +11,7 @@ Product job: make sources, confidence, freshness, and fence inspectable
 Business job: turn trust into a product asset
 Data state: current source register and methodology copy
 Fence state: visible when explaining high-liability topics
-Primary next action: inspect a source
+Primary next action: inspect a source; route-contract first action is `/methodology` for `/sources` and `/sources` for `/methodology`
 Secondary next action: build shortlist or compare
 
 ## Page spine

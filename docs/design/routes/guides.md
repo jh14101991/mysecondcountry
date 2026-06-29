@@ -11,7 +11,7 @@ Product job: group routes by reader task
 Business job: reduce dead ends and route high-intent readers deeper
 Data state: varies by route family
 Fence state: visible for cost, tax, residency, visa, financial, and legal implications
-Primary next action: relevant guide or tool
+Primary next action: reader selects a relevant guide or tool; route-contract first action is `/sources`
 Secondary next action: sources
 
 ## Route alignment
