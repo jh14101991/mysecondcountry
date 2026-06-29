@@ -6,7 +6,7 @@ const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/privacy`;
 const title = "Privacy | My Second Country";
 const description =
-  "Privacy notice for My Second Country, including what information the site collects and how to contact the operator.";
+  "Privacy notice for My Second Country, including what information the site collects, why it is used, and how to contact the operator.";
 ---
 
 <Base title={title} description={description} canonical={canonical}>
@@ -21,12 +21,26 @@ const description =
       <p class="corridor-kicker">Legal</p>
       <h1 class="corridor-title">Privacy.</h1>
       <p class="corridor-lead">
-        My Second Country is a public relocation-screening site. This notice describes
-        the limited information the site is designed to collect.
+        My Second Country is a public relocation-screening site. This notice describes the
+        limited information the site collects, the processors involved, and the launch gates
+        that must be complete before email collection or payment flows are used.
       </p>
     </header>
 
     <FenceBlock />
+
+    <section class="corridor-section" aria-labelledby="privacy-operator">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Operator</p>
+          <h2 id="privacy-operator">Who controls the site</h2>
+        </div>
+        <p class="corridor-section-note">
+          The legal entity name is pending founder confirmation before public promotion or email collection.
+          Contact hello@mysecondcountry.com for privacy questions or requests.
+        </p>
+      </div>
+    </section>
 
     <section class="corridor-section" aria-labelledby="privacy-data">
       <div class="corridor-section-head">
@@ -35,19 +49,29 @@ const description =
           <h2 id="privacy-data">What is collected</h2>
         </div>
         <p class="corridor-section-note">
-          The public site uses cookieless analytics to understand page views and source
-          link clicks. If you submit a form, the information you enter is used to respond
-          to that request.
+          The site is designed to collect the smallest useful record for product quality,
+          source auditing, contact, and future opt-in services.
         </p>
       </div>
       <div class="corridor-grid">
         <section class="corridor-card">
           <span class="corridor-card__meta">Analytics</span>
           <div>
-            <h3 class="corridor-card__title">Page and link events</h3>
+            <h3 class="corridor-card__title">Plausible analytics</h3>
             <p class="corridor-card__copy">
-              Analytics are used for product quality signals, such as which pages are read
-              and which cited sources are opened.
+              Plausible records cookieless page and event data, including page views,
+              cited-source clicks, and product quality signals. This is used to understand
+              which public pages and source trails are useful.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Hosting</span>
+          <div>
+            <h3 class="corridor-card__title">Vercel hosting</h3>
+            <p class="corridor-card__copy">
+              Vercel serves the site and may process technical request logs needed to keep
+              the site available, secure, and working.
             </p>
           </div>
         </section>
@@ -56,20 +80,71 @@ const description =
           <div>
             <h3 class="corridor-card__title">Information you submit</h3>
             <p class="corridor-card__copy">
-              Screener and contact information is used to respond to you or prepare a
-              shortlist if that feature is active.
+              If contact, screener, waitlist, or email forms are enabled, the information
+              entered in the form is used only for the purpose stated near that form.
             </p>
           </div>
         </section>
-        <section class="corridor-card">
-          <span class="corridor-card__meta">Contact</span>
-          <div>
-            <h3 class="corridor-card__title">Questions</h3>
-            <p class="corridor-card__copy">
-              Contact hello@mysecondcountry.com for privacy questions or requests.
-            </p>
-          </div>
-        </section>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="privacy-processors">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Processors</p>
+          <h2 id="privacy-processors">Services used</h2>
+        </div>
+        <p class="corridor-section-note">
+          Plausible and Vercel are part of the public site. Resend is used only if email
+          capture is enabled with double opt-in. Stripe is used only if a checkout or paid
+          dossier flow is enabled. DPAs and transfer mechanisms must be confirmed before
+          email collection or paid checkout is promoted.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="privacy-basis">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Basis</p>
+          <h2 id="privacy-basis">Why data is used</h2>
+        </div>
+        <p class="corridor-section-note">
+          Analytics and technical logs are used for site operation, security, and product
+          quality. Contact and email data are used by consent or to respond to a request.
+          Payment records, if enabled, are used to complete the transaction and meet legal
+          accounting duties.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="privacy-retention">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Retention</p>
+          <h2 id="privacy-retention">How long records are kept</h2>
+        </div>
+        <p class="corridor-section-note">
+          Aggregated analytics are kept for trend review. Contact messages are kept only as
+          long as needed to answer and maintain a basic record. Consent records for email,
+          if enabled, are kept while subscribed and for a complaint-defense period after
+          unsubscribe. Payment records, if enabled, follow tax and accounting retention
+          rules.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="privacy-rights">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Rights</p>
+          <h2 id="privacy-rights">Your choices</h2>
+        </div>
+        <p class="corridor-section-note">
+          Depending on where you live, you may ask to access, correct, delete, restrict, or
+          export personal data, object to some uses, or withdraw consent. Send requests to
+          hello@mysecondcountry.com.
+        </p>
       </div>
     </section>
   </article>
