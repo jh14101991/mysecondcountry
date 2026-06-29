@@ -23,17 +23,48 @@ const jsonLd = [
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <h1>Shortlists</h1>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Shortlists</span>
+    </nav>
 
-  <FenceBlock hasLegalClaims={true} />
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Shortlists</p>
+      <h1 class="corridor-title">Ranked files, with the math visible.</h1>
+      <p class="corridor-lead">
+        Each shortlist applies a named filter and rank rule to the same cited place
+        records, so the order can be checked rather than trusted.
+      </p>
+    </header>
 
-  <ul>
-    {
-      shortlists.map((shortlist) => (
-        <li>
-          <a href={`/shortlists/${shortlist.slug}`}>{shortlist.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="shortlist-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{shortlists.length} live</p>
+          <h2 id="shortlist-files">Open shortlists</h2>
+        </div>
+        <p class="corridor-section-note">
+          These are screening views, not recommendations. The ranking changes when the
+          filters or source records change.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          shortlists.map((shortlist) => (
+            <a class="corridor-card" href={`/shortlists/${shortlist.slug}`}>
+              <span class="corridor-card__meta">{shortlist.constraint.rank.byKey}</span>
+              <div>
+                <h3 class="corridor-card__title">{shortlist.title}</h3>
+                <p class="corridor-card__copy">{shortlist.intro}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
 </Base>

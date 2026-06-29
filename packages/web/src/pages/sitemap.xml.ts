@@ -31,8 +31,15 @@ export const GET: APIRoute = () => {
 
   // Static pages
   lines.push(urlEntry(`${SITE}/`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/affiliate-disclosure`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/compare/greece-portugal-spain`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/guides`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/methodology`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/places`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/privacy`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/screener`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/sources`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/terms`, FALLBACK_DATE));
 
   // Index/hub pages
   lines.push(urlEntry(`${SITE}/answers`, FALLBACK_DATE));

@@ -1,0 +1,168 @@
+---
+import { placeById, qa, regimes, tools, topics } from "@where/data";
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+import { itemListJsonLd } from "../lib/jsonld";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/guides`;
+const title = "Guides | My Second Country";
+const description =
+  "Cited answers, tax regime explainers, topic guides, and eligibility tools for building a relocation shortlist.";
+
+const regimeCards = regimes.flatMap((regime) => {
+  const country = placeById(regime.countryId);
+  if (!country) return [];
+  return [
+    {
+      href: `/${country.slug}/tax/${regime.slug}`,
+      title: regime.name,
+      copy: regime.summary,
+      meta: country.name,
+    },
+  ];
+});
+
+const guideItems = [
+  ...qa.map((entry) => ({ name: entry.question, url: `${SITE}/answers/${entry.slug}` })),
+  ...regimeCards.map((entry) => ({ name: entry.title, url: `${SITE}${entry.href}` })),
+  ...topics.map((topic) => ({ name: topic.title, url: `${SITE}/topics/${topic.slug}` })),
+  ...tools.map((tool) => ({ name: tool.title, url: `${SITE}/tools/${tool.slug}` })),
+];
+
+const jsonLd = [
+  itemListJsonLd({
+    url: canonical,
+    items: guideItems.map((item, i) => ({
+      position: i + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  }),
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Guides</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Guides</p>
+      <h1 class="corridor-title">Evidence for the shortlist.</h1>
+      <p class="corridor-lead">
+        Start here when a rule, tax route, or checklist needs more context than a
+        comparison row can carry. Every guide points back to the source record it uses.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="answer-guides">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Answers</p>
+          <h2 id="answer-guides">Cited answers</h2>
+        </div>
+        <p class="corridor-section-note">
+          Short, source-backed answers to the questions that usually appear before a
+          country makes or leaves a shortlist.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          qa.map((entry) => (
+            <a class="corridor-card" href={`/answers/${entry.slug}`}>
+              <span class="corridor-card__meta">{entry.category}</span>
+              <div>
+                <h3 class="corridor-card__title">{entry.question}</h3>
+                <p class="corridor-card__copy">{entry.answer}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="tax-guides">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Tax</p>
+          <h2 id="tax-guides">Tax regimes</h2>
+        </div>
+        <p class="corridor-section-note">
+          Programme pages for headline rates, duration, eligibility, and the source
+          caveats that matter before speaking with a professional adviser.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          regimeCards.map((entry) => (
+            <a class="corridor-card" href={entry.href}>
+              <span class="corridor-card__meta">{entry.meta}</span>
+              <div>
+                <h3 class="corridor-card__title">{entry.title}</h3>
+                <p class="corridor-card__copy">{entry.copy}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="topic-guides">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Topics</p>
+          <h2 id="topic-guides">Rule explainers</h2>
+        </div>
+        <p class="corridor-section-note">
+          Longer context where a single source row is too compressed for the reader's
+          next question.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          topics.map((topic) => (
+            <a class="corridor-card" href={`/topics/${topic.slug}`}>
+              <span class="corridor-card__meta">{topic.countryId ? "Country topic" : "General topic"}</span>
+              <div>
+                <h3 class="corridor-card__title">{topic.title}</h3>
+                <p class="corridor-card__copy">{topic.metaDescription}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="tool-guides">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Tools</p>
+          <h2 id="tool-guides">Checklists</h2>
+        </div>
+        <p class="corridor-section-note">
+          Step-by-step screens that show which requirements are official claims and
+          where each requirement comes from.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          tools.map((tool) => (
+            <a class="corridor-card" href={`/tools/${tool.slug}`}>
+              <span class="corridor-card__meta">{tool.toolType}</span>
+              <div>
+                <h3 class="corridor-card__title">{tool.title}</h3>
+                <p class="corridor-card__copy">{tool.intro}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
+</Base>

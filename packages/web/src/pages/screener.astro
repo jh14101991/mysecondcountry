@@ -1,5 +1,6 @@
 ---
 import { FENCE_PRIMARY } from "../lib/fence.ts";
+import FenceBlock from "../components/FenceBlock.astro";
 ---
 
 <!doctype html>
@@ -8,10 +9,20 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Second Country · Screener</title>
+<meta name="description" content="Build a source-cited relocation shortlist from published country, region, and town evidence.">
+<link rel="canonical" href="https://mysecondcountry.com/screener">
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer data-domain="mysecondcountry.com" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+<script>
+  window.plausible =
+    window.plausible ||
+    function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+</script>
 
 <!-- SHARED FOUNDATION + SECTION LIBRARY -->
 <link rel="stylesheet" href="/mockups/_msc-system.css">
@@ -88,6 +99,8 @@ select.field-input {
 .screener-actions { margin-top: clamp(30px,3.8vw,42px); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
 
 .screener-fence { margin-top: clamp(28px,3.6vw,40px); }
+.screener-intro .screener-fence { margin-top: clamp(18px,2.8vw,28px); }
+.screener-fence .fence { margin: 0; }
 .screener-fence__second { color: var(--stone); font-size: var(--t-bodysm); margin-top: 6px; }
 
 /* "what the engine reads" — a small sample of the live, cited dataset,
@@ -99,7 +112,94 @@ select.field-input {
 .reads .ledger { margin-top: clamp(18px,2.4vw,28px); }
 
 @media (max-width: 640px) {
+  .product-header .shell,
+  main > .shell {
+    padding-left: clamp(16px, 5vw, 20px);
+    padding-right: clamp(16px, 5vw, 20px);
+  }
+  .product-header-inner {
+    column-gap: 10px;
+  }
+  .product-brand {
+    max-width: min(100%, calc(100vw - 92px));
+  }
+  .product-brand .brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .product-brand .brand-rule {
+    height: 24px;
+    margin: 0 10px;
+  }
+  .product-brand .brand-name {
+    overflow: hidden;
+    font-size: clamp(1.45rem, 7vw, 1.8rem);
+    text-overflow: ellipsis;
+  }
+  .product-exit a {
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    gap: 0;
+    border: 1px solid var(--hairline-soft);
+    border-radius: 999px;
+    font-size: 0;
+  }
+  .product-exit a svg {
+    width: 16px;
+    height: 16px;
+  }
+  .product-progress {
+    gap: 10px;
+  }
+  .product-steps {
+    min-width: 120px;
+    margin-right: 0;
+  }
+  .product-step-label {
+    flex: 0 1 auto;
+    overflow: hidden;
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .screener {
+    width: 100%;
+    max-width: none;
+    padding-top: clamp(34px, 9vw, 48px);
+  }
+  .screener-intro .display-mid {
+    font-size: clamp(2.45rem, 10vw, 3rem);
+  }
+  .screener-intro .standfirst {
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .screener-intro .fence {
+    padding: 1rem;
+  }
+  .screener-intro .fence p {
+    font-size: 0.95rem;
+  }
+  .screener-scenario .chip-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .screener-scenario .chip {
+    width: 100%;
+    justify-content: center;
+  }
+  .plate {
+    padding: clamp(20px, 6vw, 24px);
+  }
+  .plate__head {
+    align-items: flex-start;
+  }
   .field-grid { grid-template-columns: 1fr; }
+  .field-affix__pre,
+  .field-affix__post {
+    padding: 0 10px;
+  }
 }
 </style>
 </head>
@@ -127,7 +227,7 @@ select.field-input {
       </nav>
 
       <div class="product-exit">
-        <a href="/">
+        <a href="/" aria-label="Save and exit screener">
           Save and exit
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
@@ -145,6 +245,9 @@ select.field-input {
       <header class="screener-intro">
         <span class="overline">Step 1 · Your situation</span>
         <h1 class="display-mid">Where could you live?</h1>
+        <div class="screener-fence">
+          <FenceBlock hasLegalClaims={true} />
+        </div>
         <p class="standfirst">Set your situation. The engine screens Greece, Portugal, and Spain against published rules and returns a source-cited shortlist. About two minutes. It screens, it does not advise.</p>
       </header>
 
@@ -337,15 +440,6 @@ select.field-input {
         </div>
       </form>
 
-      <!-- the fence, at body-text size -->
-      <div class="liability-note screener-fence" role="note" aria-label="Disclaimer">
-        <span class="liability-mark">Note</span>
-        <div>
-          <p class="liability-text">{FENCE_PRIMARY}</p>
-          <p class="liability-text screener-fence__second">It screens against published rules and shows every figure with its source, verified date, and confidence.</p>
-        </div>
-      </div>
-
       <!-- what the engine reads: a real, cited sample of the dataset -->
       <section class="reads" aria-labelledby="reads-title">
         <span class="overline">What the engine reads</span>
@@ -438,8 +532,8 @@ select.field-input {
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 My Second Country</span>
       <div class="footer-legal">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
         <a href="/sources">Sources</a>
       </div>
     </div>
