@@ -4,7 +4,9 @@ import { ensureBuilt, htmlFiles, read, rel } from "./lib/dist.js";
 
 ensureBuilt();
 
-const placePages = htmlFiles().filter((f) => f.includes(`${"/places/"}`));
+const placePages = htmlFiles().filter(
+  (f) => f.includes(`${"/places/"}`) && !f.endsWith("/places/index.html"),
+);
 let failures = 0;
 
 for (const file of placePages) {

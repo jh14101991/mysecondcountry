@@ -1,0 +1,76 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/privacy`;
+const title = "Privacy | My Second Country";
+const description =
+  "Privacy notice for My Second Country, including what information the site collects and how to contact the operator.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page legal-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Privacy</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Legal</p>
+      <h1 class="corridor-title">Privacy.</h1>
+      <p class="corridor-lead">
+        My Second Country is a public relocation-screening site. This notice describes
+        the limited information the site is designed to collect.
+      </p>
+    </header>
+
+    <FenceBlock />
+
+    <section class="corridor-section" aria-labelledby="privacy-data">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Data</p>
+          <h2 id="privacy-data">What is collected</h2>
+        </div>
+        <p class="corridor-section-note">
+          The public site uses cookieless analytics to understand page views and source
+          link clicks. If you submit a form, the information you enter is used to respond
+          to that request.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Analytics</span>
+          <div>
+            <h3 class="corridor-card__title">Page and link events</h3>
+            <p class="corridor-card__copy">
+              Analytics are used for product quality signals, such as which pages are read
+              and which cited sources are opened.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Forms</span>
+          <div>
+            <h3 class="corridor-card__title">Information you submit</h3>
+            <p class="corridor-card__copy">
+              Screener and contact information is used to respond to you or prepare a
+              shortlist if that feature is active.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Contact</span>
+          <div>
+            <h3 class="corridor-card__title">Questions</h3>
+            <p class="corridor-card__copy">
+              Contact hello@mysecondcountry.com for privacy questions or requests.
+            </p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </article>
+</Base>

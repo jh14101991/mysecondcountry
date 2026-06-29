@@ -1130,6 +1130,156 @@ main {
 main.bleed { max-width: none; margin: 0; padding: 0; }
 
 /* ============================================================
+   EVIDENCE CORRIDORS
+   Editorial index pages for guides, coverage, and evidence files.
+   ============================================================ */
+.corridor-page {
+  padding-bottom: clamp(2.5rem, 7vw, 5rem);
+}
+
+.corridor-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  font-family: var(--f-mono);
+  font-size: var(--t-meta);
+  color: var(--stone);
+}
+.corridor-breadcrumb a {
+  color: var(--stone);
+  text-decoration: none;
+}
+.corridor-breadcrumb a:hover,
+.corridor-breadcrumb a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.corridor-hero {
+  max-width: 58rem;
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1.5px solid var(--ink);
+}
+.corridor-kicker {
+  margin: 0 0 0.85rem;
+  font-family: var(--f-mono);
+  font-size: var(--t-meta);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+.corridor-title {
+  margin: 0;
+  max-width: 14ch;
+  font-size: 4.5rem;
+  line-height: 0.98;
+}
+.corridor-lead {
+  margin: clamp(1.25rem, 2.5vw, 2rem) 0 0;
+  max-width: 62ch;
+  font-family: var(--f-ui);
+  font-size: 1.18rem;
+  line-height: 1.58;
+  color: var(--ink-soft);
+}
+
+.corridor-section {
+  padding: clamp(2.25rem, 5vw, 4.75rem) 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.corridor-section:last-child {
+  border-bottom: 0;
+}
+.corridor-section-head {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 4rem);
+  align-items: baseline;
+  margin-bottom: clamp(1.35rem, 3vw, 2.5rem);
+}
+.corridor-section h2 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+.corridor-section-note {
+  margin: 0;
+  max-width: 58ch;
+  font-family: var(--f-ui);
+  color: var(--ink-soft);
+  line-height: 1.58;
+}
+
+.corridor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1px;
+  background: var(--hairline-soft);
+  border: 1px solid var(--hairline-soft);
+}
+.corridor-card {
+  display: flex;
+  min-height: 12rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.1rem, 2.5vw, 1.65rem);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+}
+.corridor-card:hover,
+.corridor-card:focus-visible {
+  background: var(--paper-warm);
+  color: var(--ink);
+}
+.corridor-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.corridor-card__meta,
+.corridor-count {
+  font-family: var(--f-mono);
+  font-size: var(--t-meta);
+  color: var(--stone);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.corridor-card__title {
+  margin: 0;
+  font-family: var(--f-display);
+  font-optical-sizing: auto;
+  font-size: 1.45rem;
+  font-weight: 400;
+  line-height: 1.16;
+  color: var(--ink);
+}
+.corridor-card__copy {
+  margin: 0.8rem 0 0;
+  font-family: var(--f-ui);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+@media (max-width: 680px) {
+  .corridor-title {
+    font-size: 2.6rem;
+  }
+  .corridor-lead {
+    font-size: 1.05rem;
+  }
+  .corridor-section h2 {
+    font-size: 1.65rem;
+  }
+  .corridor-section-head {
+    grid-template-columns: 1fr;
+  }
+  .corridor-card {
+    min-height: 10rem;
+  }
+}
+
+/* ============================================================
    CTA BAND (gate 6 — imageless, type-led closing invitation)
    Ported from _msc-system.css. An ACTION surface: no engraving,
    a quiet warm broadsheet card framed by a fine inset rule.

@@ -1,0 +1,135 @@
+---
+import { placePath, places } from "@where/data";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/places`;
+const title = "Places | My Second Country";
+const description =
+  "The countries, regions, and towns currently covered by My Second Country, with every live page tied to cited data.";
+
+const countryPlaces = places.filter((place) => place.granularity === "country");
+const regionPlaces = places.filter((place) => place.granularity === "region");
+const townPlaces = places.filter((place) => place.granularity === "town");
+
+const allPlaceItems = places.map((place, i) => ({
+  position: i + 1,
+  name: place.name,
+  url: `${SITE}${placePath(place)}`,
+}));
+
+const jsonLd = [
+  itemListJsonLd({
+    url: canonical,
+    items: allPlaceItems,
+  }),
+];
+
+function placeScope(place: (typeof places)[number]): string {
+  if (place.granularity === "country") return "Country file";
+  if (place.granularity === "region") return `Region in ${place.country}`;
+  return place.ancestry.length > 0
+    ? `Town in ${place.ancestry.map((item) => item.name).join(", ")}`
+    : "Town file";
+}
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Places</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Coverage</p>
+      <h1 class="corridor-title">Places with a file open.</h1>
+      <p class="corridor-lead">
+        A place appears here only when it has a source-backed record in the product.
+        Some countries are broad anchors. Town pages go deeper and carry their own local facts.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="country-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{countryPlaces.length} live</p>
+          <h2 id="country-files">Countries</h2>
+        </div>
+        <p class="corridor-section-note">
+          Country files hold the national context used by comparisons, shortlists, and
+          tax regime pages.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          countryPlaces.map((place) => (
+            <a class="corridor-card" href={placePath(place)}>
+              <span class="corridor-card__meta">{placeScope(place)}</span>
+              <div>
+                <h3 class="corridor-card__title">{place.name}</h3>
+                <p class="corridor-card__copy">{place.description}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    {regionPlaces.length > 0 && (
+      <section class="corridor-section" aria-labelledby="region-files">
+        <div class="corridor-section-head">
+          <div>
+            <p class="corridor-count">{regionPlaces.length} live</p>
+            <h2 id="region-files">Regions</h2>
+          </div>
+          <p class="corridor-section-note">
+            Region files bridge country-level rules and town-level living evidence.
+          </p>
+        </div>
+        <div class="corridor-grid">
+          {regionPlaces.map((place) => (
+            <a class="corridor-card" href={placePath(place)}>
+              <span class="corridor-card__meta">{placeScope(place)}</span>
+              <div>
+                <h3 class="corridor-card__title">{place.name}</h3>
+                <p class="corridor-card__copy">{place.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {townPlaces.length > 0 && (
+      <section class="corridor-section" aria-labelledby="town-files">
+        <div class="corridor-section-head">
+          <div>
+            <p class="corridor-count">{townPlaces.length} live</p>
+            <h2 id="town-files">Towns</h2>
+          </div>
+          <p class="corridor-section-note">
+            Town files are the proof unit for local living claims. They need local facts,
+            not only inherited country data.
+          </p>
+        </div>
+        <div class="corridor-grid">
+          {townPlaces.map((place) => (
+            <a class="corridor-card" href={placePath(place)}>
+              <span class="corridor-card__meta">{placeScope(place)}</span>
+              <div>
+                <h3 class="corridor-card__title">{place.name}</h3>
+                <p class="corridor-card__copy">{place.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</Base>
