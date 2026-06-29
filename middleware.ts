@@ -1,14 +1,11 @@
 import { put } from "@vercel/blob";
+import { next, waitUntil } from "@vercel/functions";
 import {
   type AiCrawlerId,
   aiCrawlerResourceType,
   detectAiCrawler,
   isAiCrawlerLoggablePath,
 } from "./packages/web/src/lib/ai-crawlers.js";
-
-interface VercelMiddlewareContext {
-  waitUntil?: (promise: Promise<unknown>) => void;
-}
 
 interface AiCrawlerHit {
   version: 1;
@@ -65,15 +62,15 @@ async function writeCrawlerHit(record: AiCrawlerHit): Promise<void> {
   });
 }
 
-export default function middleware(request: Request, context: VercelMiddlewareContext): void {
-  if (request.method !== "GET" && request.method !== "HEAD") return;
+export default function middleware(request: Request): Response {
+  if (request.method !== "GET" && request.method !== "HEAD") return next();
 
   const url = new URL(request.url);
-  if (!isAiCrawlerLoggablePath(url.pathname)) return;
+  if (!isAiCrawlerLoggablePath(url.pathname)) return next();
 
   const userAgent = request.headers.get("user-agent") ?? "";
   const crawler = detectAiCrawler(userAgent);
-  if (!crawler) return;
+  if (!crawler) return next();
 
   const observedAt = new Date().toISOString();
   const record: AiCrawlerHit = {
@@ -95,7 +92,9 @@ export default function middleware(request: Request, context: VercelMiddlewareCo
   const write = writeCrawlerHit(record).catch((error) => {
     console.error("ai-crawler-log: write failed", error);
   });
-  context.waitUntil?.(write);
+  waitUntil(write);
+
+  return next();
 }
 
 export const config = {
