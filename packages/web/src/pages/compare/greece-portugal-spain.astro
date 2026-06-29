@@ -1037,6 +1037,30 @@ const jsonLd = [
     }
     .tab-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
+    @media (max-width: 639px) {
+      .tabs-list {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        border-bottom: 0;
+      }
+
+      .tab-btn {
+        flex: 1 1 50%;
+        margin: 0 -1px -1px 0;
+        padding: 12px 10px;
+        border: 1px solid var(--rule);
+        line-height: 1.25;
+        text-align: center;
+        white-space: normal;
+      }
+
+      .tab-btn.active {
+        position: relative;
+        z-index: 1;
+        border-color: var(--primary);
+      }
+    }
+
     /* ── WHAT THE DATA SHOWS ─────────────────────────────────────────────── */
     .shows-wrap {
       max-width: 80rem;
