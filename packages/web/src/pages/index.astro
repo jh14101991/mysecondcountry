@@ -1,5 +1,6 @@
 ---
 import { FENCE_PRIMARY } from "../lib/fence.ts";
+import FenceBlock from "../components/FenceBlock.astro";
 
 const primaryNav = [
   { href: "/compare/greece-portugal-spain", label: "Compare" },
@@ -54,10 +55,20 @@ const dossierFiles = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Second Country · A second country, decided on evidence.</title>
+<meta name="description" content="My Second Country screens countries, regions, and towns using cited relocation facts, verified dates, and confidence marks.">
+<link rel="canonical" href="https://mysecondcountry.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<script defer data-domain="mysecondcountry.com" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+<script>
+  window.plausible =
+    window.plausible ||
+    function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+</script>
 
 <script type="application/ld+json">
 [
@@ -167,6 +178,8 @@ const dossierFiles = [
 
 .hero-copy { max-width: 34rem; display: flex; flex-direction: column; gap: 26px; }
 .hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero-fence { max-width: 34rem; }
+.hero-fence .fence { margin: 0; }
 
 /* ---- the live shortlist artifact (LOCKED size, premium) ----
    Fixed width; every scenario renders to the same height because the
@@ -694,6 +707,9 @@ const dossierFiles = [
       <div class="hero-load" style="transition-delay:0ms;">
         <span class="overline">Cited relocation intelligence</span>
         <h1 id="hero-heading" class="display-hero">A second country,<br>decided on evidence.</h1>
+      </div>
+      <div class="hero-fence hero-load" style="transition-delay:60ms;">
+        <FenceBlock hasLegalClaims={true} />
       </div>
       <p class="standfirst hero-load" style="transition-delay:80ms;">
         Put your situation in. Get back a shortlist of countries, regions, and towns, each figure shown with its source, its verified date, and a confidence mark.
