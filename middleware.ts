@@ -43,12 +43,25 @@ function blobPathFor(record: AiCrawlerHit): string {
 }
 
 async function writeCrawlerHit(record: AiCrawlerHit): Promise<void> {
-  if (!hasBlobCredentials()) return;
-  await put(blobPathFor(record), `${JSON.stringify(record)}\n`, {
+  if (!hasBlobCredentials()) {
+    console.warn("ai-crawler-log: missing blob credentials", {
+      hasBlobStoreId: Boolean(process.env.BLOB_STORE_ID),
+      hasOidcToken: Boolean(process.env.VERCEL_OIDC_TOKEN),
+      hasReadWriteToken: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+    });
+    return;
+  }
+
+  const blob = await put(blobPathFor(record), `${JSON.stringify(record)}\n`, {
     access: "private",
     addRandomSuffix: false,
     contentType: "application/json",
     cacheControlMaxAge: 60,
+  });
+  console.info("ai-crawler-log: write ok", {
+    bot: record.bot,
+    path: record.path,
+    blobPath: blob.pathname,
   });
 }
 
