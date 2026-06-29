@@ -1,0 +1,82 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/about`;
+const title = "About | My Second Country";
+const description =
+  "About My Second Country, a cited relocation screening desk built around sourced data, visible confidence, and clear boundaries.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page legal-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">About</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">About</p>
+      <h1 class="corridor-title">A cited screening desk.</h1>
+      <p class="corridor-lead">
+        My Second Country is a cited relocation screening desk. James and Amanda are
+        relocators sharing sourced data, not advisers.
+      </p>
+    </header>
+
+    <FenceBlock />
+
+    <section class="corridor-section" aria-labelledby="about-method">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Boundary</p>
+          <h2 id="about-method">What the product does</h2>
+        </div>
+        <p class="corridor-section-note">
+          The product reports what named sources say, when they were checked, and how
+          confident the evidence is. It does not tell an individual what to do.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <a class="corridor-card" href="/methodology">
+          <span class="corridor-card__meta">Method</span>
+          <div>
+            <h3 class="corridor-card__title">How the screening works</h3>
+            <p class="corridor-card__copy">
+              Read how cited values, confidence, freshness, and granularity are handled.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/sources">
+          <span class="corridor-card__meta">Sources</span>
+          <div>
+            <h3 class="corridor-card__title">Where the figures come from</h3>
+            <p class="corridor-card__copy">
+              Inspect the named sources, verification dates, and evidence trails.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/screening-notice">
+          <span class="corridor-card__meta">Notice</span>
+          <div>
+            <h3 class="corridor-card__title">The public boundary</h3>
+            <p class="corridor-card__copy">
+              See the screening notice that explains what the site can and cannot do.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/screener">
+          <span class="corridor-card__meta">Screener</span>
+          <div>
+            <h3 class="corridor-card__title">Build a source-cited shortlist</h3>
+            <p class="corridor-card__copy">
+              Try the public screener and inspect the evidence behind each result.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>

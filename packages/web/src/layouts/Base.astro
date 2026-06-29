@@ -1,6 +1,7 @@
 ---
 import { placePath, places } from "@where/data";
 import "../styles/system.css";
+
 interface Props {
   title: string;
   description: string;
@@ -135,7 +136,8 @@ const primaryNav = [
                 <span class="footer-col-label">Product</span>
                 <ul class="footer-links">
                   <li><a href="/screener">Screener</a></li>
-                  <li><a href="/compare/greece-portugal-spain">Compare</a></li>
+                  <li><a href="/compare">Compare</a></li>
+                  <li><a href="/compare/greece-portugal-spain">Greece, Portugal, and Spain</a></li>
                   <li><a href="/shortlists">Shortlists</a></li>
                   <li><a href="/guides">Guides</a></li>
                 </ul>
@@ -152,6 +154,7 @@ const primaryNav = [
               <div>
                 <span class="footer-col-label">Reference</span>
                 <ul class="footer-links">
+                  <li><a href="/about">About</a></li>
                   <li><a href="/guides">Guides</a></li>
                   <li><a href="/tax">Tax regimes</a></li>
                   <li><a href="/tools">Tools</a></li>
@@ -169,6 +172,8 @@ const primaryNav = [
           <div class="footer-bottom">
             <span class="footer-copy">&copy; {year} My Second Country</span>
             <div class="footer-legal">
+              <a href="/about">About</a>
+              <a href="/screening-notice">Screening notice</a>
               <a href="/privacy">Privacy</a>
               <a href="/terms">Terms</a>
               <a href="/sources">Sources</a>

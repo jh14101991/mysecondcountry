@@ -29,10 +29,10 @@
     },
     {
       "route": "/compare",
-      "status": "planned",
+      "status": "live",
       "surface": "hub",
-      "discoverability": ["planned"],
-      "sitemap": false,
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
       "firstAction": "/compare/greece-portugal-spain",
       "brief": "docs/design/routes/compare.md"
     },
@@ -129,19 +129,19 @@
     },
     {
       "route": "/about",
-      "status": "planned",
+      "status": "live",
       "surface": "trust",
-      "discoverability": ["planned"],
-      "sitemap": false,
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
       "firstAction": "/methodology",
       "brief": "docs/design/routes/legal.md"
     },
     {
       "route": "/screening-notice",
-      "status": "planned",
+      "status": "live",
       "surface": "legal",
-      "discoverability": ["planned"],
-      "sitemap": false,
+      "discoverability": ["footer", "sitemap", "related"],
+      "sitemap": true,
       "firstAction": "/sources",
       "brief": "docs/design/routes/legal.md"
     }
