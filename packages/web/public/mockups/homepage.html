@@ -1,8 +1,4 @@
----
-import { FENCE_PRIMARY } from "../lib/fence.ts";
----
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +7,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
 
 <script type="application/ld+json">
 [
@@ -72,9 +68,9 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
 </script>
 
 <!-- SHARED FOUNDATION + SECTION LIBRARY -->
-<link rel="stylesheet" href="/mockups/_msc-system.css">
+<link rel="stylesheet" href="_msc-system.css">
 
-<style is:global>
+<style>
 /* ============================================================
    FULL HOMEPAGE — assembled from the locked section mockups
    (gates 12-17) + the shared CTA band. Section CSS concatenated
@@ -100,7 +96,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
   background-color: var(--paper);
   background-image:
     linear-gradient(to bottom, var(--paper) 8%, rgba(252,252,252,0.5) 38%, rgba(252,252,252,0.08) 66%, rgba(252,252,252,0) 84%),
-    url("/mockups/img/engravings/hero.png");
+    url("img/engravings/hero.png");
   background-repeat: no-repeat, no-repeat;
   background-position: center, center 42%;
   background-size: 100% 100%, cover;
@@ -521,7 +517,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
   inset: -72px 0;
   z-index: 0;
   background-color: var(--paper);
-  background-image: url("/mockups/img/engravings/benefit-3.png"); /* benefit-3.png = Japan coastal village scene */
+  background-image: url("img/engravings/benefit-3.png"); /* benefit-3.png = Japan coastal village scene */
   background-position: center 34%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -582,19 +578,19 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
 <header class="site-header" role="banner">
   <div class="shell">
     <div class="site-header-inner">
-      <a class="brand-wordmark" href="/" aria-label="My Second Country home">
-        <img class="brand-icon" src="/brand/monogram.svg" alt="" width="36" height="36">
+      <a class="brand-wordmark" href="#" aria-label="My Second Country home">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
         <span class="brand-rule" aria-hidden="true"></span>
         <span class="brand-name">My Second Country</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a class="nav-link" href="#howit-heading">How it works</a>
-        <a class="nav-link" href="/compare/greece-portugal-spain">Compare</a>
-        <a class="nav-link" href="/methodology">Methodology</a>
-        <a class="nav-link" href="#who-heading">About</a>
+        <a class="nav-link" href="#">How it works</a>
+        <a class="nav-link" href="#">Compare</a>
+        <a class="nav-link" href="#">Methodology</a>
+        <a class="nav-link" href="#">About</a>
       </nav>
       <div class="nav-cta">
-        <a href="/screener" class="btn-primary">Build my shortlist
+        <a href="#" class="btn-primary">Build my shortlist
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -603,11 +599,11 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
       </button>
     </div>
     <div class="nav-menu" id="mobile-menu" hidden>
-      <a class="nav-link" href="#howit-heading">How it works</a>
-      <a class="nav-link" href="/compare/greece-portugal-spain">Compare</a>
-      <a class="nav-link" href="/methodology">Methodology</a>
-      <a class="nav-link" href="#who-heading">About</a>
-      <a href="/screener" class="btn-primary">Build my shortlist</a>
+      <a class="nav-link" href="#">How it works</a>
+      <a class="nav-link" href="#">Compare</a>
+      <a class="nav-link" href="#">Methodology</a>
+      <a class="nav-link" href="#">About</a>
+      <a href="#" class="btn-primary">Build my shortlist</a>
     </div>
   </div>
 </header>
@@ -628,11 +624,11 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
         Put your situation in. Get back a shortlist of countries, regions, and towns, each figure shown with its source, its verified date, and a confidence mark.
       </p>
       <div class="hero-actions hero-load" style="transition-delay:160ms;">
-        <a href="/screener" class="btn-primary">
+        <a href="#" class="btn-primary">
           Build my shortlist
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="/methodology" class="text-link">See the methodology</a>
+        <a href="#" class="text-link">See the methodology</a>
       </div>
     </div>
 
@@ -781,7 +777,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
   <div class="shell">
     <div class="benefit-grid">
       <div class="benefit-figure" data-reveal data-img-reveal style="--i:0">
-        <img class="engraving" src="/mockups/img/engravings/who.png" alt="" aria-hidden="true"
+        <img class="engraving" src="img/engravings/who.png" alt="" aria-hidden="true"
              onerror="this.style.display='none';this.closest('.benefit-figure').classList.add('no-img');">
       </div>
       <div class="benefit-text" data-reveal style="--i:1">
@@ -911,7 +907,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
 
     <div class="coverage-foot" data-reveal style="--i:2">
       <p class="coverage-note">A country goes live only once every figure clears the same bar, so coverage widens deliberately. Greece, Portugal, and Spain are shown above as one example.</p>
-      <a class="coverage-link" href="/compare/greece-portugal-spain">See the full comparison, every figure cited
+      <a class="coverage-link" href="gate-08-compare.html">See the full comparison, every figure cited
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -986,7 +982,7 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
       </div>
       <div class="faq-item" data-reveal style="--i:1">
         <dt class="faq-q">Which countries can I compare?</dt>
-        <dd class="faq-a">A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the <a href="/compare/greece-portugal-spain">compare page</a>.</dd>
+        <dd class="faq-a">A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the <a href="gate-08-compare.html">compare page</a>.</dd>
       </div>
       <div class="faq-item" data-reveal style="--i:2">
         <dt class="faq-q">How current is the data?</dt>
@@ -1013,9 +1009,9 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
       <h2 id="cta-heading" class="display-section cta-headline">Start with your situation.</h2>
       <p class="cta-sub">Tell us your income, your visa needs, and what you want from a place. You get back a sourced shortlist of countries, regions, and towns, every figure cited.</p>
       <div class="cta-actions">
-        <a href="/screener" class="btn-primary">Build my shortlist
+        <a href="#" class="btn-primary">Build my shortlist
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a href="/methodology" class="text-link">See the methodology</a>
+        <a href="#" class="text-link">See the methodology</a>
       </div>
       <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
     </div>
@@ -1029,35 +1025,35 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
     <div class="shell">
       <div class="footer-top" data-reveal style="--i:0">
         <div>
-          <a href="/" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
+          <a href="#" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
           <p class="footer-tagline">Cited relocation intelligence. Countries, regions, and towns, screened on evidence.</p>
         </div>
         <nav class="footer-cols" aria-label="Footer">
           <div>
             <span class="footer-col-label">Product</span>
             <ul class="footer-links">
-              <li><a href="#howit-heading">How it works</a></li>
-              <li><a href="/screener">Build my shortlist</a></li>
-              <li><a href="/compare/greece-portugal-spain">Compare</a></li>
-              <li><a href="/methodology">Methodology</a></li>
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Build my shortlist</a></li>
+              <li><a href="#">Compare</a></li>
+              <li><a href="#">Methodology</a></li>
             </ul>
           </div>
           <div>
             <span class="footer-col-label">Coverage</span>
             <ul class="footer-links">
-              <li><a href="/places/greece">Greece</a></li>
-              <li><a href="/places/portugal">Portugal</a></li>
-              <li><a href="/places/spain">Spain</a></li>
-              <li><a href="/sources">All countries</a></li>
+              <li><a href="#">Greece</a></li>
+              <li><a href="#">Portugal</a></li>
+              <li><a href="#">Spain</a></li>
+              <li><a href="#">All countries</a></li>
             </ul>
             <span class="footer-cov-note">A growing set, adding weekly.</span>
           </div>
           <div>
             <span class="footer-col-label">Company</span>
             <ul class="footer-links">
-              <li><a href="#who-heading">About</a></li>
-              <li><a href="/sources">Sources</a></li>
-              <li><a href="mailto:hello@mysecondcountry.com">Contact</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Sources</a></li>
+              <li><a href="#">Contact</a></li>
             </ul>
           </div>
         </nav>
@@ -1066,20 +1062,20 @@ import { FENCE_PRIMARY } from "../lib/fence.ts";
   </div>
   <div class="footer-legalstrip">
     <div class="shell">
-      <p class="footer-fence">{FENCE_PRIMARY}</p>
+      <p class="footer-fence">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
       <div class="footer-bottom">
         <span class="footer-copy">© 2026 My Second Country</span>
         <div class="footer-legal">
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
-          <a href="/sources">Sources</a>
+          <a href="#">Sources</a>
         </div>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="/mockups/_msc-system.js" is:inline></script>
+<script src="_msc-system.js"></script>
 <script>
 /* GATE 12 — live shortlist demo (homepage-unique). Scenario chips
    re-rank the three places with the relevant cited figure; citations

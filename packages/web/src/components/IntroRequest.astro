@@ -36,18 +36,22 @@ const { pageId, corridorLabel } = Astro.props;
         {corridorLabel} corridor.
       </p>
       <p class="intro-request__corridor">Corridor: {corridorLabel}</p>
-      <p class="intro-request__disclosure">
-        We may earn a fee if you proceed with an introduction.
-      </p>
-      <p class="intro-request__framing">
-        This is a professional we have vetted, not advice. Confirm everything with them.
-      </p>
+      <div class="intro-request__fence">
+        <p class="intro-request__disclosure">
+          We may earn a fee if you proceed with an introduction.
+        </p>
+        <p class="intro-request__framing">
+          This is a professional we have vetted, not advice. Confirm everything with them.
+        </p>
+      </div>
       <form class="intro-request__form" action={INTRO_FORM_URL} method="post">
         <input type="hidden" name="page_id" value={pageId} />
         <input type="hidden" name="corridor" value={corridorLabel} />
 
-        <label class="intro-request__label" for="intro-situation">Your situation in a sentence</label>
-        <textarea class="intro-request__input" id="intro-situation" name="situation" required></textarea>
+        <div class="intro-request__field">
+          <label class="intro-request__label" for="intro-situation">Your situation in a sentence</label>
+          <textarea class="intro-request__input" id="intro-situation" name="situation" required></textarea>
+        </div>
 
         <fieldset class="intro-request__fieldset">
           <legend>Have you been tax resident in this country before?</legend>
@@ -56,17 +60,186 @@ const { pageId, corridorLabel } = Astro.props;
           <label><input type="radio" name="prior_residency" value="unsure" /> Not sure</label>
         </fieldset>
 
-        <label class="intro-request__label" for="intro-timeline">Rough timeline</label>
-        <input
-          class="intro-request__input"
-          id="intro-timeline"
-          type="text"
-          name="timeline"
-          placeholder="e.g. within 12 months"
-        />
+        <div class="intro-request__field">
+          <label class="intro-request__label" for="intro-timeline">Rough timeline</label>
+          <input
+            class="intro-request__input"
+            id="intro-timeline"
+            type="text"
+            name="timeline"
+            placeholder="e.g. within 12 months"
+          />
+        </div>
 
         <button class="intro-request__submit" type="submit">Request an introduction</button>
       </form>
     </section>
   )
 }
+
+<style>
+  .intro-request {
+    margin: clamp(34px, 4.5vw, 56px) 0;
+    padding: clamp(24px, 3.4vw, 38px);
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+    background: var(--surface);
+  }
+
+  .intro-request__heading {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--f-display);
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .intro-request__what {
+    max-width: 60ch;
+    margin: 12px 0 0;
+    color: var(--ink-soft);
+    font-size: var(--t-body);
+    line-height: 1.6;
+  }
+
+  .intro-request__corridor {
+    margin: 14px 0 0;
+    color: var(--stone);
+    font-family: var(--f-mono);
+    font-size: var(--t-meta);
+    letter-spacing: 0.04em;
+  }
+
+  .intro-request__fence {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+    background: var(--tint-clay);
+  }
+
+  .intro-request__disclosure {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--t-bodysm);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .intro-request__framing {
+    margin: 6px 0 0;
+    color: var(--stone);
+    font-size: var(--t-bodysm);
+    line-height: 1.5;
+  }
+
+  .intro-request__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 22px;
+  }
+
+  .intro-request__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-request__label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--stone);
+    font-size: var(--t-meta);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .intro-request__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    font: var(--t-body) var(--f-ui);
+  }
+
+  .intro-request__input::placeholder {
+    color: var(--stone);
+  }
+
+  textarea.intro-request__input {
+    min-height: 104px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .intro-request__input:focus-visible {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .intro-request__fieldset {
+    margin: 0;
+    padding: 14px 16px 16px;
+    border: 1px solid var(--hairline-soft);
+    border-radius: 4px;
+  }
+
+  .intro-request__fieldset legend {
+    padding: 0 6px;
+    color: var(--ink);
+    font-size: var(--t-bodysm);
+    font-weight: 700;
+  }
+
+  .intro-request__fieldset label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 20px 0 0;
+    color: var(--ink-soft);
+    font-size: var(--t-body);
+  }
+
+  .intro-request__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-height: 48px;
+    padding: 12px 26px;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-btn);
+    background: var(--accent);
+    color: var(--paper);
+    font: 700 var(--t-body) var(--f-ui);
+    cursor: pointer;
+    transition:
+      background 150ms var(--ease),
+      box-shadow 150ms var(--ease),
+      transform 150ms var(--ease);
+  }
+
+  .intro-request__submit:hover {
+    background: var(--accent-dark);
+    box-shadow: 0 4px 14px rgba(26, 24, 19, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .intro-request__submit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 560px) {
+    .intro-request__submit {
+      width: 100%;
+    }
+  }
+</style>

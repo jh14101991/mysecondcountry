@@ -1,22 +1,17 @@
----
-import { FENCE_PRIMARY } from "../lib/fence.ts";
----
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Second Country · Screener</title>
-<meta name="robots" content="noindex,nofollow">
+<title>My Second Country · Gate 21: Screener (situation input)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- SHARED FOUNDATION + SECTION LIBRARY -->
-<link rel="stylesheet" href="/mockups/_msc-system.css">
+<link rel="stylesheet" href="_msc-system.css">
 
-<style is:global>
+<style>
 /* ============================================================
    GATE 21 — SCREENER (situation input)  [PRODUCT register]
    The product's front door: a calm, instrument-like single screen
@@ -112,22 +107,22 @@ select.field-input {
   <div class="shell">
     <div class="product-header-inner">
 
-      <a class="brand-wordmark product-brand" href="/" aria-label="My Second Country home (exit screener)">
-        <img class="brand-icon" src="/brand/monogram.svg" alt="" width="36" height="36">
+      <a class="brand-wordmark product-brand" href="#" aria-label="My Second Country home (exit screener)">
+        <img class="brand-icon" src="../brand/monogram.svg" alt="" width="36" height="36">
         <span class="brand-rule" aria-hidden="true"></span>
         <span class="brand-name">My Second Country</span>
       </a>
 
-      <nav class="product-progress" aria-label="Screener progress">
+      <div class="product-progress">
         <div class="product-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="2" aria-label="Step 1 of 2, Your situation">
           <span class="product-step is-current" aria-hidden="true"></span>
           <span class="product-step" aria-hidden="true"></span>
         </div>
         <span class="product-step-label">Step 1 of 2 · Your situation</span>
-      </nav>
+      </div>
 
       <div class="product-exit">
-        <a href="/">
+        <a href="#">
           Save and exit
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
@@ -161,7 +156,7 @@ select.field-input {
       </section>
 
       <!-- the instrument -->
-      <form class="screener-form" action="/shortlists" method="get" novalidate>
+      <form class="screener-form" action="#" method="post" novalidate>
 
         <!-- 01 — who's moving -->
         <section class="plate" aria-labelledby="plate1-title">
@@ -333,7 +328,7 @@ select.field-input {
             Build my shortlist
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <a href="/screener" class="text-link">Clear and start over</a>
+          <a href="#" class="text-link">Clear and start over</a>
         </div>
       </form>
 
@@ -341,7 +336,7 @@ select.field-input {
       <div class="liability-note screener-fence" role="note" aria-label="Disclaimer">
         <span class="liability-mark">Note</span>
         <div>
-          <p class="liability-text">{FENCE_PRIMARY}</p>
+          <p class="liability-text">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
           <p class="liability-text screener-fence__second">It screens against published rules and shows every figure with its source, verified date, and confidence.</p>
         </div>
       </div>
@@ -434,19 +429,19 @@ select.field-input {
 <!-- minimal footer (product register): the legal strip only, no scene -->
 <footer class="footer-legalstrip" role="contentinfo" style="border-top:1px solid var(--hairline-soft);">
   <div class="shell">
-    <p class="footer-fence">{FENCE_PRIMARY}</p>
+    <p class="footer-fence">Sourced screening information, not legal, tax, immigration, or financial advice. Verify with a licensed professional before acting.</p>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 My Second Country</span>
       <div class="footer-legal">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
-        <a href="/sources">Sources</a>
+        <a href="#">Sources</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="/mockups/_msc-system.js" is:inline></script>
+<script src="_msc-system.js"></script>
 
 </body>
 </html>
