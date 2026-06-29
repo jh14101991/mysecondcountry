@@ -650,6 +650,12 @@ img {
   transform: none;
 }
 
+html:not(.js) [data-reveal],
+html:not(.js) [data-img-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
 [data-reveal][style*="--i:0"] { transition-delay:   0ms; }
 [data-reveal][style*="--i:1"] { transition-delay:  80ms; }
 [data-reveal][style*="--i:2"] { transition-delay: 160ms; }
@@ -677,6 +683,12 @@ img {
   will-change: auto;
 }
 
+html:not(.js) [data-img-reveal] img {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
 /* ============================================================
    HERO LOAD SEQUENCE — same easing, same 80ms stagger
    ============================================================ */
@@ -693,6 +705,11 @@ img {
   transform: none;
 }
 
+html:not(.js) .hero-load {
+  opacity: 1;
+  transform: none;
+}
+
 /* ============================================================
    REDUCED MOTION — fully disables ALL motion
    ============================================================ */
@@ -705,6 +722,7 @@ img {
     transition: none !important;
   }
 
+  [data-img-reveal],
   [data-img-reveal] img {
     opacity: 1 !important;
     transform: none !important;
