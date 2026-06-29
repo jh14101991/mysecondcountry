@@ -12,39 +12,21 @@ const primaryNav = [
 const dossierFiles = [
   {
     href: "/compare/greece-portugal-spain",
-    meta: "Comparison",
+    meta: "Live comparison",
     title: "Greece, Portugal, and Spain",
-    copy: "A side-by-side file for cost, tax, visa, residency, climate, healthcare, and safety.",
+    copy: "A live country comparison with source, date, and confidence beside the claim.",
   },
   {
     href: "/shortlists/eu-residency-under-3700-a-month",
-    meta: "Shortlist",
+    meta: "Live shortlist",
     title: "EU residency under 3,700 euros a month",
-    copy: "A ranked screen for countries where income thresholds and core costs are visible.",
+    copy: "A live shortlist for income-threshold screening, with source state visible.",
   },
   {
-    href: "/shortlists/eu-expat-tax-regimes-by-rate",
-    meta: "Shortlist",
-    title: "EU expat tax regimes by rate",
-    copy: "A tax-led shortlist with the rule, source, and headline rate kept together.",
-  },
-  {
-    href: "/greece/tax/foreign-pensioner-flat-tax",
-    meta: "Tax file",
-    title: "Greece foreign pensioner flat tax",
-    copy: "The published 7 percent pensioner regime, with duration and eligibility claims cited.",
-  },
-  {
-    href: "/places/greece/crete/chania",
-    meta: "Town file",
-    title: "Chania, Crete",
-    copy: "A local dossier for the first town file, including climate, safety, and living evidence.",
-  },
-  {
-    href: "/places",
-    meta: "Coverage",
-    title: "All live places",
-    copy: "Countries, regions, and towns that have a source-backed record in the product.",
+    href: "/sources",
+    meta: "Source trail",
+    title: "Sources",
+    copy: "The live trail for source families, verification dates, and confidence marks.",
   },
 ];
 ---
@@ -71,61 +53,13 @@ const dossierFiles = [
 </script>
 
 <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "My Second Country",
-    "url": "https://mysecondcountry.com/",
-    "description": "Cited relocation intelligence: every cost, tax, visa, residency, climate, healthcare, and safety figure is a sourced, dated claim with a confidence mark that links to its primary source."
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is this advice?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. We screen published rules and show you sourced figures. We are not lawyers or tax advisers; for the decision itself we point you to professionals."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Which countries can I compare?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the compare page."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How current is the data?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Every figure shows the date we last verified it and how confident we are. Rule-based figures like tax and visa rules are rechecked more often than slow-moving ones like climate."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What does it cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Building a shortlist is free. We may earn a fee only if you choose an introduction we suggest, and we disclose it before you decide. Nothing pays for placement."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How is this different from the usual sites?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "They give you a number. We give you the number plus its source, its date, and our confidence in it, so you can check us rather than take our word."
-        }
-      }
-    ]
-  }
-]
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "My Second Country",
+  "url": "https://mysecondcountry.com/",
+  "description": "Cited relocation intelligence: every cost, tax, visa, residency, climate, healthcare, and safety figure is a sourced, dated claim with a confidence mark that links to its primary source."
+}
 </script>
 
 <!-- SHARED FOUNDATION + SECTION LIBRARY -->
@@ -338,70 +272,8 @@ const dossierFiles = [
   .anatomy__k { margin-bottom: 1px; }
 }
 
-/* ===== gate-14-howitworks.html ===== */
-/* ============================================================
-   GATE 14 — HOW IT WORKS (type + evidence led, three steps)
-   No stock icons, no illustration. Big mono step numerals on a
-   broadsheet baseline rule, Newsreader titles, tight copy, and each
-   step grounded in a REAL artifact: the actual input chips, the real
-   source families we cite, and a real cited result. Input -> sources
-   -> output, shown with evidence. On lock -> homepage build.
-   ============================================================ */
-.howit { background: var(--paper); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
-
-.howit-head { max-width: 62ch; }
-.howit-head .display-section { margin: 10px 0 0; max-width: 22ch; }
-.howit-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 56ch; margin-top: 18px; }
-
-.howit-steps { margin-top: clamp(46px, 6vw, 84px); display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid var(--ink); }
-@media (max-width: 760px) { .howit-steps { grid-template-columns: 1fr; } }
-
-.step { display: flex; flex-direction: column; padding: clamp(26px, 2.6vw, 38px) clamp(22px, 2.2vw, 34px) clamp(8px, 1vw, 14px); }
-.step:first-child { padding-left: 0; }
-.step:last-child { padding-right: 0; }
-.step + .step { border-left: 1px solid var(--hairline-soft); }
-@media (max-width: 760px) {
-  .step { padding: clamp(28px, 6vw, 40px) 0 clamp(20px, 4vw, 28px); }
-  .step + .step { border-left: none; border-top: 1px solid var(--hairline-soft); }
-}
-
-.step__num { font-family: var(--f-mono); font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 500; color: var(--ink); letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
-.step__title { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: var(--t-sub); line-height: 1.18; letter-spacing: -0.018em; color: var(--ink); margin: 16px 0 0; }
-.step__body { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.6; margin: 10px 0 0; max-width: 34ch; }
-
-.step__art { margin-top: auto; padding-top: clamp(22px, 2.4vw, 30px); }
-.step__artlabel { display: block; font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); margin-bottom: 12px; }
-
-/* step 1 — input chips (static glimpse of the scenario picker) */
-.step-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.step-chip { font-family: var(--f-ui); font-size: var(--t-meta); font-weight: 500; color: var(--ink); background: var(--surface); border: 1px solid var(--hairline-soft); border-radius: 999px; padding: 7px 13px; }
-.step-chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
-
-/* step 2 — the real source families */
-.step-sources { display: flex; flex-wrap: wrap; gap: 8px; }
-.step-src { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); border: 1px solid var(--hairline-soft); border-radius: 6px; padding: 5px 9px; }
-
-/* step 3 — a real cited result (open, ledger style, no card) */
-.step-result__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.step-result__place { font-family: var(--f-display); font-optical-sizing: auto; font-size: 1.05rem; color: var(--ink); line-height: 1.2; }
-.step-result__val { font-family: var(--f-mono); font-size: 1.0625rem; font-weight: 500; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.step-result__unit { font-family: var(--f-mono); font-size: var(--t-meta); font-weight: 400; color: var(--stone); margin-left: 4px; }
-.step-result__prov { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 9px; font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
-.step-result__conf { display: inline-flex; align-items: center; gap: 5px; }
-.step-result__conf svg { flex-shrink: 0; }
-.step-result__sep { color: var(--hairline-soft); }
-
 /* ===== gate-18-bento.html ===== */
-/* ============================================================
-   GATE 18 — HOW TO READ IT (bento)
-   A gapless tile grid that teaches the SYSTEM (not shown as a
-   standalone anywhere else): the confidence marks, the dimensions
-   every country gets, and the source/date/confidence triad. Breaks
-   the middle type-run with a real visual grid. One
-   bordered grid with shared hairlines, never floating cards. On a
-   stone band so it reads as a third tone between paper and warm.
-   On lock -> homepage build (placed after "how it works").
-   ============================================================ */
+/* Compact source cue, kept as one visual grid. */
 .bento-band { background: var(--paper-stone); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
 .bento-head { max-width: 44ch; }
 .bento-head .display-section { margin: 10px 0 0; max-width: 20ch; }
@@ -446,35 +318,6 @@ const dossierFiles = [
 .bento__triad { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.6; margin-top: 16px; max-width: 34ch; }
 .bento__triad b { color: var(--ink); font-weight: 500; }
 
-/* ===== gate-15-coverage.html ===== */
-/* ============================================================
-   GATE 15 — WHERE IT RUNS DEEPEST (coverage + compare glimpse)
-   Merges the old "see a real result" + "coverage": honest scope
-   (Greece, Portugal, Spain deep today; global ambition) PROVEN with a
-   real cited side-by-side comparison, the depth/decision the hero's
-   shortlist never shows. Reuses the locked comparison-table component
-   (gate 8) in a lighter homepage glimpse (source named, no expandable
-   panel; full cited version on the compare page). Figures vary from
-   earlier sections (cost / tax / sunshine / safety, not 7% again).
-   On lock -> homepage build.
-   ============================================================ */
-.coverage { background: var(--paper-warm); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
-
-.coverage-head { max-width: 64ch; }
-.coverage-head .display-section { margin: 10px 0 0; max-width: 18ch; }
-.coverage-lead { font-family: var(--f-ui); font-size: clamp(var(--t-lead), 1.5vw, 1.2rem); color: var(--ink-soft); line-height: 1.58; max-width: 60ch; margin-top: 18px; }
-
-/* homepage glimpse: the shared comparison table, not sticky here, lighter cells */
-.coverage-sample { margin-top: clamp(40px, 5vw, 64px); font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); }
-.coverage .ctable { margin-top: 14px; max-width: none; }
-.coverage .ctable-head { position: static; }
-.cov-src { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); }
-
-.coverage-foot { margin-top: clamp(26px, 3vw, 38px); display: flex; align-items: baseline; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; }
-.coverage-note { font-family: var(--f-mono); font-size: var(--t-meta); color: var(--stone); line-height: 1.6; max-width: 56ch; }
-.coverage-link { font-family: var(--f-ui); font-size: var(--t-body); font-weight: 700; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
-.coverage-link:hover, .coverage-link:focus-visible { text-decoration: underline; }
-
 /* ===== evidence dossier shelf ===== */
 .dossier-shelf { background: var(--paper); padding: clamp(72px, 9vw, 132px) 0; border-top: 1px solid var(--hairline-soft); }
 .dossier-head { display: grid; grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 84px); align-items: end; }
@@ -498,69 +341,28 @@ const dossierFiles = [
   .dossier-file { min-height: 188px; }
 }
 
-/* ===== gate-16-who.html ===== */
-/* ============================================================
-   GATE 16 — WHO MAKES THIS (the people + the integrity stance)
-   Type-led, evergreen (no country names, no figures). A founders'
-   note in the Newsreader italic analyst voice carries the human/why;
-   a tight hairline list of integrity promises carries the trust we
-   pulled out of the cut "why trust it" pillars, including the honest-
-   money stance (screening not advice, nothing buys a ranking, fees
-   disclosed). On lock -> homepage build.
-   ============================================================ */
-.who { background: var(--paper); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
-
-.who-inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(40px, 6vw, 92px); align-items: start; }
-@media (max-width: 860px) { .who-inner { grid-template-columns: 1fr; gap: clamp(40px, 8vw, 56px); } }
-
-.who-head .display-section { margin: 10px 0 0; max-width: 18ch; }
-.who-note { margin-top: clamp(26px, 3vw, 38px); }
-.who-note p { margin-top: 0.6em; }
-.who-note p:first-child { margin-top: 0; }
-.who-sign { margin-top: clamp(22px, 2.4vw, 30px); font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.04em; color: var(--stone); }
-
-.who-right { padding-top: clamp(6px, 1vw, 14px); }
-.who-right__label { display: block; font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); margin-bottom: 4px; }
-
-.integrity { list-style: none; margin: 0; padding: 0; }
-.integrity__item { padding: clamp(18px, 2vw, 24px) 0; border-top: 1px solid var(--hairline-soft); }
-.integrity__item:first-child { border-top: 1.5px solid var(--ink); }
-.integrity__item:last-child { padding-bottom: 0; }
-.integrity__lead { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.22; letter-spacing: -0.014em; color: var(--ink); display: flex; align-items: baseline; gap: 12px; }
-.integrity__lead::before { content: ""; flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: var(--pop); transform: translateY(-0.18em); }
-.integrity__gloss { font-family: var(--f-ui); font-size: var(--t-bodysm); color: var(--ink-soft); line-height: 1.6; margin: 9px 0 0 19px; max-width: 48ch; }
-
-/* ===== gate-17-faq.html ===== */
-/* ============================================================
-   GATE 17 — QUESTIONS ANSWERED (compact FAQ, broadsheet Q|A)
-   Type-led, evergreen, no cards. A definition-list layout: question
-   left, answer right, hairline-divided, like a glossary. Handles the
-   objections (advice, cost, currency, difference) and the coverage
-   question NEUTRALLY (points to the live, data-driven list rather
-   than naming a roster). On lock -> homepage build; the homepage then
-   closes with the shared CTA band (gate 6) + footer.
-   ============================================================ */
-.faq { background: var(--paper-warm); padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--hairline-soft); }
-
-.faq-head { max-width: 30ch; }
-.faq-head .display-section { margin: 10px 0 0; }
-
-.faq-list { margin-top: clamp(40px, 5vw, 68px); border-top: 1.5px solid var(--ink); }
-.faq-item { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(12px, 3vw, 56px); align-items: start; padding: clamp(22px, 2.6vw, 32px) 0; border-bottom: 1px solid var(--hairline-soft); }
-@media (max-width: 720px) { .faq-item { grid-template-columns: 1fr; gap: 10px; padding: clamp(22px, 6vw, 28px) 0; } }
-
-.faq-q { font-family: var(--f-display); font-optical-sizing: auto; font-weight: 400; font-size: clamp(1.25rem, 1.9vw, 1.6rem); line-height: 1.22; letter-spacing: -0.016em; color: var(--ink); }
-.faq-a { font-family: var(--f-ui); font-size: var(--t-body); color: var(--ink-soft); line-height: 1.62; max-width: 56ch; }
-.faq-a a { color: var(--accent); text-decoration: none; }
-.faq-a a:hover, .faq-a a:focus-visible { text-decoration: underline; }
-
 /* ===== homepage overrides ===== */
-/* Closing CTA — imageless, type-led.
-   Place imagery on this page lives in the hero, the mid-page engraving
-   moments, and the footer. The closing invitation is an ACTION surface,
-   so per the locked register split it stays type-and-evidence-led: a
-   quiet warm broadsheet card, framed by a fine inset rule for craft, the
-   wow from type and scale rather than a scene. */
+html { scroll-behavior: auto; }
+
+@media (max-width: 1039px) and (min-width: 861px) {
+  .nav-cta { display: none; }
+}
+
+[data-reveal].reveal-caught-up {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+[data-img-reveal].reveal-caught-up,
+[data-img-reveal].reveal-caught-up img {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+/* Closing CTA stays imageless and type-led. */
 .cta-card {
   background-color: var(--paper-warm);
   background-image: none;
@@ -580,79 +382,6 @@ const dossierFiles = [
   .cta-card { background-image: none; }
   .cta-card::before { inset: 11px; }
 }
-
-/* ===== mid-page engraving band (evergreen "anywhere") =====
-   Full-bleed engraving on a pure-paper ground (multiply drops the white),
-   a soft paper veil keeps the centred line legible. The site's signature
-   image device, reused once mid-page; a different global location from the
-   hero (Amalfi), the Alps block above, and the footer (Greek coast). */
-.place-band {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border-top: 1px solid var(--hairline-soft);
-  border-bottom: 1px solid var(--hairline-soft);
-  background-color: var(--paper);
-  display: flex;
-  align-items: center;
-  min-height: clamp(360px, 44vw, 560px);
-}
-/* engraving on its own oversized layer so the subtle parallax never exposes
-   an edge; background-blend multiply drops its white ground onto the paper. */
-.place-band__bg {
-  position: absolute;
-  inset: -72px 0;
-  z-index: 0;
-  background-color: var(--paper);
-  background-image: url("/mockups/img/engravings/benefit-3.png"); /* benefit-3.png = Japan coastal village scene */
-  background-position: center 34%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: multiply;
-}
-/* soft paper veil keeps the centred line legible (sits above the engraving,
-   below the copy, and does not move with the parallax). */
-.place-band::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(58% 74% at 50% 52%, rgba(252,252,252,0.90) 0%, rgba(252,252,252,0.36) 46%, rgba(252,252,252,0) 78%);
-}
-.place-band .shell { position: relative; z-index: 2; }
-.place-band-inner {
-  max-width: 52ch;
-  margin-inline: auto;
-  text-align: center;
-  padding-block: clamp(56px, 8vw, 112px);
-}
-.place-band-line {
-  font-family: var(--f-display);
-  font-weight: 500;
-  font-size: clamp(1.85rem, 3.4vw, 2.9rem);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  max-width: 18ch;
-  margin: 0 auto 16px;
-}
-.place-band-sub {
-  font-family: var(--f-ui);
-  font-size: var(--t-body);
-  line-height: 1.55;
-  color: var(--ink-soft);
-  max-width: 46ch;
-  margin: 0 auto;
-}
-@media (max-width: 600px) {
-  .place-band::after {
-    background: radial-gradient(98% 88% at 50% 52%, rgba(252,252,252,0.94) 0%, rgba(252,252,252,0.82) 54%, rgba(252,252,252,0) 92%);
-  }
-}
-
-/* the mid-page Alps place block sits on a warm band (class, not inline) */
-.benefit--warm { background: var(--paper-warm); }
 
 /* evergreen qualifier under the footer coverage list (not a fixed roster) */
 .footer-cov-note { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.01em; color: var(--stone); }
@@ -720,7 +449,7 @@ const dossierFiles = [
           Build my shortlist
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="/methodology" class="text-link">See the methodology</a>
+        <a href="/compare/greece-portugal-spain" class="text-link">Compare Greece, Portugal, and Spain</a>
       </div>
     </div>
 
@@ -795,111 +524,25 @@ const dossierFiles = [
   </div>
 </section>
 
-<!-- ===== gate-14-howitworks.html ===== -->
-<section class="howit" aria-labelledby="howit-heading">
-  <div class="shell">
-
-    <header class="howit-head" data-reveal style="--i:0">
-      <span class="overline">How it works</span>
-      <h2 id="howit-heading" class="display-section">From your situation to a sourced shortlist.</h2>
-      <p class="howit-lead">No account, no sales call. You answer a few questions, we screen your situation against published rules, and you get back a shortlist you can check yourself.</p>
-    </header>
-
-    <div class="howit-steps">
-
-      <div class="step" data-reveal style="--i:0">
-        <span class="step__num">01</span>
-        <h3 class="step__title">Tell us your situation</h3>
-        <p class="step__body">Household, citizenship, income, and what you want from a place. About two minutes, no account needed.</p>
-        <div class="step__art">
-          <span class="step__artlabel">You pick</span>
-          <div class="step-chips">
-            <span class="step-chip is-on">Lower my taxes</span>
-            <span class="step-chip">Work remotely</span>
-            <span class="step-chip">Retire abroad</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="step" data-reveal style="--i:1">
-        <span class="step__num">02</span>
-        <h3 class="step__title">Screened against published rules</h3>
-        <p class="step__body">We match it to visa, tax, cost, climate, healthcare, and safety data, every figure from a named public source.</p>
-        <div class="step__art">
-          <span class="step__artlabel">We cite</span>
-          <div class="step-sources">
-            <span class="step-src">Eurostat</span>
-            <span class="step-src">PwC</span>
-            <span class="step-src">Migration ministries</span>
-            <span class="step-src">WHO</span>
-            <span class="step-src">GPI</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="step" data-reveal style="--i:2">
-        <span class="step__num">03</span>
-        <h3 class="step__title">A sourced shortlist</h3>
-        <p class="step__body">Countries, regions, and towns sorted by the metric you chose, each figure shown with its source, date, and confidence.</p>
-        <div class="step__art">
-          <span class="step__artlabel">You get</span>
-          <div class="step-result">
-            <div class="step-result__row">
-              <span class="step-result__place">Lisbon, Portugal</span>
-              <span class="step-result__val">86.6<span class="step-result__unit">cost index</span></span>
-            </div>
-            <div class="step-result__prov">
-              <span class="step-result__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
-              <span class="step-result__sep" aria-hidden="true">·</span>
-              <span>Eurostat</span>
-              <span class="step-result__sep" aria-hidden="true">·</span>
-              <span>2026-06-24</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== MID-PAGE PLACE BLOCK (Alps engraving, gate-10 .benefit) ===== -->
-<section class="benefit benefit--warm" aria-labelledby="payoff-heading">
-  <div class="shell">
-    <div class="benefit-grid">
-      <div class="benefit-figure" data-reveal data-img-reveal style="--i:0">
-        <img class="engraving" src="/mockups/img/engravings/who.png" alt="" aria-hidden="true"
-             onerror="this.style.display='none';this.closest('.benefit-figure').classList.add('no-img');">
-      </div>
-      <div class="benefit-text" data-reveal style="--i:1">
-        <span class="overline">Why the rigour</span>
-        <h2 id="payoff-heading" class="benefit-headline">Evidence is the means. A place is the point.</h2>
-        <p class="body-prose">Every cited figure, every linked source, every confidence mark is here for one reason: so the place you choose is one you understand before you move. We screen and show the work. Which life fits is yours to decide.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== gate-18-bento.html ===== -->
 <section class="bento-band" aria-labelledby="bento-heading">
   <div class="shell">
 
     <header class="bento-head" data-reveal style="--i:0">
-      <span class="overline">How to read it</span>
-      <h2 id="bento-heading" class="display-section">Every figure shows its work.</h2>
-      <p class="bento-lead">A quick key to the marks you will see on every number, so you can check us rather than trust us.</p>
+      <span class="overline">Source cue</span>
+      <h2 id="bento-heading" class="display-section">Read the mark before the number.</h2>
+      <p class="bento-lead">The homepage shows only the cue a reader needs now: who says it, when we checked it, and how much weight to put on it.</p>
     </header>
 
     <div class="bento" data-reveal style="--i:1">
 
       <div class="bento__tile bento__tile--conf">
         <span class="bento__label">Confidence</span>
-        <h3 class="bento__h">How sure we are</h3>
+        <h3 class="bento__h">High, medium, low</h3>
         <ul class="bento__conf">
           <li>
             <span class="bento__mk"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span>
-            <span class="bento__gl">Verified against a primary source.</span>
+            <span class="bento__gl">Checked against a primary source.</span>
           </li>
           <li>
             <span class="bento__mk"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span>
@@ -913,95 +556,21 @@ const dossierFiles = [
       </div>
 
       <div class="bento__tile bento__tile--dims">
-        <span class="bento__label">Every country</span>
-        <h3 class="bento__h">Seven dimensions</h3>
+        <span class="bento__label">Source</span>
+        <h3 class="bento__h">A named place to check</h3>
         <div class="bento__dims">
-          <span class="bento__dim">Cost</span>
-          <span class="bento__dim">Tax</span>
-          <span class="bento__dim">Visa</span>
-          <span class="bento__dim">Residency</span>
-          <span class="bento__dim">Climate</span>
-          <span class="bento__dim">Healthcare</span>
-          <span class="bento__dim">Safety</span>
+          <span class="bento__dim">Eurostat</span>
+          <span class="bento__dim">PwC</span>
+          <span class="bento__dim">Migration ministry</span>
         </div>
       </div>
 
       <div class="bento__tile bento__tile--triad">
-        <span class="bento__label">Every figure</span>
-        <h3 class="bento__h">Carries its receipts</h3>
-        <p class="bento__triad">A <b>source</b> you can open, the <b>date</b> we last checked it, and an honest <b>confidence</b> mark.</p>
+        <span class="bento__label">Date</span>
+        <h3 class="bento__h">A visible check date</h3>
+        <p class="bento__triad">If a number matters, the page shows the <b>source</b>, the <b>date</b>, and the <b>confidence</b> mark near the claim.</p>
       </div>
 
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== gate-15-coverage.html ===== -->
-<section class="coverage" aria-labelledby="coverage-heading">
-  <div class="shell">
-
-    <header class="coverage-head" data-reveal style="--i:0">
-      <span class="overline">Compare on the evidence</span>
-      <h2 id="coverage-heading" class="display-section">Weigh any country, like for like.</h2>
-      <p class="coverage-lead">Every place we cover is screened across the same dimensions, cost, tax, visa, residency, climate, healthcare, and safety, with every figure sourced, dated, and confidence-marked. So you can compare them on the same evidence base.</p>
-    </header>
-
-    <p class="coverage-sample" data-reveal style="--i:1">A sample comparison · every figure verified through 2026-06-28</p>
-    <div class="ctable" role="table" aria-label="Sample comparison: Greece, Portugal, Spain" data-reveal style="--i:1">
-      <div class="ctable-head" role="row">
-        <div class="ctable-corner" role="columnheader">Indicator</div>
-        <div class="ctable-country" role="columnheader">Greece</div>
-        <div class="ctable-country" role="columnheader">Portugal</div>
-        <div class="ctable-country" role="columnheader">Spain</div>
-      </div>
-
-      <div class="crow" role="row">
-        <div class="crow-label" role="rowheader">
-          <span class="crow-label__name">Cost of living</span>
-          <span class="crow-label__meta">Price level index, EU27 = 100. Lower is cheaper.</span>
-        </div>
-        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">87.4</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">86.6</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">91.6</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: high"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="currentColor" stroke="currentColor" stroke-width="1.25"/></svg>high</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">Eurostat</span></div></div></div>
-      </div>
-
-      <div class="crow" role="row">
-        <div class="crow-label" role="rowheader">
-          <span class="crow-label__name">Top income tax rate</span>
-          <span class="crow-label__meta">Headline top marginal rate, before any special regime.</span>
-        </div>
-        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">44<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">48<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">47<span class="ccell__unit">%</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">PwC</span></div></div></div>
-      </div>
-
-      <div class="crow" role="row">
-        <div class="crow-label" role="rowheader">
-          <span class="crow-label__name">Average annual sunshine</span>
-          <span class="crow-label__meta">Capital as a national proxy.</span>
-        </div>
-        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,773<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">HNMS</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,792.8<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IPMA</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">2,744<span class="ccell__unit">h / yr</span></span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: low"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/></svg>low</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">AEMET</span></div></div></div>
-      </div>
-
-      <div class="crow" role="row">
-        <div class="crow-label" role="rowheader">
-          <span class="crow-label__name">Global Peace Index (2024)</span>
-          <span class="crow-label__meta">IEP score. Lower is more peaceful.</span>
-        </div>
-        <div class="ccell" role="cell"><span class="ccell-country">Greece</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.793</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Portugal</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.372</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
-        <div class="ccell" role="cell"><span class="ccell-country">Spain</span><div class="ccell__body"><div class="ccell__valrow"><span class="ccell__val">1.597</span></div><div class="ccell__prov"><span class="ccell__conf" aria-label="Confidence: medium"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.25"/><rect x="0.5" y="0.5" width="4.75" height="9" fill="currentColor"/></svg>medium</span><span class="ccell__sep" aria-hidden="true">·</span><span class="cov-src">IEP</span></div></div></div>
-      </div>
-    </div>
-
-    <div class="coverage-foot" data-reveal style="--i:2">
-      <p class="coverage-note">A country goes live only once every figure clears the same bar, so coverage widens deliberately. Greece, Portugal, and Spain are shown above as one example.</p>
-      <a class="coverage-link" href="/compare/greece-portugal-spain">See the full comparison, every figure cited
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
     </div>
 
   </div>
@@ -1016,9 +585,8 @@ const dossierFiles = [
         <h2 id="dossier-heading" class="display-section">The evidence shelf.</h2>
       </div>
       <p class="dossier-lead">
-        Follow the live files behind the promise: country comparisons, tax routes,
-        ranked shortlists, and the first town dossier. Each one keeps the source trail
-        close to the claim.
+        Three next clicks, each with an honest status: one live comparison,
+        one live shortlist, and the deeper source trail.
       </p>
     </header>
 
@@ -1038,99 +606,10 @@ const dossierFiles = [
 
     <div class="dossier-foot" data-reveal style="--i:2">
       <p class="dossier-note">
-        Pages stay out of this shelf until the underlying record is live enough to read.
-        Draft work belongs in the repo, not in the product map.
+        Each file links one click lower, where the supporting evidence can carry
+        more detail.
       </p>
-      <a class="coverage-link" href="/guides">Browse the guides
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
     </div>
-  </div>
-</section>
-
-<!-- ===== MID-PAGE ENGRAVING BAND (Japan engraving, evergreen) ===== -->
-<section class="place-band" aria-labelledby="anywhere-heading">
-  <div class="place-band__bg" data-parallax-img="0.08" aria-hidden="true"></div>
-  <div class="shell">
-    <div class="place-band-inner" data-reveal style="--i:0">
-      <span class="overline">Anywhere you're weighing</span>
-      <h2 id="anywhere-heading" class="place-band-line">One standard, every place on the map.</h2>
-      <p class="place-band-sub">Coverage grows every week. The bar never moves: every figure is cited, every source is linked, and every number carries a confidence mark.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== gate-16-who.html ===== -->
-<section class="who" aria-labelledby="who-heading">
-  <div class="shell">
-    <div class="who-inner">
-
-      <div class="who-left">
-        <div class="who-head" data-reveal style="--i:0">
-          <span class="overline">Who makes this</span>
-          <h2 id="who-heading" class="display-section">Built by people who got tired of guessing.</h2>
-        </div>
-        <div class="who-note analyst-note" data-reveal style="--i:1">
-          <p>We kept hitting the same wall: relocation figures with no source, no date, and a quiet affiliate behind them. So we built the opposite: a screening engine where every number carries its source, its date, and a confidence mark.</p>
-          <p>We are not advisers, and we are not for sale.</p>
-        </div>
-        <p class="who-sign" data-reveal style="--i:2">The founders, My Second Country</p>
-      </div>
-
-      <div class="who-right" data-reveal style="--i:1">
-        <span class="who-right__label">How we stay honest</span>
-        <ul class="integrity">
-          <li class="integrity__item">
-            <p class="integrity__lead">We screen, we don't advise.</p>
-            <p class="integrity__gloss">You get sourced figures and the published rules. The decision, and the professional you make it with, stay yours.</p>
-          </li>
-          <li class="integrity__item">
-            <p class="integrity__lead">Nothing can buy a ranking.</p>
-            <p class="integrity__gloss">No country, visa programme, or firm can pay for placement. The data is the data.</p>
-          </li>
-          <li class="integrity__item">
-            <p class="integrity__lead">When we earn, you see it first.</p>
-            <p class="integrity__gloss">If you choose an introduction we suggest, we may earn a fee. We disclose it before you decide, and no fee can affect a ranking.</p>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== gate-17-faq.html ===== -->
-<section class="faq" aria-labelledby="faq-heading">
-  <div class="shell">
-
-    <header class="faq-head" data-reveal style="--i:0">
-      <span class="overline">Questions answered</span>
-      <h2 id="faq-heading" class="display-section">The honest answers.</h2>
-    </header>
-
-    <dl class="faq-list" aria-labelledby="faq-heading">
-      <div class="faq-item" data-reveal style="--i:0">
-        <dt class="faq-q">Is this advice?</dt>
-        <dd class="faq-a">No. We screen published rules and show you sourced figures. We are not lawyers or tax advisers; for the decision itself we point you to professionals.</dd>
-      </div>
-      <div class="faq-item" data-reveal style="--i:1">
-        <dt class="faq-q">Which countries can I compare?</dt>
-        <dd class="faq-a">A growing set. We add a country only once its data clears the same sourcing bar. You can see the ones covered today on the <a href="/compare/greece-portugal-spain">compare page</a>.</dd>
-      </div>
-      <div class="faq-item" data-reveal style="--i:2">
-        <dt class="faq-q">How current is the data?</dt>
-        <dd class="faq-a">Every figure shows the date we last verified it and how confident we are. Rule-based figures like tax and visa rules are rechecked more often than slow-moving ones like climate.</dd>
-      </div>
-      <div class="faq-item" data-reveal style="--i:3">
-        <dt class="faq-q">What does it cost?</dt>
-        <dd class="faq-a">Building a shortlist is free. We may earn a fee only if you choose an introduction we suggest, and we disclose it before you decide. Nothing pays for placement.</dd>
-      </div>
-      <div class="faq-item" data-reveal style="--i:4">
-        <dt class="faq-q">How is this different from the usual sites?</dt>
-        <dd class="faq-a">They give you a number. We give you the number plus its source, its date, and our confidence in it, so you can check us rather than take our word.</dd>
-      </div>
-    </dl>
-
   </div>
 </section>
 
@@ -1144,7 +623,7 @@ const dossierFiles = [
       <div class="cta-actions">
         <a href="/screener" class="btn-primary">Build my shortlist
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a href="/methodology" class="text-link">See the methodology</a>
+        <a href="/compare/greece-portugal-spain" class="text-link">Compare Greece, Portugal, and Spain</a>
       </div>
       <p class="cta-reassure">Free to start. Sourced screening, not advice.</p>
     </div>
@@ -1216,6 +695,40 @@ const dossierFiles = [
 
 <script src="/mockups/_msc-system.js" is:inline></script>
 <script>
+/* Homepage-only guard for fast programmatic scrolls that skip the shared
+   IntersectionObserver threshold before it can mark passed reveal nodes. */
+(function () {
+  'use strict';
+
+  var ticking = false;
+
+  function markVisible(el) {
+    if (el.hasAttribute('data-reveal')) el.classList.add('in');
+    if (el.hasAttribute('data-img-reveal')) el.classList.add('img-in');
+    el.classList.add('reveal-caught-up');
+  }
+
+  function catchUpReveals() {
+    ticking = false;
+    document.querySelectorAll('[data-reveal], [data-img-reveal]').forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.height > 8 && rect.top < window.innerHeight) markVisible(el);
+    });
+  }
+
+  function scheduleCatchUp() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(catchUpReveals);
+  }
+
+  window.addEventListener('scroll', scheduleCatchUp, { passive: true });
+  window.addEventListener('resize', scheduleCatchUp);
+  window.addEventListener('load', scheduleCatchUp);
+  scheduleCatchUp();
+}());
+</script>
+<script>
 /* GATE 12 — live shortlist demo (homepage-unique). Scenario chips
    re-rank the three places with the relevant cited figure; citations
    expand on tap. All figures are real, from packages/data/src. */
@@ -1228,7 +741,7 @@ const dossierFiles = [
 
   var DATE = '2026-06-24';
   var PLACES = {
-    gr: { name: 'Chania, Crete', country: 'Greece' },
+    gr: { name: 'Greece', country: 'Country file' },
     pt: { name: 'Lisbon', country: 'Portugal' },
     es: { name: 'Valencia', country: 'Spain' }
   };
