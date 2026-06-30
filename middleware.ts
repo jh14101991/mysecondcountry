@@ -1,14 +1,11 @@
 import { put } from "@vercel/blob";
+import { next, waitUntil } from "@vercel/functions";
 import {
   type AiCrawlerId,
   aiCrawlerResourceType,
   detectAiCrawler,
   isAiCrawlerLoggablePath,
-} from "./packages/web/src/lib/ai-crawlers";
-
-interface VercelMiddlewareContext {
-  waitUntil?: (promise: Promise<unknown>) => void;
-}
+} from "./packages/web/src/lib/ai-crawlers.js";
 
 interface AiCrawlerHit {
   version: 1;
@@ -43,24 +40,37 @@ function blobPathFor(record: AiCrawlerHit): string {
 }
 
 async function writeCrawlerHit(record: AiCrawlerHit): Promise<void> {
-  if (!hasBlobCredentials()) return;
-  await put(blobPathFor(record), `${JSON.stringify(record)}\n`, {
+  if (!hasBlobCredentials()) {
+    console.warn("ai-crawler-log: missing blob credentials", {
+      hasBlobStoreId: Boolean(process.env.BLOB_STORE_ID),
+      hasOidcToken: Boolean(process.env.VERCEL_OIDC_TOKEN),
+      hasReadWriteToken: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+    });
+    return;
+  }
+
+  const blob = await put(blobPathFor(record), `${JSON.stringify(record)}\n`, {
     access: "private",
     addRandomSuffix: false,
     contentType: "application/json",
     cacheControlMaxAge: 60,
   });
+  console.info("ai-crawler-log: write ok", {
+    bot: record.bot,
+    path: record.path,
+    blobPath: blob.pathname,
+  });
 }
 
-export default function middleware(request: Request, context: VercelMiddlewareContext): void {
-  if (request.method !== "GET" && request.method !== "HEAD") return;
+export default function middleware(request: Request): Response {
+  if (request.method !== "GET" && request.method !== "HEAD") return next();
 
   const url = new URL(request.url);
-  if (!isAiCrawlerLoggablePath(url.pathname)) return;
+  if (!isAiCrawlerLoggablePath(url.pathname)) return next();
 
   const userAgent = request.headers.get("user-agent") ?? "";
   const crawler = detectAiCrawler(userAgent);
-  if (!crawler) return;
+  if (!crawler) return next();
 
   const observedAt = new Date().toISOString();
   const record: AiCrawlerHit = {
@@ -82,9 +92,12 @@ export default function middleware(request: Request, context: VercelMiddlewareCo
   const write = writeCrawlerHit(record).catch((error) => {
     console.error("ai-crawler-log: write failed", error);
   });
-  context.waitUntil?.(write);
+  waitUntil(write);
+
+  return next();
 }
 
 export const config = {
+  runtime: "nodejs",
   matcher: ["/((?!_astro/|brand/|mockups/|favicon.ico|og-image.png|site.webmanifest).*)"],
 };
