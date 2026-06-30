@@ -116,7 +116,7 @@ describe("route contract helpers", () => {
         {
           ...baseEntry,
           route: "/",
-          surface: "marketing",
+          surface: "marketing" as const,
           firstAction: "/sources",
           brief: "docs/design/routes/home.md",
         },

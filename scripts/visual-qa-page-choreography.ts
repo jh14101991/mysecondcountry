@@ -282,17 +282,20 @@ async function run(): Promise<Result[]> {
   let browser: Browser | undefined;
 
   try {
-    browser = await chromium.launch({ headless: true });
+    const activeBrowser = await chromium.launch({ headless: true });
+    browser = activeBrowser;
     for (const route of routes) {
       for (const viewport of viewports) {
         results.push(
-          await runCheck(route, viewport.name, () => checkRoute(browser, route, viewport)),
+          await runCheck(route, viewport.name, () => checkRoute(activeBrowser, route, viewport)),
         );
       }
       results.push(
-        await runCheck(route, "reduced-motion-mobile", () => checkReducedMotion(browser, route)),
+        await runCheck(route, "reduced-motion-mobile", () =>
+          checkReducedMotion(activeBrowser, route),
+        ),
       );
-      results.push(await runCheck(route, "no-js-mobile", () => checkNoJs(browser, route)));
+      results.push(await runCheck(route, "no-js-mobile", () => checkNoJs(activeBrowser, route)));
     }
   } catch (error) {
     results.push(

@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import type { CitedValue as DataCitedValue } from "@where/data";
 import { fromUrl, type GeoTIFFImage } from "geotiff";
 
 type Granularity = "country" | "region" | "town";
@@ -2200,8 +2201,33 @@ function decodeSourceText(value: string): string {
   }
 }
 
+/**
+ * Minimal bundle shape for coordinate extraction. Accepts both the resolved adapter
+ * bundles in this script (rows carry a CitedValue) and the seed bundles whose rows still
+ * carry an unresolved fact ref, so the seeded-bundle test can reuse this reader without
+ * the two MatrixRow shapes colliding.
+ */
+type CoordinateBundleView = {
+  id?: string;
+  placeName?: string;
+  granularity?: string;
+  adapterInput?: { coordinates?: { lat: number; lon: number } };
+  rows: ReadonlyArray<{
+    key?: string;
+    label?: string;
+    matrixCategory?: string;
+    intendedGranularity?: string;
+    observedGranularity?: string;
+    coverageStatus?: string;
+    cited?: DataCitedValue | { ref: string };
+    unit?: string;
+    sourceGapReason?: string;
+    notes?: string;
+  }>;
+};
+
 export function extractRepresentativeCoordinate(
-  bundle: Pick<PlaceEvidenceBundle, "id" | "placeName" | "granularity" | "adapterInput" | "rows">,
+  bundle: CoordinateBundleView,
 ): { lat: number; lon: number } | null {
   const coordinate = bundle.adapterInput?.coordinates;
   if (
@@ -2216,7 +2242,9 @@ export function extractRepresentativeCoordinate(
 
   for (const row of bundle.rows) {
     const cited = row.cited;
-    const texts = [cited?.sourceUrl, cited?.excerpt, row.notes].filter(Boolean) as string[];
+    const citedSourceUrl = cited && "sourceUrl" in cited ? cited.sourceUrl : undefined;
+    const citedExcerpt = cited && "excerpt" in cited ? cited.excerpt : undefined;
+    const texts = [citedSourceUrl, citedExcerpt, row.notes].filter(Boolean) as string[];
     for (const raw of texts) {
       const text = decodeSourceText(raw);
       const around = text.match(/around:\d+,\s*(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)/);
@@ -4679,7 +4707,7 @@ export function buildManualTransportScheduleRow({
   bundle: PlaceEvidenceBundle;
   record: TransportScheduleManualRecord;
   verifiedDate: string;
-}): MatrixRow {
+}): CitedMatrixRow {
   if (record.bundleId !== bundle.id) {
     throw new Error(`${bundle.id}: manual transport schedule record targets ${record.bundleId}`);
   }
