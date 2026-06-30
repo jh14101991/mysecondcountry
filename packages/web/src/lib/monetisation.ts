@@ -41,3 +41,8 @@ export function isInIntroCorridor(pageId: string): boolean {
 export function showIntro(pageId: string): boolean {
   return INTRO_LIVE && INTRO_CORRIDOR.has(pageId);
 }
+
+/** True when an email endpoint is a real https URL, not the REPLACE.example placeholder. */
+export function isCaptureLive(action: string = EMAIL_FORM_ACTION): boolean {
+  return action.startsWith("https://") && !action.includes("REPLACE.example");
+}

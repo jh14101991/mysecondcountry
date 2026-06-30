@@ -7,9 +7,9 @@
  * POST with a single `email` field, so it works with no JavaScript on a static page. The founder
  * sets the real endpoint in monetisation.ts.
  */
-import { EMAIL_FORM_ACTION } from "../lib/monetisation.ts";
+import { EMAIL_FORM_ACTION, isCaptureLive } from "../lib/monetisation.ts";
 
-const emailCaptureLive = !EMAIL_FORM_ACTION.includes("REPLACE.example");
+const emailCaptureLive = isCaptureLive();
 ---
 
 {

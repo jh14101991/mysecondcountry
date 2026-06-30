@@ -1,6 +1,7 @@
 ---
 import { FENCE_PRIMARY } from "../lib/fence.ts";
 import FenceBlock from "../components/FenceBlock.astro";
+import EmailCapture from "../components/EmailCapture.astro";
 ---
 
 <!doctype html>
@@ -466,6 +467,8 @@ select.field-input {
       </form>
 
       <section id="screener-results" class="screener-results" aria-live="polite" hidden></section>
+
+      <EmailCapture />
 
       <!-- what the engine reads: a compact cited sample, below the first action -->
       <details class="reads details-panel">
