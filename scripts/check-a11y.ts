@@ -2,9 +2,9 @@
 //  1. Deterministic structural checks (landmarks, single h1, lang, img alt) - hard gate.
 //  2. WCAG contrast ratios on the design tokens - hard gate (jsdom cannot compute these,
 //     so they are checked directly against the palette pairs actually used).
-//  3. axe-core over the DOM for the remaining rules - hard gate when it runs cleanly,
-//     soft when the tool cannot run under jsdom (so infra quirks never block a deploy).
+//  3. axe-core over the DOM for the remaining rules - hard gate.
 
+import axe from "axe-core";
 import { JSDOM } from "jsdom";
 import { ensureBuilt, htmlFiles, read, rel } from "./lib/dist.js";
 
@@ -71,31 +71,31 @@ for (const [name, fg, bg] of PAIRS) {
   if (ratio < 4.5) fail(`contrast ${name}: ${ratio.toFixed(2)}:1 < 4.5:1`);
 }
 
-// ---- 3. axe-core (best effort) ----
-try {
-  const axe = (await import("axe-core")).default;
-  for (const file of htmlFiles()) {
-    const dom = new JSDOM(read(file), { pretendToBeVisual: true });
-    const g = globalThis as unknown as Record<string, unknown>;
-    g.window = dom.window;
-    g.document = dom.window.document;
-    const results = await axe.run(dom.window.document, {
-      resultTypes: ["violations"],
-      rules: { "color-contrast": { enabled: false } },
-    });
-    for (const v of results.violations) {
-      if (v.impact === "serious" || v.impact === "critical") {
-        fail(`${rel(file)}: axe ${v.id} (${v.impact}) - ${v.help}`);
-      }
+// ---- 3. axe-core ----
+type AxeWindow = Window & typeof globalThis & { axe?: typeof axe };
+
+for (const file of htmlFiles()) {
+  const dom = new JSDOM(read(file), {
+    pretendToBeVisual: true,
+    runScripts: "outside-only",
+    url: `https://mysecondcountry.com/${rel(file).replace(/\/index\.html$/, "")}`,
+  });
+  const win = dom.window as AxeWindow;
+  win.eval(axe.source);
+  const results = await win.axe?.run(win.document, {
+    resultTypes: ["violations"],
+    rules: { "color-contrast": { enabled: false } },
+  });
+  for (const v of results?.violations ?? []) {
+    if (v.impact === "serious" || v.impact === "critical") {
+      fail(`${rel(file)}: axe ${v.id} (${v.impact}) - ${v.help}`);
     }
   }
-  console.log("check-a11y: axe-core ran.");
-} catch (err) {
-  console.warn(`check-a11y: axe-core could not run under jsdom (soft): ${(err as Error).message}`);
 }
+console.log("check-a11y: axe-core ran.");
 
 if (failures > 0) {
   console.error(`\ncheck-a11y: ${failures} accessibility problem(s).`);
   process.exit(1);
 }
-console.log("check-a11y: structural and contrast checks passed (axe-core best-effort).");
+console.log("check-a11y: structural, contrast, and axe-core checks passed.");

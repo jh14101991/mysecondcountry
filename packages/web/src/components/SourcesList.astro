@@ -25,7 +25,16 @@ const { sources, heading = "Sources and methodology" } = Astro.props;
           <div class="source-row" id={`sources-${i + 1}`}>
             <span class="source-n">{i + 1}.</span>
             <div class="source-body-wrap">
-              <a href={src.url} target="_blank" rel="noopener nofollow" class="source-link">
+              <a
+                href={src.url}
+                target="_blank"
+                rel="noopener nofollow"
+                class="source-link"
+                data-source-link
+                data-source-name={src.name}
+                data-source-url={src.url}
+                data-source-placement="sources_list"
+              >
                 {src.name}
                 <svg
                   width="9"

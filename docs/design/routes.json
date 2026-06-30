@@ -191,13 +191,39 @@
     },
     {
       "route": "/places/greece/crete/chania",
-      "status": "held",
+      "status": "live",
       "surface": "coverage",
       "discoverability": ["places", "sitemap"],
       "sitemap": true,
       "firstAction": "/sources",
-      "brief": "docs/design/routes/places.md",
-      "gate": "Chania is coverage-only until Data Desk clears gr-crete-region and gr-crete-chania."
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/heraklion",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/rethymno",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/agios-nikolaos",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
     },
     {
       "route": "/places/italy",

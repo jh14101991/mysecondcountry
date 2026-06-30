@@ -812,9 +812,20 @@ const jsonLd = [
       });
     }
 
+    function trackComparison(filter: string): void {
+      const plausible = (window as Window & {
+        plausible?: (eventName: string, options?: { props?: Record<string, string> }) => void;
+      }).plausible;
+      plausible?.("place_compared", {
+        props: { set: "greece-portugal-spain", filter },
+      });
+    }
+
     document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        applyFilter(btn.dataset.filter ?? "remote");
+        const filter = btn.dataset.filter ?? "remote";
+        applyFilter(filter);
+        trackComparison(filter);
       });
     });
     applyFilter("remote");

@@ -296,14 +296,78 @@ const primaryNav = [
     </footer>
 
     <script is:inline>
-      // Demand-sensor events. Pageviews and outbound (source) clicks are auto-tracked.
+      // Demand-sensor events. Pageviews and outbound source clicks are auto-tracked.
       (function () {
         var p = function (e, o) {
           if (window.plausible) window.plausible(e, o);
         };
+
         var page = document.querySelector("[data-page]");
+        var pageProps = function () {
+          return page
+            ? {
+                path: window.location.pathname,
+                page_type: page.getAttribute("data-page") || "",
+                place_id: page.getAttribute("data-place-id") || "",
+                granularity: page.getAttribute("data-place-granularity") || "",
+              }
+            : { path: window.location.pathname };
+        };
+
+        var withPageProps = function (props) {
+          return Object.assign({}, pageProps(), props || {});
+        };
+
+        var cleanText = function (node) {
+          return (node.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
+        };
+
+        var track = function (eventName, props) {
+          p(eventName, { props: withPageProps(props) });
+        };
+
+        if (page && page.getAttribute("data-page") === "place") {
+          track("place_page_view");
+        }
+
+        document.addEventListener(
+          "click",
+          function (event) {
+            if (!(event.target instanceof Element)) return;
+
+            var source = event.target.closest("[data-source-link], a.source-link, a[data-detail-source]");
+            if (source) {
+              var sourceProps = {
+                source_name:
+                  source.getAttribute("data-source-name") ||
+                  cleanText(source),
+                source_url:
+                  source.getAttribute("data-source-url") ||
+                  source.getAttribute("href") ||
+                  "",
+                cited_value_key: source.getAttribute("data-cited-value-key") || "",
+                row_key: source.getAttribute("data-row-key") || "",
+                source_placement: source.getAttribute("data-source-placement") || "source_link",
+              };
+              track("source_link_click", sourceProps);
+              if (source.hasAttribute("data-detail-source")) {
+                track("evidence_atlas_source_click", sourceProps);
+              }
+            }
+
+            var screenerCta = event.target.closest("a[href='/screener']");
+            if (screenerCta) {
+              track("screener_cta_click", {
+                cta_variant: screenerCta.getAttribute("data-cta-variant") || cleanText(screenerCta),
+                source_path: window.location.pathname,
+              });
+            }
+          },
+          { capture: true },
+        );
+
         if (page && page.getAttribute("data-page") === "comparison") {
-          p("Comparison Viewed", { props: { set: page.getAttribute("data-compare") || "" } });
+          track("place_compared", { set: page.getAttribute("data-compare") || "" });
         }
         var fence = document.querySelector(".fence");
         if (fence && "IntersectionObserver" in window) {
@@ -311,7 +375,8 @@ const primaryNav = [
           var io = new IntersectionObserver(function (entries) {
             if (!seen && entries.some(function (en) { return en.isIntersecting; })) {
               seen = true;
-              p("Fence Seen");
+              track("fence_seen");
+              track("fence_viewed");
               io.disconnect();
             }
           });

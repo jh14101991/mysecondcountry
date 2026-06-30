@@ -51,6 +51,48 @@ const dossierFiles = [
       (window.plausible.q = window.plausible.q || []).push(arguments);
     };
 </script>
+<script>
+  (() => {
+    const initAnalytics = () => {
+      const track = (name, props = {}) => {
+        if (window.plausible) window.plausible(name, { props });
+      };
+      const fence = document.querySelector(".fence");
+      if (fence && "IntersectionObserver" in window) {
+        let seen = false;
+        const observer = new IntersectionObserver((entries) => {
+          if (seen || !entries.some((entry) => entry.isIntersecting)) return;
+          seen = true;
+          track("fence_seen");
+          track("fence_viewed");
+          observer.disconnect();
+        });
+        observer.observe(fence);
+      }
+      document.addEventListener("change", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) return;
+        if (target.name !== "ls-scenario" || !target.checked) return;
+        track("place_compared", { surface: "homepage_shortlist", scenario: target.value });
+      });
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const link = target.closest("a[href='/screener']");
+        if (!link) return;
+        track("screener_cta_click", {
+          surface: "homepage",
+          cta_variant: (link.textContent || "screener").trim().replace(/\s+/g, " ").slice(0, 80),
+        });
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAnalytics, { once: true });
+    } else {
+      initAnalytics();
+    }
+  })();
+</script>
 
 <script type="application/ld+json">
 {

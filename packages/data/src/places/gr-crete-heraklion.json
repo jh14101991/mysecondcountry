@@ -1,0 +1,155 @@
+{
+  "id": "gr-crete-heraklion",
+  "slug": "heraklion",
+  "granularity": "town",
+  "parentId": "gr-crete",
+  "name": "Heraklion",
+  "country": "Greece",
+  "coordinates": {
+    "lat": 35.33908,
+    "lon": 25.1332843
+  },
+  "ancestry": [
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "granularity": "country"
+    },
+    {
+      "name": "Crete",
+      "slug": "crete",
+      "granularity": "region"
+    }
+  ],
+  "description": "Heraklion is a Crete town page in the My Second Country evidence atlas. It publishes cited screening data, inherited national context, local proxies, and visible source gaps for the town. It is not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 87.4,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 14.5,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.33908&longitude=25.1332843&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Heraklion",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Heraklion 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.5C; Feb 15.1C; Mar 17.5C; Apr 21C; May 25.5C; Jun 29.6C; Jul 31.2C; Aug 31C; Sep 28.6C; Oct 24.5C; Nov 19.9C; Dec 15.9C. Returned grid point 35.32513, 25.204603, elevation 29 m."
+    },
+    "averageJulyHighC": {
+      "value": 31.2,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.33908&longitude=25.1332843&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Heraklion",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Heraklion 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.5C; Feb 15.1C; Mar 17.5C; Apr 21C; May 25.5C; Jun 29.6C; Jul 31.2C; Aug 31C; Sep 28.6C; Oct 24.5C; Nov 19.9C; Dec 15.9C. Returned grid point 35.32513, 25.204603, elevation 29 m."
+    },
+    "averageAnnualSunHours": {
+      "value": 2773,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals (Elliniko), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens: about 2,773 mean annual sunshine hours (Elliniko station)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, is recorded here as the provisional Crete parent class pending the region geospatial build."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Migration Code, Law 5038/2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "excerpt": "Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child.",
+      "stalenessDays": 60
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 44,
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top marginal personal income tax rate 44 percent on income above 60,000 euros (scale 9, 20, 26, 34, 39, 44 percent)."
+    }
+  },
+  "variables": {
+    "nearest_airport": {
+      "value": "Heraklion International Nikos Kazantzakis Airport (HER/LGIR), large_airport",
+      "sourceUrl": "https://ourairports.com/airports/LGIR/",
+      "sourceName": "OurAirports, Heraklion International Nikos Kazantzakis Airport record",
+      "verifiedDate": "2026-06-28",
+      "confidence": "high",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "LGIR, large_airport, Heraklion International Nikos Kazantzakis Airport, municipality Heraklion, IATA HER."
+    },
+    "airport_drive_minutes": {
+      "value": "OSRM route proxy from Heraklion town point to Heraklion International Nikos Kazantzakis Airport (HER/LGIR): 7.9 minutes, 5.5 km.",
+      "sourceUrl": "https://router.project-osrm.org/table/v1/driving/24.0191544,35.5120831;25.1332843,35.33908;24.4736079,35.3676472;25.7175216,35.1905899;24.150673,35.531207;25.1803,35.339699;26.101299285888672,35.21609878540039?sources=0;1;2;3&destinations=4;5;6&annotations=duration,distance",
+      "sourceName": "OSRM public routing table over OpenStreetMap-derived road graph, Heraklion point to Crete airport points",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "OSRM table returned Heraklion to HER 7.9 minutes and 5.5 km; JSH was 133.3 minutes and CHQ was 172.9 minutes."
+    },
+    "bus_frequency_proxy": {
+      "value": "12 weekday outbound spine departures from Heraklion, counting 5 Heraklion-Rethymno-Chania services plus 7 Heraklion-Agios Nikolaos services. Selected corridor: Heraklion westbound to Rethymno/Chania and eastbound to Agios Nikolaos.",
+      "sourceUrl": "https://www.ktelherlas.gr/en/slug/frequent-asked-questions",
+      "sourceName": "KTEL Heraklion-Lasithi timetable FAQ",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "The KTEL Heraklion-Lasithi FAQ lists Monday-Friday Heraklion-Rethymno-Chania departures at 7:30, 11:30, 14:30, 17:30, 20:30 and Heraklion-Agios Nikolaos departures at 7:30, 10:00, 12:00, 14:00, 15:45, 17:45, 19:45."
+    },
+    "blue_flag_beaches": {
+      "value": 37,
+      "sourceUrl": "https://www.blueflag.gr/el/awards/2026",
+      "sourceName": "Blue Flag Greece, 2026 awarded beaches list",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "region",
+      "excerpt": "English official awards list has HERAKLION R.U. [37]. No Heraklion Municipality beach section is used for this row."
+    },
+    "temp_monthly_high": {
+      "value": "Jan 14.5C; Feb 15.1C; Mar 17.5C; Apr 21C; May 25.5C; Jun 29.6C; Jul 31.2C; Aug 31C; Sep 28.6C; Oct 24.5C; Nov 19.9C; Dec 15.9C",
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.33908&longitude=25.1332843&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Heraklion",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Heraklion 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.5C; Feb 15.1C; Mar 17.5C; Apr 21C; May 25.5C; Jun 29.6C; Jul 31.2C; Aug 31C; Sep 28.6C; Oct 24.5C; Nov 19.9C; Dec 15.9C. Returned grid point 35.32513, 25.204603, elevation 29 m."
+    }
+  }
+}

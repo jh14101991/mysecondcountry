@@ -8,7 +8,7 @@ const SITE = "https://mysecondcountry.com";
 const canonical = `${SITE}/places`;
 const title = "Places | My Second Country";
 const description =
-  "The countries, regions, and towns currently covered by My Second Country, grouped by readiness state and source status.";
+  "The countries, regions, and towns currently covered by My Second Country, grouped by published coverage and source status.";
 
 const countryPlaces = places.filter((place) => place.granularity === "country");
 const regionPlaces = places.filter((place) => place.granularity === "region");
@@ -44,10 +44,8 @@ function placeScope(place: Place): string {
     : "Town file";
 }
 
-const heldPaths = new Set(["/places/greece/crete/chania"]);
-const sourceGapPaths = new Set(["/places/greece/crete"]);
-const chaniaPath = "/places/greece/crete/chania";
-const heldChania = places.find((place) => placePath(place) === chaniaPath);
+const heldPaths = new Set<string>();
+const sourceGapPaths = new Set<string>();
 const sourceGapPlaces = places.filter((place) => sourceGapPaths.has(placePath(place)));
 const publishedPlaces = places.filter((place) => {
   const path = placePath(place);
@@ -78,33 +76,17 @@ const readinessGroups: {
   {
     id: "held",
     label: "Held",
-    count: 1,
-    note:
-      "Held means visible coverage only. It is not a finished town dossier and it has not cleared the page gate.",
-    entries: [
-      {
-        href: heldChania ? chaniaPath : "/sources",
-        title: heldChania?.name ?? "Chania",
-        copy:
-          "Coverage-only. Chania stays held until the Crete region and Chania town evidence bundles clear for publication.",
-        meta: "Town file / held coverage",
-        linked: true,
-      },
-    ],
+    count: 0,
+    note: "Held means visible coverage only. It is not a finished town dossier.",
+    entries: [],
   },
   {
     id: "upcoming",
     label: "Upcoming",
-    count: 2,
+    count: 1,
     note:
       "Upcoming means the route is not current coverage. It waits for a source-backed place file.",
     entries: [
-      {
-        title: "Next Greek town file",
-        copy: "Queued after the first town page clears the published-page gate.",
-        meta: "Town file / upcoming",
-        linked: false,
-      },
       {
         title: "Portugal and Spain local coverage",
         copy: "Country files are live. Local pages wait for town-level source bundles.",
@@ -116,27 +98,16 @@ const readinessGroups: {
   {
     id: "source-gap",
     label: "Source gap",
-    count: Math.max(1, sourceGapPlaces.length),
+    count: sourceGapPlaces.length,
     note:
       "Source gap means a required evidence layer is not yet strong enough for a published local claim.",
-    entries:
-      sourceGapPlaces.length > 0
-        ? sourceGapPlaces.map((place) => ({
-            title: place.name,
-            copy:
-              "Regional support layer for future town pages. It stays out of the published group until the source gate clears.",
-            meta: `${placeScope(place)} / source gap`,
-            linked: false,
-          }))
-        : [
-            {
-              title: "Crete regional evidence bundle",
-              copy:
-                "Regional support layer for Chania. It stays out of the published group until the source gate clears.",
-              meta: "Region file / source gap",
-              linked: false,
-            },
-          ],
+    entries: sourceGapPlaces.map((place) => ({
+      title: place.name,
+      copy:
+        "Regional support layer for future town pages. It stays out of the published group until the source gate clears.",
+      meta: `${placeScope(place)} / source gap`,
+      linked: false,
+    })),
   },
 ];
 ---
@@ -153,15 +124,15 @@ const readinessGroups: {
       <p class="corridor-kicker">Coverage</p>
       <h1 class="corridor-title">Coverage by readiness state.</h1>
       <p class="corridor-lead">
-        A place can be published, held, upcoming, or blocked by a source gap. Town
-        pages need local evidence before they count as finished coverage.
+        A place can be published, upcoming, or blocked by a source gap. Town pages
+        need a complete evidence bundle before they count as finished coverage.
       </p>
     </header>
 
     <FenceBlock hasLegalClaims={true} />
 
     {
-      readinessGroups.map((group) => (
+      readinessGroups.filter((group) => group.entries.length > 0).map((group) => (
         <section class="corridor-section" aria-labelledby={`coverage-${group.id}`} id={group.id}>
           <div class="corridor-section-head">
             <div>
@@ -251,20 +222,21 @@ const readinessGroups: {
       </div>
     </section>
 
-    <section class="corridor-section" aria-labelledby="held-means">
+    <section class="corridor-section" aria-labelledby="page-gate">
       <div class="corridor-section-head">
         <div>
           <p class="corridor-kicker">Gate</p>
-          <h2 id="held-means">Why held means held</h2>
+          <h2 id="page-gate">How a place moves here</h2>
         </div>
         <p class="corridor-section-note">
-          Chania remains coverage-only until the regional and town evidence bundles clear
-          the data gate. This task does not add a dossier template.
+          Published town pages need a complete evidence bundle, cited values, visible
+          source gaps, route discovery, and the page checks in the shipping gate.
         </p>
       </div>
       <p class="coverage-note">
-        Held coverage can show that work exists. It cannot carry local cost, residency,
-        tax, or living claims until those claims have source-backed town-level values.
+        A town page can carry inherited national facts, regional context, proxy rows,
+        and unavailable rows only when those labels are visible. Missing values stay
+        visible as source gaps; they are not converted into zeros or claims.
       </p>
       <p class="coverage-links">
         <a href="/sources">Inspect sources</a>

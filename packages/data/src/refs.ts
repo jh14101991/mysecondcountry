@@ -5,7 +5,7 @@ export const FactRefSchema = z.object({
   ref: z
     .string()
     .regex(
-      /^(regime|place):[a-z0-9-]+#[a-zA-Z0-9.]+$/,
+      /^(regime|place):[a-z0-9-]+#[a-zA-Z0-9_.]+$/,
       "ref must be '<regime|place>:<id>#<dotted.path>'",
     ),
 });

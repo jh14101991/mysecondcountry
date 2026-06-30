@@ -11,7 +11,6 @@ import FenceBlock from "../components/FenceBlock.astro";
 <title>My Second Country · Screener</title>
 <meta name="description" content="Build a source-cited relocation shortlist from published country, region, and town evidence.">
 <link rel="canonical" href="https://mysecondcountry.com/screener">
-<meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -22,6 +21,42 @@ import FenceBlock from "../components/FenceBlock.astro";
     function () {
       (window.plausible.q = window.plausible.q || []).push(arguments);
     };
+</script>
+<script>
+  (() => {
+    const initAnalytics = () => {
+      const track = (name, props = {}) => {
+        if (window.plausible) window.plausible(name, { props });
+      };
+      const fence = document.querySelector(".fence");
+      if (fence && "IntersectionObserver" in window) {
+        let seen = false;
+        const observer = new IntersectionObserver((entries) => {
+          if (seen || !entries.some((entry) => entry.isIntersecting)) return;
+          seen = true;
+          track("fence_seen");
+          track("fence_viewed");
+          observer.disconnect();
+        });
+        observer.observe(fence);
+      }
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const link = target.closest("a[href='/screener']");
+        if (!link) return;
+        track("screener_cta_click", {
+          surface: "screener",
+          cta_variant: (link.textContent || "screener").trim().replace(/\s+/g, " ").slice(0, 80),
+        });
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAnalytics, { once: true });
+    } else {
+      initAnalytics();
+    }
+  })();
 </script>
 
 <!-- SHARED FOUNDATION + SECTION LIBRARY -->

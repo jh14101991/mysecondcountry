@@ -1,0 +1,155 @@
+{
+  "id": "gr-crete-agios-nikolaos",
+  "slug": "agios-nikolaos",
+  "granularity": "town",
+  "parentId": "gr-crete",
+  "name": "Agios Nikolaos",
+  "country": "Greece",
+  "coordinates": {
+    "lat": 35.1905899,
+    "lon": 25.7175216
+  },
+  "ancestry": [
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "granularity": "country"
+    },
+    {
+      "name": "Crete",
+      "slug": "crete",
+      "granularity": "region"
+    }
+  ],
+  "description": "Agios Nikolaos is a Crete town page in the My Second Country evidence atlas. It shows cited town rows, inherited national context, bounded proxies, and unresolved source gaps in one screening record. It is not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 87.4,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 15.3,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.1905899&longitude=25.7175216&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Agios Nikolaos",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Agios Nikolaos 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 15.3C; Feb 15.7C; Mar 18.1C; Apr 21.5C; May 25.9C; Jun 29.9C; Jul 31.9C; Aug 32C; Sep 29.3C; Oct 25.3C; Nov 20.7C; Dec 16.8C. Returned grid point 35.184532, 25.714285, elevation -2 m."
+    },
+    "averageJulyHighC": {
+      "value": 31.9,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.1905899&longitude=25.7175216&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Agios Nikolaos",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Agios Nikolaos 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 15.3C; Feb 15.7C; Mar 18.1C; Apr 21.5C; May 25.9C; Jun 29.9C; Jul 31.9C; Aug 32C; Sep 29.3C; Oct 25.3C; Nov 20.7C; Dec 16.8C. Returned grid point 35.184532, 25.714285, elevation -2 m."
+    },
+    "averageAnnualSunHours": {
+      "value": 2773,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals (Elliniko), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens: about 2,773 mean annual sunshine hours (Elliniko station)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, is recorded here as the provisional Crete parent class pending the region geospatial build."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Migration Code, Law 5038/2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "excerpt": "Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child.",
+      "stalenessDays": 60
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 44,
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top marginal personal income tax rate 44 percent on income above 60,000 euros (scale 9, 20, 26, 34, 39, 44 percent)."
+    }
+  },
+  "variables": {
+    "nearest_airport": {
+      "value": "Sitia Airport (JSH/LGST), medium_airport",
+      "sourceUrl": "https://ourairports.com/airports/LGST/",
+      "sourceName": "Derived nearest-airport selection from OpenStreetMap Agios Nikolaos coordinate and OurAirports Crete airport coordinates",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "Great-circle comparison from OSM node 5262444770 for Agios Nikolaos gives JSH 35.0 km, HER 51.5 km, and CHQ 147.0 km."
+    },
+    "airport_drive_minutes": {
+      "value": "OSRM route proxy from Agios Nikolaos town point to Heraklion International Nikos Kazantzakis Airport (HER/LGIR): 58.1 minutes, 61.6 km.",
+      "sourceUrl": "https://router.project-osrm.org/table/v1/driving/24.0191544,35.5120831;25.1332843,35.33908;24.4736079,35.3676472;25.7175216,35.1905899;24.150673,35.531207;25.1803,35.339699;26.101299285888672,35.21609878540039?sources=0;1;2;3&destinations=4;5;6&annotations=duration,distance",
+      "sourceName": "OSRM public routing table over OpenStreetMap-derived road graph, Agios Nikolaos point to Crete airport points",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "OSRM table returned Agios Nikolaos to HER 58.1 minutes and 61.6 km; JSH was 75.5 minutes and CHQ was 230.0 minutes."
+    },
+    "bus_frequency_proxy": {
+      "value": "6 weekday outbound spine departures from Agios Nikolaos to Heraklion, with 5 Saturday and 5 Sunday departures listed separately. Selected corridor: Agios Nikolaos to Heraklion intercity spine.",
+      "sourceUrl": "https://www.ktelherlas.gr/en/slug/frequent-asked-questions",
+      "sourceName": "KTEL Heraklion-Lasithi timetable FAQ",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "The KTEL Heraklion-Lasithi FAQ lists Monday-Friday Agios Nikolaos-Heraklion departures at 6:30, 9:30, 12:30, 15:30, 17:30, 19:00, with five Saturday and five Sunday departures."
+    },
+    "blue_flag_beaches": {
+      "value": 27,
+      "sourceUrl": "https://www.blueflag.gr/el/awards/2026",
+      "sourceName": "Blue Flag Greece, 2026 awarded beaches list",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "excerpt": "English official awards list has LASITHI R.U. > Agios Nikolaos Municipality: 27 awarded beaches, including Agios Nikolaos 1/St. Nicolas Bay, Agios Nikolaos 2/Minos Palace, Agios Nikolaos 3/Minos Beach, Agios Panteleimonas."
+    },
+    "temp_monthly_high": {
+      "value": "Jan 15.3C; Feb 15.7C; Mar 18.1C; Apr 21.5C; May 25.9C; Jun 29.9C; Jul 31.9C; Aug 32C; Sep 29.3C; Oct 25.3C; Nov 20.7C; Dec 16.8C",
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.1905899&longitude=25.7175216&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Agios Nikolaos",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Agios Nikolaos 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 15.3C; Feb 15.7C; Mar 18.1C; Apr 21.5C; May 25.9C; Jun 29.9C; Jul 31.9C; Aug 32C; Sep 29.3C; Oct 25.3C; Nov 20.7C; Dec 16.8C. Returned grid point 35.184532, 25.714285, elevation -2 m."
+    }
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "MSC Data Desk",
+  "adapters": [
+    {
+      "id": "osm-access",
+      "name": "OSM walkability and accessibility proxies",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_access",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --write",
+      "onlyModes": ["all"],
+      "rowKeys": [
+        "walkability_proxy",
+        "sidewalk_coverage_proxy",
+        "wheelchair_tagged_amenities_share",
+        "step_free_station_proxy"
+      ],
+      "proxyCaveat": "OpenStreetMap tag-count proxies around the representative town coordinate. They are not formal accessibility audits, sidewalk inventories, route guarantees, or service availability claims."
+    },
+    {
+      "id": "osm-osrm-route-feature",
+      "name": "OSM feature plus OSRM route proxies",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_osrm_route_feature",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --write",
+      "onlyModes": ["all"],
+      "rowKeys": [
+        "nearest_emergency_hospital",
+        "emergency_hospital_drive_minutes",
+        "ferry_terminal_drive_minutes"
+      ],
+      "proxyCaveat": "OSM feature discovery plus OSRM route-time proxy. It is not an official hospital registry, emergency access guarantee, ferry timetable, ticketing, traffic, or seasonal-service claim."
+    },
+    {
+      "id": "open-meteo-environment",
+      "name": "Open-Meteo gridded environment proxies",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "open_meteo_environment",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --write",
+      "onlyModes": ["all"],
+      "rowKeys": ["pm25_monthly", "pm25_exceedance_days", "snowfall_days"],
+      "proxyCaveat": "Open-Meteo grid samples. They are not regulatory monitoring-station observations, indoor-air measures, live weather alerts, road-safety claims, or medical advice."
+    },
+    {
+      "id": "osm-outdoor",
+      "name": "OSM outdoor mapped-feature proxies",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_outdoor",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --write",
+      "onlyModes": ["all"],
+      "rowKeys": [
+        "hiking_trail_km",
+        "mtb_trail_count",
+        "climbing_sites",
+        "surf_spots",
+        "ski_piste_km"
+      ],
+      "proxyCaveat": "Mapped-feature counts and geometry lengths. They are not access-rights, safety, maintenance, wave-quality, snow-cover, legal-access, or current-condition claims."
+    },
+    {
+      "id": "terrain-slope",
+      "name": "OSM street graph plus Open-Meteo elevation terrain proxies",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_open_meteo_terrain",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only terrain --write",
+      "onlyModes": ["all", "terrain"],
+      "rowKeys": ["slope_proxy", "stroller_hilliness_proxy"],
+      "proxyCaveat": "DEM samples over mapped OSM street and footway segments. They are not parcel, flood, mobility, accessibility, route-quality, or stroller-suitability assessments."
+    },
+    {
+      "id": "mountain-proximity",
+      "name": "OSM mapped-peak proximity proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_mountain_peak",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only mountain --write",
+      "onlyModes": ["all", "mountain"],
+      "rowKeys": ["mountain_proximity"],
+      "proxyCaveat": "OSM natural=peak nodes with elevation tags. This is not an official DEM peak inventory, hiking access, route time, safety, weather, rescue, or property-risk claim."
+    },
+    {
+      "id": "protected-area-distance",
+      "name": "OSM protected-area distance proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_protected_area_distance",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only protected-area --write",
+      "onlyModes": ["all", "protected-area"],
+      "rowKeys": ["nat_park_dist_km"],
+      "proxyCaveat": "Derived from existing cited OSM protected-area overlap evidence. It is not WDPA, Natura 2000, IUCN Category II, legal national-park, public-access, route-time, habitat-quality, safety, or recreation-quality evidence."
+    },
+    {
+      "id": "green-urban-proxy",
+      "name": "Derived OSM green urban proxy",
+      "compilerLane": "derived_formula",
+      "sourceFamily": "derived_city_signal",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only green-urban --write",
+      "onlyModes": ["all", "green-urban"],
+      "rowKeys": ["green_urban_pct"],
+      "proxyCaveat": "Derived from cited OSM green_space_pct rows. It is not Copernicus Urban Atlas, functional urban area coverage, public-park access, tree canopy, shade, ecological quality, legal open-space inventory, or a guarantee of usable green space."
+    },
+    {
+      "id": "scenery-tags",
+      "name": "Derived scenery tag proxy",
+      "compilerLane": "derived_formula",
+      "sourceFamily": "derived_scenery_tags",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only scenery --write",
+      "onlyModes": ["all", "scenery"],
+      "rowKeys": ["scenery_tags"],
+      "proxyCaveat": "Derived from cited coast-distance, mapped-peak proximity, mapped green-space, protected-area distance, and bathing-water rows. It is not a subjective beauty score, forest-cover value, lake or plain classification, route/safety/accessibility claim, or site-specific environmental assessment."
+    },
+    {
+      "id": "family-amenity-density",
+      "name": "Derived family amenity density proxy",
+      "compilerLane": "derived_formula",
+      "sourceFamily": "derived_city_signal",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --write",
+      "onlyModes": ["all"],
+      "rowKeys": ["family_amenity_density"],
+      "proxyCaveat": "Derived from already cited OSM component rows. It is not childcare availability, school quality, admissions, paediatric care, safety, stroller-route, park-usability, opening-hours, or family suitability advice."
+    },
+    {
+      "id": "blue-flag-awards",
+      "name": "Official Blue Flag awarded beaches list",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "blue_flag_awards",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only blue-flag --write",
+      "onlyModes": ["all", "blue-flag"],
+      "rowKeys": ["blue_flag_beaches"],
+      "proxyCaveat": "Official annual award-list counts. Municipality rows are not town-radius counts, Heraklion is regional-unit context, and no row is beach-accessibility, safety, bathing-water-quality, or unmonitored-beach evidence."
+    },
+    {
+      "id": "seatrac-accessible-beaches",
+      "name": "SEATRAC accessible beach directory",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "seatrac_accessible_beaches",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only seatrac-accessible --write",
+      "onlyModes": ["all", "seatrac-accessible"],
+      "rowKeys": ["accessible_beach_count"],
+      "proxyCaveat": "SEATRAC directory counts of entries marked Online at verification time. They are not full accessible-beach inventories, formal accessibility audits, route or parking guarantees, sea-state claims, assistance-service guarantees, safety claims, or proof that unmatched beaches are inaccessible."
+    },
+    {
+      "id": "open-meteo-uv-index",
+      "name": "Open-Meteo UV-index grid proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "open_meteo_uv_index",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only uv-index --write",
+      "onlyModes": ["all", "uv-index"],
+      "rowKeys": ["uv_index_monthly"],
+      "proxyCaveat": "Open-Meteo prior-calendar-year hourly UV-index grid proxy converted to monthly mean daily maxima. It is not a TEMIS long-term UV climatology, current forecast, medical advice, personal exposure measure, beach-safety claim, sunburn-risk advice, or microclimate guarantee."
+    },
+    {
+      "id": "osm-osrm-citizen-service-centre",
+      "name": "OSM and OSRM KEP access proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_osrm_public_service",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only citizen-service --write",
+      "onlyModes": ["all", "citizen-service"],
+      "rowKeys": ["citizen_service_centre_distance"],
+      "proxyCaveat": "Mapped KEP or citizen-service feature plus OSRM route-time proxy. It is not an official KEP registry, service-area assignment, appointment availability, opening-hours, processing-time, eligibility, language-access, or legal or administrative advice claim."
+    },
+    {
+      "id": "aade-osrm-tax-office-distance",
+      "name": "AADE tax-office address and OSRM access proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "aade_osrm_tax_office_route",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only tax-office --write",
+      "onlyModes": ["all", "tax-office"],
+      "rowKeys": ["tax_office_distance"],
+      "proxyCaveat": "AADE tax-office address evidence plus OSRM route-time proxy. It is not an official tax-office assignment, jurisdiction map, appointment availability, opening-hours, processing-time, eligibility, tax-residency determination, tax obligation, or tax advice claim."
+    },
+    {
+      "id": "apdkritis-osrm-residence-permit-office-distance",
+      "name": "Crete residence-permit office address and OSRM access proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "apdkritis_osrm_residence_permit_office_route",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only residence-permit-office --write",
+      "onlyModes": ["all", "residence-permit-office"],
+      "rowKeys": ["residence_permit_office_distance"],
+      "proxyCaveat": "Official Decentralized Administration of Crete residence-permit office-address evidence plus OSRM route-time proxy. It is not an official service-area assignment, appointment availability, opening-hours, processing-time, eligibility, visa or residence-route qualification, application outcome, legal advice, immigration advice, or administrative advice claim."
+    },
+    {
+      "id": "hellenic-cadastre-osrm-land-registry-office-distance",
+      "name": "Hellenic Cadastre office address and OSRM access proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "hellenic_cadastre_osrm_land_registry_office_route",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only land-registry-office --write",
+      "onlyModes": ["all", "land-registry-office"],
+      "rowKeys": ["land_registry_office_distance"],
+      "proxyCaveat": "Hellenic Cadastre office-address evidence plus OSRM route-time proxy. It is not an official jurisdiction assignment, service-area assignment, appointment availability, opening-hours, processing-time, title, ownership, property-rights, legal-status, land-registration outcome, property advice, legal advice, or administrative advice claim."
+    },
+    {
+      "id": "european-school-osrm-international-school-distance",
+      "name": "Accredited European School address and OSRM access proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "european_school_osrm_international_school_route",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only international-school --write",
+      "onlyModes": ["all", "international-school"],
+      "rowKeys": ["international_school_distance"],
+      "proxyCaveat": "European Schools accreditation/address evidence for the School of European Education Heraklion plus OSRM route-time proxy. It is not a complete international-school inventory, admission availability, tuition, curriculum fit, grade placement, special-education provision, school-bus service, commute guarantee, childcare availability, or education advice."
+    },
+    {
+      "id": "european-school-tuition-proxy",
+      "name": "Selected European Schools-accredited public school tuition proxy",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "european_school_tuition",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only international-school-tuition --write",
+      "onlyModes": ["all", "international-school-tuition"],
+      "rowKeys": ["intl_school_tuition"],
+      "proxyCaveat": "Selected tuition proxy for the European Schools-accredited public school already used by the international-school access row. It is not a median of all private international-school tuition in the town, admissions availability, grade placement, school-bus, meals, uniform, trips, exam-fee, support-service cost, or education advice."
+    },
+    {
+      "id": "crete-pharmacy-duty-rota",
+      "name": "Crete public duty-pharmacy rota pages",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "crete_pharmacy_duty_rota",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only pharmacy-duty --write",
+      "onlyModes": ["all", "pharmacy-duty"],
+      "rowKeys": ["after_hours_pharmacy_proxy"],
+      "proxyCaveat": "Public duty-pharmacy rota-page availability signal for priority Crete towns. It is not live opening-hours evidence, a 24/7 pharmacy-density measure, emergency care, stock, prescription, language, insurance, ambulance, clinical access, or medical advice. Dynamic duty rosters must be refreshed close to publication."
+    },
+    {
+      "id": "crete-municipal-digital-services",
+      "name": "Crete official municipal and regional digital-service pages",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "crete_municipal_digital_services",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only municipal-digital-services --write",
+      "onlyModes": ["all", "municipal-digital-services"],
+      "rowKeys": ["municipal_digital_services"],
+      "proxyCaveat": "Official municipal or regional e-service page presence signal. It is not a service-completeness audit, service-quality measure, appointment availability, processing time, account eligibility, accessibility, language support, or administrative advice claim."
+    },
+    {
+      "id": "crete-ktel-bus-frequency",
+      "name": "Crete official KTEL bus-frequency proxy",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "crete_ktel_bus_frequency",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only bus-frequency --write",
+      "onlyModes": ["all", "bus-frequency"],
+      "rowKeys": ["bus_frequency_proxy"],
+      "proxyCaveat": "Selected official KTEL timetable departure counts for priority Crete town spine corridors. It is not a full public-transport network score, local bus coverage audit, headway guarantee, real-time reliability measure, accessibility claim, ticket availability claim, strike or cancellation warning, door-to-door commute estimate, or transport advice. Refresh before publication because timetables are seasonal."
+    },
+    {
+      "id": "chania-airport-summer-direct-destinations",
+      "name": "Chania Airport official summer direct-destination count",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "fraport_chania_airport_timetable",
+      "batchScope": "town",
+      "command": "pnpm data:city-adapters --only airport-summer-direct-destinations --bundle gr-crete-chania --write",
+      "onlyModes": ["all", "airport-summer-direct-destinations"],
+      "rowKeys": ["airport_summer_direct_destinations"],
+      "proxyCaveat": "Official Chania/Fraport airport timetable endpoint count for CHQ outbound destination airports in the summer period ending 24 October 2026. It is not flight frequency, seats, fares, airline coverage, live operation, year-round availability, service guarantee, booking advice, or travel advice."
+    },
+    {
+      "id": "transport-schedule-manual-intake",
+      "name": "Manual or licensed airport and ferry seasonal schedule intake",
+      "compilerLane": "licensed_or_manual",
+      "sourceFamily": "transport_schedule_manual",
+      "batchScope": "manual_batch",
+      "command": "pnpm data:city-adapters --only transport-schedule-manual --manual-schedule-file docs/data/manual/transport-schedule-manual.json --write",
+      "onlyModes": ["transport-schedule-manual"],
+      "rowKeys": [
+        "airport_winter_direct_destinations",
+        "airport_summer_direct_destinations",
+        "airport_winter_route_ratio",
+        "ferry_routes_winter",
+        "ferry_routes_summer"
+      ],
+      "proxyCaveat": "Only accepts dated official timetable, official port or national ferry publication, manual browser/export read, or licensed schedule-feed records. Manual input records must be component rows only; airport_winter_route_ratio is derived after matching cited winter and summer counts exist for the same selected-airport basis. It is not frequency, seats, live operation, a service guarantee, booking advice, or travel advice."
+    },
+    {
+      "id": "osm-seasonal-service-dropoff",
+      "name": "OSM seasonal opening-hours proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_seasonal_opening_hours",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only seasonal-service-dropoff --write",
+      "onlyModes": ["all", "seasonal-service-dropoff"],
+      "rowKeys": ["seasonal_service_dropoff_proxy"],
+      "proxyCaveat": "OpenStreetMap selected service, shop, and tourism features with opening_hours month/date ranges or seasonal tags. It is a low-confidence mapped-tag proxy, not a full winter-vs-summer service-drop-off measure, not business-hours proof, not proof services are open or closed, not resident-service availability, and not advice."
+    },
+    {
+      "id": "osm-emergency-vet-proxy",
+      "name": "OSM emergency veterinary tag proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_emergency_vet_tags",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only emergency-vet --write",
+      "onlyModes": ["all", "emergency-vet"],
+      "rowKeys": ["emergency_vet_proxy"],
+      "proxyCaveat": "OpenStreetMap veterinary features with explicit emergency, emergency-service, emergency opening-hours, 24/7 opening-hours, or emergency-speciality tags. It is a low-confidence mapped-tag proxy, not a complete veterinary directory, after-hours rota, emergency-service guarantee, opening-hours guarantee, clinical-quality measure, animal-health advice, or proof that untagged veterinary services do not offer emergency care."
+    },
+    {
+      "id": "open-meteo-cams-pollen-severity",
+      "name": "Open-Meteo CAMS pollen severity proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "open_meteo_cams_pollen",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only pollen-severity --write",
+      "onlyModes": ["all", "pollen-severity"],
+      "rowKeys": ["pollen_severity"],
+      "proxyCaveat": "Open-Meteo Air Quality API selected-species pollen grid values derived from CAMS. This is a medium-confidence gridded screening proxy, not a medical, diagnosis, treatment, allergy-risk, medication, current-forecast, personal-exposure, indoor-air, street-level vegetation, or neighbourhood microclimate claim."
+    },
+    {
+      "id": "elime-cruise-passenger-pressure",
+      "name": "ELIME annual cruise passenger pressure rows",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "elime_cruise_passenger_pressure",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only cruise-passenger-pressure --write",
+      "onlyModes": ["all", "cruise-passenger-pressure"],
+      "rowKeys": ["cruise_passenger_pressure"],
+      "proxyCaveat": "Annual ELIME cruise-call and passenger-arrival port rows. These are port visit counts, not unique individuals, resident pressure, overnight-stay counts, ferry passengers, day-crowd distribution, port capacity, congestion, spending, or tourism-pressure advice."
+    },
+    {
+      "id": "derived-car-dependency-proxy",
+      "name": "Derived car-dependency screening proxy",
+      "compilerLane": "derived_formula",
+      "sourceFamily": "derived_car_dependency_proxy",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only car-dependency --write",
+      "onlyModes": ["all", "car-dependency"],
+      "rowKeys": ["car_dependency_proxy"],
+      "proxyCaveat": "Derived 0-100 screening proxy from already cited walkability, selected KTEL frequency, airport-drive, ferry-terminal-drive, family-amenity, and KEP-distance rows. It is not a car-ownership rate, commute advice, full local bus coverage audit, traffic or parking measure, accessibility guarantee, school-run suitability claim, night/weekend service measure, route guarantee, or transport advice."
+    },
+    {
+      "id": "crete-water-restriction-history",
+      "name": "Crete dated municipal and water-utility interruption notices",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "crete_water_restriction_history",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only water-restriction-history --write",
+      "onlyModes": ["all", "water-restriction-history"],
+      "rowKeys": ["water_restriction_history"],
+      "proxyCaveat": "Official dated municipal or water-utility notice-history signal for priority Crete towns. The Crete parent is an accepted priority-town aggregate only, not a true island-wide regional restriction history. It is not a continuous water-stress baseline, current outage status, water-quality claim, utility-capacity assessment, household supply guarantee, future restriction prediction, legal or utility advice, or health advice."
+    },
+    {
+      "id": "wri-aqueduct-water-stress-baseline",
+      "name": "WRI Aqueduct Crete baseline water-stress row",
+      "compilerLane": "ai_official_crawl",
+      "sourceFamily": "wri_aqueduct_water_stress",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only water-stress-baseline --write",
+      "onlyModes": ["all", "water-stress-baseline"],
+      "rowKeys": ["water_stress_baseline"],
+      "proxyCaveat": "WRI Aqueduct 4.0 baseline annual water-stress category for the Crete regional row, inherited by priority towns. It is regional screening context, not household service, current outage, water-quality, utility-capacity, property-suitability, water-rights, future-restriction, legal, utility, or health advice."
+    },
+    {
+      "id": "osm-surface-water-density",
+      "name": "OpenStreetMap mapped inland-water polygon proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_surface_water_polygon_proxy",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only surface-water --write",
+      "onlyModes": ["all", "surface-water"],
+      "rowKeys": ["surface_water_density"],
+      "proxyCaveat": "Fallback mapped inland-water polygon proxy within 2 km representative-town circles, with sea/coast/pool/fountain exclusions and a priority-town regional summary. It is not JRC Global Surface Water, not a municipal or island-wide water-area value, not household service, water quality, drought, flood risk, beach access, parcel suitability, or legal, utility, health, or safety advice."
+    },
+    {
+      "id": "copernicus-hrl-forest-tree",
+      "name": "Copernicus/EEA HRL forest and tree-cover samples",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "copernicus_hrl_forest_tree",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only forest-tree --write",
+      "onlyModes": ["all", "forest-tree"],
+      "rowKeys": ["forest_cover_pct", "tree_canopy_pct"],
+      "proxyCaveat": "Copernicus/EEA High Resolution Layer Forest Type and Tree Cover Density samples within 2 km representative-town circles, plus a priority-town regional summary. These are raster-sample proxies, not municipal or island-wide inventories, legal forest classifications, street-shade measures, public-access claims, wildfire-risk scores, safety advice, or property advice."
+    },
+    {
+      "id": "zenodo-viirs-light-pollution",
+      "name": "Zenodo/OpenGeoHub VIIRS nighttime-lights radiance proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "zenodo_opengeohub_viirs_nightlights",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only light-pollution --write",
+      "onlyModes": ["all", "light-pollution"],
+      "rowKeys": ["light_pollution"],
+      "proxyCaveat": "Samples the 2024 Zenodo/OpenGeoHub VIIRS nighttime-lights COG inside representative 2 km town circles and reports raw/10 as a NOAA-like radiance proxy; regional rows summarize priority-town samples. It is not a Bortle class, stargazing guarantee, streetlight inventory, safety advice, health advice, property advice, parcel measure, or neighborhood measure."
+    },
+    {
+      "id": "edo-cdi-drought-frequency",
+      "name": "EDO CDI v4.1 drought-frequency grid-cell proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "edo_cdi_drought_frequency",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only drought-frequency --write",
+      "onlyModes": ["all", "drought-frequency"],
+      "rowKeys": ["drought_frequency_proxy"],
+      "proxyCaveat": "European Drought Observatory CDI v4.1 nearest-grid-cell ten-day class-frequency proxy for priority Crete towns, plus a priority-town regional summary. It is not an island-wide drought frequency, municipal drought declaration, household water-service evidence, water-quality claim, utility-capacity assessment, forecast, property, safety, legal, utility, health, or personal advice."
+    },
+    {
+      "id": "osm-wildfire-egress-road-dependence",
+      "name": "OSM wildfire-context road-dependence proxy",
+      "compilerLane": "geospatial_adapter",
+      "sourceFamily": "osm_wildfire_egress_road_dependence",
+      "batchScope": "cluster",
+      "command": "pnpm data:city-adapters --only wildfire-egress --write",
+      "onlyModes": ["all", "wildfire-egress"],
+      "rowKeys": ["wildfire_egress_proxy"],
+      "proxyCaveat": "OpenStreetMap mapped motor-road component sectors, dead-end node share, and the existing car-dependency proxy around representative town points, combined with the already cited national ThinkHazard wildfire context row. It is a low-confidence road-dependence proxy, not an EFFIS/GWIS fire-behaviour grid, evacuation route, emergency plan, road-capacity, live-traffic, closure, response-time, insurance, parcel, property, safety, legal, health, or personal advice claim."
+    }
+  ]
+}
