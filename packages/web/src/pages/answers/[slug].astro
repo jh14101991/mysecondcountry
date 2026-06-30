@@ -85,6 +85,72 @@ const relatedLinks = entry.relatedSlugs
   })
   .filter((l): l is { label: string; href: string } => l !== null);
 
+type InternalLink = { label: string; href: string };
+const greeceTaxAnswerIds = new Set([
+  "does-greece-tax-foreign-pensions-at-7-percent",
+  "who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+  "what-happens-when-greece-7-percent-pensioner-tax-expires",
+]);
+const answerClusterMap: Record<string, { heading: string; links: InternalLink[] }> = {
+  "is-portugals-nhr-tax-regime-still-available": {
+    heading: "Portugal IFICI cluster",
+    links: [
+      { label: "Portugal IFICI 20 percent regime", href: "/portugal/tax/ifici" },
+      { label: "Portugal IFICI, the NHR successor", href: "/topics/portugal-ifici-the-nhr-successor" },
+      {
+        label: "Portugal IFICI eligibility checklist",
+        href: "/tools/portugal-ifici-eligibility-checklist",
+      },
+      { label: "Portugal country dossier", href: "/places/portugal" },
+    ],
+  },
+  "can-i-still-get-a-spanish-golden-visa": {
+    heading: "Golden visa context",
+    links: [
+      { label: "Greece golden visa price tiers", href: "/topics/greece-golden-visa-price-tiers" },
+      { label: "Spain country dossier", href: "/places/spain" },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+      { label: "Greece country dossier", href: "/places/greece" },
+    ],
+  },
+};
+if (greeceTaxAnswerIds.has(entry.id)) {
+  answerClusterMap[entry.id] = {
+    heading: "Greece 7 percent tax cluster",
+    links: [
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+      {
+        label: "Does Greece tax foreign pensions at 7 percent?",
+        href: "/answers/does-greece-tax-foreign-pensions-at-7-percent",
+      },
+      {
+        label: "Who does not qualify for Greece 7 percent pensioner tax?",
+        href: "/answers/who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+      },
+      {
+        label: "What happens when Greece 7 percent pensioner tax expires?",
+        href: "/answers/what-happens-when-greece-7-percent-pensioner-tax-expires",
+      },
+      {
+        label: "Greece 7 percent pension tax checklist",
+        href: "/tools/greece-7-percent-pension-tax-checklist",
+      },
+      { label: "Greece country dossier", href: "/places/greece" },
+    ],
+  };
+}
+const currentAnswerHref = `/answers/${entry.slug}`;
+const answerCluster = answerClusterMap[entry.id];
+const answerClusterLinks = answerCluster
+  ? answerCluster.links.filter((link) => link.href !== currentAnswerHref)
+  : [];
+
 const title = `${entry.question} | My Second Country`;
 
 const jsonLd = [
@@ -126,6 +192,10 @@ const jsonLd = [
     </section>
 
     <CiteThis lines={citeLines} />
+
+    {answerCluster && answerClusterLinks.length > 0 && (
+      <RelatedLinks heading={answerCluster.heading} links={answerClusterLinks} />
+    )}
 
     {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
 
