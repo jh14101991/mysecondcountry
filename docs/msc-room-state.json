@@ -81,15 +81,14 @@
       "automationId": "msc-page-factory-pass",
       "cadence": "Monday to Thursday late morning",
       "owns": ["place pages", "data endpoints", "page gate checks"],
-      "currentJob": "Chania is local-build ready for James's human review on 2026-06-30 with a 254-row Evidence atlas. The route /places/greece/crete/chania builds as a live local page, uses the accepted evidence bundle, exposes all rows through filter/search/detail controls, renders the approved source-gap wording, and passes the available local data, route, link, fence, JSON-LD, typecheck, and browser-smoke gates. This is still not production publication or deploy approval.",
+      "currentJob": "Chania is live on mysecondcountry.com as of 2026-06-30 with a 254-row Evidence atlas. The route /places/greece/crete/chania uses the accepted evidence bundle, exposes all rows through filter/search/detail controls, renders the approved source-gap wording, and passed the available local, clean-worktree, Vercel production build, source, route, link, fence, JSON-LD, typecheck, test, and live browser-smoke gates.",
       "nextActions": [
-        "Show the local Safari preview to James for human read-through and visual review of the Evidence atlas.",
-        "If James accepts the atlas direction, prepare the final publish-gate packet and decide whether Design Desk needs a rendered quality pass before deployment.",
-        "Do not start a scale run. The next Page Factory work stays inside the Chania page unit until the first town page passes DEFINITION_OF_DONE.md."
+        "Run or log the remaining manual rich-results validation for the live Chania URL.",
+        "Prepare a compact post-live packet for Content Desk and Distribution Desk, but do not externally post without James.",
+        "Do not start a scale run. The next Page Factory work stays inside the Chania page unit until the first town page closeout is fully logged against DEFINITION_OF_DONE.md."
       ],
       "blockers": [
-        "This is a local build-green dossier draft, not a ship. Nothing has been deployed to mysecondcountry.com.",
-        "Full DEFINITION_OF_DONE.md is not complete: James human review, rich-results manual test, final publication decision, and production publish remain open.",
+        "Production publish is complete, but full DEFINITION_OF_DONE.md closeout is not complete until the manual rich-results validation is logged.",
         "The automated accessibility script passed structural and contrast checks, but its axe-core jsdom run is still best-effort because axe could not attach to window/document in this repo snapshot.",
         "Two DOD-named scripts are not present in this repo snapshot: scripts/assert-no-copy-duplication.ts and scripts/assert-analytics.ts."
       ],
@@ -232,8 +231,8 @@
       "id": "handoff-page-content-first-town-packet",
       "from": "pageFactory",
       "to": "contentDesk",
-      "status": "blocked_until_human_publish_gate",
-      "summary": "Chania now has a local build-green page draft with a 254-row Evidence atlas for James's review, but Content Desk should not prepare or publish place-specific external claims until the human publish gate and deployment decision are complete. Method and source-literacy posts remain allowed under the existing posting board.",
+      "status": "ready_after_live_page",
+      "summary": "Chania is live on mysecondcountry.com with a 254-row Evidence atlas. Content Desk may prepare a post-live packet that points to the page, but no external post, newsletter, or channel move should publish without James's explicit approval. Keep source-literacy framing and source-gap caveats visible.",
       "nextCheck": "2026-07-01",
       "lastUpdated": "2026-06-30",
       "updatedAt": "2026-06-30"
