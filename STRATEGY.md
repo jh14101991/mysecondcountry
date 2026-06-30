@@ -34,15 +34,11 @@ later every clip, post, and newsletter, is a projection of the same source. (ADR
 
 ## Route families (the scaffolding)
 - Live: `/` · `/places/[...path]` (country, region, town) · `/compare/...` ·
-  `/[country]/tax/[slug]` (regime pages) · `/screener` (a fixed-example shortlist funnel, not yet
-  scoring user input; see below) · `/answers/[slug]` (static cited Q&A) · the trust pages
+  `/[country]/tax/[slug]` (regime pages) · `/screener` (runs the engine client-side on submit: parses the 6 screening criteria and renders a cited, ranked shortlist via `screenPlace`) · `/answers/[slug]` (static cited Q&A) · the trust pages
   (`methodology`, `sources`, `privacy`, `affiliate-disclosure`) · email capture (live but gated
   closed via `EMAIL_FORM_ACTION`) · `/data/regimes/[slug].json` · `sitemap.xml` · `robots.txt` ·
   `llms.txt` · JSON-LD on every page.
-- Designed, not built: the screener does not yet read or score user input (`scoreByProfile`,
-  `applyFilters`, `screenPlace` exist in `packages/engine`, fully tested, but are not imported by
-  any web page) · the content engine (video, social, newsletter) · affiliate links (component
-  exists, not turned on) · the Stripe fake-door · the paid cited dossier (ADR-0018).
+- Designed, not built: the engine's profile-preset scoring (`scoreByProfile`) and dealbreaker filters (`applyFilters`) exist in `packages/engine`, fully tested, but are not yet surfaced in any web page (the screener wires only `screenPlace`, the 6-criteria path) · the content engine (video, social, newsletter) · affiliate links (component exists, not turned on) · payment for the cited dossier (the `/dossier` fake-door page is live and wiring-first; no checkout is built).
 
 ## Geography
 Global brand, Europe-first depth, demand-led waves. Greece is the dogfood proof. Depth ranks and
@@ -75,12 +71,8 @@ with zero completions). Judge only after a fair window: about 20 published pages
 and 4 newsletter issues. A flat result reworks the wedge, not the build. (SHIP.md.)
 
 ## Status (2026-06-30)
-- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener (as a
-  fixed-example shortlist funnel), launched on `mysecondcountry.com`.
-- Engine catalogue: 15 wired screening variables (profile presets, dealbreaker filters,
-  confidence-aware scoring) implemented and unit-tested in `packages/engine`, not yet imported by
-  any web page. The aspirational ~200-variable catalogue is unbuilt and deferred; do not read
-  either as "variable system live" on the shipped site.
+- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener (now scoring user input client-side), launched on `mysecondcountry.com`.
+- Engine catalogue: the 6 screening criteria (`screenPlace`) now run client-side in the screener, shipped in this recovery branch. The wider engine (profile-preset scoring, dealbreaker filters, confidence-aware weighting) is implemented and unit-tested in `packages/engine` but not yet surfaced in a web page. The aspirational ~200-variable catalogue is unbuilt and deferred; do not read any of this as "variable system live" on the shipped site.
 - First deep page live: the Greece foreign-pensioner 7% flat-tax regime, plus its public cited
   dataset, schema.org Dataset JSON-LD, an `llms.txt` entry, and freshness, sources, and JSON-LD
   guards that walk the regimes collection.
