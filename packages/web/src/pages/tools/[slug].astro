@@ -76,6 +76,54 @@ const relatedLinks = entry.relatedSlugs
   })
   .filter((l): l is { label: string; href: string } => l !== null);
 
+type InternalLink = { label: string; href: string };
+const toolClusterMap: Record<string, { heading: string; links: InternalLink[] }> = {
+  "greece-7-percent-pension-tax-checklist": {
+    heading: "Greece 7 percent tax cluster",
+    links: [
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+      {
+        label: "Does Greece tax foreign pensions at 7 percent?",
+        href: "/answers/does-greece-tax-foreign-pensions-at-7-percent",
+      },
+      {
+        label: "Who does not qualify for Greece 7 percent pensioner tax?",
+        href: "/answers/who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+      },
+      {
+        label: "What happens when Greece 7 percent pensioner tax expires?",
+        href: "/answers/what-happens-when-greece-7-percent-pensioner-tax-expires",
+      },
+      { label: "Greece country dossier", href: "/places/greece" },
+      { label: "Crete region dossier", href: "/places/greece/crete" },
+    ],
+  },
+  "portugal-ifici-eligibility-checklist": {
+    heading: "Portugal IFICI cluster",
+    links: [
+      { label: "Portugal IFICI 20 percent regime", href: "/portugal/tax/ifici" },
+      {
+        label: "Is Portugal's NHR tax regime still available?",
+        href: "/answers/is-portugals-nhr-tax-regime-still-available",
+      },
+      { label: "Portugal IFICI, the NHR successor", href: "/topics/portugal-ifici-the-nhr-successor" },
+      { label: "Portugal country dossier", href: "/places/portugal" },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+    ],
+  },
+};
+const currentToolHref = `/tools/${entry.slug}`;
+const toolCluster = toolClusterMap[entry.id];
+const toolClusterLinks = toolCluster
+  ? toolCluster.links.filter((link) => link.href !== currentToolHref)
+  : [];
+
 const title = `${entry.title} | My Second Country`;
 
 const jsonLd = [
@@ -144,6 +192,10 @@ const jsonLd = [
     }
 
     <CiteThis lines={citeLines} />
+
+    {toolCluster && toolClusterLinks.length > 0 && (
+      <RelatedLinks heading={toolCluster.heading} links={toolClusterLinks} />
+    )}
 
     {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
   </article>
