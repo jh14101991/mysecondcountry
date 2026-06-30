@@ -34,11 +34,11 @@ later every clip, post, and newsletter, is a projection of the same source. (ADR
 
 ## Route families (the scaffolding)
 - Live: `/` · `/places/[...path]` (country, region, town) · `/compare/...` ·
-  `/[country]/tax/[slug]` (regime pages) · `/screener` · `/data/regimes/[slug].json` ·
-  `sitemap.xml` · `robots.txt` · `llms.txt` · JSON-LD on every page.
-- Designed, not built: constraint and answer pages · trust pages (how-we-cite, privacy,
-  affiliate-disclosure) · the content engine (video, social, newsletter) · email capture ·
-  affiliate links · the Stripe fake-door.
+  `/[country]/tax/[slug]` (regime pages) · `/screener` (runs the engine client-side on submit: parses the 6 screening criteria and renders a cited, ranked shortlist via `screenPlace`) · `/answers/[slug]` (static cited Q&A) · the trust pages
+  (`methodology`, `sources`, `privacy`, `affiliate-disclosure`) · email capture (live but gated
+  closed via `EMAIL_FORM_ACTION`) · `/data/regimes/[slug].json` · `sitemap.xml` · `robots.txt` ·
+  `llms.txt` · JSON-LD on every page.
+- Designed, not built: the engine's profile-preset scoring (`scoreByProfile`) and dealbreaker filters (`applyFilters`) exist in `packages/engine`, fully tested, but are not yet surfaced in any web page (the screener wires only `screenPlace`, the 6-criteria path) · the content engine (video, social, newsletter) · affiliate links (component exists, not turned on) · payment for the cited dossier (the `/dossier` fake-door page is live and wiring-first; no checkout is built).
 
 ## Geography
 Global brand, Europe-first depth, demand-led waves. Greece is the dogfood proof. Depth ranks and
@@ -51,10 +51,7 @@ and senses demand; programmatic SEO and AEO compound; the newsletter is the owne
 a one-time launch seed backlinks. The page is the channel.
 
 ## Monetization
-Affiliate-first, to licensed professionals, embedded in the relevant cited claim. The fence makes
-the referral the safe call to action, since the page already routes the reader to a pro. A paid
-"cited dossier" is tested upside, validated cheaply with a Stripe fake-door. Ads come last, behind
-a return gate. Nothing monetizes before there is traffic. (ADR-0007.)
+Recurring revenue off the freshness moat is the primary line: a consumer change-monitoring subscription ("alert me when the rule that affects my move changes") and B2B licensing of the cited, dated, staleness-monitored dataset. The validated entry product is a one-time cited dossier, a dated relocation snapshot the reader hands to their own accountant or lawyer, proven with a fake-door before any build and designed as the front door to the subscription. Affiliate is demoted to a disclosed floor on commodity adjacencies only (currency transfer, insurance, SIM, moving), barred from every cited tax, visa, or residency claim. Nothing monetizes before there is traffic. (ADR-0018.)
 
 ## The founder shape (why it is built this way)
 Infinite runway: revenue is chosen proof, not survival, so optimize a durable 2 to 3 year
@@ -73,10 +70,9 @@ hook breaking past the founder's own audience; the fake-door showing paid intent
 with zero completions). Judge only after a fair window: about 20 published pages, 30 posted clips,
 and 4 newsletter issues. A flat result reworks the wedge, not the build. (SHIP.md.)
 
-## Status (2026-06-25)
-- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener, launched
-  on `mysecondcountry.com`.
-- Variable system live: profile presets, dealbreaker filters, confidence-aware scoring.
+## Status (2026-06-30)
+- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener (now scoring user input client-side), launched on `mysecondcountry.com`.
+- Engine catalogue: the 6 screening criteria (`screenPlace`) now run client-side in the screener, shipped in this recovery branch. The wider engine (profile-preset scoring, dealbreaker filters, confidence-aware weighting) is implemented and unit-tested in `packages/engine` but not yet surfaced in a web page. The aspirational ~200-variable catalogue is unbuilt and deferred; do not read any of this as "variable system live" on the shipped site.
 - First deep page live: the Greece foreign-pensioner 7% flat-tax regime, plus its public cited
   dataset, schema.org Dataset JSON-LD, an `llms.txt` entry, and freshness, sources, and JSON-LD
   guards that walk the regimes collection.
@@ -85,6 +81,6 @@ and 4 newsletter issues. A flat result reworks the wedge, not the build. (SHIP.m
 1. The minimal content and newsletter engine, the only thing that makes the ship floor and the
    clip and issue counts in the kill gate reachable. Start with the cheap outputs (rough cards,
    social posts, the auto-newsletter) and a first batch recording; defer the heavy video pipeline.
-2. The trust pages (privacy, affiliate-disclosure, how-we-cite), required before affiliate links
-   can turn on and to close the launch definition of done.
+2. Turn affiliate links on (trust pages are already live; affiliate is the remaining gate before
+   the disclosed commodity floor in ADR-0018 can go live).
 3. The second regime page, demand-led: chosen from the search and AI-crawler logs of the first one.

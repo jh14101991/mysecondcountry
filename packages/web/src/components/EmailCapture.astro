@@ -7,9 +7,14 @@
  * POST with a single `email` field, so it works with no JavaScript on a static page. The founder
  * sets the real endpoint in monetisation.ts.
  */
-import { EMAIL_FORM_ACTION } from "../lib/monetisation.ts";
+import { EMAIL_FORM_ACTION, isCaptureLive } from "../lib/monetisation.ts";
 
-const emailCaptureLive = !EMAIL_FORM_ACTION.includes("REPLACE.example");
+const emailCaptureLive = isCaptureLive();
+
+interface Props {
+  source?: string;
+}
+const { source } = Astro.props;
 ---
 
 {
@@ -21,6 +26,7 @@ const emailCaptureLive = !EMAIL_FORM_ACTION.includes("REPLACE.example");
         unsubscribe anytime.
       </p>
       <form class="email-capture__form" action={EMAIL_FORM_ACTION} method="post">
+        {source && <input type="hidden" name="source" value={source} />}
         <label class="email-capture__label" for="email-capture-input">Email address</label>
         <input
           class="email-capture__input"

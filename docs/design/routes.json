@@ -164,7 +164,7 @@
     },
     {
       "route": "/places/cyprus",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
@@ -227,7 +227,7 @@
     },
     {
       "route": "/places/italy",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
@@ -236,7 +236,7 @@
     },
     {
       "route": "/places/malta",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
@@ -287,6 +287,15 @@
       "sitemap": true,
       "firstAction": "/compare/greece-portugal-spain",
       "brief": "docs/design/routes/screener.md"
+    },
+    {
+      "route": "/dossier",
+      "status": "live",
+      "surface": "product",
+      "discoverability": ["sources", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/dossier.md"
     },
     {
       "route": "/screening-notice",

@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import EmailCapture from "../components/EmailCapture.astro";
+import FenceBlock from "../components/FenceBlock.astro";
+
+const SITE = "https://mysecondcountry.com";
+const title = "The cited relocation dossier | My Second Country";
+const description =
+  "A one-time, dated, cited snapshot of the residency and tax rules and key figures for a chosen country, ready to hand to an accountant or lawyer.";
+const canonical = `${SITE}/dossier`;
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page" data-page="dossier">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Dossier</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Product</p>
+      <h1 class="corridor-title">The cited relocation dossier</h1>
+      <p class="corridor-lead">
+        A one-time, dated snapshot of the residency and tax rules and the key figures for a
+        chosen country. Every figure links back to its primary source, formatted to hand
+        directly to an accountant or lawyer. This is cited screening intelligence, not advice.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="dossier-price">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Price</p>
+          <h2 id="dossier-price">$49 one time</h2>
+        </div>
+        <p class="corridor-section-note">
+          A fixed, one-time price for a dated snapshot. No subscription, no account required.
+          The figures are cited and dated so the snapshot can be checked against the original
+          source at any time.
+        </p>
+      </div>
+      <button id="dossier-cta" class="btn-primary" type="button">Get the cited dossier</button>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="dossier-what">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">What it contains</p>
+          <h2 id="dossier-what">A dated record, not a recommendation</h2>
+        </div>
+        <p class="corridor-section-note">
+          The dossier compiles the residency, tax, and cost figures for a chosen country into a
+          single dated document. Each figure carries its source, the date it was verified, and a
+          confidence rating, so the reader's own adviser can verify every line before relying on
+          it.
+        </p>
+      </div>
+    </section>
+
+    <EmailCapture source="dossier" />
+  </article>
+
+  <script>
+    const cta = document.getElementById("dossier-cta");
+    cta?.addEventListener("click", () => {
+      const plausible = (window as Window & {
+        plausible?: (eventName: string, options?: { props?: Record<string, string> }) => void;
+      }).plausible;
+      if (typeof plausible === "function") {
+        plausible("dossier_fakedoor_click", { props: { source_path: window.location.pathname } });
+      }
+      const capture = document.querySelector(".email-capture");
+      if (capture) capture.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+
+  <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+  </style>
+</Base>

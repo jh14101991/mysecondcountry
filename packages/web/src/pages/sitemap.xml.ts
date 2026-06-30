@@ -36,6 +36,7 @@ export const GET: APIRoute = () => {
   lines.push(urlEntry(`${SITE}/affiliate-disclosure`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/compare`, TRUST_ROUTE_DATE));
   lines.push(urlEntry(`${SITE}/compare/greece-portugal-spain`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/dossier`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/guides`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/methodology`, FALLBACK_DATE));
   lines.push(urlEntry(`${SITE}/places`, FALLBACK_DATE));
