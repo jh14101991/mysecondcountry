@@ -579,6 +579,7 @@ select.field-input {
         results.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
+      // Only trusted build-time data from @where/data is interpolated here (place name, route path, integer counts, score). Never interpolate user-entered text or r.detail into this template.
       const rows = ranked
         .map((r) => {
           const matched = `${r.matchedCount} of ${r.applicableCount} limits met`;

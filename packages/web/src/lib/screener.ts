@@ -31,7 +31,7 @@ export function parseCriteria(input: CriteriaInput): ScreeningCriteria {
     const cleaned = raw.replace(/[,\s]/g, "");
     if (cleaned === "") continue;
     const n = Number(cleaned);
-    if (Number.isFinite(n)) criteria[field as NumericField] = n;
+    if (Number.isFinite(n)) criteria[field] = n;
   }
   return criteria;
 }
