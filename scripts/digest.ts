@@ -18,6 +18,7 @@ import {
   tools,
   topics,
 } from "@where/data";
+import { renderAiCrawlerSection } from "./lib/ai-crawler-summary";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -35,7 +36,7 @@ export interface FreshRow {
 }
 
 // ---------------------------------------------------------------------------
-// (a) Freshness — pure, exported, testable
+// (a) Freshness, pure, exported, testable
 // ---------------------------------------------------------------------------
 
 const HIGH_LIABILITY = new Set(["visa", "tax", "residency"]);
@@ -67,7 +68,7 @@ function makeRow(
 
 /** Pure freshness computation. Returns stale (daysLeft < 0) and aging (0 <= daysLeft <= 14). */
 export function freshnessDigest(today: Date): { stale: FreshRow[]; aging: FreshRow[] } {
-  // Dedupe key: sourceUrl|value|verifiedDate — a referenced fact counts once.
+  // Dedupe key: sourceUrl|value|verifiedDate. A referenced fact counts once.
   const seen = new Map<string, FreshRow>();
 
   function process(collection: string, id: string, cited: CitedValue, path: string): void {
@@ -413,16 +414,16 @@ async function gscSection(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
-// (d) Traffic and AI-citation referrers
+// (d) Human traffic and referrers
 // ---------------------------------------------------------------------------
 
 async function trafficSection(): Promise<string> {
-  const lines: string[] = ["## Traffic and AI-citation referrers", ""];
+  const lines: string[] = ["## Human traffic and referrers", ""];
 
   const key = process.env.PLAUSIBLE_API_KEY;
   if (!key) {
     lines.push(
-      "Traffic + AI-referrer stats: set the PLAUSIBLE_API_KEY repo secret to include 7-day visitors, top pages, and referrers (this is where Perplexity/ChatGPT citations show up).",
+      "Human traffic analytics is not wired in this digest. Do not infer human demand from GSC impressions or AI crawler sightings. The free next path is first-party event logging for source clicks, screener starts, newsletter signups, and referrer snapshots.",
     );
     lines.push("");
     return lines.join("\n");
@@ -538,10 +539,11 @@ async function main(): Promise<void> {
   const freshness = renderFreshnessSection(today);
   const health = await siteHealth();
   const gsc = await gscSection();
+  const aiCrawlers = await renderAiCrawlerSection();
   const traffic = await trafficSection();
   const manual = manualChecksSection();
 
-  process.stdout.write([title, freshness, health, gsc, traffic, manual].join("\n"));
+  process.stdout.write([title, freshness, health, gsc, aiCrawlers, traffic, manual].join("\n"));
 }
 
 main().catch((err) => {

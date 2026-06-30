@@ -25,6 +25,7 @@
     "verify:links": "tsx scripts/assert-public-links.ts",
     "verify:routes": "tsx scripts/assert-route-contract.ts",
     "qa:visual": "tsx scripts/visual-qa-page-choreography.ts",
+    "ai:crawlers": "tsx scripts/parse-ai-crawlers.ts",
     "digest": "tsx scripts/digest.ts",
     "prepare": "simple-git-hooks || true"
   },
@@ -48,5 +49,8 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.5.0"
   }
 }
