@@ -5,7 +5,10 @@
   "parentId": null,
   "name": "Greece",
   "country": "Greece",
-  "coordinates": { "lat": 37.9838, "lon": 23.7275 },
+  "coordinates": {
+    "lat": 37.9838,
+    "lon": 23.7275
+  },
   "ancestry": [],
   "description": "Greece is a southern European country on the Mediterranean and Aegean, drawing remote earners and retirees for its climate, cost, and residence routes. The figures below are screened, sourced, and dated. They are not advice.",
   "costOfLiving": {
@@ -13,7 +16,7 @@
       "value": 87.4,
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
       "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
-      "verifiedDate": "2026-06-24",
+      "verifiedDate": "2026-06-30",
       "confidence": "high",
       "granularity": "country",
       "category": "cost",
