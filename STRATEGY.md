@@ -34,11 +34,15 @@ later every clip, post, and newsletter, is a projection of the same source. (ADR
 
 ## Route families (the scaffolding)
 - Live: `/` · `/places/[...path]` (country, region, town) · `/compare/...` ·
-  `/[country]/tax/[slug]` (regime pages) · `/screener` · `/data/regimes/[slug].json` ·
-  `sitemap.xml` · `robots.txt` · `llms.txt` · JSON-LD on every page.
-- Designed, not built: constraint and answer pages · trust pages (how-we-cite, privacy,
-  affiliate-disclosure) · the content engine (video, social, newsletter) · email capture ·
-  affiliate links · the Stripe fake-door.
+  `/[country]/tax/[slug]` (regime pages) · `/screener` (a fixed-example shortlist funnel, not yet
+  scoring user input; see below) · `/answers/[slug]` (static cited Q&A) · the trust pages
+  (`methodology`, `sources`, `privacy`, `affiliate-disclosure`) · email capture (live but gated
+  closed via `EMAIL_FORM_ACTION`) · `/data/regimes/[slug].json` · `sitemap.xml` · `robots.txt` ·
+  `llms.txt` · JSON-LD on every page.
+- Designed, not built: the screener does not yet read or score user input (`scoreByProfile`,
+  `applyFilters`, `screenPlace` exist in `packages/engine`, fully tested, but are not imported by
+  any web page) · the content engine (video, social, newsletter) · affiliate links (component
+  exists, not turned on) · the Stripe fake-door · the paid cited dossier (ADR-0018).
 
 ## Geography
 Global brand, Europe-first depth, demand-led waves. Greece is the dogfood proof. Depth ranks and
@@ -70,10 +74,13 @@ hook breaking past the founder's own audience; the fake-door showing paid intent
 with zero completions). Judge only after a fair window: about 20 published pages, 30 posted clips,
 and 4 newsletter issues. A flat result reworks the wedge, not the build. (SHIP.md.)
 
-## Status (2026-06-25)
-- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener, launched
-  on `mysecondcountry.com`.
-- Variable system live: profile presets, dealbreaker filters, confidence-aware scoring.
+## Status (2026-06-30)
+- A0 live: three countries (Greece, Portugal, Spain), the comparison page, the screener (as a
+  fixed-example shortlist funnel), launched on `mysecondcountry.com`.
+- Engine catalogue: 15 wired screening variables (profile presets, dealbreaker filters,
+  confidence-aware scoring) implemented and unit-tested in `packages/engine`, not yet imported by
+  any web page. The aspirational ~200-variable catalogue is unbuilt and deferred; do not read
+  either as "variable system live" on the shipped site.
 - First deep page live: the Greece foreign-pensioner 7% flat-tax regime, plus its public cited
   dataset, schema.org Dataset JSON-LD, an `llms.txt` entry, and freshness, sources, and JSON-LD
   guards that walk the regimes collection.
@@ -82,6 +89,6 @@ and 4 newsletter issues. A flat result reworks the wedge, not the build. (SHIP.m
 1. The minimal content and newsletter engine, the only thing that makes the ship floor and the
    clip and issue counts in the kill gate reachable. Start with the cheap outputs (rough cards,
    social posts, the auto-newsletter) and a first batch recording; defer the heavy video pipeline.
-2. The trust pages (privacy, affiliate-disclosure, how-we-cite), required before affiliate links
-   can turn on and to close the launch definition of done.
+2. Turn affiliate links on (trust pages are already live; affiliate is the remaining gate before
+   the disclosed commodity floor in ADR-0018 can go live).
 3. The second regime page, demand-led: chosen from the search and AI-crawler logs of the first one.

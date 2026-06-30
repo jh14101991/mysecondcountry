@@ -6,13 +6,27 @@ This repo is public-leaning. A committed secret is an immediate financial-loss e
 
 The content-as-code dataset is designed to be public. The codebase will likely be open-sourced or at minimum browsed by contributors. Treat every secret as if it is one `git push` away from exposure. The risk profile:
 
-- ANTHROPIC_API_KEY: per-token billing, no hard cap by default. Leaked = open invoice.
-- STRIPE_SECRET_KEY: payment operations. Even a restricted key can create payment links or read customer data.
-- RESEND_API_KEY: email send. Leaked = spam cannon on your domain.
+- GSC_SERVICE_ACCOUNT_JSON: Google Cloud service-account credentials with read access to Search Console. Leaked = read access to the site's search-performance data; low financial risk, real privacy/competitive-intel risk.
+- BLOB_READ_WRITE_TOKEN: write access to the Vercel Blob store. Leaked = an attacker can write or overwrite blobs in that store; low financial risk at current scale, but rotate on suspicion.
 - VERCEL_TOKEN: not needed in CI with Vercel's Git integration; only needed if running `vercel` CLI manually. Leaked = unauthorized deploys.
-- OPENAQ_API_KEY / DATA_GOV_GR_TOKEN: rate-limited data APIs. Leaked = quota exhaustion.
+- ANTHROPIC_API_KEY, STRIPE_SECRET_KEY, RESEND_API_KEY, OPENAQ_API_KEY, DATA_GOV_GR_TOKEN: planned, not yet wired into any live code path (see below). Documented now so the risk profile is on record before they go live; no live financial exposure today.
 
 ## Secret inventory
+
+### Live (consumed by shipped code)
+
+| Variable | Description | Least-privilege scope |
+|---|---|---|
+| `GSC_SERVICE_ACCOUNT_JSON` | Google Cloud service-account JSON, read access to the `sc-domain:mysecondcountry.com` Search Console property. Consumed by `scripts/digest.ts` (the Monday digest cron) to pull indexing, clicks, impressions, and top queries. | Search Console read-only role on the `sc-domain:mysecondcountry.com` property only; no other Google Cloud project permissions |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob read/write token. Consumed by `middleware.ts` (`hasBlobCredentials` / `writeCrawlerHit`) to log AI-crawler hits to Blob storage at runtime, and by `scripts/lib/ai-crawler-summary.ts` (via `scripts/digest.ts`) to read that log back for the weekly digest. | Scoped to the single Vercel Blob store backing this project; Vercel does not currently support finer read/write scoping than store-level |
+| `GH_PR_BOT_TOKEN` | GitHub PAT used by the cron refresh pipeline to open a PR | Fine-grained PAT: `contents:write` + `pull_requests:write` on this repo only; no org scope |
+| `PLAUSIBLE_API_KEY` | Plausible Stats API for analytics reads, consumed by `scripts/digest.ts` | Read-only stats token |
+| `PLAUSIBLE_DOMAIN` | Plausible site domain string (e.g. `mysecondcountry.com`) | Not a secret, but kept in env for consistency |
+| `VERCEL_TOKEN` | Only needed if running `vercel` CLI outside of the native Git integration | Not required in CI for normal push-to-deploy; set only if a manual CLI deploy step is added |
+
+### Planned, not yet wired
+
+These are documented for when the code path goes live (Stripe fake-door, the content/refresh pipeline using Anthropic, the air-quality and Greek open-data pulls). None of them is currently read by any committed script, page, or workflow; do not add the values to any live environment until the corresponding feature ships.
 
 | Variable | Description | Least-privilege scope |
 |---|---|---|
@@ -22,10 +36,6 @@ The content-as-code dataset is designed to be public. The codebase will likely b
 | `STRIPE_WEBHOOK_SECRET` | Verifies Stripe webhook signatures | Generated per webhook endpoint; unique per environment |
 | `OPENAQ_API_KEY` | OpenAQ air quality data pulls in the refresh pipeline | Read-only, no write scopes |
 | `DATA_GOV_GR_TOKEN` | Greek government open data API | Read-only |
-| `PLAUSIBLE_API_KEY` | Plausible Stats API for analytics reads (optional in pipeline) | Read-only stats token |
-| `PLAUSIBLE_DOMAIN` | Plausible site domain string (e.g. `whereto.live`) | Not a secret, but kept in env for consistency |
-| `VERCEL_TOKEN` | Only needed if running `vercel` CLI outside of the native Git integration | Not required in CI for normal push-to-deploy; set only if a manual CLI deploy step is added |
-| `GH_PR_BOT_TOKEN` | GitHub PAT used by the cron refresh pipeline to open a PR | Fine-grained PAT: `contents:write` + `pull_requests:write` on this repo only; no org scope |
 
 ## Where each secret lives
 
@@ -37,53 +47,62 @@ Use only for: local data refreshes (`tsx scripts/refresh-*.ts`), local Stripe fa
 
 ### GitHub Actions secrets
 
-Store in the repo's **Settings > Secrets and variables > Actions**. The cron workflow and the PR-open bot use:
+Store in the repo's **Settings > Secrets and variables > Actions**. As of this writing the crons actually reference:
 
-- `ANTHROPIC_API_KEY`
-- `RESEND_API_KEY`
-- `OPENAQ_API_KEY`
-- `DATA_GOV_GR_TOKEN`
-- `GH_PR_BOT_TOKEN`
-- `PLAUSIBLE_API_KEY` (if the pipeline reads analytics for scoring)
+- `GSC_SERVICE_ACCOUNT_JSON` (`digest.yml`, the weekly digest cron)
+- `BLOB_READ_WRITE_TOKEN` (`digest.yml`, to read the crawler log written by the runtime middleware)
+- `PLAUSIBLE_API_KEY` (`digest.yml`)
+- `GH_PR_BOT_TOKEN` is not currently referenced by name in `refresh.yml` (it uses the built-in `github.token` for the PR-open step); keep it documented here in case the PR-bot step is moved to a PAT later, and drop it from GitHub Actions secrets if it stays unused.
 
-Stripe secrets are NOT needed in GitHub Actions. The refresh pipeline does not create payment intents; it generates content and opens a PR. Stripe keys belong only in the Vercel runtime.
+Once wired, the planned secrets (`ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `OPENAQ_API_KEY`, `DATA_GOV_GR_TOKEN`) would also live here, for the refresh pipeline. Stripe secrets are NOT needed in GitHub Actions: the refresh pipeline does not create payment intents; it generates content and opens a PR. Stripe keys belong only in the Vercel runtime.
 
 ### Vercel runtime secrets
 
-Set in the Vercel project dashboard at Settings > Environment Variables. These are injected into Vercel Functions at runtime:
-
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
-- `PLAUSIBLE_API_KEY` (if server-side AI-crawler logging calls the Plausible Events API)
+Set in the Vercel project dashboard at Settings > Environment Variables. `BLOB_READ_WRITE_TOKEN` is injected here too (in addition to GitHub Actions) because `middleware.ts` reads it at request time in the deployed app, to log AI-crawler hits to Vercel Blob. Once wired, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and (if server-side AI-crawler logging ever calls the Plausible Events API directly) `PLAUSIBLE_API_KEY` would also live here.
 
 With Vercel's native Git integration no deploy token is needed in GitHub Actions CI; deployments are triggered automatically on push to `main`.
 
 ## .env.example
 
+The committed `.env.example` should match this shape. Live secrets first, planned ones below, clearly separated so a contributor does not assume the planned block is wired:
+
 ```env
-# Claude API, content generation in the refresh pipeline
+# --- Live ---
+
+# Google Search Console service-account JSON, read access to sc-domain:mysecondcountry.com.
+# Used by scripts/digest.ts (weekly digest cron).
+GSC_SERVICE_ACCOUNT_JSON=
+
+# Vercel Blob read/write token. Used by middleware.ts at runtime (AI-crawler hit logging)
+# and by scripts/digest.ts (reading the crawler log back) via scripts/lib/ai-crawler-summary.ts.
+BLOB_READ_WRITE_TOKEN=
+
+# Plausible, analytics reads in the digest
+PLAUSIBLE_API_KEY=
+PLAUSIBLE_DOMAIN=
+
+# GitHub, fine-grained PAT for the cron PR bot (not currently referenced in refresh.yml,
+# which uses the built-in github.token; keep documented for if that changes)
+GH_PR_BOT_TOKEN=
+
+# --- Planned, not yet wired ---
+
+# Claude API, content generation in the refresh pipeline (not yet built)
 ANTHROPIC_API_KEY=
 
-# Resend, transactional email and newsletter
+# Resend, transactional email and newsletter (not yet built)
 RESEND_API_KEY=
 
-# Stripe, RESTRICTED key only (fake-door checkout sessions + read)
+# Stripe, RESTRICTED key only (fake-door checkout sessions + read; not yet built)
 # Do NOT put your full live Stripe secret key here.
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 
-# OpenAQ, air quality data
+# OpenAQ, air quality data (not yet built)
 OPENAQ_API_KEY=
 
-# Greek government open data
+# Greek government open data (not yet built)
 DATA_GOV_GR_TOKEN=
-
-# Plausible, analytics reads (optional in pipeline)
-PLAUSIBLE_API_KEY=
-PLAUSIBLE_DOMAIN=
-
-# GitHub, fine-grained PAT for the cron PR bot
-GH_PR_BOT_TOKEN=
 ```
 
 ## Secret scanning
@@ -148,16 +167,32 @@ Vercel's native Git integration handles deploys automatically on push to `main`;
 4. Expiry: 90 days maximum. Set a calendar reminder to rotate before expiry.
 5. Save as `GH_PR_BOT_TOKEN` in GitHub Actions secrets.
 
+## GSC service-account setup and rotation
+
+1. In Google Cloud Console, use (or create) the project tied to the `sc-domain:mysecondcountry.com` Search Console property.
+2. Create a service account with no project-level IAM role beyond what Search Console needs.
+3. In Search Console (Settings > Users and permissions), add the service account's email as a **Restricted** (read-only) user on the `sc-domain:mysecondcountry.com` property.
+4. Generate a JSON key for the service account, paste the full JSON as the value of `GSC_SERVICE_ACCOUNT_JSON` in GitHub Actions secrets.
+5. Rotate by deleting the old key in Google Cloud Console and generating a new one; update the GitHub Actions secret in the same sitting so the digest cron does not silently fall back to its no-credentials branch.
+
+## Vercel Blob token setup and rotation
+
+1. In the Vercel project dashboard, Storage > the Blob store backing this project > Settings, copy the read/write token (or generate a new one).
+2. Set it as `BLOB_READ_WRITE_TOKEN` in both Vercel Environment Variables (consumed by `middleware.ts` at runtime) and GitHub Actions secrets (consumed by `scripts/digest.ts` to read the crawler log).
+3. Rotate by regenerating the token in the Vercel dashboard, then updating both locations together. A stale token in only one location means either the middleware stops logging or the digest stops reading; neither fails loudly, both just go quiet (`hasBlobCredentials()` / the digest's missing-token message degrade gracefully rather than erroring), so check both after rotating.
+
 ## Rotation policy
 
 | Key | Rotation trigger | Rotation interval |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Any suspected leak, or every 6 months | 6 months |
-| `RESEND_API_KEY` | Any suspected leak, or any change to sending domain | 6 months |
-| `STRIPE_SECRET_KEY` | Any suspected leak | 6 months |
-| `STRIPE_WEBHOOK_SECRET` | Any change to the webhook endpoint URL | Per endpoint change |
-| `OPENAQ_API_KEY` | Any suspected leak | 12 months |
-| `DATA_GOV_GR_TOKEN` | Any suspected leak | 12 months |
+| `GSC_SERVICE_ACCOUNT_JSON` | Any suspected leak | 12 months |
+| `BLOB_READ_WRITE_TOKEN` | Any suspected leak | 12 months |
+| `ANTHROPIC_API_KEY` | Any suspected leak, or every 6 months, once wired | 6 months |
+| `RESEND_API_KEY` | Any suspected leak, or any change to sending domain, once wired | 6 months |
+| `STRIPE_SECRET_KEY` | Any suspected leak, once wired | 6 months |
+| `STRIPE_WEBHOOK_SECRET` | Any change to the webhook endpoint URL, once wired | Per endpoint change |
+| `OPENAQ_API_KEY` | Any suspected leak, once wired | 12 months |
+| `DATA_GOV_GR_TOKEN` | Any suspected leak, once wired | 12 months |
 | `VERCEL_TOKEN` | Any suspected leak or contributor offboarding (if a manual CLI token was created) | 90 days |
 | `GH_PR_BOT_TOKEN` | Expiry (max 90 days), any suspected leak | 90 days |
 
