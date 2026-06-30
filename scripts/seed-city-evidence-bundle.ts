@@ -1,54 +1,13 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { placeById } from "@where/data";
+import {
+  type Granularity,
+  type MatrixCategory,
+  type MatrixRowInput,
+  placeById,
+  type SourceGapReason,
+} from "@where/data";
 import { buildCityMatrixRun, parseVariableRegistry } from "./plan-city-matrix.js";
-
-type Granularity = "country" | "region" | "town";
-type CoverageStatus =
-  | "local"
-  | "regional"
-  | "national"
-  | "inherited_national"
-  | "inherited_regional"
-  | "proxy"
-  | "relational"
-  | "unavailable"
-  | "blocked"
-  | "deferred";
-type MatrixCategory =
-  | "identity"
-  | "money"
-  | "tax_residency"
-  | "climate"
-  | "travel_connectivity"
-  | "health_family_schooling"
-  | "safety_rights"
-  | "nature_environment"
-  | "culture_services";
-type SourceGapReason =
-  | "no_public_source_found"
-  | "source_exists_but_paywalled"
-  | "source_terms_block_reuse"
-  | "source_bot_blocked_manual_needed"
-  | "local_source_too_sparse"
-  | "official_source_only_national"
-  | "requires_geospatial_build"
-  | "requires_manual_maps_check"
-  | "source_search_required"
-  | "out_of_slice";
-
-type MatrixRow = {
-  key: string;
-  label: string;
-  matrixCategory: MatrixCategory;
-  intendedGranularity: Granularity;
-  observedGranularity?: Granularity;
-  coverageStatus: CoverageStatus;
-  cited?: { ref: string };
-  unit?: string;
-  sourceGapReason?: SourceGapReason;
-  notes?: string;
-};
 
 type AdapterInput = {
   coordinates?: {
@@ -89,7 +48,7 @@ type SeededPlaceEvidenceBundle = {
   summary: string;
   publicationRecommendation: "hold";
   adapterInput?: AdapterInput;
-  rows: MatrixRow[];
+  rows: MatrixRowInput[];
 };
 
 export type SeedCityEvidenceBundleResult = {
@@ -148,9 +107,11 @@ function todayStamp(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-function safeReadTemplateRows(): Map<string, Partial<MatrixRow>> {
+function safeReadTemplateRows(): Map<string, Partial<MatrixRowInput>> {
   try {
-    const raw = JSON.parse(readFileSync(TEMPLATE_BUNDLE_PATH, "utf8")) as { rows?: MatrixRow[] };
+    const raw = JSON.parse(readFileSync(TEMPLATE_BUNDLE_PATH, "utf8")) as {
+      rows?: MatrixRowInput[];
+    };
     return new Map((raw.rows ?? []).map((row) => [row.key, row]));
   } catch {
     return new Map();
@@ -177,7 +138,7 @@ function granularityFromRegistry(value: string): Granularity {
   return "country";
 }
 
-function gapReasonCounts(rows: MatrixRow[]): Record<string, number> {
+function gapReasonCounts(rows: MatrixRowInput[]): Record<string, number> {
   return rows.reduce<Record<string, number>>((acc, row) => {
     if (!row.sourceGapReason) return acc;
     acc[row.sourceGapReason] = (acc[row.sourceGapReason] ?? 0) + 1;
@@ -232,10 +193,10 @@ function sourceSearchNotes(row: ReturnType<typeof buildCityMatrixRun>["rows"][nu
 
 function completedGapRow(
   row: ReturnType<typeof buildCityMatrixRun>["rows"][number],
-  template: Partial<MatrixRow> | undefined,
+  template: Partial<MatrixRowInput> | undefined,
   sourceGapReason: SourceGapReason,
   notes: string,
-): MatrixRow {
+): MatrixRowInput {
   return {
     key: row.key,
     label: row.label,
@@ -271,7 +232,7 @@ export function buildSeedCityEvidenceBundle(
     id: input.id,
   });
 
-  const rows: MatrixRow[] = run.rows.map((row) => {
+  const rows: MatrixRowInput[] = run.rows.map((row) => {
     const template = templateRows.get(row.key);
     const base = {
       key: row.key,

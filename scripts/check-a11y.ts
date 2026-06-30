@@ -80,7 +80,7 @@ for (const file of htmlFiles()) {
     runScripts: "outside-only",
     url: `https://mysecondcountry.com/${rel(file).replace(/\/index\.html$/, "")}`,
   });
-  const win = dom.window as AxeWindow;
+  const win = dom.window as unknown as AxeWindow;
   win.eval(axe.source);
   const results = await win.axe?.run(win.document, {
     resultTypes: ["violations"],

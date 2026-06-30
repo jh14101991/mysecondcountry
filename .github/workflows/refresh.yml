@@ -17,7 +17,11 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ github.token }}
+      # Use the documented fine-grained PAT (SECRETS.md: GH_PR_BOT_TOKEN) for gh pr create.
+      # The default GITHUB_TOKEN cannot open PRs unless the repo setting "Allow GitHub Actions
+      # to create and approve pull requests" is on, which is what broke the 2026-06-29 run.
+      # A PAT also makes the data PR trigger CI. Falls back to GITHUB_TOKEN if the secret is unset.
+      GH_TOKEN: ${{ secrets.GH_PR_BOT_TOKEN || github.token }}
     steps:
       - uses: actions/checkout@v4
 

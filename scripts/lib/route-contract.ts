@@ -43,13 +43,14 @@ const routeSurfaces = new Set<RouteSurface>([
 
 function defaultRouteContractPath(): string {
   const cwd = process.cwd();
+  const primary = join(cwd, "docs/design/routes.json");
   const candidates = [
-    join(cwd, "docs/design/routes.json"),
+    primary,
     join(cwd, "../docs/design/routes.json"),
     join(cwd, "../../docs/design/routes.json"),
     fileURLToPath(new URL("../../docs/design/routes.json", import.meta.url)),
   ];
-  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0];
+  return candidates.find((candidate) => existsSync(candidate)) ?? primary;
 }
 
 export const DEFAULT_ROUTE_CONTRACT_PATH = defaultRouteContractPath();
@@ -179,7 +180,11 @@ export function canonicalUrlForRoute(
 
 export function parseSitemapLocs(sitemap: string): Set<string> {
   const locPattern = /<loc>\s*([^<]+?)\s*<\/loc>/g;
-  return new Set(Array.from(sitemap.matchAll(locPattern), ([, loc]) => loc.trim()));
+  return new Set(
+    Array.from(sitemap.matchAll(locPattern), (match) => match[1]?.trim()).filter(
+      (loc): loc is string => loc !== undefined,
+    ),
+  );
 }
 
 function canonicalVariantLoc(loc: string, origin: string): string | null {
