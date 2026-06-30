@@ -33,6 +33,19 @@ const emailCaptureLive = !EMAIL_FORM_ACTION.includes("REPLACE.example");
         />
         <button class="email-capture__submit" type="submit">Email me changes</button>
       </form>
+      <script is:inline>
+        (() => {
+          for (const form of document.querySelectorAll(".email-capture__form")) {
+            form.addEventListener("submit", () => {
+              if (window.plausible) {
+                window.plausible("waitlist_joined", {
+                  props: { source_path: window.location.pathname },
+                });
+              }
+            });
+          }
+        })();
+      </script>
     </section>
   )
 }

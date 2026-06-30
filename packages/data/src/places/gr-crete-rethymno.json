@@ -1,0 +1,165 @@
+{
+  "id": "gr-crete-rethymno",
+  "slug": "rethymno",
+  "granularity": "town",
+  "parentId": "gr-crete",
+  "name": "Rethymno",
+  "country": "Greece",
+  "coordinates": {
+    "lat": 35.3676472,
+    "lon": 24.4736079
+  },
+  "ancestry": [
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "granularity": "country"
+    },
+    {
+      "name": "Crete",
+      "slug": "crete",
+      "granularity": "region"
+    }
+  ],
+  "description": "Rethymno is a Crete town page in the My Second Country evidence atlas. It separates cited local rows, inherited Greece and Crete context, route proxies, and source gaps for screening. It is not advice.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 87.4,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 14.3,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.3676472&longitude=24.4736079&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Rethymno",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Rethymno 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.3C; Feb 14.8C; Mar 17.1C; Apr 20.4C; May 25.1C; Jun 29.4C; Jul 31.2C; Aug 31.1C; Sep 28.6C; Oct 24.4C; Nov 19.7C; Dec 15.7C. Returned grid point 35.32513, 24.514067, elevation 8 m."
+    },
+    "averageJulyHighC": {
+      "value": 31.2,
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.3676472&longitude=24.4736079&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Rethymno",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Rethymno 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.3C; Feb 14.8C; Mar 17.1C; Apr 20.4C; May 25.1C; Jun 29.4C; Jul 31.2C; Aug 31.1C; Sep 28.6C; Oct 24.4C; Nov 19.7C; Dec 15.7C. Returned grid point 35.32513, 24.514067, elevation 8 m."
+    },
+    "averageAnnualSunHours": {
+      "value": 2773,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Athens",
+      "sourceName": "Athens climate normals (Elliniko), via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "country",
+      "category": "climate",
+      "excerpt": "Athens: about 2,773 mean annual sunshine hours (Elliniko station)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, is recorded here as the provisional Crete parent class pending the region geospatial build."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Migration Code, Law 5038/2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "excerpt": "Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child.",
+      "stalenessDays": 60
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 44,
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top marginal personal income tax rate 44 percent on income above 60,000 euros (scale 9, 20, 26, 34, 39, 44 percent)."
+    }
+  },
+  "variables": {
+    "nearest_airport": {
+      "value": "Chania International Airport (CHQ/LGSA), large_airport",
+      "sourceUrl": "https://ourairports.com/airports/LGSA/",
+      "sourceName": "Derived nearest-airport selection from OpenStreetMap Rethymno coordinate and OurAirports Crete airport coordinates",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "Great-circle comparison from OSM node 31376614 for Rethymno gives CHQ 34.4 km, HER 64.2 km, and JSH 148.7 km."
+    },
+    "airport_drive_minutes": {
+      "value": "OSRM route proxy from Rethymno town point to Heraklion International Nikos Kazantzakis Airport (HER/LGIR): 84.8 minutes, 83.3 km.",
+      "sourceUrl": "https://router.project-osrm.org/table/v1/driving/24.0191544,35.5120831;25.1332843,35.33908;24.4736079,35.3676472;25.7175216,35.1905899;24.150673,35.531207;25.1803,35.339699;26.101299285888672,35.21609878540039?sources=0;1;2;3&destinations=4;5;6&annotations=duration,distance",
+      "sourceName": "OSRM public routing table over OpenStreetMap-derived road graph, Rethymno point to Crete airport points",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "OSRM table returned Rethymno to HER 84.8 minutes and 83.3 km; CHQ was 94.5 minutes and JSH was 208.8 minutes."
+    },
+    "airport_summer_direct_destinations": {
+      "value": 115,
+      "sourceUrl": "https://www.chq-airport.gr/en/flights--more/flights--destinations/destinations/destinations/dest_id-448/nd_id-448",
+      "sourceName": "Chania Airport / Fraport Greece destinations timetable",
+      "verifiedDate": "2026-06-30",
+      "confidence": "medium",
+      "granularity": "region",
+      "category": "connectivity",
+      "excerpt": "CHQ official destinations page exposes destination airports through /en/selected_country and outbound timetable rows through /en/destinations. Live recount on 2026-06-30 returned 116 listed destination airports and 115 outbound airports with timetable rows; IST had no outbound rows. The page states flight details relate to the period until 24/10/2026, and the HSCA calendar marks NW26/27 as starting 25-Oct-2026."
+    },
+    "bus_frequency_proxy": {
+      "value": "37 daily outbound spine departures from Rethymno, counting 19 Rethymno-Chania services plus 18 Rethymno-Heraklion services. Selected corridor: Rethymno westbound to Chania and eastbound to Heraklion.",
+      "sourceUrl": "https://www.e-ktel.com/images/pdfs/2026/JUN_2026/RETHYMNO_FROM_23-06-2026.pdf",
+      "sourceName": "KTEL Chania-Rethymno Rethymno departures PDF valid from 23 June 2026",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "The KTEL Chania-Rethymno PDF 'Timetable with departure from Rethymno' is valid from 23 June 2026. It lists 19 daily Rethymno-Kavros-Georgioupolis-Chania departures and 18 daily Rethymno-Bali-Heraklion departures."
+    },
+    "blue_flag_beaches": {
+      "value": 14,
+      "sourceUrl": "https://www.blueflag.gr/el/awards/2026",
+      "sourceName": "Blue Flag Greece, 2026 awarded beaches list",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "excerpt": "English official awards list has RETHYMNO R.U. > Rethymno Municipality: 14 awarded beaches, including Adelianos Kampos A/Aquila Rithymna Beach, Adelianos Kampos/Caramel Boutique, Adelianos Kampos/Uzenie All Suites Boutique Resort, Pigianos Kampos/Amira Luxury Resort."
+    },
+    "temp_monthly_high": {
+      "value": "Jan 14.3C; Feb 14.8C; Mar 17.1C; Apr 20.4C; May 25.1C; Jun 29.4C; Jul 31.2C; Aug 31.1C; Sep 28.6C; Oct 24.4C; Nov 19.7C; Dec 15.7C",
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.3676472&longitude=24.4736079&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Rethymno",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Rethymno 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 14.3C; Feb 14.8C; Mar 17.1C; Apr 20.4C; May 25.1C; Jun 29.4C; Jul 31.2C; Aug 31.1C; Sep 28.6C; Oct 24.4C; Nov 19.7C; Dec 15.7C. Returned grid point 35.32513, 24.514067, elevation 8 m."
+    }
+  }
+}

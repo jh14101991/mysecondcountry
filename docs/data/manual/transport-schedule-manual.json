@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "bundleId": "gr-crete-rethymno",
+      "rowKey": "airport_summer_direct_destinations",
+      "value": 115,
+      "unit": "outbound direct destination airports, CHQ NS26 summer schedule period ending 2026-10-24",
+      "sourceUrl": "https://www.chq-airport.gr/en/flights--more/flights--destinations/destinations/destinations/dest_id-448/nd_id-448",
+      "sourceName": "Chania Airport / Fraport Greece destinations timetable",
+      "sourceExcerpt": "CHQ official destinations page exposes destination airports through /en/selected_country and outbound timetable rows through /en/destinations. Live recount on 2026-06-30 returned 116 listed destination airports and 115 outbound airports with timetable rows; IST had no outbound rows. The page states flight details relate to the period until 24/10/2026, and the HSCA calendar marks NW26/27 as starting 25-Oct-2026.",
+      "observedGranularity": "region",
+      "coverageStatus": "proxy",
+      "confidence": "medium",
+      "verifiedDate": "2026-06-30",
+      "notes": "Rethymno uses CHQ because its nearest_airport row selects Chania International Airport (CHQ/LGSA) by straight-line distance, while the airport_drive_minutes row separately records HER as the faster OSRM drive proxy. Do not inherit this row to Heraklion, Agios Nikolaos, or the Crete parent without their own selected-airport basis."
+    }
+  ]
+}

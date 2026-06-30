@@ -16,6 +16,7 @@ import type { APIRoute } from "astro";
 
 const SITE = "https://mysecondcountry.com";
 const FALLBACK_DATE = "2026-06-25";
+const TRUST_ROUTE_DATE = "2026-06-29";
 
 function maxDate(dates: string[]): string {
   if (dates.length === 0) return FALLBACK_DATE;
@@ -31,8 +32,18 @@ export const GET: APIRoute = () => {
 
   // Static pages
   lines.push(urlEntry(`${SITE}/`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/about`, TRUST_ROUTE_DATE));
+  lines.push(urlEntry(`${SITE}/affiliate-disclosure`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/compare`, TRUST_ROUTE_DATE));
   lines.push(urlEntry(`${SITE}/compare/greece-portugal-spain`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/guides`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/methodology`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/places`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/privacy`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/screening-notice`, TRUST_ROUTE_DATE));
   lines.push(urlEntry(`${SITE}/screener`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/sources`, FALLBACK_DATE));
+  lines.push(urlEntry(`${SITE}/terms`, FALLBACK_DATE));
 
   // Index/hub pages
   lines.push(urlEntry(`${SITE}/answers`, FALLBACK_DATE));

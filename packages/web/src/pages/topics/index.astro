@@ -23,17 +23,47 @@ const jsonLd = [
 ---
 
 <Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
-  <h1>Topics</h1>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Topics</span>
+    </nav>
 
-  <FenceBlock hasLegalClaims={true} />
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Topics</p>
+      <h1 class="corridor-title">Rule context for a careful reader.</h1>
+      <p class="corridor-lead">
+        Topic pages explain the parts of a relocation rule that need more room than a
+        shortlist row or a comparison cell.
+      </p>
+    </header>
 
-  <ul>
-    {
-      topics.map((topic) => (
-        <li>
-          <a href={`/topics/${topic.slug}`}>{topic.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="topic-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">{topics.length} live</p>
+          <h2 id="topic-files">Topic files</h2>
+        </div>
+        <p class="corridor-section-note">
+          Each topic starts from cited facts and keeps the source trail visible.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        {
+          topics.map((topic) => (
+            <a class="corridor-card" href={`/topics/${topic.slug}`}>
+              <span class="corridor-card__meta">{topic.countryId ? "Country topic" : "General topic"}</span>
+              <div>
+                <h3 class="corridor-card__title">{topic.title}</h3>
+                <p class="corridor-card__copy">{topic.metaDescription}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </article>
 </Base>

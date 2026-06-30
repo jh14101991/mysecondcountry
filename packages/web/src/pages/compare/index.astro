@@ -1,0 +1,73 @@
+---
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/compare`;
+const title = "Compare | My Second Country";
+const description =
+  "Neutral, source-backed relocation comparison files from My Second Country, with cited data and visible confidence.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Compare</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Compare</p>
+      <h1 class="corridor-title">Neutral comparison files.</h1>
+      <p class="corridor-lead">
+        MSC comparisons are neutral and source-backed. Each file is built from cited
+        records, dated checks, and visible confidence labels.
+      </p>
+    </header>
+
+    <FenceBlock />
+
+    <section class="corridor-section" aria-labelledby="compare-files">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-count">1 live</p>
+          <h2 id="compare-files">Open comparison files</h2>
+        </div>
+        <p class="corridor-section-note">
+          Start with the available country comparison, then use the screener or source
+          register to inspect the underlying evidence.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <a class="corridor-card" href="/compare/greece-portugal-spain">
+          <span class="corridor-card__meta">Country file</span>
+          <div>
+            <h3 class="corridor-card__title">Greece, Portugal, and Spain</h3>
+            <p class="corridor-card__copy">
+              Cost, tax, visa, sunshine, healthcare, and safety, with sourced rows.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/screener">
+          <span class="corridor-card__meta">Screener</span>
+          <div>
+            <h3 class="corridor-card__title">Build a shortlist</h3>
+            <p class="corridor-card__copy">
+              Screen places against selected constraints and inspect the cited output.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/sources">
+          <span class="corridor-card__meta">Sources</span>
+          <div>
+            <h3 class="corridor-card__title">Inspect the source register</h3>
+            <p class="corridor-card__copy">
+              Check where each public figure comes from and when it was reviewed.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>

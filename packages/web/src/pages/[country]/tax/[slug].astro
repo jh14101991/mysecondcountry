@@ -106,6 +106,49 @@ const factRows = [
   { label: "Maximum regime duration", cited: regime.durationYears, unit: "years" },
 ];
 
+const adviserVerificationItems =
+  regime.id === "greece-foreign-pensioner-flat-tax"
+    ? [
+        "your prior Greek tax-residence history against the five-of-six-year rule;",
+        "whether the country you transfer from has administrative cooperation in tax matters with Greece;",
+        "the 31 March application timing for the tax year you are targeting;",
+        "how your pension source, treaty position, payment timing, and Greek filing obligations apply to your own case.",
+      ]
+    : [];
+
+const ificiContextRows =
+  regime.id === "portugal-ifici"
+    ? [
+        regime.eligibility.priorRegimeExclusion
+          ? {
+              label: "Prior NHR or former-resident use",
+              cited: regime.eligibility.priorRegimeExclusion,
+              prose: true,
+            }
+          : null,
+        regime.eligibility.knownCatch
+          ? {
+              label: "Foreign pension treatment",
+              cited: regime.eligibility.knownCatch,
+              prose: true,
+            }
+          : null,
+        {
+          label: "Prior Portuguese tax residence",
+          cited: regime.eligibility.priorNonResidency,
+          prose: true,
+        },
+      ].filter(
+        (
+          row,
+        ): row is {
+          label: string;
+          cited: Regime["eligibility"][keyof Regime["eligibility"]];
+          prose: true;
+        } => row !== null,
+      )
+    : [];
+
 // Alternatives: every other published regime, linked to its page. Evergreen.
 const altRegimeLinks = regimes
   .filter((r) => r.id !== regime.id)
@@ -114,6 +157,95 @@ const altRegimeLinks = regimes
     return cSlug ? { label: `${r.name}`, href: `/${cSlug}/tax/${r.slug}` } : null;
   })
   .filter((l): l is { label: string; href: string } => l !== null);
+
+type InternalLink = { label: string; href: string };
+const regimeClusterMap: Record<string, { heading: string; links: InternalLink[] }> = {
+  "greece-foreign-pensioner-flat-tax": {
+    heading: "Greece 7 percent tax cluster",
+    links: [
+      {
+        label: "Does Greece tax foreign pensions at 7 percent?",
+        href: "/answers/does-greece-tax-foreign-pensions-at-7-percent",
+      },
+      {
+        label: "Who does not qualify for Greece 7 percent pensioner tax?",
+        href: "/answers/who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+      },
+      {
+        label: "What happens when Greece 7 percent pensioner tax expires?",
+        href: "/answers/what-happens-when-greece-7-percent-pensioner-tax-expires",
+      },
+      {
+        label: "Greece 7 percent pension tax checklist",
+        href: "/tools/greece-7-percent-pension-tax-checklist",
+      },
+      { label: "Greece country dossier", href: "/places/greece" },
+      { label: "Crete region dossier", href: "/places/greece/crete" },
+    ],
+  },
+  "greece-non-dom-lump-sum-tax": {
+    heading: "Greece tax context",
+    links: [
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+      { label: "Greece golden visa price tiers", href: "/topics/greece-golden-visa-price-tiers" },
+      { label: "Greece country dossier", href: "/places/greece" },
+      { label: "Crete region dossier", href: "/places/greece/crete" },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+    ],
+  },
+  "portugal-ifici": {
+    heading: "Portugal IFICI cluster",
+    links: [
+      { label: "Portugal IFICI, the NHR successor", href: "/topics/portugal-ifici-the-nhr-successor" },
+      {
+        label: "Is Portugal's NHR tax regime still available?",
+        href: "/answers/is-portugals-nhr-tax-regime-still-available",
+      },
+      {
+        label: "Portugal IFICI eligibility checklist",
+        href: "/tools/portugal-ifici-eligibility-checklist",
+      },
+      { label: "Portugal country dossier", href: "/places/portugal" },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+    ],
+  },
+  "italy-pensioner-7-percent-flat-tax": {
+    heading: "Pension tax context",
+    links: [
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+      { label: "Italy country dossier", href: "/places/italy" },
+      {
+        label: "EU expat tax regimes by rate",
+        href: "/shortlists/eu-expat-tax-regimes-by-rate",
+      },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+    ],
+  },
+};
+const currentRegimeHref = `/${country}/tax/${regime.slug}`;
+const regimeCluster = regimeClusterMap[regime.id];
+const regimeClusterLinks = regimeCluster
+  ? regimeCluster.links.filter((link) => link.href !== currentRegimeHref)
+  : [];
 
 const citeLines = allFacts.map(({ path, cited }) => ({
   sourceName: cited.sourceName,
@@ -208,6 +340,36 @@ const jsonLd = [
       </ul>
     </section>
 
+    {adviserVerificationItems.length > 0 && (
+      <section aria-labelledby="adviser-verification-h">
+        <SectionHeading as="h2" id="adviser-verification-h">
+          What to verify with a tax adviser
+        </SectionHeading>
+        <p class="section-note">
+          Use this page to identify the published rule, then verify the individual application
+          outside this site. In particular, check:
+        </p>
+        <ul class="verification-list">
+          {adviserVerificationItems.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {ificiContextRows.length > 0 && (
+      <section aria-labelledby="ifici-context-h">
+        <SectionHeading as="h2" id="ifici-context-h">
+          NHR is closed, IFICI is narrower
+        </SectionHeading>
+        <p class="section-note">
+          The former NHR regime and IFICI should not be read as the same thing. The cited fields
+          below are the main narrowing points carried by this page.
+        </p>
+        <FactsTable caption="Cited IFICI context facts" rows={ificiContextRows} />
+      </section>
+    )}
+
     {showIntro(regime.id) && <IntroRequest pageId={regime.id} corridorLabel="Portugal IFICI" />}
 
     <section aria-labelledby="headline-facts-h">
@@ -225,6 +387,10 @@ const jsonLd = [
     </section>
 
     <CiteThis lines={citeLines} />
+
+    {regimeCluster && regimeClusterLinks.length > 0 && (
+      <RelatedLinks heading={regimeCluster.heading} links={regimeClusterLinks} />
+    )}
 
     <RelatedLinks
       links={[

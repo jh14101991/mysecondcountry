@@ -80,6 +80,57 @@ const relatedLinks = topic.relatedSlugs
   })
   .filter((l): l is { label: string; href: string } => l !== null);
 
+type InternalLink = { label: string; href: string };
+const topicClusterMap: Record<string, { heading: string; links: InternalLink[] }> = {
+  "greece-golden-visa-price-tiers": {
+    heading: "Greece residency context",
+    links: [
+      { label: "Greece country dossier", href: "/places/greece" },
+      { label: "Crete region dossier", href: "/places/greece/crete" },
+      {
+        label: "Greece non-dom 100,000 euro lump-sum tax",
+        href: "/greece/tax/non-dom-lump-sum-tax",
+      },
+      {
+        label: "Greece foreign-pensioner 7 percent flat tax",
+        href: "/greece/tax/foreign-pensioner-flat-tax",
+      },
+      {
+        label: "Can I still get a Spanish golden visa?",
+        href: "/answers/can-i-still-get-a-spanish-golden-visa",
+      },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+    ],
+  },
+  "portugal-ifici-the-nhr-successor": {
+    heading: "Portugal IFICI cluster",
+    links: [
+      { label: "Portugal IFICI 20 percent regime", href: "/portugal/tax/ifici" },
+      {
+        label: "Is Portugal's NHR tax regime still available?",
+        href: "/answers/is-portugals-nhr-tax-regime-still-available",
+      },
+      {
+        label: "Portugal IFICI eligibility checklist",
+        href: "/tools/portugal-ifici-eligibility-checklist",
+      },
+      { label: "Portugal country dossier", href: "/places/portugal" },
+      {
+        label: "Greece vs Portugal vs Spain comparison",
+        href: "/compare/greece-portugal-spain",
+      },
+    ],
+  },
+};
+const currentTopicHref = `/topics/${topic.slug}`;
+const topicCluster = topicClusterMap[topic.id];
+const topicClusterLinks = topicCluster
+  ? topicCluster.links.filter((link) => link.href !== currentTopicHref)
+  : [];
+
 const title = `${topic.title} | My Second Country`;
 
 const jsonLd = [
@@ -127,6 +178,10 @@ const jsonLd = [
     {showIntro(topic.id) && <IntroRequest pageId={topic.id} corridorLabel="Portugal IFICI" />}
 
     <CiteThis lines={citeLines} />
+
+    {topicCluster && topicClusterLinks.length > 0 && (
+      <RelatedLinks heading={topicCluster.heading} links={topicClusterLinks} />
+    )}
 
     {relatedLinks.length > 0 && <RelatedLinks links={relatedLinks} />}
 

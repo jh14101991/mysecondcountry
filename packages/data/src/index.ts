@@ -1,6 +1,9 @@
 import { places } from "./places/index.js";
 import type { Place } from "./schema.js";
 
+export * from "./place-bundles/facts.js";
+export * from "./place-bundles/index.js";
+export * from "./place-bundles/schema.js";
 export * from "./profiles/presets.js";
 export * from "./qa/facts.js";
 export * from "./qa/index.js";

@@ -100,5 +100,66 @@
       "category": "tax",
       "excerpt": "Top marginal personal income tax rate of 44 percent on income above 60,000 euros (general scale 9, 20, 26, 34, 39, 44 percent)."
     }
+  },
+  "variables": {
+    "nearest_airport": {
+      "value": "Chania International Airport (CHQ/LGSA), large_airport",
+      "sourceUrl": "https://ourairports.com/airports/LGSA/",
+      "sourceName": "OurAirports, Chania International Airport record",
+      "verifiedDate": "2026-06-28",
+      "confidence": "high",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "LGSA, large_airport, Chania International Airport, municipality Souda, IATA CHQ."
+    },
+    "airport_drive_minutes": {
+      "value": "OSRM route proxy from Chania town point to Chania International Airport (CHQ/LGSA): 24.4 minutes, 15.7 km.",
+      "sourceUrl": "https://router.project-osrm.org/table/v1/driving/24.0191544,35.5120831;25.1332843,35.33908;24.4736079,35.3676472;25.7175216,35.1905899;24.150673,35.531207;25.1803,35.339699;26.101299285888672,35.21609878540039?sources=0;1;2;3&destinations=4;5;6&annotations=duration,distance",
+      "sourceName": "OSRM public routing table over OpenStreetMap-derived road graph, Chania point to Crete airport points",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "OSRM table returned Chania to CHQ 24.4 minutes and 15.7 km; HER was 155.3 minutes and JSH was 279.4 minutes."
+    },
+    "airport_summer_direct_destinations": {
+      "value": 115,
+      "sourceUrl": "https://www.chq-airport.gr/en/flights--more/flights--destinations/destinations/destinations/dest_id-448/nd_id-448",
+      "sourceName": "Chania Airport / Fraport Greece destinations timetable",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "region",
+      "category": "connectivity",
+      "excerpt": "Official Chania Airport endpoints returned 116 listed destination airports. The /en/destinations endpoint with ArrivalStatus=D returned outbound timetable rows for 115 airports, with IST listed but no outbound rows. The page says the flight information relates to the period up to 24/10/2026; the HSCA March 2026 calendar identifies NS26 starting 29-Mar-26 and NW26/27 starting 25-Oct-26."
+    },
+    "bus_frequency_proxy": {
+      "value": "22 daily outbound spine departures from Chania, counting 18 Chania-Rethymno-Heraklion services plus 4 express Chania-Heraklion services. Selected corridor: Chania to Rethymno and Heraklion intercity spine.",
+      "sourceUrl": "https://www.e-ktel.com/images/pdfs/2026/JUN_2026/CHANIA_FROM_27-06-2026.pdf",
+      "sourceName": "KTEL Chania-Rethymno Chania departures PDF valid from 27 June 2026",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "connectivity",
+      "excerpt": "The KTEL Chania-Rethymno PDF 'Bus departures from Chania' is valid from 27 June 2026. It lists 18 daily Chania-Georgioupolis-Kavros-Rethymno-Bali-Heraklion departures and 4 daily express Chania-Heraklion departures."
+    },
+    "blue_flag_beaches": {
+      "value": 15,
+      "sourceUrl": "https://www.blueflag.gr/el/awards/2026",
+      "sourceName": "Blue Flag Greece, 2026 awarded beaches list",
+      "verifiedDate": "2026-06-29",
+      "confidence": "medium",
+      "granularity": "town",
+      "excerpt": "English official awards list has CHANIA R.U. > Chania Municipality: 15 awarded beaches, including Ag. Apostoli 1, Ag. Apostoli 2, Agia Marina/Santa Marina, Ag. Marina/The noverian Antama organic beach resort."
+    },
+    "temp_monthly_high": {
+      "value": "Jan 13.2C; Feb 13.4C; Mar 15.1C; Apr 17.7C; May 21.5C; Jun 25.6C; Jul 27.9C; Aug 28C; Sep 25.5C; Oct 22C; Nov 18.2C; Dec 14.7C",
+      "sourceUrl": "https://archive-api.open-meteo.com/v1/archive?latitude=35.5120831&longitude=24.0191544&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=UTC",
+      "sourceName": "Open-Meteo Historical Weather API, 1991-2020 daily archive point sample for Chania",
+      "verifiedDate": "2026-06-28",
+      "confidence": "medium",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Chania 1991-2020 monthly average daily high temperatures from Open-Meteo daily temperature_2m_max: Jan 13.2C; Feb 13.4C; Mar 15.1C; Apr 17.7C; May 21.5C; Jun 25.6C; Jul 27.9C; Aug 28C; Sep 25.5C; Oct 22C; Nov 18.2C; Dec 14.7C. Returned grid point 35.536026, 24.146341, elevation 15 m."
+    }
   }
 }

@@ -1,0 +1,124 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/screening-notice`;
+const title = "Screening notice | My Second Country";
+const description =
+  "The screening notice for My Second Country, including what the product reports and what it does not do.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page legal-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Screening notice</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Legal</p>
+      <h1 class="corridor-title">Screening notice.</h1>
+      <p class="corridor-lead">
+        My Second Country is built to surface sourced screening information with visible
+        dates, confidence, and limits.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="notice-reports">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Reports</p>
+          <h2 id="notice-reports">What MSC reports.</h2>
+        </div>
+        <p class="corridor-section-note">
+          MSC reports cited public information about places, rules, costs, climate,
+          healthcare, safety, and practical fit. Each value should name its source, show
+          the date checked, and carry a confidence label.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="notice-limits">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Limits</p>
+          <h2 id="notice-limits">What MSC does not do.</h2>
+        </div>
+        <p class="corridor-section-note">
+          MSC does not decide eligibility, calculate an individual tax position, assess a
+          visa application, handle legal matters, or tell a person which place to choose.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="notice-evidence">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Evidence</p>
+          <h2 id="notice-evidence">Why sources, dates, confidence, and granularity are visible.</h2>
+        </div>
+        <p class="corridor-section-note">
+          Relocation facts can change and can apply at country, region, or town level.
+          Visible source trails help readers check what was measured, where it came from,
+          when it was reviewed, and how close the evidence is to the place being screened.
+        </p>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="notice-consult">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Review</p>
+          <h2 id="notice-consult">When to consult a licensed professional.</h2>
+        </div>
+        <p class="corridor-section-note">
+          Consult a licensed professional before acting on legal, tax, immigration,
+          financial, property, healthcare, or residency matters, and verify the current
+          position with official sources.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <a class="corridor-card" href="/sources">
+          <span class="corridor-card__meta">Sources</span>
+          <div>
+            <h3 class="corridor-card__title">Open the source register</h3>
+            <p class="corridor-card__copy">
+              Check source names, dates, confidence, and coverage.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/methodology">
+          <span class="corridor-card__meta">Method</span>
+          <div>
+            <h3 class="corridor-card__title">Read the method</h3>
+            <p class="corridor-card__copy">
+              See how cited values are collected, labelled, and shown.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/privacy">
+          <span class="corridor-card__meta">Privacy</span>
+          <div>
+            <h3 class="corridor-card__title">Review privacy terms</h3>
+            <p class="corridor-card__copy">
+              See what information the site collects and why.
+            </p>
+          </div>
+        </a>
+        <a class="corridor-card" href="/terms">
+          <span class="corridor-card__meta">Terms</span>
+          <div>
+            <h3 class="corridor-card__title">Read the site terms</h3>
+            <p class="corridor-card__copy">
+              Review the usage limits and public boundaries.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>

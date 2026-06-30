@@ -13,14 +13,59 @@ Trigger: any `/places/[slug]` page mount (fires once per navigation, not on scro
 Properties:
 - `place_id`: string, e.g. `gr-athens-attica`
 - `granularity`: `"country"` | `"region"` | `"town"`
+- `path`: current URL path
 
 **`source_link_click`**
-Trigger: user clicks any external link rendered from a `CitedValue.sourceUrl`.
+Trigger: user clicks any external link rendered from a `CitedValue.sourceUrl`, an evidence-atlas
+detail source, or the deduplicated page source list.
 Properties:
 - `source_name`: `CitedValue.sourceName`, e.g. `"Greek Ministry of Finance"`
 - `source_url`: `CitedValue.sourceUrl`
-- `cited_value_key`: the field path on the Place object that holds this `CitedValue`, e.g. `"tax.incomeTaxRate"`
+- `cited_value_key`: the field path or stable key for the cited value, e.g. `"tax.incomeTaxRate"`
+- `row_key`: evidence-atlas row key when the click comes from the atlas
+- `source_placement`: `"cited_value"` | `"place_fact_table"` | `"atlas_detail"` | `"sources_list"`
 - `place_id`: string
+
+**`evidence_atlas_lens_selected`**
+Trigger: user selects an Evidence atlas lens.
+Properties:
+- `place_id`: string
+- `granularity`: `"country"` | `"region"` | `"town"`
+- `lens`: selected lens key, e.g. `"family"` | `"housing"` | `"source-gaps"`
+- `visible_count`: number of visible rows after filtering, encoded as a string for provider compatibility
+
+**`evidence_atlas_search_used`**
+Trigger: user types a non-empty Evidence atlas search query. Track the first meaningful search per
+page load, not every keystroke.
+Properties:
+- `place_id`: string
+- `query_length`: character count only; do not send the raw query
+- `visible_count`: number of visible rows after filtering, encoded as a string
+
+**`evidence_atlas_row_opened`**
+Trigger: user opens an Evidence atlas row.
+Properties:
+- `place_id`: string
+- `row_key`: canonical matrix row key
+- `row_label`: reader-facing row label
+- `coverage_status`: reader-facing coverage label
+- `confidence`: confidence value when the row has a cited value
+- `status_tone`: `"cited"` | `"gap"` | `"inherited"` | `"local"` | `"proxy"`
+- `has_source`: `"true"` | `"false"`
+
+**`evidence_atlas_source_click`**
+Trigger: user clicks the source link in the Evidence atlas detail pane. This should also emit
+`source_link_click` with the same source fields.
+Properties:
+- same properties as `source_link_click`
+
+**`screener_cta_click`**
+Trigger: user clicks a place-page CTA to `/screener`.
+Properties:
+- `place_id`: string
+- `granularity`: `"country"` | `"region"` | `"town"`
+- `cta_variant`: stable CTA placement or visible CTA label
+- `source_path`: page path where the CTA was clicked
 
 **`affiliate_outbound_click`**
 Trigger: user clicks any affiliate-tagged outbound link (health insurance comparison, VPN, flight search, relocation service, etc.).
@@ -203,7 +248,7 @@ A secondary cut: breakdown by `cited_value_key` to learn which data categories (
 
 1. When a human-traffic analytics provider is enabled, every event listed above must be wired
    before new conversion surfaces ship.
-2. `fence_viewed` must fire on every page that renders residency, tax, visa, or immigration `CitedValue` fields. The `IntersectionObserver` hook lives in a shared Astro island component (`packages/web/src/components/LiabilityFence.astro`); it is not optional per-page.
+2. `fence_viewed` must fire on every page that renders residency, tax, visa, or immigration `CitedValue` fields. The fence markup lives in `packages/web/src/components/FenceBlock.astro`; the shared `IntersectionObserver` hook lives in `packages/web/src/layouts/Base.astro`. It is not optional per-page.
 3. `dossier_checkout_started` is server-side only. Do not fire it from the client.
 4. The AI-crawler parser (`scripts/parse-ai-crawlers.ts`) is part of the weekly digest. It reports
    ingestion signals only. It does not prove AI citations or human demand.

@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-06-29",
+  "primaryNav": [
+    "/compare/greece-portugal-spain",
+    "/shortlists",
+    "/guides",
+    "/sources",
+    "/screener"
+  ],
+  "routes": [
+    {
+      "route": "/",
+      "status": "live",
+      "surface": "marketing",
+      "discoverability": ["primaryNav", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/home.md"
+    },
+    {
+      "route": "/about",
+      "status": "live",
+      "surface": "trust",
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/methodology",
+      "brief": "docs/design/routes/legal.md"
+    },
+    {
+      "route": "/affiliate-disclosure",
+      "status": "live",
+      "surface": "legal",
+      "discoverability": ["footer", "sources", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/legal.md"
+    },
+    {
+      "route": "/answers",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["guides", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/answers/can-i-still-get-a-spanish-golden-visa",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["answers", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/answers/does-greece-tax-foreign-pensions-at-7-percent",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["answers", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/answers/is-portugals-nhr-tax-regime-still-available",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["answers", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/answers/what-happens-when-greece-7-percent-pensioner-tax-expires",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["answers", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/answers/who-does-not-qualify-for-greece-7-percent-pensioner-tax",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["answers", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/compare",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/compare/greece-portugal-spain",
+      "brief": "docs/design/routes/compare.md"
+    },
+    {
+      "route": "/compare/greece-portugal-spain",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["primaryNav", "homepage", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/compare.md"
+    },
+    {
+      "route": "/greece/tax/foreign-pensioner-flat-tax",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["tax", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/greece/tax/non-dom-lump-sum-tax",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["tax", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/guides",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["primaryNav", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/italy/tax/pensioner-7-percent-flat-tax",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["tax", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/methodology",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["guides", "sources", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/sources-methodology.md"
+    },
+    {
+      "route": "/places",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["homepage", "footer", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/places/greece/crete/chania",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/cyprus",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/places/greece/crete",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/places/greece/crete/chania",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/chania",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/heraklion",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/rethymno",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/greece/crete/agios-nikolaos",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/italy",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/malta",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/portugal",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/places/spain",
+      "status": "live",
+      "surface": "coverage",
+      "discoverability": ["places", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/places.md"
+    },
+    {
+      "route": "/portugal/tax/ifici",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["tax", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/privacy",
+      "status": "live",
+      "surface": "legal",
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/terms",
+      "brief": "docs/design/routes/legal.md"
+    },
+    {
+      "route": "/screener",
+      "status": "live",
+      "surface": "product",
+      "discoverability": ["primaryNav", "homepage", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/compare/greece-portugal-spain",
+      "brief": "docs/design/routes/screener.md"
+    },
+    {
+      "route": "/screening-notice",
+      "status": "live",
+      "surface": "legal",
+      "discoverability": ["footer", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/legal.md"
+    },
+    {
+      "route": "/shortlists",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["primaryNav", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/shortlists.md"
+    },
+    {
+      "route": "/shortlists/eu-expat-tax-regimes-by-rate",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["shortlists", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/shortlists.md"
+    },
+    {
+      "route": "/shortlists/eu-residency-under-3700-a-month",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["shortlists", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/shortlists.md"
+    },
+    {
+      "route": "/sources",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["primaryNav", "footer", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/methodology",
+      "brief": "docs/design/routes/sources-methodology.md"
+    },
+    {
+      "route": "/tax",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["guides", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/terms",
+      "status": "live",
+      "surface": "legal",
+      "discoverability": ["footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/privacy",
+      "brief": "docs/design/routes/legal.md"
+    },
+    {
+      "route": "/tools",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["guides", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/tools/greece-7-percent-pension-tax-checklist",
+      "status": "live",
+      "surface": "product",
+      "discoverability": ["tools", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/tools/portugal-ifici-eligibility-checklist",
+      "status": "live",
+      "surface": "product",
+      "discoverability": ["tools", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/topics",
+      "status": "live",
+      "surface": "hub",
+      "discoverability": ["guides", "footer", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/topics/greece-golden-visa-price-tiers",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["topics", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    },
+    {
+      "route": "/topics/portugal-ifici-the-nhr-successor",
+      "status": "live",
+      "surface": "evidence",
+      "discoverability": ["topics", "guides", "sitemap", "related"],
+      "sitemap": true,
+      "firstAction": "/sources",
+      "brief": "docs/design/routes/guides.md"
+    }
+  ]
+}

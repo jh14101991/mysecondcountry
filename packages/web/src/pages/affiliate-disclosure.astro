@@ -1,0 +1,97 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/affiliate-disclosure`;
+const title = "Affiliate disclosure | My Second Country";
+const description =
+  "Affiliate disclosure for My Second Country, including how paid links are handled and how rankings are protected.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page legal-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Affiliate disclosure</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <h1 class="corridor-title">Affiliate disclosure</h1>
+      <p class="corridor-lead">
+        My Second Country may contain affiliate links only when they are clearly disclosed.
+        No fee can buy placement, ranking, or a better confidence label.
+      </p>
+      <nav class="legal-links" aria-label="Related legal and source links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/screening-notice">Screening notice</a>
+        <a href="/sources">Sources</a>
+        <a href="/methodology">Methodology</a>
+      </nav>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="affiliate-rules">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Disclosure</p>
+          <h2 id="affiliate-rules">How paid links work</h2>
+        </div>
+        <p class="corridor-section-note">
+          If a page contains an affiliate link, the page will say so before the first paid
+          link. If a reader buys through an affiliate link, My Second Country may earn a
+          commission at no extra cost to the reader.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Rankings</span>
+          <div>
+            <h3 class="corridor-card__title">No paid placement</h3>
+            <p class="corridor-card__copy">
+              A company cannot pay to change a place score, shortlist rank, confidence
+              mark, source label, or editorial conclusion.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Programs</span>
+          <div>
+            <h3 class="corridor-card__title">No approved programs listed yet</h3>
+            <p class="corridor-card__copy">
+              No current affiliate program list is published because no approved live
+              program list has been confirmed for launch.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Proof</span>
+          <div>
+            <h3 class="corridor-card__title">Sources stay separate</h3>
+            <p class="corridor-card__copy">
+              Source records and confidence labels are governed by the citation method, not
+              by commercial relationships.
+            </p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="affiliate-links">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Reference</p>
+          <h2 id="affiliate-links">Where to inspect the method</h2>
+        </div>
+        <p class="corridor-section-note">
+          Read the <a href="/sources">source register</a> and
+          <a href="/methodology">methodology</a> to see how evidence, confidence, and
+          freshness are handled.
+        </p>
+      </div>
+    </section>
+  </article>
+</Base>

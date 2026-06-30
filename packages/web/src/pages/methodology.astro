@@ -84,7 +84,7 @@ const jsonLd = [
       <h1>How the engine works, and how it cites.</h1>
       <p class="standfirst">
         A reader gives a situation. The engine screens it against published records and
-        returns a ranked, source-cited shortlist of countries, regions, and towns.
+        returns a source-cited shortlist of countries, regions, and towns.
       </p>
     </header>
 
@@ -110,7 +110,7 @@ const jsonLd = [
             <h3>Screen against selected constraints</h3>
             <p>
               Profiles surface the variables that matter for the scenario. Dealbreakers are
-              applied as filters. Scores are calculated only across the selected criteria.
+              applied as filters. Comparisons are calculated only across the selected criteria.
             </p>
           </div>
         </article>
@@ -171,7 +171,7 @@ const jsonLd = [
 
     <section class="method-section" aria-labelledby="confidence-heading">
       <p class="overline">Confidence</p>
-      <h2 id="confidence-heading">Confidence is a visible part of the interface.</h2>
+      <h2 id="confidence-heading">Confidence tiers are visible in the interface.</h2>
       <div class="confidence-list">
         {
           confidenceTerms.map((term) => (
@@ -197,9 +197,47 @@ const jsonLd = [
       </div>
     </section>
 
+    <section class="method-section" aria-labelledby="granularity-heading">
+      <p class="overline">Granularity</p>
+      <h2 id="granularity-heading">A figure says which place level it can support.</h2>
+      <p class="body-prose">
+        Country data can screen a country. Region data can narrow a region. Town data is
+        required before a local dossier can make local claims.
+      </p>
+      <div class="granularity-list">
+        <article>
+          <span>Country</span>
+          <p>National rules, national indexes, and country-level comparison rows.</p>
+        </article>
+        <article>
+          <span>Region</span>
+          <p>Regional context where national data is too broad for the reader's question.</p>
+        </article>
+        <article>
+          <span>Town</span>
+          <p>Local living evidence. A town page stays held until this level clears the data gate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="fence-heading">
+      <p class="overline">Fence</p>
+      <h2 id="fence-heading">The product screens evidence. It does not tell a reader what to do.</h2>
+      <div class="fence-rules">
+        <p>
+          MSC does not provide legal, tax, immigration, financial, or individualized
+          relocation guidance.
+        </p>
+        <p>
+          High-liability claims stay tied to official sources, visible confidence, verified
+          dates, and a route to source inspection.
+        </p>
+      </div>
+    </section>
+
     <section class="method-section" aria-labelledby="artifacts-heading">
       <p class="overline">Machine-readable artifacts</p>
-      <h2 id="artifacts-heading">The same facts feed humans and crawlers.</h2>
+      <h2 id="artifacts-heading">Pointers, not another source register.</h2>
       <div class="artifact-list">
         <a href="/sources">Sources index</a>
         <a href="/compare/greece-portugal-spain">Comparison dataset</a>
@@ -210,6 +248,17 @@ const jsonLd = [
   </article>
 
   <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+
     .method-page {
       padding-bottom: 3rem;
     }
@@ -246,12 +295,16 @@ const jsonLd = [
 
     .method-steps,
     .confidence-list,
+    .granularity-list,
+    .fence-rules,
     .artifact-list {
       border-top: 1px solid var(--ink);
     }
 
     .method-step,
-    .confidence-row {
+    .confidence-row,
+    .granularity-list article,
+    .fence-rules p {
       display: grid;
       grid-template-columns: 4rem minmax(0, 1fr);
       gap: clamp(18px, 3vw, 34px);
@@ -271,10 +324,27 @@ const jsonLd = [
     }
 
     .method-step p,
-    .confidence-row p {
+    .confidence-row p,
+    .granularity-list p,
+    .fence-rules p {
       margin: 0;
       color: var(--ink-soft);
       line-height: 1.62;
+    }
+
+    .granularity-list span {
+      color: var(--pop-ink);
+      font: 700 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .fence-rules p::before {
+      content: "Fence";
+      color: var(--pop-ink);
+      font: 700 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .anatomy {
@@ -370,6 +440,8 @@ const jsonLd = [
     @media (max-width: 720px) {
       .method-step,
       .confidence-row,
+      .granularity-list article,
+      .fence-rules p,
       .anatomy,
       .freshness-note {
         grid-template-columns: 1fr;

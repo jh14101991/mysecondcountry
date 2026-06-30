@@ -1,0 +1,2681 @@
+{
+  "id": "pt-lisbon-ericeira",
+  "candidateId": "pt-lisbon-ericeira",
+  "placeId": null,
+  "placeName": "Ericeira",
+  "granularity": "town",
+  "parentId": null,
+  "publishTier": "standard",
+  "status": "source_gap",
+  "summary": "Seed evidence bundle for Ericeira, Portugal. It instantiates all 254 canonical registry rows for the city matrix, inherits only existing country CitedValues from pt, closes known relational or source-policy rows as visible gaps, and leaves the rest as source_search_required blockers for source-family batches. It is not page-ready.",
+  "publicationRecommendation": "hold",
+  "adapterInput": {
+    "coordinates": {
+      "lat": 38.9632411,
+      "lon": -9.4170802,
+      "sourceUrl": "https://www.openstreetmap.org/relation/6522363",
+      "sourceName": "OpenStreetMap relation 6522363, Ericeira administrative boundary",
+      "verifiedDate": "2026-06-30"
+    }
+  },
+  "rows": [
+    {
+      "key": "price_level_index",
+      "label": "Price level index (AIC, EU27=100)",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EU27=100",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#costOfLiving.priceLevelIndexEU27"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "electricity_price_hh",
+      "label": "Household electricity price",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EUR/kWh",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat nrg_pc_204. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "gas_price_hh",
+      "label": "Household gas price",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EUR/kWh",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat nrg_pc_202. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "fuel_price",
+      "label": "Pump price petrol/diesel",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EUR/litre",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 1_money_and_cost_of_living; batch scope country. Primary source: EC Weekly Oil Bulletin. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "inflation_hicp",
+      "label": "Annual HICP inflation",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "%",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat prc_hicp_aind. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "food_price_trend",
+      "label": "Food price sub-index",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "% annual rate",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat prc_hicp_minr CP01. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "min_wage",
+      "label": "Statutory monthly minimum wage",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EUR/month",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat earn_mw_cur. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "net_salary_avg",
+      "label": "Average annual net earnings",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "EUR/year",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat earn_nt_net. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "hpi",
+      "label": "House price index (2015=100)",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "2015=100",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat prc_hpi_a. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "property_sqm_city",
+      "label": "Asking price per sqm, cities",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "unit": "asking EUR per square metre and EUR per square metre per month",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "mortgage_rate",
+      "label": "New mortgage interest rate",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "% annualised agreed rate",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family banking_property_index; batch scope country. Primary source: ECB MIR statistics. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "rent_to_income",
+      "label": "Housing cost share of income",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "% disposable income",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat ilc_mded01. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "housing_overburden",
+      "label": "Housing cost overburden rate",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "% of market-rent tenants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat tessi164. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "broadband_price",
+      "label": "Fixed broadband monthly price",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "PPP EUR/month",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat isoc_pbo. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "mobile_price",
+      "label": "Mobile plan monthly price",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "PPP EUR/month",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat isoc_pbo. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "transit_pass",
+      "label": "Monthly transit ticket",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family eurostat_country; batch scope town. Primary source: Eurostat Urban Audit urb_ctran. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "childcare_net_cost",
+      "label": "Net childcare cost (% of wage)",
+      "matrixCategory": "money",
+      "intendedGranularity": "country",
+      "unit": "% of average earnings, bounded OECD statement",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Family DB (NCC). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "rent_1bed_city",
+      "label": "Rent, 1-bed city centre",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_exists_but_paywalled",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "grocery_basket",
+      "label": "Single grocery basket",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_exists_but_paywalled",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "restaurant_meal",
+      "label": "Mid-range meal for two",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_exists_but_paywalled",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "beer_price",
+      "label": "Domestic draught beer 0.5L",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_exists_but_paywalled",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "top_pit_rate",
+      "label": "Top personal income tax rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "%",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#tax.headlinePersonalIncomeTaxRate"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "tax_wedge_avg",
+      "label": "Tax wedge on average salary",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% of labour costs, single worker at average wage, 2025",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Taxing Wages (data API). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ee_social_security",
+      "label": "Employee social security rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% employee social security contribution",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Taxing Wages. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "er_social_security",
+      "label": "Employer social security rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% employer social security contribution",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Taxing Wages. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dividend_tax",
+      "label": "Dividend tax rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% withholding tax on dividends",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "interest_tax",
+      "label": "Interest tax rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% withholding tax on standard interest",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cgt_rate",
+      "label": "Capital gains tax rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "capital-gains tax screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "rental_income_tax",
+      "label": "Rental income tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "rental-income tax bands",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "foreign_income_basis",
+      "label": "Worldwide vs territorial",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "tax-residence basis summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dtr_method",
+      "label": "Double-tax relief method",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "foreign-tax relief method summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: PwC WTS / OECD treaties. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "special_inbound_regime",
+      "label": "Inbound/new-resident regime",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#tax.specialRegime"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "pension_income_regime",
+      "label": "Special pension tax regime",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% foreign-source income under pensioner regime",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS + national authority. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "remittance_basis",
+      "label": "Remittance basis availability",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "basis summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; UK gov.uk FIG. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "wealth_tax",
+      "label": "Net wealth tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "headline net wealth/worth tax-rate status",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; Tax Foundation; EC wealth study 2026. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "inheritance_gift_tax",
+      "label": "Inheritance/gift tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "inheritance and gift-tax screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; EC TEDB. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "property_transfer_tax",
+      "label": "Transfer tax on purchase",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "% of taxable value for transfers not subject to VAT",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; Property Tax Lab. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "annual_property_tax",
+      "label": "Recurrent property tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "recurrent property-tax status",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; Tax Foundation real property. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "vat_standard",
+      "label": "Standard VAT rate",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "%",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: EC VAT rates DB / TEDB. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "tax_treaty",
+      "label": "Treaty with home country",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "coverageStatus": "deferred",
+      "sourceGapReason": "out_of_slice",
+      "notes": "Relational row. This depends on reader inputs such as home country, home hub, ancestry, or treaty pair, so it is not stored as a fixed place fact."
+    },
+    {
+      "key": "totalization_agreement",
+      "label": "Social security agreement",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "coverageStatus": "deferred",
+      "sourceGapReason": "out_of_slice",
+      "notes": "Relational row. This depends on reader inputs such as home country, home hub, ancestry, or treaty pair, so it is not stored as a fixed place fact."
+    },
+    {
+      "key": "church_solidarity",
+      "label": "Church tax / solidarity surcharge",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "tax-administration screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; DE BZSt/BMF; AT kirchenbeitrag. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "municipal_income_tax",
+      "label": "Local/municipal income tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "national state/local income-tax treatment",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Taxing Wages country chapter; PwC WTS cross-check. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cfc_rules",
+      "label": "CFC rules scope",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "CFC rules screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; Tax Foundation (2021). Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "exit_tax",
+      "label": "Individual exit tax",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "official tax-residence-transfer screening status",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: AADE tax-residence-transfer page; PwC WTS cross-check. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "crypto_tax",
+      "label": "Crypto tax treatment",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "official income-category screening status",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: AADE income-categories page; national guidance. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "filing_complexity",
+      "label": "Filing complexity/deadlines",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "filing mechanics summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family tax_residency_manual; batch scope country. Primary source: PwC WTS; national authority. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dnv_income_floor",
+      "label": "Digital nomad visa income floor",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "EUR/month",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#residency.digitalNomadVisa"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "golden_visa_status",
+      "label": "Golden visa thresholds/status",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#residency.goldenVisa"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "retiree_visa_floor",
+      "label": "Passive-income/retiree visa floor",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "sufficient-resources permit screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: National ministry. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pr_years",
+      "label": "Years of residence to PR",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "years lawful continuous residence before long-term resident permit application",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: National law / EU portal. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "citizenship_years",
+      "label": "Years to naturalisation",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "continuous years before naturalisation application, by applicant category",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: Mitos / national citizenship procedure. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dual_citizenship",
+      "label": "Dual citizenship allowed",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "national dual-citizenship loss-procedure screening context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: Mitos / national loss-of-citizenship procedure. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "citizenship_by_descent",
+      "label": "Descent (ius sanguinis) eligibility",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "citizenship-by-parentage screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: GLOBALCIT (A01 series). Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "citizenship_language",
+      "label": "Language requirement",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "naturalisation language/knowledge requirement screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: GLOBALCIT (A06c). Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "citizenship_civic_test",
+      "label": "Civic knowledge test",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "naturalisation knowledge-test requirement",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: GLOBALCIT (A06d). Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "passport_strength",
+      "label": "Visa-free destinations of passport",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "visa-free destinations, 2026 Henley Passport Index API",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: Henley Passport Index. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "family_reunification",
+      "label": "Family reunification rules",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "national family-reunification rule summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: EU Directive 2003/86/EC (EUR-Lex). Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "blue_card_threshold",
+      "label": "EU Blue Card salary threshold",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "salary-threshold formula",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: EU Directive 2021/1883; EC Home Affairs. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "schengen_visa_fee",
+      "label": "Schengen visa fee",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "EUR adult short-stay Schengen visa fee",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: EC (Visa Code 810/2009). Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "startup_visa",
+      "label": "Startup/entrepreneur visa",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "country",
+      "unit": "startup-investment residence permit screening summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family visa_citizenship_manual; batch scope country. Primary source: National schemes (FR, EE, PT, DE, NL). Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "koppen_class",
+      "label": "Koppen-Geiger class",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 4_climate_light_and_weather; batch scope cluster. Primary source: GloH2O Koppen-Geiger. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "temp_monthly_high",
+      "label": "Monthly avg max temp",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: WorldClim 2.1 (tmax) or Open-Meteo daily archive normals. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "temp_monthly_low",
+      "label": "Monthly avg min temp",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: WorldClim 2.1 (tmin) or Open-Meteo daily archive normals. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "diurnal_range",
+      "label": "Mean diurnal range",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C, mean daily max-min range",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: WorldClim BIO2. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "temp_seasonality",
+      "label": "Temperature seasonality",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C, monthly mean temperature range",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: WorldClim BIO4. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "warmest_month_high",
+      "label": "Max temp warmest month",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: WorldClim BIO5 or derived Open-Meteo daily archive normals. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "coldest_month_low",
+      "label": "Min temp coldest month",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "C",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: WorldClim BIO6 or derived Open-Meteo daily archive normals. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "precip_annual",
+      "label": "Annual precipitation",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "mm/year",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: WorldClim BIO12 or derived Open-Meteo daily archive normals. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "precip_driest_month",
+      "label": "Precip driest month",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "mm/month, driest monthly precipitation normal",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: WorldClim BIO14. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "sea_temp_monthly",
+      "label": "Sea temperature by month",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "degrees Celsius, monthly climatology",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: NOAA OISST v2.1 monthly climatology / Copernicus Marine MED+ATL. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "swimming_season",
+      "label": "Months with sea temp >20C",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "months above 20C sea-surface temperature",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: derived from NOAA OISST monthly climatology / Copernicus. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "clear_sky_days",
+      "label": "Clear-sky days per year",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "days/year, daily mean cloud cover <=20%",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: Copernicus ERA5 or Open-Meteo daily cloud-cover archive threshold proxy. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "winter_daylight",
+      "label": "December daylight hours",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "hours on December solstice",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family 4_climate_light_and_weather; batch scope town. Primary source: Astronomical calc (Forsythe 1995 / Spencer). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "uv_index_monthly",
+      "label": "Monthly UV index",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": "Jan 1.7; Feb 2.6; Mar 4.2; Apr 5.9; May 7.5; Jun 8.3; Jul 8.9; Aug 7.9; Sep 6.2; Oct 4.1; Nov 2.3; Dec 1.5",
+        "sourceUrl": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=38.9632411&longitude=-9.4170802&start_date=2025-01-01&end_date=2025-12-31&hourly=uv_index&timezone=UTC",
+        "sourceName": "Open-Meteo Air Quality API, 2025 hourly UV-index grid proxy for Ericeira",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "climate",
+        "excerpt": "Ericeira: 2025 monthly mean daily maximum UV index from 365 daily maxima and 8760 hourly Open-Meteo uv_index grid values: Jan 1.7; Feb 2.6; Mar 4.2; Apr 5.9; May 7.5; Jun 8.3; Jul 8.9; Aug 7.9; Sep 6.2; Oct 4.1; Nov 2.3; Dec 1.5. Returned grid point 39, -9.4, elevation 33 m."
+      },
+      "unit": "UV index, monthly mean of daily maximum hourly values",
+      "notes": "Open-Meteo gridded UV-index proxy for the previous complete calendar year, not a TEMIS long-term UV climatology, current forecast, medical advice, personal exposure measure, beach-safety claim, sunburn-risk advice, or microclimate guarantee."
+    },
+    {
+      "key": "snowfall_days",
+      "label": "Snowfall days per year",
+      "matrixCategory": "climate",
+      "intendedGranularity": "town",
+      "unit": "days/year, daily snowfall_sum >0 cm",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: Copernicus ERA5 (snowfall). Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "nearest_airport",
+      "label": "Nearest airport + distance",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family transport_connectivity; batch scope cluster. Primary source: OurAirports. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "airport_type",
+      "label": "Airport size class",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family transport_connectivity; batch scope town. Primary source: OurAirports. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "direct_destinations",
+      "label": "Direct destinations (skeleton)",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "unique destination airports in stale OpenFlights route snapshot",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family transport_connectivity; batch scope town. Primary source: OpenFlights routes (stale 2014). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "flight_time_home",
+      "label": "Flight time to home (computed)",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "country",
+      "coverageStatus": "deferred",
+      "sourceGapReason": "out_of_slice",
+      "notes": "Relational row. This depends on reader inputs such as home country, home hub, ancestry, or treaty pair, so it is not stored as a fixed place fact."
+    },
+    {
+      "key": "rail_station",
+      "label": "Intercity rail station present",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM railway=station features within 25 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM railway=station. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "high_speed_rail",
+      "label": "High-speed rail within 50km",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM highspeed=yes railway features within 50 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM (highspeed). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "transit_lines",
+      "label": "Public transit route count",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM bus/tram/trolleybus route relations within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM route relations. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "bike_share",
+      "label": "Bike-share present",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM bicycle-rental or bike-share features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM bicycle_rental. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ev_charging",
+      "label": "EV charging density",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=charging_station features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM charging_station. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "walkability_proxy",
+      "label": "Walkability proxy",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "selected OSM walkable-service features per km2 within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM intersection+amenity density. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "broadband_speed",
+      "label": "Fixed broadband average download Mbps",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "average download Mbps",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 5_travel_connectivity_and_work; batch scope cluster. Primary source: Ookla Open Data. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "mobile_speed",
+      "label": "Mobile average download Mbps",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "average download Mbps",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 5_travel_connectivity_and_work; batch scope cluster. Primary source: Ookla Open Data. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "timezone_offset",
+      "label": "UTC offset / client overlap",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "country",
+      "unit": "IANA time zone",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "value": "Europe/Lisbon: UTC+0 standard time, UTC+1 daylight time",
+        "sourceUrl": "https://data.iana.org/time-zones/tzdb/europe",
+        "sourceName": "IANA Time Zone Database, Europe file, Europe/Lisbon entry",
+        "verifiedDate": "2026-06-30",
+        "confidence": "high",
+        "granularity": "country",
+        "category": "connectivity",
+        "excerpt": "The IANA Europe file defines Zone Europe/Lisbon with 0:00 EU WE%sT rules after Portugal reverted from CET to WET/WEST in 1996."
+      },
+      "notes": "Country-level Portugal time-zone CitedValue inherited for Ericeira. Portugal has island exceptions, so this row is mainland Portugal screening context, not a fixed year-round UTC offset."
+    },
+    {
+      "key": "schengen_member",
+      "label": "Schengen membership",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "country",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "value": "Portugal is a Schengen area member since 26 March 1995",
+        "sourceUrl": "https://european-union.europa.eu/principles-countries-history/eu-countries/portugal_en",
+        "sourceName": "European Union, Portugal country profile",
+        "verifiedDate": "2026-06-30",
+        "confidence": "high",
+        "granularity": "country",
+        "category": "visa",
+        "excerpt": "The EU Portugal profile lists Schengen membership from 26 March 1995."
+      },
+      "notes": "Country-level Portugal Schengen CitedValue inherited for Ericeira. This is screening context only, not individualized visa or border advice."
+    },
+    {
+      "key": "company_formation",
+      "label": "Company formation ease",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "country",
+      "unit": "B-READY Business Entry overall score, 0-100",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family world_bank_country; batch scope country. Primary source: World Bank B-READY 2025. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pm25_annual",
+      "label": "PM2.5 annual mean",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "micrograms per cubic metre, annual mean",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: EEA interpolated air-quality grid or Open-Meteo air-quality grid proxy. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pm25_monthly",
+      "label": "PM2.5 monthly mean",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "micrograms per cubic metre, monthly mean",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: Copernicus CAMS EAC4 reanalysis. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pm25_exceedance_days",
+      "label": "Days over WHO PM2.5 guideline",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "days/year, daily mean PM2.5 >15 micrograms per cubic metre",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family open_meteo_environment; batch scope town. Primary source: EEA Air Quality e-Reporting. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dist_coast_km",
+      "label": "Distance to coast",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: Natural Earth coastline + NOAA distance grid. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "elevation_m",
+      "label": "Elevation",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "metres above mean sea level",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family terrain_elevation; batch scope cluster. Primary source: SRTM via OpenTopography API. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "mountain_proximity",
+      "label": "Distance to peak >=1500m",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "km straight-line to nearest OSM natural=peak with ele>=1500m within 100 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: SRTM-derived. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ski_piste_km",
+      "label": "Downhill piste km nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "km of OSM piste:type=downhill ways within 100 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM piste:type=downhill / OpenSkiStats. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "bathing_water_quality",
+      "label": "Bathing-water quality rating",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "EEA monitored sites within 10 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family water_energy_risk; batch scope town. Primary source: EEA Bathing Water Directive (DISCODATA). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "blue_flag_beaches",
+      "label": "Blue Flag beaches nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "Blue Flag awarded beaches in Chania Municipality in 2026",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family 6_nature_and_outdoors; batch scope region. Primary source: Blue Flag Greece annual awards list; JRC beach-point data if available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "seismic_hazard_pga",
+      "label": "Earthquake hazard screening / PGA where available",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "country",
+      "unit": "hazard screening class",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 6_nature_and_outdoors; batch scope cluster. Primary source: ThinkHazard country screening fallback; ESHM20 European Seismic Hazard Model preferred for PGA. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "wildfire_risk",
+      "label": "Wildfire hazard screening / grid class where available",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "country",
+      "unit": "hazard screening class",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family water_energy_risk; batch scope cluster. Primary source: ThinkHazard country screening fallback; EFFIS Wildfire Risk WMS preferred for grid class. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "flood_risk_100yr",
+      "label": "River flood hazard screening / 100-yr depth where available",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "country",
+      "unit": "hazard screening class",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 6_nature_and_outdoors; batch scope cluster. Primary source: ThinkHazard country screening fallback; JRC Global River Flood Hazard v2 preferred for depth. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "green_space_pct",
+      "label": "Green/vegetated land share",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "percent of 2 km circle area, mapped OSM green-polygon proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: Copernicus CORINE Land Cover 2018; OSM mapped green-polygon proxy where raster build is unavailable. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "forest_cover_pct",
+      "label": "Forest cover percent",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "percent of valid Copernicus HRL Forest Type samples within 2 km circle",
+      "coverageStatus": "proxy",
+      "notes": "Copernicus/EEA HRL Forest Type raster sample over a representative 2 km town circle. This is not a municipal forest inventory, legal forest classification, parcel-level land-cover value, public-access claim, shade measure, biodiversity assessment, wildfire-risk score, insurance measure, safety advice, or property advice. No-data pixels are excluded, not counted as zero forest.",
+      "observedGranularity": "town",
+      "cited": {
+        "value": 6.95,
+        "sourceUrl": "https://image.discomap.eea.europa.eu/arcgis/rest/services/GioLandPublic/HRL_ForestType_2018/ImageServer",
+        "sourceName": "Copernicus/EEA High Resolution Layer Forest Type 2018, Ericeira forest-cover sample",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "excerpt": "Ericeira: 2018 Copernicus/EEA HRL samples inside a 2 km representative-town circle using 50 m sample spacing. Sample points requested: 5025. Tree-cover density valid samples: 3265; no-data samples excluded: 1760. Forest-type valid samples: 3265; no-data samples excluded: 1760. Forest-type class counts: non-forest 3038, broadleaved forest 216, coniferous forest 11. Source service resolution reported as 10 m. forest_cover_pct is calculated as broadleaved plus coniferous forest samples divided by valid forest-type samples."
+      }
+    },
+    {
+      "key": "tree_canopy_pct",
+      "label": "Tree canopy density",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "mean percent tree-cover density across valid Copernicus HRL samples within 2 km circle",
+      "coverageStatus": "proxy",
+      "notes": "Copernicus/EEA HRL Tree Cover Density raster sample over a representative 2 km town circle. This is not a municipal tree inventory, street-shade measure, parcel-level canopy value, public-park access measure, heat exposure score, biodiversity assessment, legal land-cover claim, safety advice, or property advice. No-data pixels are excluded, not counted as zero canopy.",
+      "observedGranularity": "town",
+      "cited": {
+        "value": 6.24,
+        "sourceUrl": "https://image.discomap.eea.europa.eu/arcgis/rest/services/GioLandPublic/HRL_TreeCoverDensity_2018/ImageServer",
+        "sourceName": "Copernicus/EEA High Resolution Layer Tree Cover Density 2018, Ericeira tree-canopy sample",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "excerpt": "Ericeira: 2018 Copernicus/EEA HRL samples inside a 2 km representative-town circle using 50 m sample spacing. Sample points requested: 5025. Tree-cover density valid samples: 3265; no-data samples excluded: 1760. Forest-type valid samples: 3265; no-data samples excluded: 1760. Forest-type class counts: non-forest 3038, broadleaved forest 216, coniferous forest 11. Source service resolution reported as 10 m. tree_canopy_pct is the mean 0-100 tree-cover-density value across valid tree-cover-density samples."
+      }
+    },
+    {
+      "key": "protected_area_overlap",
+      "label": "Protected area nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "mapped features and nearest km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane api_adapter; source family outdoor_osm; batch scope town. Primary source: EEA Natura 2000 + WDPA (Protected Planet). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "nat_park_dist_km",
+      "label": "Distance to national park",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "km straight-line to nearest mapped OSM protected-area or nature-reserve feature center",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: WDPA (IUCN Cat II). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "surface_water_density",
+      "label": "Lake/river area share",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "percent of 2 km circle, OSM mapped inland-water polygon proxy",
+      "coverageStatus": "proxy",
+      "notes": "OSM mapped inland-water polygon proxy used while the preferred JRC Global Surface Water raster build remains unavailable in this environment. This is not JRC Global Surface Water, not a municipal boundary value, not household water-service evidence, not water quality, not drought, not flood risk, not beach access, not parcel suitability, not proof that narrow or unmapped streams are absent, and not legal, utility, health, or safety advice. A zero means no sampled point intersected retained mapped inland-water polygons under this query, not proof that no water feature exists.",
+      "observedGranularity": "town",
+      "cited": {
+        "value": 0.04,
+        "sourceUrl": "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A120%5D%3B%0A(%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22natural%22%3D%22water%22%5D%3B%0A%20%20relation(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22natural%22%3D%22water%22%5D%3B%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22waterway%22%3D%22riverbank%22%5D%3B%0A%20%20relation(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22waterway%22%3D%22riverbank%22%5D%3B%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22landuse%22%3D%22reservoir%22%5D%3B%0A%20%20relation(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22landuse%22%3D%22reservoir%22%5D%3B%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22water%22%5D%3B%0A%20%20relation(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22water%22%5D%3B%0A)%3B%0Aout%20geom%20tags%3B",
+        "sourceName": "OpenStreetMap contributors via Overpass API, Ericeira mapped inland-water polygon proxy",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "climate",
+        "excerpt": "Ericeira: 0.04% of the 2 km representative-town circle was sampled as retained OSM mapped inland-water polygons. Retained 5 closed polygons after excluding coastline, sea, bay/ocean/strait/harbour water tags, fountains, swimming-pool tags, and pool-like names. Sampled 31417 points on a 20 m grid; 11 points intersected retained polygons, approximately 4400 m2 of 12566371 m2. Largest retained examples: way/847259086 natural=water; way/890487091 natural=water water=lake; way/1057481898 natural=water water=stream; way/1136711136 natural=water water=lake."
+      }
+    },
+    {
+      "key": "hiking_trail_km",
+      "label": "Hiking trail km nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "km of selected OSM path/track ways within 25 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM route=hiking / Waymarked Trails. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "mtb_trail_count",
+      "label": "Mountain-bike routes nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "OSM route=mtb relations within 25 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM route=mtb. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "climbing_sites",
+      "label": "Rock-climbing sites nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "OSM sport=climbing features within 25 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM sport=climbing. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "surf_spots",
+      "label": "Surf spots nearby",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "OSM sport=surfing features within 25 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM sport=surfing. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "light_pollution",
+      "label": "Nighttime light radiance proxy",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "mean 2024 VIIRS annual average DNB radiance proxy, nW/sr/cm2, 2 km circle",
+      "coverageStatus": "proxy",
+      "notes": "Medium-confidence VIIRS nighttime-radiance proxy from the 2024 OpenGeoHub/Zenodo COG derived from NOAA/EOG Annual VNL V2.2. This is not Bortle class, not a stargazing guarantee, not a skyglow model, not visible-stars evidence, not street-light coverage, not safety, health, parcel, property, legal, or personal advice, and not a neighborhood value. Background filtering and 500 m pixels can understate or overstate lived night-light exposure.",
+      "observedGranularity": "town",
+      "cited": {
+        "value": 1.3,
+        "sourceUrl": "https://zenodo.org/records/17294744",
+        "sourceName": "OpenGeoHub Zenodo annual VIIRS nighttime lights 2024 COG, Ericeira nighttime-radiance sample",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "climate",
+        "excerpt": "Ericeira: sampled nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif within a 2 km representative-town circle around 38.9632411, -9.4170802. The Zenodo source states original Annual VNL V2 values were converted from 0-200 to 0-2000 scale; this adapter reports raw/source-scale 10 as a NOAA-like average DNB radiance proxy in nW/sr/cm2. Valid samples 77; no-data samples 0; zero samples 0; raw mean 13.03, raw min 1, raw max 53, raw p50 8, raw p90 35; reported mean 1.3, p50 0.8, p90 3.5. Raster 86400x35849, pixel resolution 0.004167 by 0.004167 degrees, read window [40934, 11613, 40947, 11623], file md5 0b976892d40c2d0d99177c727289eaf2, file size 63713625 bytes, source version v20250904."
+      }
+    },
+    {
+      "key": "pollen_severity",
+      "label": "Pollen season severity",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": "2025 proxy: 4 days with selected pollen species at or above 50 grains/m3; peak daily maximum 214.6 grains/m3; peak species olive 214.6 grains/m3.",
+        "sourceUrl": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=38.9632411&longitude=-9.4170802&start_date=2025-01-01&end_date=2025-12-31&hourly=alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timezone=UTC",
+        "sourceName": "Open-Meteo Air Quality API, 2025 CAMS pollen grid proxy for Ericeira",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "healthcare",
+        "excerpt": "Ericeira: 2025 selected-species pollen proxy from 8760 hourly Open-Meteo grid values and 365 daily maxima. Species: alder, birch, grass, mugwort, olive, ragweed. Monthly mean daily maxima: Jan 0 grains/m3; Feb 0.2 grains/m3; Mar 2.3 grains/m3; Apr 17.6 grains/m3; May 13.8 grains/m3; Jun 5.9 grains/m3; Jul 2.8 grains/m3; Aug 0.8 grains/m3; Sep 0.1 grains/m3; Oct 0.1 grains/m3; Nov 0 grains/m3; Dec 0 grains/m3. Returned grid point 39, -9.4, elevation 33 m."
+      },
+      "unit": "days/year and grains/m3, daily maximum of selected species, threshold 50 grains/m3",
+      "notes": "Open-Meteo gridded CAMS pollen proxy for the previous complete calendar year. This is not a medical, diagnosis, treatment, allergy-risk, medication, current-forecast, personal-exposure, indoor-air, street-level vegetation, or neighbourhood microclimate claim. Species sensitivity thresholds differ, so the threshold is a comparable screening proxy only."
+    },
+    {
+      "key": "scenery_tags",
+      "label": "Coast/mountain/forest/lake/plain present",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "derived tags from cited component rows",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: derived: Natural Earth, SRTM, CORINE, JRC GSW. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "green_urban_pct",
+      "label": "Green urban space share",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "percent of 2 km circle, OSM mapped green-polygon proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family climate_raster; batch scope cluster. Primary source: Copernicus Urban Atlas. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "physicians_per_1k",
+      "label": "Physicians per 1,000",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "physicians per 1,000 people",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#healthcare.physiciansPer1000"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "hospital_beds_per_1k",
+      "label": "Hospital beds per 1,000",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "available hospital beds per 1,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: WHO GHO / Eurostat hlth_rs_bdsns. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "life_expectancy",
+      "label": "Life expectancy at birth",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "years",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat / OECD. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "infant_mortality",
+      "label": "Infant mortality rate",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "per 1,000 live births",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: OECD / Eurostat. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "public_health_coverage",
+      "label": "Public health coverage share",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% of population with health-care coverage",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Health at a Glance. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "oop_spending_share",
+      "label": "Out-of-pocket health spend share",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% of current health expenditure",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat / OECD SHA. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dentists_per_100k",
+      "label": "Dentists per 100k",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "licensed dentists per 100,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat hlth_rs_prs2. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pharmacists_per_100k",
+      "label": "Pharmacists per 100k",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "professionally active pharmacists per 100,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat hlth_rs_prs2. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "psychiatrists_per_100k",
+      "label": "Psychiatrists per 100k",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "psychiatrists per 100,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: WHO-EURO HFA-DB. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "paediatricians_per_10k",
+      "label": "Paediatricians per 10k",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "general paediatricians per 10,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: WHO-EURO HFA-DB. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "vaccination_dtp3",
+      "label": "DTP3 immunisation coverage",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% of children ages 12-23 months",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: WHO Immunization Data (WUENIC). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "vaccination_mmr",
+      "label": "MMR or measles-containing second-dose coverage",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "percent of target cohort",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: WHO Immunization Data, WUENIC `MCV2`. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ivf_access",
+      "label": "IVF/ART access score",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% score in Fertility Europe treatment-policy atlas",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: Fertility Europe Atlas 2021. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ltc_beds_per_100k",
+      "label": "Long-term care beds per 100k",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "long-term-care beds per 100,000 inhabitants",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat hlth_rs_bdltc. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ltc_quality",
+      "label": "Elder-care quality (infections, pressure ulcers, benzodiazepines)",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "healthcare-associated infections per 100 residents in long-term care facilities",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD/ECDC Health at a Glance StatLinks. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "english_for_health",
+      "label": "English usable for healthcare (population proxy)",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "EF EPI score and rank, healthcare-language proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: EF English Proficiency Index. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "intl_schools_count",
+      "label": "International schools count",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "private international schools, country count",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: ISC Research / CIS directory. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "intl_school_tuition",
+      "label": "Median intl-school tuition",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "unit": "EUR annual tuition for selected European Schools-accredited public school",
+      "notes": "Known policy or licence gate for source family terms_limited_source. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "montessori_presence",
+      "label": "Montessori presence",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "country education-system context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: AMI country directory. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "waldorf_presence",
+      "label": "Waldorf-Steiner presence",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "country education-system context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: ECSWE member list. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "homeschool_legal",
+      "label": "Home-education legal status",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "country education-system context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: National legislation / HSLDA survey. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "childcare_cost",
+      "label": "Net childcare cost (% wage)",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% of average earnings, bounded OECD statement",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Family DB. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ecec_enrolment_under3",
+      "label": "Childcare enrolment under 3",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "% of children under 3",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat ilc_caindformal. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pisa_reading",
+      "label": "PISA reading score",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "PISA score points",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD PISA 2022. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pisa_maths",
+      "label": "PISA maths score",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "PISA score points",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD PISA 2022. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pisa_science",
+      "label": "PISA science score",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "PISA score points",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD PISA 2022. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pupil_teacher_ratio",
+      "label": "Pupil-teacher ratio",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "primary pupils per teacher",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Education at a Glance. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "clil_bilingual",
+      "label": "Bilingual (CLIL) provision",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "country education-system context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: Eurydice Key Data on Languages. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "special_needs",
+      "label": "SEN inclusion policy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "country education-system context",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: European Agency / Eurydice. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "maternity_leave_weeks",
+      "label": "Paid maternity leave (weeks)",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "weeks",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Family DB PF2.1. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "parental_leave_weeks",
+      "label": "Total paid parental leave",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "weeks",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: OECD Family DB PF2.1. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "top_university_qs",
+      "label": "Top QS university + rank",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "country",
+      "unit": "QS WUR rank",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 7_health_family_and_schooling; batch scope country. Primary source: QS World University Rankings. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pharmacy_density",
+      "label": "Pharmacy density",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=pharmacy. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "hospital_density",
+      "label": "Hospital count",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 5 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=hospital. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dentist_density",
+      "label": "Dentist density",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=dentist. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "gpi_score",
+      "label": "Global Peace Index",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "GPI score",
+      "observedGranularity": "country",
+      "coverageStatus": "inherited_national",
+      "cited": {
+        "ref": "place:pt#safety.peaceIndexScore"
+      },
+      "notes": "Country-level Portugal CitedValue inherited for Ericeira. This is not a local Ericeira measurement and must render with inherited national labelling."
+    },
+    {
+      "key": "homicide_rate",
+      "label": "Homicide per 100k",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "per 100,000 people",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: UNODC / Eurostat crim_off_cat. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "recorded_crime",
+      "label": "Recorded offences per 100k",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat crim_off_cat. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "corruption_cpi",
+      "label": "Corruption Perceptions Index",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "0-100 CPI score",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: Transparency International CPI. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pol_stability",
+      "label": "Political stability percentile",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "percentile rank, 0 lowest to 100 highest",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family world_bank_country; batch scope country. Primary source: World Bank WGI. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "govt_effectiveness",
+      "label": "Government effectiveness",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "percentile rank, 0 lowest to 100 highest",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family world_bank_country; batch scope country. Primary source: World Bank WGI. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "rule_of_law",
+      "label": "Rule of law percentile",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "percentile rank, 0 lowest to 100 highest",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family world_bank_country; batch scope country. Primary source: World Bank WGI. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "lgbt_legal",
+      "label": "LGBTI legal rights score",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "percent score, 0 to 100",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: ILGA-Europe Rainbow Map. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "lgbt_social",
+      "label": "LGBT social acceptance",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "index score, 0 to 100",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: Equaldex acceptance index. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "lgbt_combined",
+      "label": "LGBT combined equality",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "index score, 0 to 100",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: Equaldex Equality Index. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "womens_safety",
+      "label": "Women Peace & Security score",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "index score, 0 to 1",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: Georgetown WPS Index. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "press_freedom",
+      "label": "Press freedom score",
+      "matrixCategory": "safety_rights",
+      "intendedGranularity": "country",
+      "unit": "0-100 RSF press freedom score",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: Reporters Without Borders. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "english_proficiency",
+      "label": "English proficiency",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "EF EPI score and rank",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: EF EPI. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "parkrun_events",
+      "label": "Active parkrun events",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "active parkrun country presence",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: parkrun.com/countries. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "craft_plumber",
+      "label": "Plumbers per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM craft=plumber features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM craft=plumber. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "craft_electrician",
+      "label": "Electricians per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM craft=electrician features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM craft=electrician. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "craft_carpenter",
+      "label": "Carpenters per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM craft=carpenter features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM craft=carpenter. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "craft_builder",
+      "label": "Builders per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM craft=builder features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM craft=builder. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "gym_density",
+      "label": "Gyms per 100k (lifting via sport=weightlifting)",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM leisure=fitness_centre. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "sauna_density",
+      "label": "Saunas per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM leisure=sauna features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM leisure=sauna. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "climbing_gym",
+      "label": "Indoor climbing gyms",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM sport=climbing features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM sport=climbing + sports_centre. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "swimming_pool",
+      "label": "Public pools per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM leisure=swimming_pool. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cafe_density",
+      "label": "Cafe density (coffee culture)",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=cafe. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "restaurant_density",
+      "label": "Restaurant density",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=restaurant. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "nightlife_density",
+      "label": "Bars/clubs per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=bar or amenity=nightclub features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=bar/nightclub. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "museum_gallery",
+      "label": "Museums/galleries per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM tourism=museum/gallery. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "library_density",
+      "label": "Libraries per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=library. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "theatre_cinema",
+      "label": "Theatres/cinemas per 100k",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM amenity=theatre/cinema. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dog_park_vet",
+      "label": "Dog parks + vets (dog-friendliness)",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM dog-park plus veterinary features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM leisure=dog_park, amenity=veterinary. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "foreign_born_share",
+      "label": "Foreign-born population share",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "% of total population",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: Eurostat tps00178. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "religiosity",
+      "label": "Non-religious share / attendance",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "% valid respondents answering No to belonging to a religion or denomination",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: European Social Survey (ESS10 rlgblg). Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "vegan_friendly",
+      "label": "Vegan-friendly ranking",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family terms_limited_source. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "smoking_prevalence",
+      "label": "Adult smoking prevalence",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "% of adults",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family eurostat_country; batch scope country. Primary source: WHO / Eurostat. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "alcohol_consumption",
+      "label": "Alcohol litres per capita",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "litres pure alcohol per capita, age 15+",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family oecd_country; batch scope country. Primary source: WHO / OECD. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cannabis_status",
+      "label": "Cannabis legal status",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: EU Drugs Agency (EUDA). Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "noise_pollution",
+      "label": "Population over road-noise threshold",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: EEA Environmental Noise. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "social_trust",
+      "label": "Interpersonal trust (0-10)",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "0-10 mean score",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: European Social Survey (ppltrst). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ethnic_fractionalization",
+      "label": "Ethnic fractionalization index",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "HIEF EFindex, latest available country-year",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 8_safety_rights_culture_community_and_services; batch scope country. Primary source: HIEF (Harvard Dataverse). Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "running_hiking_clubs",
+      "label": "Sport/outdoor club count",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM club=sport features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family outdoor_osm; batch scope cluster. Primary source: OSM club=sport. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "nearest_emergency_hospital",
+      "label": "Nearest hospital with emergency-care signal",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "nearest OSM emergency-tagged hospital feature",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family osm_access; batch scope manual_batch. Primary source: OSM `amenity=hospital` + `emergency=yes`; official hospital registry where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "emergency_hospital_drive_minutes",
+      "label": "Drive time to nearest emergency hospital",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_osrm_route; batch scope cluster. Primary source: OSRM route over OSM road graph, using sourced hospital point. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "private_hospital_presence",
+      "label": "Private hospital or clinic presence",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM private-tagged hospital or clinic features within 5 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM operator/type tags; national hospital registry where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "urgent_care_clinic_count",
+      "label": "Urgent-care or walk-in clinic proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM clinic features within 5 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=clinic`, `healthcare=clinic`, emergency tags. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ambulance_station_count",
+      "label": "Ambulance station proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM emergency=ambulance_station features within 5 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `emergency=ambulance_station`; official emergency-service registry where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "after_hours_pharmacy_proxy",
+      "label": "After-hours pharmacy availability signal",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "public duty-pharmacy rota pages verified at source",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 9_decision_useful_city_and_ai_citation_signals; batch scope cluster. Primary source: Public duty-pharmacy rota pages, official/federation/local where public; otherwise source-gap. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "sale_inventory_count",
+      "label": "Active sale-listing count",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family terms_limited_source. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "rent_inventory_count",
+      "label": "Active long-let listing count",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "long_let_inventory_count",
+      "label": "Long-term rental supply proxy",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "furnished_rental_share",
+      "label": "Furnished rental share proxy",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "asking_rent_sqm",
+      "label": "Asking rent per sqm",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "rental_supply_seasonality",
+      "label": "Rental listing count change by season",
+      "matrixCategory": "money",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "short_term_rental_density",
+      "label": "Short-stay listing or guest-night density",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "platform guest nights per resident",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat platform short-stay data by NUTS 3 where available; Inside Airbnb only for covered cities. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "short_term_guest_nights",
+      "label": "Guest nights in short-stay accommodation",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "guest nights",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat collaborative-economy short-stay accommodation data. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "hotel_bed_places",
+      "label": "Hotel and tourist accommodation bed places",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "bed places",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat tourism capacity; ELSTAT or national tourism authority for Greece where local tables exist. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "airport_drive_minutes",
+      "label": "Drive time to nearest commercial airport",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_osrm_route; batch scope cluster. Primary source: OSRM route over OSM graph, using OurAirports point. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "airport_winter_direct_destinations",
+      "label": "Winter direct-destination count",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "region",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family transport_connectivity; batch scope manual_batch. Primary source: Official airport route/timetable pages, or licensed schedules only if licensed; HSCA calendars define seasons but not destination counts. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "airport_summer_direct_destinations",
+      "label": "Summer direct-destination count",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "region",
+      "unit": "outbound direct destination airports, NS26 summer schedule period ending 24 October 2026",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family transport_connectivity; batch scope manual_batch. Primary source: Official airport route/timetable pages, or licensed schedules only if licensed; public destination pages count only the loaded season. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "airport_winter_route_ratio",
+      "label": "Winter-to-summer direct-destination ratio",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "region",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: Derived from cited winter and summer destination counts. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ferry_terminal_drive_minutes",
+      "label": "Drive time to nearest ferry terminal",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to OSM ferry-terminal feature",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_osrm_route; batch scope cluster. Primary source: OSM ferry-terminal point plus OSRM route. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ferry_routes_winter",
+      "label": "Winter ferry-route count",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "region",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family transport_connectivity; batch scope manual_batch. Primary source: Official port authority, national ferry publication, ferry-operator timetable, or licensed schedule feed; marketing route pages are not enough. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "ferry_routes_summer",
+      "label": "Summer ferry-route count",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "region",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family transport_connectivity; batch scope manual_batch. Primary source: Official port authority, national ferry publication, ferry-operator timetable, or licensed schedule feed; marketing route pages are not enough. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "intercity_bus_terminal_presence",
+      "label": "Intercity bus terminal or stop presence",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=bus_station features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family osm_access; batch scope manual_batch. Primary source: OSM `amenity=bus_station`; operator timetable page where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "bus_frequency_proxy",
+      "label": "Public or intercity bus frequency proxy",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "selected official KTEL timetable departures",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family transport_connectivity; batch scope manual_batch. Primary source: GTFS feed from Mobility Database or operator timetable, where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "car_dependency_proxy",
+      "label": "Car-dependency signal",
+      "matrixCategory": "travel_connectivity",
+      "intendedGranularity": "town",
+      "unit": "0-100 derived car-dependency proxy, higher means more car-dependent",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: Derived from cited walkability, selected bus-frequency, airport/ferry drive, family-amenity, and KEP-distance rows. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "playground_density",
+      "label": "Playgrounds per resident or radius",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `leisure=playground`. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "nursery_density",
+      "label": "Nursery/kindergarten count proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=kindergarten`; official school registry where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "primary_school_density",
+      "label": "Primary school count proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=school`; official education registry where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "family_doctor_clinic_proxy",
+      "label": "Family-doctor and clinic access proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM doctor or clinic features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `healthcare=doctor`, `amenity=doctors`, `amenity=clinic`. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "stroller_hilliness_proxy",
+      "label": "Stroller hilliness proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": "33.8% of sampled street/footway segments over 5% grade; 28.7% over 8%; p90 17.6%.",
+        "sourceUrl": "https://z.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A120%5D%3B%0A(%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22highway%22~%22%5E(primary%7Csecondary%7Ctertiary%7Cresidential%7Cliving_street%7Cunclassified%7Cservice%7Cpedestrian%7Cfootway%7Cpath%7Csteps)%24%22%5D%3B%0A)%3B%0Aout%20geom%20tags%3B",
+        "sourceName": "OpenStreetMap contributors via Overpass API and Open-Meteo Elevation API, Ericeira terrain slope proxy",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "connectivity",
+        "excerpt": "Ericeira: 160 sampled street/footway segments from 1491 OSM ways within 2 km of 38.9632411, -9.4170802; source graph had 2002 eligible segments before deterministic sampling and 94 OSM highway=steps ways. Open-Meteo elevation request URLs used: https://api.open-meteo.com/v1/elevation?latitude=38.9544271,38.9547074,38.9551873,38.9553731,38.9528453,38.9524262,38.9577176,38.9575631,38.9553866,38.9555472,38.9524997,38.9513443,38.9674667,38.967991,38.9761258,38.9766913,38.965637,38.965759,38.9529931,38.9530378,38.958625,38.9591993,38.9685341,38.9688056,38.9690886,38.9694123,38.9723657,38.9722137,38.9661,38.9662707,38.9653447,38.9654856,38.962215,38.9626855,38.9716013,38.9714958,38.9562573,38.9563674,38.9555577,38.9555202,38.9554923,38.9559353,38.9523617,38.9525926,38.9731361,38.9730946,38.9746906,38.9749061,38.9600492,38.9603453,38.9621535,38.9625392,38.9797029,38.9794859,38.9784572,38.978236,38.9791187,38.9792059,38.9763591,38.976151,38.963121,38.962911,38.9653325,38.9653807,38.969655,38.9696761,38.9686793,38.9685413,38.9649409,38.964524,38.9616568,38.96185,38.9751069,38.9751069,38.9738807,38.9734004,38.9708103,38.9707771,38.9734227,38.973576,38.9746501,38.9740817,38.9742874,38.9746525,38.9712517,38.9709343,38.9651263,38.9652321,38.9643008,38.9640571,38.9682715,38.9682316,38.9599897,38.9598186,38.958198,38.9579657,38.9582607,38.9582358,38.9565431,38.9563862&longitude=-9.3979195,-9.3984815,-9.3994056,-9.3990608,-9.3987364,-9.3988175,-9.4012214,-9.4009467,-9.3986283,-9.3984985,-9.3964983,-9.3962021,-9.4040971,-9.4042861,-9.4102191,-9.4109472,-9.4106597,-9.411125,-9.4035734,-9.4032404,-9.4012282,-9.4010721,-9.4107761,-9.4100857,-9.4163751,-9.4162469,-9.4125124,-9.4122777,-9.4129651,-9.4133118,-9.4136809,-9.4132488,-9.4164903,-9.4168323,-9.4017233,-9.4008993,-9.4122198,-9.4119449,-9.4100401,-9.4096301,-9.4034914,-9.4030663,-9.4101393,-9.4115989,-9.4028292,-9.4020975,-9.3990636,-9.3993393,-9.3964703,-9.3966071,-9.416837,-9.4170905,-9.4120234,-9.4123712,-9.4106493,-9.4105613,-9.4101899,-9.4092515,-9.4124476,-9.4123442,-9.4181177,-9.418086,-9.418236,-9.4178641,-9.4198,-9.4194615,-9.4069111,-9.4070917,-9.4176975,-9.4175913,-9.4145146,-9.4144715,-9.4187339,-9.4182046,-9.418243,-9.4179158,-9.4193719,-9.4187852,-9.419597,-9.4194292,-9.4168813,-9.4168858,-9.4152799,-9.4151904,-9.4173668,-9.4173175,-9.4146989,-9.4141798,-9.4167861,-9.4167079,-9.417556,-9.4173186,-9.4125326,-9.4123473,-9.4124892,-9.4123221,-9.4057225,-9.4051553,-9.4129813,-9.4140376 https://api.open-meteo.com/v1/elevation?latitude=38.9703112,38.9702194,38.9639244,38.9639123,38.9687664,38.9687368,38.9684161,38.9685648,38.9473276,38.9475655,38.9516991,38.9518703,38.9609168,38.9606853,38.9523086,38.9520476,38.9726683,38.972343,38.9681682,38.9676766,38.9561934,38.9560624,38.9477541,38.9480267,38.9590062,38.9588639,38.9610193,38.9614988,38.959625,38.9592244,38.9553258,38.9547743,38.9557838,38.9556816,38.9547443,38.9546509,38.9670672,38.9674793,38.9649043,38.9647043,38.9627439,38.9626011,38.9636991,38.963526,38.9760253,38.9752089,38.9678829,38.9673954,38.9652146,38.9652415,38.9655676,38.9654049,38.949522,38.949255,38.9490088,38.9492925,38.9499204,38.9498703,38.94621,38.9460133,38.9485254,38.948708,38.9706779,38.970799,38.9487471,38.94864,38.9616129,38.9620376,38.9658082,38.9657773,38.9629667,38.9626994,38.9667153,38.9665297,38.9822273,38.9821045,38.981524,38.9818101,38.9681197,38.9677719,38.960214,38.9603406,38.9657581,38.9658936,38.96957,38.9698681,38.9820254,38.9811857,38.9813856,38.9815183,38.9657947,38.966024,38.9664749,38.9666422,38.9805025,38.9802282,38.980269,38.9804671,38.9826226,38.9827744&longitude=-9.414721,-9.4151757,-9.411255,-9.4115663,-9.4177036,-9.4179694,-9.4090767,-9.4089274,-9.404093,-9.4041413,-9.4058166,-9.405941,-9.3962477,-9.3962369,-9.4062917,-9.4062147,-9.3971247,-9.3968725,-9.3952149,-9.395316,-9.3996775,-9.3994393,-9.4142597,-9.4142284,-9.4055967,-9.4049311,-9.3993255,-9.3991327,-9.4064429,-9.406586,-9.40824,-9.4081434,-9.4029204,-9.4027252,-9.4066159,-9.406362,-9.3949604,-9.3948015,-9.395569,-9.3956122,-9.3948692,-9.39503,-9.3968326,-9.3970606,-9.4102985,-9.4093215,-9.4043434,-9.4041765,-9.4084265,-9.4081843,-9.4020224,-9.4021726,-9.4115694,-9.4114755,-9.4127308,-9.4128488,-9.412315,-9.4125699,-9.411114,-9.4111311,-9.4079933,-9.4077641,-9.4078287,-9.4076199,-9.4040211,-9.4036591,-9.4180339,-9.4181398,-9.4135376,-9.413096,-9.4178191,-9.4177323,-9.4174343,-9.4174209,-9.416554,-9.4163733,-9.4180638,-9.4180555,-9.4177226,-9.417391,-9.4183609,-9.4180889,-9.4099819,-9.4105705,-9.3976341,-9.3975123,-9.4145244,-9.4141148,-9.4151383,-9.4153141,-9.4079664,-9.4079754,-9.4051085,-9.4047465,-9.4144797,-9.4143318,-9.4141477,-9.4142539,-9.4168906,-9.4170569 https://api.open-meteo.com/v1/elevation?latitude=38.9770041,38.9770343,38.9785349,38.9787593,38.9782999,38.9788497,38.9762303,38.9763274,38.9814606,38.9814859,38.9769457,38.9503518,38.9503076,38.9511517,38.9512628,38.960346,38.960194,38.9582301,38.9580199,38.9605511,38.9606519,38.9554437,38.9553523,38.9655384,38.9660284,38.9628744,38.9628952,38.9621269,38.9621563,38.9645602,38.9643801,38.9656425,38.9657386,38.9626943,38.9627058,38.9632743,38.9632956,38.9678338,38.9704198,38.9708244,38.9733803,38.9737486,38.9812673,38.9811842,38.965839,38.9656534,38.9564099,38.9566924,38.9538036,38.9537864,38.9632932,38.9634676,38.9675401,38.9679026,38.9687208,38.9684738,38.9611618,38.961,38.9544746,38.9547497,38.9712591,38.9712314,38.9772192,38.9773495,38.9765394,38.9765603,38.9700235,38.9702335,38.9709433,38.9709223,38.968131,38.96805,38.9636659,38.9634599,38.9681362,38.9681475,38.9681057,38.9682702,38.9553763,38.9549423,38.9530097,38.9529944,38.9578737,38.9577945,38.9547976,38.9550518,38.9677422,38.9675253,38.9502177,38.9502511,38.9542664,38.9541699,38.947786,38.9479904,38.9601911,38.9598431,38.9551173,38.954915,38.9720386,38.971951&longitude=-9.4162896,-9.4159345,-9.4139216,-9.4139033,-9.4183926,-9.4182855,-9.4187728,-9.4185439,-9.4160253,-9.4157447,-9.4167295,-9.3970328,-9.3973215,-9.4034431,-9.4036471,-9.4088388,-9.408497,-9.4093329,-9.4093382,-9.4171017,-9.4168883,-9.4133127,-9.4135262,-9.4057742,-9.405816,-9.4185525,-9.4180834,-9.4079153,-9.4075953,-9.4172059,-9.4171647,-9.4200265,-9.4197609,-9.4157873,-9.4153007,-9.4104179,-9.4107411,-9.4179195,-9.4196439,-9.4196542,-9.41967,-9.4197099,-9.4211624,-9.420953,-9.4080807,-9.4080585,-9.415378,-9.415306,-9.4149816,-9.4147208,-9.4119062,-9.4118274,-9.4144681,-9.4148431,-9.415709,-9.4152187,-9.411476,-9.4111513,-9.4082174,-9.4081909,-9.4160817,-9.4154146,-9.415597,-9.4150941,-9.414897,-9.4154039,-9.3985633,-9.3988548,-9.3781098,-9.3783968,-9.3844992,-9.3847121,-9.392576,-9.393388,-9.4065902,-9.4069136,-9.4126413,-9.4123218,-9.4115342,-9.4114208,-9.4133763,-9.4131109,-9.4067594,-9.4072422,-9.4023667,-9.4023096,-9.415306,-9.4153001,-9.4073519,-9.4069422,-9.400243,-9.4004848,-9.4073512,-9.4074163,-9.4142536,-9.4143242,-9.4140744,-9.4140117,-9.3950218,-9.3946302 https://api.open-meteo.com/v1/elevation?latitude=38.9675884,38.9673746,38.9526422,38.9525654,38.9533968,38.9530703,38.9502657,38.9505095,38.9488567,38.9491506,38.9717923,38.9718716,38.9781807,38.9782462,38.9640342,38.96403,38.9564448,38.9564038&longitude=-9.4099723,-9.4098377,-9.4019063,-9.4022744,-9.4113824,-9.4114766,-9.4081562,-9.4079549,-9.4094258,-9.4091647,-9.4096741,-9.4092769,-9.4192741,-9.4197976,-9.4084597,-9.4087011,-9.3955888,-9.3953057 Stroller hilliness proxy uses slope thresholds only: share over 5% grade 33.8%; share over 8% grade 28.7%; p90 grade 17.6%."
+      },
+      "unit": "share of sampled OSM street/footway segments over grade thresholds within 2 km",
+      "notes": "Hilliness proxy from DEM samples over the OSM street/footway graph. This is not accessibility advice for a specific route, stroller suitability advice, sidewalk quality, kerb, surface, traffic, heat, safety, or step-free access evidence."
+    },
+    {
+      "key": "family_amenity_density",
+      "label": "Combined family amenity density",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSM family-service features per km2 within 2 km plus mapped green-space share",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: Derived from playground, school, childcare, library, park, and clinic proxies. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "tourist_beds_per_resident",
+      "label": "Tourist bed places per resident",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "bed places per resident",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat or ELSTAT tourism capacity plus population denominator. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "overnights_per_resident",
+      "label": "Visitor overnight pressure per resident",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "tourist-accommodation nights per resident",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat or ELSTAT nights spent plus population denominator. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "peak_to_low_tourism_ratio",
+      "label": "Peak-month to low-month tourism ratio",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "peak-month / low-month nights ratio",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family eurostat_country; batch scope region. Primary source: Eurostat or ELSTAT monthly nights spent where available. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cruise_passenger_pressure",
+      "label": "Cruise passenger pressure",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "region",
+      "unit": "annual cruise calls and passenger arrivals",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family tourism_statistics; batch scope manual_batch. Primary source: Hellenic Ports Association (ELIME), port authority, or municipality cruise passenger statistics. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "hotel_density_osm",
+      "label": "Mapped hotel density proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM tourism accommodation features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `tourism=hotel`, `tourism=apartment`, `tourism=guest_house`. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "seasonal_service_dropoff_proxy",
+      "label": "Winter-vs-summer service drop-off proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": 2.6,
+        "sourceUrl": "https://lz4.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A90%5D%3B%0A(%0A%20%20nwr(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22amenity%22~%22%5E(restaurant%7Ccafe%7Cbar%7Cpub%7Cfast_food%7Cice_cream%7Cpharmacy%7Cbank%7Cpost_office%7Cclinic%7Cdoctors%7Cdentist%7Cveterinary%7Clibrary%7Cmarketplace)%24%22%5D%3B%0A%20%20nwr(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22shop%22~%22%5E(supermarket%7Cconvenience%7Cbakery%7Cgreengrocer%7Cbutcher%7Cchemist%7Cclothes%7Chairdresser)%24%22%5D%3B%0A%20%20nwr(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22tourism%22~%22%5E(hotel%7Cguest_house%7Chostel%7Capartment%7Cattraction%7Cmuseum%7Cinformation)%24%22%5D%3B%0A)%3B%0Aout%20tags%3B",
+        "sourceName": "OpenStreetMap contributors via Overpass API, Ericeira seasonal opening-hours proxy query",
+        "verifiedDate": "2026-06-30",
+        "confidence": "low",
+        "granularity": "town",
+        "excerpt": "Ericeira: Overpass returned 182 selected service, shop, and tourism OSM features within 2 km of 38.9632411, -9.4170802; 38 had opening_hours tags; 1 had month/date-range opening_hours or seasonal tags. Seasonally coded opening-hours share: 2.6%."
+      },
+      "unit": "percent of opening-hours-tagged selected OSM service features with month/date-range or seasonal tags",
+      "notes": "Low-confidence OSM tag proxy for visible seasonality in mapped service opening-hours data. This is not a full winter-vs-summer service-drop-off measure, not a proof that services are open or closed, not a business-hours guarantee, not a tourism seasonality measure, not a resident-service availability audit, and not advice. Zero means no selected mapped features returned explicit month/date-range seasonality tags, not proof that no seasonal drop-off exists."
+    },
+    {
+      "key": "municipal_digital_services",
+      "label": "Municipal digital-service availability",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "official public digital-service pages verified at source",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family 9_decision_useful_city_and_ai_citation_signals; batch scope manual_batch. Primary source: Municipality website, gov.gr service catalogue, or national e-government portal. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "residence_permit_office_distance",
+      "label": "Distance to relevant residence-permit office",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to official residence-permit office address",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family visa_citizenship_manual; batch scope manual_batch. Primary source: Official migration-office page or office list plus OSRM route proxy. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "tax_office_distance",
+      "label": "Distance to relevant tax office",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to AADE tax-office address",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family tax_residency_manual; batch scope manual_batch. Primary source: AADE DOU office pages plus Nominatim/OSRM route proxy. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "citizen_service_centre_distance",
+      "label": "Distance to citizen-service centre",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to mapped KEP or citizen-service feature",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family 9_decision_useful_city_and_ai_citation_signals; batch scope manual_batch. Primary source: GSIS myKEPlive KEP contact list, municipality KEP notices, plus OSRM route proxy. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "land_registry_office_distance",
+      "label": "Distance to land or property registry office",
+      "matrixCategory": "tax_residency",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to Hellenic Cadastre office address",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family property_terms_limited; batch scope cluster. Primary source: National cadastre or land-registry office list plus OSRM route. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "water_stress_baseline",
+      "label": "Water-stress or drought baseline",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "region",
+      "unit": "WRI Aqueduct baseline water-stress category and score",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family water_energy_risk; batch scope region. Primary source: European Drought Observatory, WRI Aqueduct, or national water authority. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "drought_frequency_proxy",
+      "label": "Primary CDI drought-signal frequency proxy",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "region",
+      "unit": "percent of valid EDO CDI ten-day observations with Watch, Warning, or Alert",
+      "coverageStatus": "proxy",
+      "notes": "European Drought Observatory CDI v4.1 nearest-grid-cell proxy for agricultural drought-screening frequency. This is not a municipal drought declaration, not household water-service evidence, not a current restriction or outage status, not water-quality evidence, not a utility-capacity assessment, not a farm, garden, fire, flood, property, insurance, safety, legal, utility, health, or personal advice claim. Recovery classes and no-data cells are not counted as active primary drought classes.",
+      "observedGranularity": "town",
+      "cited": {
+        "value": 0,
+        "sourceUrl": "https://drought.emergency.copernicus.eu/data/Drought_Observatories_datasets/EDO_Combined_Drought_Indicator/ver4-1-0/",
+        "sourceName": "Copernicus Emergency Management Service European Drought Observatory, Combined Drought Indicator v4.1, Ericeira ten-day grid-cell drought-frequency proxy",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "climate",
+        "excerpt": "Ericeira: nearest EDO CDI v4.1 grid cell to representative coordinate 38.9632411, -9.4170802 was sampled at grid row 792, column 373, cell centre 38.9792, -9.4375. 0 of 36 valid ten-day observations from 2025-03-01 to 2026-02-21 were primary drought classes Watch, Warning, or Alert, equal to 0%. Class counts: no drought 36, Watch 0, Warning 0, Alert 0, recovery/other 0, no-data 0. Requested 36 WCS GeoTIFF observations from https://drought.emergency.copernicus.eu/api/wcs; layer time extent read from https://drought.emergency.copernicus.eu/api/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities; CDI class definitions checked against https://drought.emergency.copernicus.eu/data/factsheets/factsheet_combinedDroughtIndicator_v4.pdf. Sampled class series: 2025-03-01:0, 2025-03-11:0, 2025-03-21:0, 2025-04-01:0, 2025-04-11:0, 2025-04-21:0, 2025-05-01:0, 2025-05-11:0, 2025-05-21:0, 2025-06-01:0, 2025-06-11:0, 2025-06-21:0, 2025-07-01:0, 2025-07-11:0, 2025-07-21:0, 2025-08-01:0, 2025-08-11:0, 2025-08-21:0, 2025-09-01:0, 2025-09-11:0, 2025-09-21:0, 2025-10-01:0, 2025-10-11:0, 2025-10-21:0, 2025-11-01:0, 2025-11-11:0, 2025-11-21:0, 2025-12-01:0, 2025-12-11:0, 2025-12-21:0, 2026-01-01:0, 2026-01-11:0, 2026-01-21:0, 2026-02-01:0, 2026-02-11:0, 2026-02-21:0."
+      }
+    },
+    {
+      "key": "water_restriction_history",
+      "label": "Recent water-restriction history",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "official municipal or water-utility notice-history signal",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family water_energy_risk; batch scope manual_batch. Primary source: Municipality or water-utility notices. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "power_outage_reliability",
+      "label": "Electricity outage reliability",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "country",
+      "unit": "% of firms experiencing electrical outages",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_regional; source family world_bank_country; batch scope region. Primary source: CEER/World Bank SAIDI where national; distribution operator where local. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "heatwave_days",
+      "label": "Annual hot-day or heatwave count",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "days/year with daily max >=35C",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family open_meteo_environment; batch scope cluster. Primary source: Open-Meteo archive, ERA5, or national meteorological service. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "cooling_degree_days",
+      "label": "Cooling degree days",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "unit": "CDD18 per year",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane derived_formula; source family derived_city_signal; batch scope cluster. Primary source: Open-Meteo archive or ERA5 derived series. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "wildfire_egress_proxy",
+      "label": "Wildfire-context road-dependence proxy",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "region",
+      "unit": "0-100 low-confidence road-dependence proxy, higher means more constrained",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: ThinkHazard national wildfire context plus OSM connected motor-road component sectors, dead-end share, and car-dependency formula; EFFIS/GWIS grid preferred for future v2. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "coworking_space_count",
+      "label": "Coworking-space count proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM coworking features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `office=coworking`, `amenity=coworking_space`; manual checks where needed. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "language_school_count",
+      "label": "Language-school count proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=language_school features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=language_school` and education tags. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "international_school_distance",
+      "label": "Distance to nearest sourced international or accredited European school proxy",
+      "matrixCategory": "health_family_schooling",
+      "intendedGranularity": "town",
+      "unit": "OSRM driving route proxy to accredited European School",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family 9_decision_useful_city_and_ai_citation_signals; batch scope cluster. Primary source: ISC Research, CIS directory, European Schools accredited-location page, school website, or official school registry plus OSRM route proxy. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "vet_density",
+      "label": "Veterinary-service density",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=veterinary features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=veterinary`. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "dog_park_count",
+      "label": "Dog-park count",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM leisure=dog_park features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `leisure=dog_park`. Next action: Run the source client or scripted pull, then write CitedValue. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pet_import_rules",
+      "label": "Pet import and vaccination rules",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "country",
+      "unit": "origin-dependent EU pet-travel rule summary",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane inherited_national; source family 9_decision_useful_city_and_ai_citation_signals; batch scope country. Primary source: EU Your Europe, national agriculture/customs authority. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "pet_friendly_rental_proxy",
+      "label": "Pet-friendly rental listing proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_terms_block_reuse",
+      "notes": "Known policy or licence gate for source family property_terms_limited. Use a licensed feed, written reuse permission, or a permitted manual source before turning this into a CitedValue."
+    },
+    {
+      "key": "emergency_vet_proxy",
+      "label": "Emergency veterinary-care proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": 1,
+        "sourceUrl": "https://z.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A90%5D%3B%0A(%0A%20%20nwr(around%3A10000%2C38.9632411%2C-9.4170802)%5B%22amenity%22%3D%22veterinary%22%5D%3B%0A%20%20nwr(around%3A10000%2C38.9632411%2C-9.4170802)%5B%22healthcare%22%3D%22veterinary%22%5D%3B%0A)%3B%0Aout%20tags%3B",
+        "sourceName": "OpenStreetMap contributors via Overpass API, Ericeira emergency-veterinary tag proxy query",
+        "verifiedDate": "2026-06-30",
+        "confidence": "low",
+        "granularity": "town",
+        "excerpt": "Ericeira: Overpass returned 2 selected veterinary OSM features within 10 km of 38.9632411, -9.4170802; 1 had explicit emergency, emergency-service, emergency opening-hours, 24/7 opening-hours, or emergency-speciality tags."
+      },
+      "unit": "OSM veterinary features within 10 km with explicit emergency or 24/7 tags",
+      "notes": "Low-confidence OSM tag proxy for mapped emergency veterinary-care signals. This is not a complete veterinary directory, after-hours rota, emergency-service guarantee, opening-hours guarantee, phone-triage availability, clinical-quality measure, price claim, insurance claim, animal-health advice, or proof that untagged veterinary services do not offer emergency care. Zero means no selected mapped veterinary features returned explicit emergency or 24/7 tags, not proof that emergency veterinary care is unavailable."
+    },
+    {
+      "key": "slope_proxy",
+      "label": "Street-network slope proxy",
+      "matrixCategory": "nature_environment",
+      "intendedGranularity": "town",
+      "observedGranularity": "town",
+      "coverageStatus": "proxy",
+      "cited": {
+        "value": "Mean absolute street-segment grade 5.8%; p90 17.6%; 33.8% over 5%.",
+        "sourceUrl": "https://z.overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A120%5D%3B%0A(%0A%20%20way(around%3A2000%2C38.9632411%2C-9.4170802)%5B%22highway%22~%22%5E(primary%7Csecondary%7Ctertiary%7Cresidential%7Cliving_street%7Cunclassified%7Cservice%7Cpedestrian%7Cfootway%7Cpath%7Csteps)%24%22%5D%3B%0A)%3B%0Aout%20geom%20tags%3B",
+        "sourceName": "OpenStreetMap contributors via Overpass API and Open-Meteo Elevation API, Ericeira terrain slope proxy",
+        "verifiedDate": "2026-06-30",
+        "confidence": "medium",
+        "granularity": "town",
+        "category": "connectivity",
+        "excerpt": "Ericeira: 160 sampled street/footway segments from 1491 OSM ways within 2 km of 38.9632411, -9.4170802; source graph had 2002 eligible segments before deterministic sampling and 94 OSM highway=steps ways. Open-Meteo elevation request URLs used: https://api.open-meteo.com/v1/elevation?latitude=38.9544271,38.9547074,38.9551873,38.9553731,38.9528453,38.9524262,38.9577176,38.9575631,38.9553866,38.9555472,38.9524997,38.9513443,38.9674667,38.967991,38.9761258,38.9766913,38.965637,38.965759,38.9529931,38.9530378,38.958625,38.9591993,38.9685341,38.9688056,38.9690886,38.9694123,38.9723657,38.9722137,38.9661,38.9662707,38.9653447,38.9654856,38.962215,38.9626855,38.9716013,38.9714958,38.9562573,38.9563674,38.9555577,38.9555202,38.9554923,38.9559353,38.9523617,38.9525926,38.9731361,38.9730946,38.9746906,38.9749061,38.9600492,38.9603453,38.9621535,38.9625392,38.9797029,38.9794859,38.9784572,38.978236,38.9791187,38.9792059,38.9763591,38.976151,38.963121,38.962911,38.9653325,38.9653807,38.969655,38.9696761,38.9686793,38.9685413,38.9649409,38.964524,38.9616568,38.96185,38.9751069,38.9751069,38.9738807,38.9734004,38.9708103,38.9707771,38.9734227,38.973576,38.9746501,38.9740817,38.9742874,38.9746525,38.9712517,38.9709343,38.9651263,38.9652321,38.9643008,38.9640571,38.9682715,38.9682316,38.9599897,38.9598186,38.958198,38.9579657,38.9582607,38.9582358,38.9565431,38.9563862&longitude=-9.3979195,-9.3984815,-9.3994056,-9.3990608,-9.3987364,-9.3988175,-9.4012214,-9.4009467,-9.3986283,-9.3984985,-9.3964983,-9.3962021,-9.4040971,-9.4042861,-9.4102191,-9.4109472,-9.4106597,-9.411125,-9.4035734,-9.4032404,-9.4012282,-9.4010721,-9.4107761,-9.4100857,-9.4163751,-9.4162469,-9.4125124,-9.4122777,-9.4129651,-9.4133118,-9.4136809,-9.4132488,-9.4164903,-9.4168323,-9.4017233,-9.4008993,-9.4122198,-9.4119449,-9.4100401,-9.4096301,-9.4034914,-9.4030663,-9.4101393,-9.4115989,-9.4028292,-9.4020975,-9.3990636,-9.3993393,-9.3964703,-9.3966071,-9.416837,-9.4170905,-9.4120234,-9.4123712,-9.4106493,-9.4105613,-9.4101899,-9.4092515,-9.4124476,-9.4123442,-9.4181177,-9.418086,-9.418236,-9.4178641,-9.4198,-9.4194615,-9.4069111,-9.4070917,-9.4176975,-9.4175913,-9.4145146,-9.4144715,-9.4187339,-9.4182046,-9.418243,-9.4179158,-9.4193719,-9.4187852,-9.419597,-9.4194292,-9.4168813,-9.4168858,-9.4152799,-9.4151904,-9.4173668,-9.4173175,-9.4146989,-9.4141798,-9.4167861,-9.4167079,-9.417556,-9.4173186,-9.4125326,-9.4123473,-9.4124892,-9.4123221,-9.4057225,-9.4051553,-9.4129813,-9.4140376 https://api.open-meteo.com/v1/elevation?latitude=38.9703112,38.9702194,38.9639244,38.9639123,38.9687664,38.9687368,38.9684161,38.9685648,38.9473276,38.9475655,38.9516991,38.9518703,38.9609168,38.9606853,38.9523086,38.9520476,38.9726683,38.972343,38.9681682,38.9676766,38.9561934,38.9560624,38.9477541,38.9480267,38.9590062,38.9588639,38.9610193,38.9614988,38.959625,38.9592244,38.9553258,38.9547743,38.9557838,38.9556816,38.9547443,38.9546509,38.9670672,38.9674793,38.9649043,38.9647043,38.9627439,38.9626011,38.9636991,38.963526,38.9760253,38.9752089,38.9678829,38.9673954,38.9652146,38.9652415,38.9655676,38.9654049,38.949522,38.949255,38.9490088,38.9492925,38.9499204,38.9498703,38.94621,38.9460133,38.9485254,38.948708,38.9706779,38.970799,38.9487471,38.94864,38.9616129,38.9620376,38.9658082,38.9657773,38.9629667,38.9626994,38.9667153,38.9665297,38.9822273,38.9821045,38.981524,38.9818101,38.9681197,38.9677719,38.960214,38.9603406,38.9657581,38.9658936,38.96957,38.9698681,38.9820254,38.9811857,38.9813856,38.9815183,38.9657947,38.966024,38.9664749,38.9666422,38.9805025,38.9802282,38.980269,38.9804671,38.9826226,38.9827744&longitude=-9.414721,-9.4151757,-9.411255,-9.4115663,-9.4177036,-9.4179694,-9.4090767,-9.4089274,-9.404093,-9.4041413,-9.4058166,-9.405941,-9.3962477,-9.3962369,-9.4062917,-9.4062147,-9.3971247,-9.3968725,-9.3952149,-9.395316,-9.3996775,-9.3994393,-9.4142597,-9.4142284,-9.4055967,-9.4049311,-9.3993255,-9.3991327,-9.4064429,-9.406586,-9.40824,-9.4081434,-9.4029204,-9.4027252,-9.4066159,-9.406362,-9.3949604,-9.3948015,-9.395569,-9.3956122,-9.3948692,-9.39503,-9.3968326,-9.3970606,-9.4102985,-9.4093215,-9.4043434,-9.4041765,-9.4084265,-9.4081843,-9.4020224,-9.4021726,-9.4115694,-9.4114755,-9.4127308,-9.4128488,-9.412315,-9.4125699,-9.411114,-9.4111311,-9.4079933,-9.4077641,-9.4078287,-9.4076199,-9.4040211,-9.4036591,-9.4180339,-9.4181398,-9.4135376,-9.413096,-9.4178191,-9.4177323,-9.4174343,-9.4174209,-9.416554,-9.4163733,-9.4180638,-9.4180555,-9.4177226,-9.417391,-9.4183609,-9.4180889,-9.4099819,-9.4105705,-9.3976341,-9.3975123,-9.4145244,-9.4141148,-9.4151383,-9.4153141,-9.4079664,-9.4079754,-9.4051085,-9.4047465,-9.4144797,-9.4143318,-9.4141477,-9.4142539,-9.4168906,-9.4170569 https://api.open-meteo.com/v1/elevation?latitude=38.9770041,38.9770343,38.9785349,38.9787593,38.9782999,38.9788497,38.9762303,38.9763274,38.9814606,38.9814859,38.9769457,38.9503518,38.9503076,38.9511517,38.9512628,38.960346,38.960194,38.9582301,38.9580199,38.9605511,38.9606519,38.9554437,38.9553523,38.9655384,38.9660284,38.9628744,38.9628952,38.9621269,38.9621563,38.9645602,38.9643801,38.9656425,38.9657386,38.9626943,38.9627058,38.9632743,38.9632956,38.9678338,38.9704198,38.9708244,38.9733803,38.9737486,38.9812673,38.9811842,38.965839,38.9656534,38.9564099,38.9566924,38.9538036,38.9537864,38.9632932,38.9634676,38.9675401,38.9679026,38.9687208,38.9684738,38.9611618,38.961,38.9544746,38.9547497,38.9712591,38.9712314,38.9772192,38.9773495,38.9765394,38.9765603,38.9700235,38.9702335,38.9709433,38.9709223,38.968131,38.96805,38.9636659,38.9634599,38.9681362,38.9681475,38.9681057,38.9682702,38.9553763,38.9549423,38.9530097,38.9529944,38.9578737,38.9577945,38.9547976,38.9550518,38.9677422,38.9675253,38.9502177,38.9502511,38.9542664,38.9541699,38.947786,38.9479904,38.9601911,38.9598431,38.9551173,38.954915,38.9720386,38.971951&longitude=-9.4162896,-9.4159345,-9.4139216,-9.4139033,-9.4183926,-9.4182855,-9.4187728,-9.4185439,-9.4160253,-9.4157447,-9.4167295,-9.3970328,-9.3973215,-9.4034431,-9.4036471,-9.4088388,-9.408497,-9.4093329,-9.4093382,-9.4171017,-9.4168883,-9.4133127,-9.4135262,-9.4057742,-9.405816,-9.4185525,-9.4180834,-9.4079153,-9.4075953,-9.4172059,-9.4171647,-9.4200265,-9.4197609,-9.4157873,-9.4153007,-9.4104179,-9.4107411,-9.4179195,-9.4196439,-9.4196542,-9.41967,-9.4197099,-9.4211624,-9.420953,-9.4080807,-9.4080585,-9.415378,-9.415306,-9.4149816,-9.4147208,-9.4119062,-9.4118274,-9.4144681,-9.4148431,-9.415709,-9.4152187,-9.411476,-9.4111513,-9.4082174,-9.4081909,-9.4160817,-9.4154146,-9.415597,-9.4150941,-9.414897,-9.4154039,-9.3985633,-9.3988548,-9.3781098,-9.3783968,-9.3844992,-9.3847121,-9.392576,-9.393388,-9.4065902,-9.4069136,-9.4126413,-9.4123218,-9.4115342,-9.4114208,-9.4133763,-9.4131109,-9.4067594,-9.4072422,-9.4023667,-9.4023096,-9.415306,-9.4153001,-9.4073519,-9.4069422,-9.400243,-9.4004848,-9.4073512,-9.4074163,-9.4142536,-9.4143242,-9.4140744,-9.4140117,-9.3950218,-9.3946302 https://api.open-meteo.com/v1/elevation?latitude=38.9675884,38.9673746,38.9526422,38.9525654,38.9533968,38.9530703,38.9502657,38.9505095,38.9488567,38.9491506,38.9717923,38.9718716,38.9781807,38.9782462,38.9640342,38.96403,38.9564448,38.9564038&longitude=-9.4099723,-9.4098377,-9.4019063,-9.4022744,-9.4113824,-9.4114766,-9.4081562,-9.4079549,-9.4094258,-9.4091647,-9.4096741,-9.4092769,-9.4192741,-9.4197976,-9.4084597,-9.4087011,-9.3955888,-9.3953057 Mean absolute grade 5.8%; p90 17.6%; share over 5% grade 33.8%; share over 8% grade 28.7%."
+      },
+      "unit": "percent grade over sampled OSM street/footway graph within 2 km",
+      "notes": "DEM and OSM street-network proxy using Open-Meteo elevation samples and mapped OSM ways. This is not a parcel, flood, mobility, or accessibility assessment, and not a route-quality or neighbourhood guarantee."
+    },
+    {
+      "key": "sidewalk_coverage_proxy",
+      "label": "Sidewalk and footway coverage proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "percent of selected OSM street/footway ways, count-share proxy",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `sidewalk`, `footway`, and pedestrian tags. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "wheelchair_tagged_amenities_share",
+      "label": "Share of amenities with wheelchair tags",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "percent of selected OSM amenities/shops with any wheelchair tag",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `wheelchair=*` tags across key amenities. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "step_free_station_proxy",
+      "label": "Step-free rail or transit access proxy",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM wheelchair/elevator-tagged station features within 5 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family osm_access; batch scope manual_batch. Primary source: OSM `wheelchair`, `elevator`, platform tags; operator accessibility pages where available. Next action: Manual-gate the primary source, archive/excerpt it, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "accessible_beach_count",
+      "label": "Accessible beach count",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "online SEATRAC beach-directory entries at verification time",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane ai_official_crawl; source family tourism_statistics; batch scope manual_batch. Primary source: SEATRAC public beach directory, Blue Flag accessibility notes, municipal beach accessibility pages, or national tourism accessibility data. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    },
+    {
+      "key": "public_toilet_density",
+      "label": "Public toilet density",
+      "matrixCategory": "culture_services",
+      "intendedGranularity": "town",
+      "unit": "OSM amenity=toilets features within 2 km",
+      "coverageStatus": "blocked",
+      "sourceGapReason": "source_search_required",
+      "notes": "Compiler lane geospatial_adapter; source family osm_access; batch scope cluster. Primary source: OSM `amenity=toilets`. Next action: Run scripted/geospatial source discovery, then write CitedValue or completed gap. This is a seeded blocker, not a zero, absence claim, or publishable fact."
+    }
+  ]
+}

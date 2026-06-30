@@ -13,6 +13,7 @@ This file states the v1 acceptance criteria. Every item below maps to an automat
 - [ ] At least 5 town-level Place objects cover an agreed first set (Athens, Thessaloniki, Heraklion, Nafplio, Corfu Town).
 - [ ] Every Place object passes `z.parse(PlaceSchema)` with zero Zod 4 errors (CI: `pnpm vitest run packages/data`).
 - [ ] Each Place object carries at minimum: `slug`, `name`, `granularity`, `country`, `costOfLiving`, `climate.averageAnnualSunHours`, `residency` (if applicable), and at least 3 populated `CitedValue` fields.
+- [ ] Each town or region page has a matching evidence bundle with all 254 canonical matrix rows attempted, no duplicate row keys, and no `source_search_required` rows before it can count as `data_bundle_ready`.
 - [ ] `pnpm build` in `packages/web` exits 0 and the Greece country page, all 7 region pages, and all 5 town pages are present in the static output (assert via `find dist -name "*.html" | grep -E "greece|attica|crete|athens"` count >= 13).
 
 ### (b) Every visa/tax/residency CitedValue is fresh and fully cited

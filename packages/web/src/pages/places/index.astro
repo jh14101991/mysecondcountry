@@ -1,0 +1,340 @@
+---
+import { placePath, places } from "@where/data";
+import FenceBlock from "../../components/FenceBlock.astro";
+import Base from "../../layouts/Base.astro";
+import { itemListJsonLd } from "../../lib/jsonld";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/places`;
+const title = "Places | My Second Country";
+const description =
+  "The countries, regions, and towns currently covered by My Second Country, grouped by published coverage and source status.";
+
+const countryPlaces = places.filter((place) => place.granularity === "country");
+const regionPlaces = places.filter((place) => place.granularity === "region");
+const townPlaces = places.filter((place) => place.granularity === "town");
+
+const allPlaceItems = places.map((place, i) => ({
+  position: i + 1,
+  name: place.name,
+  url: `${SITE}${placePath(place)}`,
+}));
+
+const jsonLd = [
+  itemListJsonLd({
+    url: canonical,
+    items: allPlaceItems,
+  }),
+];
+
+type Place = (typeof places)[number];
+type ReadinessEntry = {
+  href?: string;
+  title: string;
+  copy: string;
+  meta: string;
+  linked: boolean;
+};
+
+function placeScope(place: Place): string {
+  if (place.granularity === "country") return "Country file";
+  if (place.granularity === "region") return `Region in ${place.country}`;
+  return place.ancestry.length > 0
+    ? `Town in ${place.ancestry.map((item) => item.name).join(", ")}`
+    : "Town file";
+}
+
+const heldPaths = new Set<string>();
+const sourceGapPaths = new Set<string>();
+const sourceGapPlaces = places.filter((place) => sourceGapPaths.has(placePath(place)));
+const publishedPlaces = places.filter((place) => {
+  const path = placePath(place);
+  return !heldPaths.has(path) && !sourceGapPaths.has(path);
+});
+
+const readinessGroups: {
+  id: string;
+  label: string;
+  count: number;
+  note: string;
+  entries: ReadinessEntry[];
+}[] = [
+  {
+    id: "published",
+    label: "Published",
+    count: publishedPlaces.length,
+    note:
+      "Published files are live evidence surfaces. Country files can support comparisons and screener context.",
+    entries: publishedPlaces.map((place) => ({
+      href: placePath(place),
+      title: place.name,
+      copy: place.description,
+      meta: `${placeScope(place)} / published`,
+      linked: true,
+    })),
+  },
+  {
+    id: "held",
+    label: "Held",
+    count: 0,
+    note: "Held means visible coverage only. It is not a finished town dossier.",
+    entries: [],
+  },
+  {
+    id: "upcoming",
+    label: "Upcoming",
+    count: 1,
+    note:
+      "Upcoming means the route is not current coverage. It waits for a source-backed place file.",
+    entries: [
+      {
+        title: "Portugal and Spain local coverage",
+        copy: "Country files are live. Local pages wait for town-level source bundles.",
+        meta: "Town files / upcoming",
+        linked: false,
+      },
+    ],
+  },
+  {
+    id: "source-gap",
+    label: "Source gap",
+    count: sourceGapPlaces.length,
+    note:
+      "Source gap means a required evidence layer is not yet strong enough for a published local claim.",
+    entries: sourceGapPlaces.map((place) => ({
+      title: place.name,
+      copy:
+        "Regional support layer for future town pages. It stays out of the published group until the source gate clears.",
+      meta: `${placeScope(place)} / source gap`,
+      linked: false,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <article class="corridor-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Places</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <p class="corridor-kicker">Coverage</p>
+      <h1 class="corridor-title">Coverage by readiness state.</h1>
+      <p class="corridor-lead">
+        A place can be published, upcoming, or blocked by a source gap. Town pages
+        need a complete evidence bundle before they count as finished coverage.
+      </p>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    {
+      readinessGroups.filter((group) => group.entries.length > 0).map((group) => (
+        <section class="corridor-section" aria-labelledby={`coverage-${group.id}`} id={group.id}>
+          <div class="corridor-section-head">
+            <div>
+              <p class="corridor-count">{group.count} {group.label.toLowerCase()}</p>
+              <h2 id={`coverage-${group.id}`}>{group.label}</h2>
+            </div>
+            <p class="corridor-section-note">{group.note}</p>
+          </div>
+          <div class="corridor-grid">
+            {group.entries.map((entry) =>
+              entry.linked && entry.href ? (
+                <a class="corridor-card" href={entry.href}>
+                  <span class="corridor-card__meta">{entry.meta}</span>
+                  <div>
+                    <h3 class="corridor-card__title">{entry.title}</h3>
+                    <p class="corridor-card__copy">{entry.copy}</p>
+                  </div>
+                </a>
+              ) : (
+                <article class="corridor-card corridor-card--static">
+                  <span class="corridor-card__meta">{entry.meta}</span>
+                  <div>
+                    <h3 class="corridor-card__title">{entry.title}</h3>
+                    <p class="corridor-card__copy">{entry.copy}</p>
+                  </div>
+                </article>
+              ),
+            )}
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="corridor-section" aria-labelledby="place-index">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Index</p>
+          <h2 id="place-index">Country, region, and town index</h2>
+        </div>
+        <p class="corridor-section-note">
+          The index keeps each place level distinct because country, region, and town
+          evidence support different claims.
+        </p>
+      </div>
+      <div class="coverage-index">
+        <div>
+          <h3>Countries</h3>
+          <ul>
+            {countryPlaces.map((place) => (
+              <li><a href={placePath(place)}>{place.name}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Regions</h3>
+          {regionPlaces.length > 0 ? (
+            <ul>
+              {regionPlaces.map((place) => (
+                <li>
+                  {sourceGapPaths.has(placePath(place)) ? (
+                    <span>{place.name} source gap</span>
+                  ) : (
+                    <a href={placePath(place)}>{place.name}</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No published region index entries yet.</p>
+          )}
+        </div>
+        <div>
+          <h3>Towns</h3>
+          {townPlaces.length > 0 ? (
+            <ul>
+              {townPlaces.map((place) => (
+                <li>
+                  <a href={placePath(place)}>{place.name}</a>
+                  {heldPaths.has(placePath(place)) && <span> held coverage</span>}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No published town dossiers yet.</p>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="corridor-section" aria-labelledby="page-gate">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Gate</p>
+          <h2 id="page-gate">How a place moves here</h2>
+        </div>
+        <p class="corridor-section-note">
+          Published town pages need a complete evidence bundle, cited values, visible
+          source gaps, route discovery, and the page checks in the shipping gate.
+        </p>
+      </div>
+      <p class="coverage-note">
+        A town page can carry inherited national facts, regional context, proxy rows,
+        and unavailable rows only when those labels are visible. Missing values stay
+        visible as source gaps; they are not converted into zeros or claims.
+      </p>
+      <p class="coverage-links">
+        <a href="/sources">Inspect sources</a>
+        <a href="/methodology">Read methodology</a>
+        <a href="/compare/greece-portugal-spain">Compare countries</a>
+        <a href="/screener">Open screener</a>
+      </p>
+    </section>
+  </article>
+
+  <style>
+    :global(.footer-top[data-reveal]) {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (min-width: 861px) and (max-width: 940px) {
+      :global(.site-header .nav-cta) {
+        display: none;
+      }
+    }
+
+    .corridor-card--static {
+      display: block;
+      color: inherit;
+    }
+
+    .coverage-index {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--hairline-soft);
+      border: 1px solid var(--hairline-soft);
+    }
+
+    .coverage-index > div {
+      min-width: 0;
+      padding: clamp(18px, 3vw, 26px);
+      background: var(--surface);
+    }
+
+    .coverage-index h3 {
+      margin: 0 0 0.75rem;
+      color: var(--ink);
+      font-family: var(--f-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .coverage-index ul {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .coverage-index a,
+    .coverage-links a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .coverage-index a:hover,
+    .coverage-index a:focus-visible,
+    .coverage-links a:hover,
+    .coverage-links a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .coverage-index p,
+    .coverage-note {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.62;
+    }
+
+    .coverage-index span {
+      color: var(--stone);
+      font: 600 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .coverage-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.1rem 0 0;
+      font: 600 var(--t-meta) var(--f-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .coverage-index {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Base>

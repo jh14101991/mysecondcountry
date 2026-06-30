@@ -1,6 +1,7 @@
 ---
 import { placePath, places } from "@where/data";
 import "../styles/system.css";
+
 interface Props {
   title: string;
   description: string;
@@ -13,6 +14,14 @@ interface Props {
 const { title, description, canonical, jsonLd, fullBleed = false, noindex = false } = Astro.props;
 const year = 2026;
 const countries = places.filter((p) => p.granularity === "country");
+const normalizedPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isLegalRoute = ["/privacy", "/terms", "/affiliate-disclosure"].includes(normalizedPath);
+const primaryNav = [
+  { href: "/compare/greece-portugal-spain", label: "Compare" },
+  { href: "/shortlists", label: "Shortlists" },
+  { href: "/guides", label: "Guides" },
+  { href: "/sources", label: "Sources" },
+];
 ---
 
 <!doctype html>
@@ -20,6 +29,7 @@ const countries = places.filter((p) => p.granularity === "country");
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" />
@@ -45,6 +55,113 @@ const countries = places.filter((p) => p.granularity === "country");
     <link rel="mask-icon" href="/brand/monogram.svg" color="#1D3A5F" />
     <link rel="apple-touch-icon" href="/brand/social-avatar.svg" />
     <link rel="manifest" href="/site.webmanifest" />
+    <style is:global>
+      .legal-page {
+        max-width: 100%;
+        overflow-x: clip;
+      }
+
+      .legal-page .legal-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+        max-width: 100%;
+      }
+
+      .legal-page .legal-links a {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+        padding: 0.55rem 0.75rem;
+        border: 1px solid rgba(29, 58, 95, 0.24);
+        border-radius: 4px;
+        color: inherit;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+      }
+
+      .legal-page .legal-links a:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
+      }
+
+      .legal-page .corridor-title,
+      .legal-page .corridor-lead,
+      .legal-page .corridor-section-note,
+      .legal-page .corridor-card__copy {
+        overflow-wrap: anywhere;
+      }
+
+      @media (max-width: 1024px) {
+        .legal-page .corridor-section-head,
+        .legal-page .corridor-grid,
+        .legal-page .corridor-card {
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .legal-page .corridor-grid {
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 960px) {
+        .legal-route .site-header-inner {
+          grid-template-columns: 1fr auto;
+        }
+
+        .legal-route .nav-links,
+        .legal-route .nav-cta {
+          display: none;
+        }
+
+        .legal-route .nav-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          justify-self: end;
+          width: 44px;
+          height: 44px;
+          border: 1px solid var(--stone);
+          border-radius: var(--radius-btn);
+          background: transparent;
+          color: var(--ink);
+          cursor: pointer;
+        }
+
+        .legal-route .nav-menu {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          margin-top: 14px;
+          padding-top: 14px;
+          border-top: 1px solid var(--hairline-soft);
+        }
+
+        .legal-route .nav-menu[hidden] {
+          display: none;
+        }
+
+        .legal-route .nav-menu .nav-link {
+          padding: 13px 2px;
+          font-size: 1.125rem;
+        }
+
+        .legal-route .nav-menu .btn-primary {
+          margin-top: 12px;
+          justify-content: center;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .legal-page .legal-links {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
     {
       jsonLd && (
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
@@ -66,7 +183,7 @@ const countries = places.filter((p) => p.granularity === "country");
         };
     </script>
   </head>
-  <body>
+  <body class:list={[isLegalRoute && "legal-route"]}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" role="banner">
       <div class="shell">
@@ -77,11 +194,11 @@ const countries = places.filter((p) => p.granularity === "country");
             <span class="brand-name">My Second Country</span>
           </a>
           <nav class="nav-links" aria-label="Primary">
-            <a class="nav-link" href="/compare/greece-portugal-spain">Compare</a>
-            <a class="nav-link" href="/answers">Answers</a>
-            <a class="nav-link" href="/topics">Topics</a>
-            <a class="nav-link" href="/tools">Tools</a>
-            <a class="nav-link" href="/shortlists">Shortlists</a>
+            {
+              primaryNav.map((item) => (
+                <a class="nav-link" href={item.href}>{item.label}</a>
+              ))
+            }
           </nav>
           <div class="nav-cta">
             <a href="/screener" class="btn-primary">
@@ -99,11 +216,11 @@ const countries = places.filter((p) => p.granularity === "country");
         </div>
         <slot name="nav-extra" />
         <div class="nav-menu" id="mobile-menu" hidden>
-          <a class="nav-link" href="/compare/greece-portugal-spain">Compare</a>
-          <a class="nav-link" href="/answers">Answers</a>
-          <a class="nav-link" href="/topics">Topics</a>
-          <a class="nav-link" href="/tools">Tools</a>
-          <a class="nav-link" href="/shortlists">Shortlists</a>
+          {
+            primaryNav.map((item) => (
+              <a class="nav-link" href={item.href}>{item.label}</a>
+            ))
+          }
           <a href="/screener" class="btn-primary">
             Build my shortlist
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -119,7 +236,7 @@ const countries = places.filter((p) => p.granularity === "country");
     <footer class="footer-eng" role="contentinfo">
       <div class="footer-scene">
         <div class="shell">
-          <div class="footer-top" data-reveal style="--i:0">
+          <div class="footer-top">
             <div>
               <a href="/" class="footer-brand-wordmark" aria-label="My Second Country home">My Second Country</a>
               <p class="footer-tagline">Cited relocation intelligence. Countries, regions, and towns, screened on evidence.</p>
@@ -129,14 +246,16 @@ const countries = places.filter((p) => p.granularity === "country");
                 <span class="footer-col-label">Product</span>
                 <ul class="footer-links">
                   <li><a href="/screener">Screener</a></li>
-                  <li><a href="/compare/greece-portugal-spain">Compare</a></li>
+                  <li><a href="/compare">Compare</a></li>
+                  <li><a href="/compare/greece-portugal-spain">Greece, Portugal, and Spain</a></li>
                   <li><a href="/shortlists">Shortlists</a></li>
-                  <li><a href="/tools">Tools</a></li>
+                  <li><a href="/guides">Guides</a></li>
                 </ul>
               </div>
               <div>
                 <span class="footer-col-label">Coverage</span>
                 <ul class="footer-links">
+                  <li><a href="/places">All places</a></li>
                   {countries.map((p) => (
                     <li><a href={placePath(p)}>{p.name}</a></li>
                   ))}
@@ -145,9 +264,10 @@ const countries = places.filter((p) => p.granularity === "country");
               <div>
                 <span class="footer-col-label">Reference</span>
                 <ul class="footer-links">
-                  <li><a href="/answers">Answers</a></li>
-                  <li><a href="/topics">Topics</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/guides">Guides</a></li>
                   <li><a href="/tax">Tax regimes</a></li>
+                  <li><a href="/tools">Tools</a></li>
                   <li><a href="/methodology">Methodology</a></li>
                   <li><a href="/sources">Sources</a></li>
                 </ul>
@@ -158,23 +278,96 @@ const countries = places.filter((p) => p.granularity === "country");
       </div>
       <div class="footer-legalstrip">
         <div class="shell">
-          <p class="footer-fence">Sourced screening, not legal or financial advice; verify with a professional.</p>
+          <p class="footer-fence">Sourced screening, not legal, tax, immigration, financial, or individualized relocation advice. Verify with official sources and qualified professionals.</p>
           <div class="footer-bottom">
             <span class="footer-copy">&copy; {year} My Second Country</span>
+            <div class="footer-legal">
+              <a href="/about">About</a>
+              <a href="/screening-notice">Screening notice</a>
+              <a href="/privacy">Privacy</a>
+              <a href="/terms">Terms</a>
+              <a href="/affiliate-disclosure">Affiliate disclosure</a>
+              <a href="/methodology">Methodology</a>
+              <a href="/sources">Sources</a>
+            </div>
           </div>
         </div>
       </div>
     </footer>
 
     <script is:inline>
-      // Demand-sensor events. Pageviews and outbound (source) clicks are auto-tracked.
+      // Demand-sensor events. Pageviews and outbound source clicks are auto-tracked.
       (function () {
         var p = function (e, o) {
           if (window.plausible) window.plausible(e, o);
         };
+
         var page = document.querySelector("[data-page]");
+        var pageProps = function () {
+          return page
+            ? {
+                path: window.location.pathname,
+                page_type: page.getAttribute("data-page") || "",
+                place_id: page.getAttribute("data-place-id") || "",
+                granularity: page.getAttribute("data-place-granularity") || "",
+              }
+            : { path: window.location.pathname };
+        };
+
+        var withPageProps = function (props) {
+          return Object.assign({}, pageProps(), props || {});
+        };
+
+        var cleanText = function (node) {
+          return (node.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
+        };
+
+        var track = function (eventName, props) {
+          p(eventName, { props: withPageProps(props) });
+        };
+
+        if (page && page.getAttribute("data-page") === "place") {
+          track("place_page_view");
+        }
+
+        document.addEventListener(
+          "click",
+          function (event) {
+            if (!(event.target instanceof Element)) return;
+
+            var source = event.target.closest("[data-source-link], a.source-link, a[data-detail-source]");
+            if (source) {
+              var sourceProps = {
+                source_name:
+                  source.getAttribute("data-source-name") ||
+                  cleanText(source),
+                source_url:
+                  source.getAttribute("data-source-url") ||
+                  source.getAttribute("href") ||
+                  "",
+                cited_value_key: source.getAttribute("data-cited-value-key") || "",
+                row_key: source.getAttribute("data-row-key") || "",
+                source_placement: source.getAttribute("data-source-placement") || "source_link",
+              };
+              track("source_link_click", sourceProps);
+              if (source.hasAttribute("data-detail-source")) {
+                track("evidence_atlas_source_click", sourceProps);
+              }
+            }
+
+            var screenerCta = event.target.closest("a[href='/screener']");
+            if (screenerCta) {
+              track("screener_cta_click", {
+                cta_variant: screenerCta.getAttribute("data-cta-variant") || cleanText(screenerCta),
+                source_path: window.location.pathname,
+              });
+            }
+          },
+          { capture: true },
+        );
+
         if (page && page.getAttribute("data-page") === "comparison") {
-          p("Comparison Viewed", { props: { set: page.getAttribute("data-compare") || "" } });
+          track("place_compared", { set: page.getAttribute("data-compare") || "" });
         }
         var fence = document.querySelector(".fence");
         if (fence && "IntersectionObserver" in window) {
@@ -182,7 +375,8 @@ const countries = places.filter((p) => p.granularity === "country");
           var io = new IntersectionObserver(function (entries) {
             if (!seen && entries.some(function (en) { return en.isIntersecting; })) {
               seen = true;
-              p("Fence Seen");
+              track("fence_seen");
+              track("fence_viewed");
               io.disconnect();
             }
           });

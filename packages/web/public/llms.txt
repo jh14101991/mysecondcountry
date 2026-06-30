@@ -13,9 +13,11 @@
   Greece (/places/greece), Portugal (/places/portugal), and Spain (/places/spain).
 - A side-by-side cited comparison at /compare/greece-portugal-spain (11 sourced dimensions).
 - A free screener at /screener: constraints in, cited ranked shortlist out.
-- Town depth begins with Chania, Crete (/places/greece/crete/chania). More town and region
-  pages follow, demand-led.
-- Greece foreign-pensioner 7 percent flat tax regime at https://mysecondcountry.com/greece/tax/foreign-pensioner-flat-tax:
+- Crete town depth includes Chania (/places/greece/crete/chania), Heraklion
+  (/places/greece/crete/heraklion), Rethymno (/places/greece/crete/rethymno), and
+  Agios Nikolaos (/places/greece/crete/agios-nikolaos).
+- Greece foreign-pensioner 7 percent flat tax regime:
+  https://mysecondcountry.com/greece/tax/foreign-pensioner-flat-tax
   headline rate, regime duration, and eligibility rules as cited and dated values, plus a
   card covering what would disqualify an applicant.
 - Granularity is country, region, or town. A country-level figure shown on a town page is
@@ -33,8 +35,8 @@
 - Sitemap: https://mysecondcountry.com/sitemap.xml
 - The liability fence and citation policy travel with every page that carries a claim.
 - Greece foreign-pensioner flat-tax regime as a cited JSON dataset:
-  https://mysecondcountry.com/data/regimes/foreign-pensioner-flat-tax.json. Each fact
-  carries its named source, verified date, and confidence tier.
+  https://mysecondcountry.com/data/regimes/foreign-pensioner-flat-tax.json
+  Each fact carries its named source, verified date, and confidence tier.
 - Cited Q&A pages (AEO) at /answers/: each page carries a single sourced question with a
   polarity (yes/no/qualified), a cited answer fact, and up to three supporting cited facts.
   Each answer page carries FAQPage schema.org markup with a single acceptedAnswer. Machine-

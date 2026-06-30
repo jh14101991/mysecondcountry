@@ -1,0 +1,102 @@
+---
+import FenceBlock from "../components/FenceBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://mysecondcountry.com";
+const canonical = `${SITE}/terms`;
+const title = "Terms | My Second Country";
+const description =
+  "Terms for using My Second Country, a cited screening product that is not legal, tax, immigration, financial, or individualized relocation advice.";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <article class="corridor-page legal-page">
+    <nav class="corridor-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Terms</span>
+    </nav>
+
+    <header class="corridor-hero">
+      <h1 class="corridor-title">Terms</h1>
+      <p class="corridor-lead">
+        My Second Country reports cited screening intelligence from named sources. It is
+        not legal, tax, immigration, financial, or individualized relocation advice.
+      </p>
+      <nav class="legal-links" aria-label="Related legal and source links">
+        <a href="/privacy">Privacy</a>
+        <a href="/affiliate-disclosure">Affiliate disclosure</a>
+        <a href="/screening-notice">Screening notice</a>
+        <a href="/sources">Sources</a>
+        <a href="/methodology">Methodology</a>
+      </nav>
+    </header>
+
+    <FenceBlock hasLegalClaims={true} />
+
+    <section class="corridor-section" aria-labelledby="terms-use">
+      <div class="corridor-section-head">
+        <div>
+          <p class="corridor-kicker">Use</p>
+          <h2 id="terms-use">How to use the site</h2>
+        </div>
+        <p class="corridor-section-note">
+          My Second Country reports what named sources said on named dates. It does not
+          decide eligibility, suitability, tax liability, immigration status, or investment
+          outcomes.
+        </p>
+      </div>
+      <div class="corridor-grid">
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Screening</span>
+          <div>
+            <h3 class="corridor-card__title">No individualized advice</h3>
+            <p class="corridor-card__copy">
+              Pages may compare places or rank records, but they do not recommend a place
+              for personal circumstances.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Sources</span>
+          <div>
+            <h3 class="corridor-card__title">Rules can change</h3>
+            <p class="corridor-card__copy">
+              Dates and confidence marks help you judge freshness. They do not guarantee
+              that a rule still applies on the day you act.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Verification</span>
+          <div>
+            <h3 class="corridor-card__title">Professional review</h3>
+            <p class="corridor-card__copy">
+              Verify tax, visa, residency, legal, financial, and healthcare matters with a
+              licensed professional and the official source before acting.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Limits</span>
+          <div>
+            <h3 class="corridor-card__title">Source and confidence limits</h3>
+            <p class="corridor-card__copy">
+              Confidence labels describe source quality and freshness. They do not promise
+              accuracy, completeness, future availability, or fitness for a decision.
+            </p>
+          </div>
+        </section>
+        <section class="corridor-card">
+          <span class="corridor-card__meta">Contact</span>
+          <div>
+            <h3 class="corridor-card__title">Questions</h3>
+            <p class="corridor-card__copy">
+              Contact hello@mysecondcountry.com for site questions.
+            </p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </article>
+</Base>

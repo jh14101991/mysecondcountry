@@ -22,8 +22,19 @@ interface Props {
   /** The attaching place's granularity, to label any broader figure (ADR-0003). */
   placeGranularity?: Granularity;
   placeName?: string;
+  eventKey?: string;
+  sourcePlacement?: string;
 }
-const { cited, unit, prose = false, as = "td", placeGranularity, placeName } = Astro.props;
+const {
+  cited,
+  unit,
+  prose = false,
+  as = "td",
+  placeGranularity,
+  placeName,
+  eventKey,
+  sourcePlacement = "cited_value",
+} = Astro.props;
 
 const note =
   placeGranularity && placeName
@@ -38,7 +49,18 @@ const Tag = as;
   <ConfidenceMark level={cited.confidence} />
   {note && <span class="cv-granularity">{note}</span>}
   <span class="cv-provenance">
-    <a href={cited.sourceUrl} rel="noopener nofollow" target="_blank">{cited.sourceName}</a>
+    <a
+      href={cited.sourceUrl}
+      rel="noopener nofollow"
+      target="_blank"
+      data-source-link
+      data-source-name={cited.sourceName}
+      data-source-url={cited.sourceUrl}
+      data-cited-value-key={eventKey}
+      data-source-placement={sourcePlacement}
+    >
+      {cited.sourceName}
+    </a>
     <span class="cv-verified">Verified {cited.verifiedDate}</span>
   </span>
   {cited.confidence === "low" && <span class="cv-low-note">{LOW_CONFIDENCE_NOTE}</span>}
