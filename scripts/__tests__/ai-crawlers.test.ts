@@ -4,7 +4,11 @@ import {
   detectAiCrawler,
   isAiCrawlerLoggablePath,
 } from "../../packages/web/src/lib/ai-crawlers";
-import { type AiCrawlerHitRecord, summarizeAiCrawlerHits } from "../lib/ai-crawler-summary";
+import {
+  type AiCrawlerHitRecord,
+  parseAiCrawlerRecord,
+  summarizeAiCrawlerHits,
+} from "../lib/ai-crawler-summary";
 
 describe("AI crawler detection", () => {
   it("detects known AI crawler user agents", () => {
@@ -40,6 +44,26 @@ describe("AI crawler detection", () => {
 });
 
 describe("AI crawler summary", () => {
+  it("ignores explicit verification probe records", () => {
+    const record: AiCrawlerHitRecord = {
+      version: 1,
+      observedAt: "2026-06-28T19:00:00.000Z",
+      bot: "gptbot",
+      botName: "GPTBot",
+      method: "GET",
+      path: "/places/greece",
+      search: "",
+      url: "https://mysecondcountry.com/places/greece",
+      resourceType: "page",
+      userAgent: "GPTBot/1.2",
+      referrer: "",
+      environment: "probe",
+      deployment: "probe",
+    };
+
+    expect(parseAiCrawlerRecord(JSON.stringify(record))).toBeNull();
+  });
+
   it("groups hits by bot and path", () => {
     const base: AiCrawlerHitRecord = {
       version: 1,

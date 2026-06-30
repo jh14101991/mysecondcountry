@@ -55,7 +55,7 @@ async function streamToText(stream: ReadableStream<Uint8Array>): Promise<string>
   return await new Response(stream).text();
 }
 
-function parseRecord(text: string): AiCrawlerHitRecord | null {
+export function parseAiCrawlerRecord(text: string): AiCrawlerHitRecord | null {
   try {
     const value = JSON.parse(text) as Partial<AiCrawlerHitRecord>;
     if (
@@ -66,6 +66,9 @@ function parseRecord(text: string): AiCrawlerHitRecord | null {
       !value.path ||
       !value.resourceType
     ) {
+      return null;
+    }
+    if (value.environment === "probe" || value.deployment === "probe") {
       return null;
     }
     return value as AiCrawlerHitRecord;
@@ -106,7 +109,7 @@ export async function loadAiCrawlerHits(
       for (const pathname of pathnames) {
         const blob = await get(pathname, { access: "private" });
         if (blob?.statusCode !== 200 || !blob.stream) continue;
-        const record = parseRecord(await streamToText(blob.stream));
+        const record = parseAiCrawlerRecord(await streamToText(blob.stream));
         if (record) hits.push(record);
       }
     }
