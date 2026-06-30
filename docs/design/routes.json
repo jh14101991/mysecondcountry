@@ -164,7 +164,7 @@
     },
     {
       "route": "/places/cyprus",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
@@ -227,7 +227,7 @@
     },
     {
       "route": "/places/italy",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
@@ -236,7 +236,7 @@
     },
     {
       "route": "/places/malta",
-      "status": "live",
+      "status": "held",
       "surface": "coverage",
       "discoverability": ["places", "sitemap", "related"],
       "sitemap": true,
