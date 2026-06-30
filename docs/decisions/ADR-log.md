@@ -137,7 +137,7 @@ Data refresh runs as `tsx` scripts in `scripts/`. A single GitHub Actions cron t
 
 ## ADR-0007: Affiliate-first monetization with a Stripe fake-door
 
-**Status:** Accepted
+**Status:** Accepted; superseded on the monetization hierarchy by ADR-0018 (2026-06-30). Affiliate mechanics and disclosure rules remain in force as the quarantined commodity floor.
 **Date:** 2026-06-24
 
 ### Context
@@ -399,7 +399,7 @@ A0 (ADR-0015) is live. The first deep page after A0 is the Greece foreign-pensio
 
 ## ADR-0018: Monetize the freshness moat as recurring, not the referral; affiliate demoted to a quarantined floor (challenger to ADR-0007)
 
-**Status:** Proposed (challenger to ADR-0007; not yet accepted)
+**Status:** Accepted (2026-06-30; supersedes ADR-0007 on the monetization hierarchy)
 **Date:** 2026-06-25
 **Challenges:** ADR-0007. Builds on: ADR-0008, ADR-0017. Source: Hermes creative-ideation pass, Provocation 4 ("affiliate-first poisons the asset") stacked on Provocation 3 ("nobody visits the website").
 
@@ -436,4 +436,4 @@ If accepted, this reorders the monetization hierarchy set by ADR-0007:
 - No revenue projection is committed by this ADR. A sizing model with explicit assumptions lives in `docs/revenue-model.md` (a reference doc under ADR-0012); it is fiction until the first fake-door conversion returns a real number, which replaces the model's central assumption.
 - The content engine's success metric shifts from views to owned-list growth and dossier conversion; the SHIP.md kill-gate "short-form hook breaking past the founder's own audience" stays a reach/validation signal, not a revenue line. The newsletter is the load-bearing channel because it is the part that converts directly to first-party sales and is not intermediated by AI answer engines or platform algorithms.
 - No change to the fence (ADR-0008), the dataset endpoint, or any data model. The affiliate quarantine is a placement rule enforced in the content/renderer layer.
-- Status stays Proposed until the founder accepts. Until then ADR-0007 remains the accepted decision and this entry is the challenger of record.
+- Accepted by the founder on 2026-06-30. ADR-0018 now governs the monetization hierarchy; ADR-0007's affiliate mechanics and disclosure rules remain in force as the quarantined commodity floor.

@@ -10,6 +10,11 @@
 import { EMAIL_FORM_ACTION, isCaptureLive } from "../lib/monetisation.ts";
 
 const emailCaptureLive = isCaptureLive();
+
+interface Props {
+  source?: string;
+}
+const { source } = Astro.props;
 ---
 
 {
@@ -21,6 +26,7 @@ const emailCaptureLive = isCaptureLive();
         unsubscribe anytime.
       </p>
       <form class="email-capture__form" action={EMAIL_FORM_ACTION} method="post">
+        {source && <input type="hidden" name="source" value={source} />}
         <label class="email-capture__label" for="email-capture-input">Email address</label>
         <input
           class="email-capture__input"

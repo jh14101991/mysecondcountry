@@ -51,10 +51,7 @@ and senses demand; programmatic SEO and AEO compound; the newsletter is the owne
 a one-time launch seed backlinks. The page is the channel.
 
 ## Monetization
-Affiliate-first, to licensed professionals, embedded in the relevant cited claim. The fence makes
-the referral the safe call to action, since the page already routes the reader to a pro. A paid
-"cited dossier" is tested upside, validated cheaply with a Stripe fake-door. Ads come last, behind
-a return gate. Nothing monetizes before there is traffic. (ADR-0007.)
+Recurring revenue off the freshness moat is the primary line: a consumer change-monitoring subscription ("alert me when the rule that affects my move changes") and B2B licensing of the cited, dated, staleness-monitored dataset. The validated entry product is a one-time cited dossier, a dated relocation snapshot the reader hands to their own accountant or lawyer, proven with a fake-door before any build and designed as the front door to the subscription. Affiliate is demoted to a disclosed floor on commodity adjacencies only (currency transfer, insurance, SIM, moving), barred from every cited tax, visa, or residency claim. Nothing monetizes before there is traffic. (ADR-0018.)
 
 ## The founder shape (why it is built this way)
 Infinite runway: revenue is chosen proof, not survival, so optimize a durable 2 to 3 year

@@ -289,6 +289,15 @@
       "brief": "docs/design/routes/screener.md"
     },
     {
+      "route": "/dossier",
+      "status": "live",
+      "surface": "product",
+      "discoverability": ["sources", "sitemap"],
+      "sitemap": true,
+      "firstAction": "/screener",
+      "brief": "docs/design/routes/dossier.md"
+    },
+    {
       "route": "/screening-notice",
       "status": "live",
       "surface": "legal",
