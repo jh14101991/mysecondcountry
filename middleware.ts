@@ -1,10 +1,9 @@
-import { put } from "@vercel/blob";
 import {
   type AiCrawlerId,
   aiCrawlerResourceType,
   detectAiCrawler,
   isAiCrawlerLoggablePath,
-} from "./packages/web/src/lib/ai-crawlers";
+} from "./packages/web/src/lib/ai-crawlers.js";
 
 interface VercelMiddlewareContext {
   waitUntil?: (promise: Promise<unknown>) => void;
@@ -33,22 +32,20 @@ function hasBlobCredentials(): boolean {
   );
 }
 
-function blobPathFor(record: AiCrawlerHit): string {
-  const day = record.observedAt.slice(0, 10);
-  const suffix =
-    typeof crypto.randomUUID === "function"
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-  return `ai-crawlers/raw/${day}/${record.bot}-${Date.now()}-${suffix}.json`;
+function crawlerLogHeaders(): HeadersInit {
+  const headers: Record<string, string> = { "content-type": "application/json" };
+  if (process.env.AI_CRAWLER_LOG_SECRET) {
+    headers["x-msc-crawler-log-secret"] = process.env.AI_CRAWLER_LOG_SECRET;
+  }
+  return headers;
 }
 
 async function writeCrawlerHit(record: AiCrawlerHit): Promise<void> {
   if (!hasBlobCredentials()) return;
-  await put(blobPathFor(record), `${JSON.stringify(record)}\n`, {
-    access: "private",
-    addRandomSuffix: false,
-    contentType: "application/json",
-    cacheControlMaxAge: 60,
+  await fetch(`${new URL(record.url).origin}/api/ai-crawler-log`, {
+    method: "POST",
+    headers: crawlerLogHeaders(),
+    body: JSON.stringify(record),
   });
 }
 
@@ -86,5 +83,5 @@ export default function middleware(request: Request, context: VercelMiddlewareCo
 }
 
 export const config = {
-  matcher: ["/((?!_astro/|brand/|mockups/|favicon.ico|og-image.png|site.webmanifest).*)"],
+  matcher: ["/((?!api/|_astro/|brand/|mockups/|favicon.ico|og-image.png|site.webmanifest).*)"],
 };

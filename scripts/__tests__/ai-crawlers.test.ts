@@ -25,6 +25,7 @@ describe("AI crawler detection", () => {
     expect(isAiCrawlerLoggablePath("/places/greece")).toBe(true);
     expect(isAiCrawlerLoggablePath("/data/regimes/foreign-pensioner-flat-tax.json")).toBe(true);
     expect(isAiCrawlerLoggablePath("/sitemap.xml")).toBe(true);
+    expect(isAiCrawlerLoggablePath("/api/ai-crawler-log")).toBe(false);
     expect(isAiCrawlerLoggablePath("/_astro/page.js")).toBe(false);
     expect(isAiCrawlerLoggablePath("/brand/monogram.svg")).toBe(false);
     expect(isAiCrawlerLoggablePath("/mockups/homepage.html")).toBe(false);

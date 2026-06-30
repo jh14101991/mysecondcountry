@@ -78,7 +78,7 @@ Google-Extended
 GoogleOther
 ```
 
-**Data source:** Vercel Routing Middleware at the repository root (`middleware.ts`). It detects known AI crawler user agents and writes private JSON records to Vercel Blob under `ai-crawlers/raw/YYYY-MM-DD/*.json`. It does not log IP addresses, cookies, request bodies, or ordinary human traffic.
+**Data source:** Vercel Routing Middleware at the repository root (`middleware.ts`). It detects known AI crawler user agents and posts matching records to the Node serverless writer at `api/ai-crawler-log.ts`, which writes private JSON records to Vercel Blob under `ai-crawlers/raw/YYYY-MM-DD/*.json`. It does not log IP addresses, cookies, request bodies, or ordinary human traffic.
 
 **Parser:** `scripts/parse-ai-crawlers.ts`. The weekly digest calls the same parser and reports whether Blob reading is configured. If Blob credentials are missing, a zero-hit report is not meaningful.
 

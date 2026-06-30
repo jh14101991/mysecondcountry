@@ -43,6 +43,7 @@ export function detectAiCrawler(userAgent: string | null | undefined): AiCrawler
 
 export function isAiCrawlerLoggablePath(pathname: string): boolean {
   if (!pathname?.startsWith("/")) return false;
+  if (pathname.startsWith("/api/")) return false;
   if (pathname.startsWith("/_astro/")) return false;
   if (pathname.startsWith("/brand/")) return false;
   if (pathname.startsWith("/mockups/")) return false;
