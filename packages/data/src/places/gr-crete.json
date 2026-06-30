@@ -1,0 +1,151 @@
+{
+  "id": "gr-crete",
+  "slug": "crete",
+  "granularity": "region",
+  "parentId": "gr",
+  "name": "Crete",
+  "country": "Greece",
+  "coordinates": {
+    "lat": 35.2401,
+    "lon": 24.8093
+  },
+  "ancestry": [
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "granularity": "country"
+    }
+  ],
+  "description": "Crete is the first regional parent for the Greece place cluster. This record exists to separate national Greek rules, regional Crete context, and local town values before Chania or other Crete pages move to Page Factory.",
+  "costOfLiving": {
+    "priceLevelIndexEU27": {
+      "value": 87.4,
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/tec00120/default/table",
+      "sourceName": "Eurostat, price level index for actual individual consumption (tec00120, EU27=100)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "country",
+      "category": "cost",
+      "excerpt": "Greece price level index for actual individual consumption (EU27 = 100): 87.4 in 2025 (100 = EU average)."
+    }
+  },
+  "climate": {
+    "averageJanuaryHighC": {
+      "value": 14,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Chania",
+      "sourceName": "Hellenic National Meteorological Service climate atlas, Chania (Souda) 1971 to 2000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 14.0 C in January."
+    },
+    "averageJulyHighC": {
+      "value": 30.5,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Chania",
+      "sourceName": "Hellenic National Meteorological Service climate atlas, Chania (Souda) 1971 to 2000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Chania (Souda airport), 1971 to 2000 normals: mean daily maximum 30.5 C in July, the hottest month."
+    },
+    "averageAnnualSunHours": {
+      "value": 2813.7,
+      "sourceUrl": "https://en.wikipedia.org/wiki/Chania",
+      "sourceName": "Hellenic National Meteorological Service climate atlas, Chania (Souda) 1971 to 2000, via Wikipedia",
+      "verifiedDate": "2026-06-24",
+      "confidence": "low",
+      "granularity": "town",
+      "category": "climate",
+      "excerpt": "Mean annual sunshine 2,813.7 hours (Chania Souda, 1971 to 2000 normals)."
+    },
+    "koppenClass": {
+      "value": "Csa",
+      "sourceUrl": "https://www.gloh2o.org/koppen/",
+      "sourceName": "GloH2O Koppen-Geiger climate classification (Beck et al. 2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "climate",
+      "excerpt": "Koppen-Geiger class Csa, hot-summer Mediterranean, is recorded here as the provisional Crete parent class pending the region geospatial build."
+    }
+  },
+  "residency": {
+    "digitalNomadVisa": {
+      "value": 3500,
+      "sourceUrl": "https://migration.gov.gr/en/gas/aitoyntes-kai-dikaioychoi/adeies-diamonis/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, digital nomad residence permit (Migration Code, Law 5038/2023)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "visa",
+      "stalenessDays": 60,
+      "excerpt": "Greece digital nomad residence permit: minimum net monthly income 3,500 euros, plus 20 percent for a spouse and 15 percent per child."
+    },
+    "goldenVisa": {
+      "value": "Tiered since 31 Aug 2024: 800,000 euros in high-demand zones (Attica, Thessaloniki, Mykonos, Santorini, islands over 3,100 residents); 400,000 euros elsewhere; 250,000 euros only for converting a commercial building to residential or restoring a listed building.",
+      "sourceUrl": "https://migration.gov.gr/en/golden-visa/",
+      "sourceName": "Hellenic Ministry of Migration and Asylum, investor residence permit (Golden Visa)",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "residency",
+      "excerpt": "Official Greek investor residence permit page; the 250,000 euro tier remains only for commercial-to-residential conversion or listed-building restoration."
+    }
+  },
+  "tax": {
+    "headlinePersonalIncomeTaxRate": {
+      "value": 44,
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/taxes-on-personal-income",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, taxes on personal income",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Top marginal personal income tax rate 44 percent on income above 60,000 euros (scale 9, 20, 26, 34, 39, 44 percent)."
+    },
+    "specialRegime": {
+      "value": "Non-dom (Article 5A): 100,000 euros per year flat on all foreign income, up to 15 years, requires a 500,000 euro Greek investment. Foreign pensioners (Article 5B): 7 percent flat on foreign-source income, up to 15 years.",
+      "sourceUrl": "https://taxsummaries.pwc.com/greece/individual/other-tax-credits-and-incentives",
+      "sourceName": "PwC Worldwide Tax Summaries, Greece, other tax credits and incentives",
+      "verifiedDate": "2026-06-24",
+      "confidence": "medium",
+      "granularity": "country",
+      "category": "tax",
+      "excerpt": "Lump-sum tax of 100,000 euros per tax year on foreign income (Art 5A); 7 percent on foreign-sourced income (Art 5B), each for up to 15 fiscal years."
+    }
+  },
+  "variables": {
+    "regional_population": {
+      "value": 621121,
+      "sourceUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/demo_r_pjanaggr3?format=JSON&lang=EN&geo=EL43&sex=T&age=TOTAL",
+      "sourceName": "Eurostat, population on 1 January by broad age group, sex and NUTS 3 region (DEMO_R_PJANAGGR3)",
+      "verifiedDate": "2026-06-28",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "identity",
+      "excerpt": "Kriti (EL43), total population, all ages, both sexes: 621,121 in 2025."
+    },
+    "hospital_beds_per_100k": {
+      "value": 394.5,
+      "sourceUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/tgs00064?format=JSON&lang=EN&geo=EL43",
+      "sourceName": "Eurostat, available beds in hospitals by NUTS 2 region (TGS00064)",
+      "verifiedDate": "2026-06-28",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "healthcare",
+      "excerpt": "Kriti (EL43), available hospital beds per hundred thousand inhabitants: 394.50 in 2023, latest non-null value returned for the region."
+    },
+    "regional_airport_inventory": {
+      "value": "OurAirports lists two large airports on Crete, Heraklion International Nikos Kazantzakis Airport (HER/LGIR) and Chania International Airport (CHQ/LGSA), plus Sitia Airport (JSH/LGST) as a medium airport.",
+      "sourceUrl": "https://ourairports.com/countries/GR/airports.csv",
+      "sourceName": "OurAirports, Greece airports CSV export",
+      "verifiedDate": "2026-06-28",
+      "confidence": "high",
+      "granularity": "region",
+      "category": "connectivity",
+      "excerpt": "Crete rows include LGIR large_airport HER, LGSA large_airport CHQ, and LGST medium_airport JSH."
+    }
+  }
+}

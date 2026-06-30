@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-06-28",
+  "updatedAt": "2026-06-30",
   "purpose": "Shared operating board for My Second Country rooms. Rooms use this to stay aware of focus, handoffs, blockers, and posting state without reading every other thread.",
   "authority": {
     "operatingRules": "docs/msc-operating-ledger.md",
@@ -30,7 +30,8 @@
     "onePageGate": "First real Greek town page must pass DEFINITION_OF_DONE.md before breadth.",
     "weeklyMarketArtifact": "Public-safe source-literacy posting packet while Chania remains below page gate.",
     "decisionsNeeded": [
-      "Confirm whether pre-page public posts can begin as process/source-literacy posts.",
+      "Confirm whether James should post the 2026-06-29 source-literacy draft as the first pre-page market artifact.",
+      "Confirm that place-specific public claims stay held until Chania is promoted from source_gap to data_bundle_ready.",
       "Confirm the first monthly founder recording day once the first content packet is ready."
     ]
   },
@@ -40,56 +41,78 @@
       "automationId": "msc-weekly-command-packet",
       "cadence": "Weekly, Monday morning",
       "owns": ["weekly focus", "room routing", "gate discipline", "cross-room drift control"],
-      "currentJob": "Keep all rooms pointed at Crete, Chania, Portugal IFICI, and the one-page gate.",
+      "currentJob": "Run the 2026-06-29 weekly packet, hold Chania at source_gap until Data Desk promotes it, and keep market output on source-literacy posts.",
       "nextActions": [
-        "Review room briefs after initialization.",
-        "Resolve conflicts between data readiness, page readiness, and posting pressure."
+        "Tell James that the 2026-06-29 source-literacy post is the only ready_to_post item today.",
+        "Route the next production block to Data Desk for Chania completed-gap and local-distinctness review, not Page Factory.",
+        "Keep Portugal IFICI with Revenue Desk for adviser/source review; no public corridor claim until the official-source check clears.",
+        "Review Page Factory only after gr-crete-region and gr-crete-chania are data_bundle_ready."
       ],
       "blockers": [],
-      "lastUpdated": "2026-06-28"
+      "lastUpdated": "2026-06-29"
     },
     "dataDesk": {
       "threadId": "019f0e05-3825-7302-8c53-60676e3c966b",
       "automationId": "msc-data-matrix-pull",
       "cadence": "Monday to Thursday morning",
       "owns": ["CitedValues", "variable coverage", "source gaps", "freshness"],
-      "currentJob": "Advance Crete and Chania through the canonical variable matrix.",
+      "currentJob": "Accepted the 2026-06-30 Chania pre-publish source review after Page Factory amendments. The six promoted Chania Place.variables still match the approved evidence bundle, temp_monthly_high no longer renders a duplicate C unit, and source-gap rows render reader-safe wording instead of raw internal enum labels. No airport, ferry, rental, cost, or other source-gapped row was turned into a fact or zero.",
       "nextActions": [
-        "Separate Greece national values from Crete regional and Chania local values.",
-        "Mark missing local values as source gaps instead of leaving silent blanks.",
-        "Hand Page Factory only a bundle that is deep enough for the page gate."
+        "Return to Page Factory: Data Desk accepts the amended Chania pre-publish source review. Page Factory may move this single Chania page unit toward remaining DEFINITION_OF_DONE.md and human publish gates, but this is not live publication approval and no scale run should start before the first town page ships.",
+        "First data job after handoff: keep the transport-schedule manual intake ready for dated official airport destination/timetable exports, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds. Use `pnpm data:city-adapters --only transport-schedule-manual --manual-schedule-file docs/data/manual/transport-schedule-manual.json --write` only when the manual file contains defensible medium/high-confidence component records. airport_winter_route_ratio remains derived only after matching winter and summer selected-airport counts are cited.",
+        "Second data job: keep source_terms_block_reuse and paywalled rows as accepted visible gaps unless a licensed feed, written reuse permission, or approved paid data source exists. Do not scrape or republish unlicensed portal counts.",
+        "Third data job: before public publish, refresh any dynamic rows with seasonal or high-rot sources, especially CHQ timetable rows, KTEL timetable rows, pharmacy duty rota pages, and any newly supplied airport or ferry schedule export.",
+        "After Page Factory accepts or rejects the handoff, update this board with the exact Page Factory gate result. The golden rule still applies: one real Chania page must pass DEFINITION_OF_DONE.md before breadth counts."
       ],
       "blockers": [
-        "Chania needs a complete enough local and regional evidence bundle before Page Factory should build a real page."
+        "The canonical city and region evidence-bundle template is now 254 registry rows. Any bundle below 254 attempted rows remains incomplete, and any bundle with source_search_required rows is blocked from data_bundle_ready.",
+        "Crete parent and all four priority town bundles instantiate all 254 rows. After the 2026-06-30 source-family closure, all five have 0 source_search_required rows, 0 high-liability freshness blockers, and 0 openSourceGapRows. The remaining transport rows are visible source_bot_blocked_manual_needed gaps, not facts and not zeros.",
+        "Chania and Rethymno each report 232 cited/reference-backed rows and 22 visible source gaps. Crete parent, Heraklion, and Agios Nikolaos each report 231 cited/reference-backed rows and 23 visible source gaps. Chania has 107 town-level values that differ from Crete and 107 local daily-life values; Rethymno has 107 and 106; Heraklion has 106 and 105; Agios Nikolaos has 107 and 106.",
+        "Transport source discovery conclusion: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds.",
+        "Ferry and remaining airport-seasonality rows must render as source gaps until filled by dated official airport destination or timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds. They must not be inferred from old convenience proxies, marketing route pages, rolling live boards, OSM ferry-terminal proximity, cruise passenger counts, or route-existence snippets.",
+        "Property/rental portal rows remain accepted source_terms_block_reuse policy gaps unless licensed feed or written permission exists. Do not scrape or republish unlicensed portal counts.",
+        "Greek tax and visa values remain manual-gate sources. PwC WTS rows are medium-confidence secondary synthesis and must be rechecked against primary Greek authority or law sources before any public page treats them as definitive.",
+        "Bounded proxy rows must stay labelled honestly. Light_pollution, pollen_severity, forest_cover_pct, tree_canopy_pct, surface_water_density, water_stress_baseline, and drought_frequency_proxy are medium-confidence proxies; wildfire_egress_proxy, emergency_vet_proxy, and seasonal_service_dropoff_proxy remain low-confidence proxies."
       ],
-      "lastUpdated": "2026-06-28"
+      "lastUpdated": "2026-06-30"
     },
     "pageFactory": {
       "threadId": "019f0e05-3950-7340-8930-c0b09e54dee1",
       "automationId": "msc-page-factory-pass",
       "cadence": "Monday to Thursday late morning",
       "owns": ["place pages", "data endpoints", "page gate checks"],
-      "currentJob": "Wait for a complete Chania evidence bundle, then advance one page unit only.",
+      "currentJob": "Chania is local-build ready for James's human review on 2026-06-30 with a 254-row Evidence atlas. The route /places/greece/crete/chania builds as a live local page, uses the accepted evidence bundle, exposes all rows through filter/search/detail controls, renders the approved source-gap wording, and passes the available local data, route, link, fence, JSON-LD, typecheck, and browser-smoke gates. This is still not production publication or deploy approval.",
       "nextActions": [
-        "Refuse thin scaffolds.",
-        "Use Data Desk handoff to build the first Chania page when ready.",
-        "Run relevant build, source, fence, and definition-of-done checks."
+        "Show the local Safari preview to James for human read-through and visual review of the Evidence atlas.",
+        "If James accepts the atlas direction, prepare the final publish-gate packet and decide whether Design Desk needs a rendered quality pass before deployment.",
+        "Do not start a scale run. The next Page Factory work stays inside the Chania page unit until the first town page passes DEFINITION_OF_DONE.md."
       ],
-      "blockers": ["No first Greek town page should ship before data depth and fence checks pass."],
-      "lastUpdated": "2026-06-28"
+      "blockers": [
+        "This is a local build-green dossier draft, not a ship. Nothing has been deployed to mysecondcountry.com.",
+        "Full DEFINITION_OF_DONE.md is not complete: James human review, rich-results manual test, final publication decision, and production publish remain open.",
+        "The automated accessibility script passed structural and contrast checks, but its axe-core jsdom run is still best-effort because axe could not attach to window/document in this repo snapshot.",
+        "Two DOD-named scripts are not present in this repo snapshot: scripts/assert-no-copy-duplication.ts and scripts/assert-analytics.ts."
+      ],
+      "lastUpdated": "2026-06-30"
     },
     "regionDesk": {
       "threadId": "019f0e05-3aaf-7a42-9356-5f46dab79b0a",
       "automationId": "msc-region-focus-planner",
       "cadence": "Weekly, Monday early afternoon",
       "owns": ["regional batch shape", "place ordering", "local source discovery"],
-      "currentJob": "Keep Crete coherent as Chania, Heraklion, Rethymno, and Agios Nikolaos move through the matrix.",
+      "currentJob": "Keep the active Crete batch as one regional package: Crete parent, Chania as the first town gate, then Heraklion, Rethymno, and Agios Nikolaos as comparison towns after the page gate clears.",
       "nextActions": [
-        "Define what is shared across Crete and what must be proven per town.",
-        "Prepare a future regional comparison shape after the Chania gate."
+        "Hold the geography on Crete until gr-crete-region and gr-crete-chania leave source_gap and Chania can satisfy the first Greek town page gate.",
+        "Use the next batch story as: west-coast lifestyle and family fit in Chania, infrastructure and hospital access in Heraklion, middle-island compromise in Rethymno, and eastern-coast retirement or quieter coastal fit in Agios Nikolaos.",
+        "Treat Greece tax, visa, residency, Schengen, national healthcare eligibility, national education indicators, national safety or rights indices, English-proficiency context, price-level, and inflation as shared national or inherited-national rows.",
+        "Treat Crete tourism pressure, regional transport catchment, regional health capacity where sourced, regional climate or hazard bands, and regional property context as shared regional rows.",
+        "Keep town comparisons dependent on local proof: rentals and sale inventory, long-let supply, furnished share, airport and ferry seasonality, bus frequency, pharmacies, emergency healthcare, pet and vet access, municipal services, water restrictions, accessibility, car dependency, beach access, family amenities, and seasonality drop-off."
       ],
-      "blockers": [],
-      "lastUpdated": "2026-06-28"
+      "blockers": [
+        "All five active Crete queue entries remain source_gap. Region Desk should not propose a new geography until the Chania first-page gate is cleared or Command Center explicitly changes weekly focus.",
+        "The remaining publish blockers are not ordering problems. They are source-family blockers: geospatial, raster, route, manual official or timetable reads, property and rental snapshots, and manual maps checks."
+      ],
+      "lastUpdated": "2026-06-29"
     },
     "contentDesk": {
       "threadId": "019f0e05-3c3f-7220-835f-268cb35d0cf1",
@@ -177,19 +200,43 @@
       "id": "handoff-data-page-chania-evidence-bundle",
       "from": "dataDesk",
       "to": "pageFactory",
-      "status": "pending_data",
-      "summary": "Chania evidence bundle must meet the matrix-backed page gate before Page Factory builds a public page.",
-      "nextCheck": "2026-06-29",
-      "lastUpdated": "2026-06-28"
+      "status": "accepted_page_factory_draft_green",
+      "summary": "Page Factory accepted the 2026-06-30 Chania evidence-bundle handoff and translated it into a local dossier draft. The route /places/greece/crete/chania is no longer held in docs/design/routes.json, the Chania Place object now carries six bundle-backed local or selected-airport variables, and the page renders a local evidence slice plus all 22 accepted source-gap rows. The page does not infer airport winter counts, ferry counts, rental portal counts, local monthly transit fares, or other source-gapped values. Checks passed locally: scripts/report-city-bundle-readiness.ts --json, scripts/assert-uniqueness.ts, scripts/check-freshness.ts, pnpm --filter @where/web build, scripts/assert-fence.ts, scripts/validate-jsonld.ts, scripts/assert-route-contract.ts, scripts/assert-public-links.ts, and scripts/assert-robots.ts. scripts/assert-no-copy-duplication.ts and scripts/assert-analytics.ts are DOD-named but not present in this repo snapshot.",
+      "acceptanceCondition": "Accepted by Page Factory on 2026-06-30. The accepted build handoff uses the evidence bundle as a cited dossier with visible source gaps, not as a full-facts table. Required conditions now satisfied by Data Desk: gr-crete-region and gr-crete-chania are data_bundle_ready with publicationRecommendation publish; all 254 canonical rows are present with no duplicates; no source_search_required rows remain; no stale or low-confidence high-liability claims remain; Chania has at least three town-level values that differ from Crete and at least six local daily-life values; national, inherited-national, regional, inherited-regional, local, proxy, unavailable, blocked, and deferred labels remain honest. Rows that must render as source gaps, not zeros or inferred values: Chania airport_winter_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, and ferry_routes_summer; Crete parent airport_summer_direct_destinations, airport_winter_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, and ferry_routes_summer. Future fills must use `pnpm data:city-adapters --only transport-schedule-manual --manual-schedule-file docs/data/manual/transport-schedule-manual.json --write` with dated official airport or ferry exports, manual official browser/export reads, or licensed schedule-feed records. CHQ summer remains a cited selected-airport row for Chania and Rethymno only. CHQ winter has no public official countable NW26/27 destination set after 2026-10-24; HER official sources do not expose seasonal destination counts; HCG/YNANP ferry declarations are official source inputs but not current winter/summer route-count CitedValues without manual reconciliation or licensed feeds. Property/rental rows remain accepted source_terms_block_reuse policy gaps until licensed feed or written reuse permission exists; do not scrape them. The first public Chania page still must pass DEFINITION_OF_DONE.md before breadth counts. Acceptance by Page Factory is not publication approval: Data Desk pre-publish source review, remaining gate checks, and human publication gates still stand before deployment.",
+      "nextCheck": "2026-07-01",
+      "lastUpdated": "2026-06-30",
+      "updatedAt": "2026-06-30"
+    },
+    {
+      "id": "handoff-page-data-chania-prepublish-source-review",
+      "from": "pageFactory",
+      "to": "dataDesk",
+      "status": "accepted_data_desk_prepublish_source_review",
+      "summary": "Data Desk accepted the amended Chania pre-publish source review on 2026-06-30. Fresh verification confirmed: all six promoted Chania Place.variables still match the approved gr-crete-chania evidence-bundle CitedValues; temp_monthly_high renders without a duplicate C unit; source-gap cells use reader-safe wording for official seasonal count gaps, licensed city-price rows, reuse-rights rows, no-public-source rows, and reader-specific relational rows; no source-gapped row is rendered as a fact or zero.",
+      "acceptanceCondition": "Accepted for Data Desk source posture only. Page Factory may continue this single Chania page unit toward remaining DEFINITION_OF_DONE.md checks and human publish gates. This acceptance is not production publication approval, not deploy approval, and not permission to run a scale pass beyond Chania. Verification run by Data Desk: node_modules/.bin/tsx scripts/report-city-bundle-readiness.ts --json; pnpm verify:data; pnpm --filter @where/web build; node_modules/.bin/tsx scripts/assert-uniqueness.ts; node_modules/.bin/tsx scripts/check-freshness.ts; node_modules/.bin/tsx scripts/assert-fence.ts; node_modules/.bin/tsx scripts/validate-jsonld.ts; node_modules/.bin/tsx scripts/assert-route-contract.ts; node_modules/.bin/tsx scripts/assert-public-links.ts; node_modules/.bin/tsx scripts/assert-robots.ts; targeted rendered HTML checks confirming no 'C C', no raw source-gap enum strings, and the required reader-safe gap messages present.",
+      "nextCheck": "2026-07-01",
+      "lastUpdated": "2026-06-30",
+      "updatedAt": "2026-06-30"
+    },
+    {
+      "id": "handoff-region-data-crete-batch-shape",
+      "from": "regionDesk",
+      "to": "dataDesk",
+      "status": "pending_acceptance",
+      "summary": "Region Desk keeps Crete as the active regional package. The batch is Crete parent plus Chania as the first town gate, with Heraklion, Rethymno, and Agios Nikolaos held as comparison towns. The comparative story should answer: Chania for west-coast lifestyle and family fit, Heraklion for infrastructure and hospital access, Rethymno for middle-island compromise, and Agios Nikolaos for eastern-coast retirement or quieter coastal fit. Shared national and regional rows should be closed once across the cluster; town claims need local proof and honest proxy or source-gap labels.",
+      "acceptanceCondition": "Data Desk accepts when the next source pass keeps the Crete package shape intact, closes shared source-family blockers across all five bundles where possible, and keeps Chania and the Crete parent ahead of other towns until the first Greek town page gate can move.",
+      "nextCheck": "2026-07-01",
+      "lastUpdated": "2026-06-29"
     },
     {
       "id": "handoff-page-content-first-town-packet",
       "from": "pageFactory",
       "to": "contentDesk",
-      "status": "blocked_until_page_gate",
-      "summary": "Content Desk can prepare method posts now, but place-specific content waits for the first page or ready bundle.",
-      "nextCheck": "2026-07-02",
-      "lastUpdated": "2026-06-28"
+      "status": "blocked_until_human_publish_gate",
+      "summary": "Chania now has a local build-green page draft with a 254-row Evidence atlas for James's review, but Content Desk should not prepare or publish place-specific external claims until the human publish gate and deployment decision are complete. Method and source-literacy posts remain allowed under the existing posting board.",
+      "nextCheck": "2026-07-01",
+      "lastUpdated": "2026-06-30",
+      "updatedAt": "2026-06-30"
     },
     {
       "id": "handoff-content-distribution-daily-board",
@@ -222,7 +269,7 @@
   "postingBoard": {
     "source": "docs/content-projection.md#live-posting-board",
     "currentMode": "manual_review_required",
-    "today": "2026-06-28",
+    "today": "2026-06-29",
     "nextPostingDate": "2026-06-29",
     "dailyRule": "James checks the dated row in docs/content-projection.md. If status is ready_to_post, post it manually. If status is hold or draft, do not post it externally."
   }

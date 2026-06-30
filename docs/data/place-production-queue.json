@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Machine-readable place production queue for My Second Country. Candidates are processed daily through the canonical variable matrix. Publishing is evidence-gated.",
+  "description": "Machine-readable place production queue for My Second Country. Candidates are processed daily through the canonical 254-row variable matrix. Publishing is evidence-gated.",
   "sourceOfTruth": {
     "operatingLedger": "docs/msc-operating-ledger.md",
     "matrixContract": "docs/data/variable-matrix-contract.md",
@@ -38,19 +38,23 @@
   ],
   "publishThresholds": {
     "pilot": {
-      "variablesEvaluated": 40,
+      "variablesEvaluated": 254,
       "populatedCitedValues": 20,
-      "localOrRegionalValues": 6
+      "localOrRegionalValues": 6,
+      "resolvedOrCompletedGapRows": 40
     },
     "standard": {
-      "variablesEvaluated": 80,
+      "variablesEvaluated": 254,
       "populatedCitedValues": 35,
-      "localOrRegionalValues": 12
+      "localOrRegionalValues": 12,
+      "noSourceSearchRequired": true
     },
     "flagship": {
-      "variablesEvaluated": 120,
+      "variablesEvaluated": 254,
       "populatedCitedValues": 55,
-      "localOrRegionalValues": 20
+      "localOrRegionalValues": 20,
+      "noSourceSearchRequired": true,
+      "priorityCitySignalRows": "cited_or_completed_gap_closed"
     }
   },
   "queue": [
@@ -63,7 +67,7 @@
       "priority": 1,
       "weeklyFocus": "Crete",
       "publishTier": "standard",
-      "status": "candidate",
+      "status": "data_bundle_ready",
       "reason": "Parent region needed for Chania and future Crete town pages.",
       "intentQueries": [
         "best places to live in Crete",
@@ -79,9 +83,10 @@
         "health_family_schooling",
         "safety_rights",
         "nature_environment",
-        "culture_services"
+        "culture_services",
+        "decision_city_signals"
       ],
-      "sourceGapReason": null,
+      "sourceGapReason": "Evidence bundle at packages/data/src/place-bundles/gr-crete-region.json instantiates all 254 canonical registry rows with 254 unique keys, 231 cited or reference-backed rows, 23 completed-gap rows, 0 source_search_required rows, 0 high-liability freshness blockers. Data Desk reviewed the completed gaps on 2026-06-29 and follow-up passes have now closed fuel_price, cannabis_status, childcare_cost, childcare_net_cost, top_university_qs, scenery_tags, citizenship_years, dual_citizenship, ltc_quality, municipal_income_tax, blue_flag_beaches, accessible_beach_count, uv_index_monthly, pollen_severity, water_stress_baseline, surface_water_density, forest_cover_pct, tree_canopy_pct, citizen_service_centre_distance, exit_tax, crypto_tax, tax_office_distance, residence_permit_office_distance, international_school_distance, after_hours_pharmacy_proxy, municipal_digital_services, water_restriction_history, bus_frequency_proxy, intl_school_tuition, car_dependency_proxy, land_registry_office_distance, cruise_passenger_pressure, seasonal_service_dropoff_proxy, emergency_vet_proxy, drought_frequency_proxy, wildfire_egress_proxy, light_pollution from cited or reference-backed sources where defensible. Light_pollution now cites the Zenodo/OpenGeoHub 2024 VIIRS nighttime-lights COG derived from NOAA/EOG Annual VNL V2.2 as a medium-confidence 2 km representative-town circle radiance proxy, with source version, checksum, sample radius, sample counts, units, and source-scale conversion recorded in each row. It is not Bortle class, a stargazing guarantee, a streetlight inventory, safety advice, health advice, property advice, a parcel measure, or a neighborhood measure. Wildfire_egress_proxy cites OpenStreetMap contributors via Overpass API as a low-confidence connected motor-road component, dead-end share, and car-dependency proxy under cited ThinkHazard national wildfire context, plus a priority-town regional summary for Crete. It is not an EFFIS/GWIS fire-behaviour grid, evacuation route, emergency plan, road-capacity model, live traffic or closure source, response-time evidence, insurance claim, parcel or property risk score, safety advice, legal advice, health advice, or personal advice. Forest_cover_pct, tree_canopy_pct, surface_water_density, water_stress_baseline, drought_frequency_proxy, pollen_severity, emergency_vet_proxy, seasonal_service_dropoff_proxy, wildfire_egress_proxy, and light_pollution remain bounded proxy rows with their row-level caveats. Chania airport_summer_direct_destinations is closed only for Chania; other selected airport or regional parent rows still need their own official timetable read where the same row remains blocked. Accepted visible gaps before transport-row completion remain: 3 no_public_source_found rows, 3 relational out_of_slice rows, 4 source_exists_but_paywalled Numbeo rows, and 8 source_terms_block_reuse rows. The terms-limited rows include vegan-friendly plus seven property/rental portal rows; do not scrape or republish unlicensed portal counts. Fill those only from a licensed provider feed or written permission. Completed visible transport source gaps: 5 source_bot_blocked_manual_needed rows (airport_winter_direct_destinations, airport_summer_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, ferry_routes_summer). 2026-06-30 transport source-family pass completed source discovery: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds. scripts/report-city-bundle-readiness.ts --json now exposes sourceGapRows for visible completed gaps and openSourceGapRows for true unresolved blockers; openSourceGapRows is 0 for this bundle. Future fill source families remain dated official airport destination/timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds such as OAG/Cirium for airports and an approved ferry timetable feed for ferries. There are no remaining requires_geospatial_build rows after light_pollution closure. Page Factory may use this as evidence-bundle fuel only if visible source gaps render as gaps, not zeros or inferred transport service counts, and the first public Chania page still passes DEFINITION_OF_DONE.md.",
       "contentOutputs": []
     },
     {
@@ -93,7 +98,7 @@
       "priority": 2,
       "weeklyFocus": "Crete",
       "publishTier": "standard",
-      "status": "dossier_draft",
+      "status": "data_bundle_ready",
       "reason": "Existing pilot town page, should be upgraded to full matrix-backed dossier.",
       "intentQueries": [
         "living in Chania Crete",
@@ -109,9 +114,10 @@
         "health_family_schooling",
         "safety_rights",
         "nature_environment",
-        "culture_services"
+        "culture_services",
+        "decision_city_signals"
       ],
-      "sourceGapReason": "Parent Crete region is not yet in the dataset, so town uniqueness is currently skipped.",
+      "sourceGapReason": "Evidence bundle at packages/data/src/place-bundles/gr-crete-chania.json instantiates all 254 canonical registry rows with 254 unique keys, 232 cited or reference-backed rows, 22 completed-gap rows, 0 source_search_required rows, 0 high-liability freshness blockers, 107 town-level values that differ from Crete, and 107 local daily-life values. Data Desk reviewed the completed gaps on 2026-06-29 and follow-up passes have now closed fuel_price, cannabis_status, childcare_cost, childcare_net_cost, top_university_qs, scenery_tags, citizenship_years, dual_citizenship, ltc_quality, municipal_income_tax, blue_flag_beaches, accessible_beach_count, uv_index_monthly, pollen_severity, water_stress_baseline, surface_water_density, forest_cover_pct, tree_canopy_pct, citizen_service_centre_distance, exit_tax, crypto_tax, tax_office_distance, residence_permit_office_distance, international_school_distance, after_hours_pharmacy_proxy, municipal_digital_services, water_restriction_history, bus_frequency_proxy, intl_school_tuition, car_dependency_proxy, land_registry_office_distance, cruise_passenger_pressure, seasonal_service_dropoff_proxy, emergency_vet_proxy, drought_frequency_proxy, wildfire_egress_proxy, light_pollution from cited or reference-backed sources where defensible. Light_pollution now cites the Zenodo/OpenGeoHub 2024 VIIRS nighttime-lights COG derived from NOAA/EOG Annual VNL V2.2 as a medium-confidence 2 km representative-town circle radiance proxy, with source version, checksum, sample radius, sample counts, units, and source-scale conversion recorded in each row. It is not Bortle class, a stargazing guarantee, a streetlight inventory, safety advice, health advice, property advice, a parcel measure, or a neighborhood measure. Wildfire_egress_proxy cites OpenStreetMap contributors via Overpass API as a low-confidence connected motor-road component, dead-end share, and car-dependency proxy under cited ThinkHazard national wildfire context, plus a priority-town regional summary for Crete. It is not an EFFIS/GWIS fire-behaviour grid, evacuation route, emergency plan, road-capacity model, live traffic or closure source, response-time evidence, insurance claim, parcel or property risk score, safety advice, legal advice, health advice, or personal advice. Forest_cover_pct, tree_canopy_pct, surface_water_density, water_stress_baseline, drought_frequency_proxy, pollen_severity, emergency_vet_proxy, seasonal_service_dropoff_proxy, wildfire_egress_proxy, and light_pollution remain bounded proxy rows with their row-level caveats. Chania airport_summer_direct_destinations now cites the official Chania/Fraport timetable endpoint as 115 outbound direct destination airports for the NS26 period ending 24 October 2026, cross-checked against the HSCA seasonal calendar. This is a selected-airport timetable count, not frequency, seats, live operation, year-round availability, booking advice, or travel advice. Accepted visible gaps before transport-row completion remain: 3 no_public_source_found rows, 3 relational out_of_slice rows, 4 source_exists_but_paywalled Numbeo rows, and 8 source_terms_block_reuse rows. The terms-limited rows include vegan-friendly plus seven property/rental portal rows; do not scrape or republish unlicensed portal counts. Fill those only from a licensed provider feed or written permission. Completed visible transport source gaps: 4 source_bot_blocked_manual_needed rows (airport_winter_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, ferry_routes_summer). 2026-06-30 transport source-family pass completed source discovery: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds. scripts/report-city-bundle-readiness.ts --json now exposes sourceGapRows for visible completed gaps and openSourceGapRows for true unresolved blockers; openSourceGapRows is 0 for this bundle. Future fill source families remain dated official airport destination/timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds such as OAG/Cirium for airports and an approved ferry timetable feed for ferries. There are no remaining requires_geospatial_build rows after light_pollution closure. Page Factory may use this as evidence-bundle fuel only if visible source gaps render as gaps, not zeros or inferred transport service counts, and the first public Chania page still passes DEFINITION_OF_DONE.md.",
       "contentOutputs": [
         "source_card",
         "newsletter_block",
@@ -128,7 +134,7 @@
       "priority": 3,
       "weeklyFocus": "Crete",
       "publishTier": "standard",
-      "status": "candidate",
+      "status": "data_bundle_ready",
       "reason": "Natural Chania comparison, larger airport and hospital access create useful local contrast.",
       "intentQueries": [
         "Heraklion vs Chania living",
@@ -144,9 +150,10 @@
         "health_family_schooling",
         "safety_rights",
         "nature_environment",
-        "culture_services"
+        "culture_services",
+        "decision_city_signals"
       ],
-      "sourceGapReason": null,
+      "sourceGapReason": "Evidence bundle at packages/data/src/place-bundles/gr-crete-heraklion.json instantiates all 254 canonical registry rows with 254 unique keys, 231 cited or reference-backed rows, 23 completed-gap rows, 0 source_search_required rows, 0 high-liability freshness blockers, 106 town-level values that differ from Crete, and 105 local daily-life values. Data Desk reviewed the completed gaps on 2026-06-29 and follow-up passes have now closed fuel_price, cannabis_status, childcare_cost, childcare_net_cost, top_university_qs, scenery_tags, citizenship_years, dual_citizenship, ltc_quality, municipal_income_tax, blue_flag_beaches, accessible_beach_count, uv_index_monthly, pollen_severity, water_stress_baseline, surface_water_density, forest_cover_pct, tree_canopy_pct, citizen_service_centre_distance, exit_tax, crypto_tax, tax_office_distance, residence_permit_office_distance, international_school_distance, after_hours_pharmacy_proxy, municipal_digital_services, water_restriction_history, bus_frequency_proxy, intl_school_tuition, car_dependency_proxy, land_registry_office_distance, cruise_passenger_pressure, seasonal_service_dropoff_proxy, emergency_vet_proxy, drought_frequency_proxy, wildfire_egress_proxy, light_pollution from cited or reference-backed sources where defensible. Light_pollution now cites the Zenodo/OpenGeoHub 2024 VIIRS nighttime-lights COG derived from NOAA/EOG Annual VNL V2.2 as a medium-confidence 2 km representative-town circle radiance proxy, with source version, checksum, sample radius, sample counts, units, and source-scale conversion recorded in each row. It is not Bortle class, a stargazing guarantee, a streetlight inventory, safety advice, health advice, property advice, a parcel measure, or a neighborhood measure. Wildfire_egress_proxy cites OpenStreetMap contributors via Overpass API as a low-confidence connected motor-road component, dead-end share, and car-dependency proxy under cited ThinkHazard national wildfire context, plus a priority-town regional summary for Crete. It is not an EFFIS/GWIS fire-behaviour grid, evacuation route, emergency plan, road-capacity model, live traffic or closure source, response-time evidence, insurance claim, parcel or property risk score, safety advice, legal advice, health advice, or personal advice. Forest_cover_pct, tree_canopy_pct, surface_water_density, water_stress_baseline, drought_frequency_proxy, pollen_severity, emergency_vet_proxy, seasonal_service_dropoff_proxy, wildfire_egress_proxy, and light_pollution remain bounded proxy rows with their row-level caveats. Chania airport_summer_direct_destinations is closed only for Chania; other selected airport or regional parent rows still need their own official timetable read where the same row remains blocked. Accepted visible gaps before transport-row completion remain: 3 no_public_source_found rows, 3 relational out_of_slice rows, 4 source_exists_but_paywalled Numbeo rows, and 8 source_terms_block_reuse rows. The terms-limited rows include vegan-friendly plus seven property/rental portal rows; do not scrape or republish unlicensed portal counts. Fill those only from a licensed provider feed or written permission. Completed visible transport source gaps: 5 source_bot_blocked_manual_needed rows (airport_winter_direct_destinations, airport_summer_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, ferry_routes_summer). 2026-06-30 transport source-family pass completed source discovery: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds. scripts/report-city-bundle-readiness.ts --json now exposes sourceGapRows for visible completed gaps and openSourceGapRows for true unresolved blockers; openSourceGapRows is 0 for this bundle. Future fill source families remain dated official airport destination/timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds such as OAG/Cirium for airports and an approved ferry timetable feed for ferries. There are no remaining requires_geospatial_build rows after light_pollution closure. Page Factory may use this as evidence-bundle fuel only if visible source gaps render as gaps, not zeros or inferred transport service counts, and the first public Chania page still passes DEFINITION_OF_DONE.md.",
       "contentOutputs": []
     },
     {
@@ -158,7 +165,7 @@
       "priority": 4,
       "weeklyFocus": "Crete",
       "publishTier": "standard",
-      "status": "candidate",
+      "status": "data_bundle_ready",
       "reason": "Middle-Crete lifestyle contrast between Chania and Heraklion.",
       "intentQueries": ["living in Rethymno Crete", "Rethymno expat life", "Rethymno vs Chania"],
       "requiredVariableGroups": [
@@ -170,9 +177,10 @@
         "health_family_schooling",
         "safety_rights",
         "nature_environment",
-        "culture_services"
+        "culture_services",
+        "decision_city_signals"
       ],
-      "sourceGapReason": null,
+      "sourceGapReason": "Evidence bundle at packages/data/src/place-bundles/gr-crete-rethymno.json instantiates all 254 canonical registry rows with 254 unique keys, 232 cited or reference-backed rows, 22 completed-gap rows, 0 source_search_required rows, 0 high-liability freshness blockers, 107 town-level values that differ from Crete, and 106 local daily-life values. Data Desk reviewed the completed gaps on 2026-06-29 and follow-up passes have now closed fuel_price, cannabis_status, childcare_cost, childcare_net_cost, top_university_qs, scenery_tags, citizenship_years, dual_citizenship, ltc_quality, municipal_income_tax, blue_flag_beaches, accessible_beach_count, uv_index_monthly, pollen_severity, water_stress_baseline, surface_water_density, forest_cover_pct, tree_canopy_pct, citizen_service_centre_distance, exit_tax, crypto_tax, tax_office_distance, residence_permit_office_distance, international_school_distance, after_hours_pharmacy_proxy, municipal_digital_services, water_restriction_history, bus_frequency_proxy, intl_school_tuition, car_dependency_proxy, land_registry_office_distance, cruise_passenger_pressure, seasonal_service_dropoff_proxy, emergency_vet_proxy, drought_frequency_proxy, wildfire_egress_proxy, light_pollution, and airport_summer_direct_destinations from cited or reference-backed sources where defensible. Rethymno airport_summer_direct_destinations now cites the official Chania/Fraport timetable endpoint as 115 outbound direct destination airports for the CHQ NS26 summer period ending 24 October 2026, because Rethymno's nearest_airport row selects CHQ/LGSA by straight-line distance; do not inherit that row to Heraklion, Agios Nikolaos, or the Crete parent without their own selected-airport basis. Accepted visible gaps before transport-row completion remain: 3 no_public_source_found rows, 3 relational out_of_slice rows, 4 source_exists_but_paywalled Numbeo rows, and 8 source_terms_block_reuse rows. The terms-limited rows include vegan-friendly plus seven property/rental portal rows; do not scrape or republish unlicensed portal counts. Fill those only from a licensed provider feed or written permission. Completed visible transport source gaps: 4 source_bot_blocked_manual_needed rows (airport_winter_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, ferry_routes_summer). 2026-06-30 transport source-family pass completed source discovery: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds. scripts/report-city-bundle-readiness.ts --json now exposes sourceGapRows for visible completed gaps and openSourceGapRows for true unresolved blockers; openSourceGapRows is 0 for this bundle. Future fill source families remain dated official airport destination/timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds such as OAG/Cirium for airports and an approved ferry timetable feed for ferries. There are no remaining requires_geospatial_build rows after light_pollution closure. Page Factory may use this as evidence-bundle fuel only if visible source gaps render as gaps, not zeros or inferred transport service counts, and the first public Chania page still passes DEFINITION_OF_DONE.md.",
       "contentOutputs": []
     },
     {
@@ -184,7 +192,7 @@
       "priority": 5,
       "weeklyFocus": "Crete",
       "publishTier": "standard",
-      "status": "candidate",
+      "status": "data_bundle_ready",
       "reason": "Eastern Crete coastal candidate with retirement and family-life relevance.",
       "intentQueries": [
         "living in Agios Nikolaos Crete",
@@ -200,9 +208,10 @@
         "health_family_schooling",
         "safety_rights",
         "nature_environment",
-        "culture_services"
+        "culture_services",
+        "decision_city_signals"
       ],
-      "sourceGapReason": null,
+      "sourceGapReason": "Evidence bundle at packages/data/src/place-bundles/gr-crete-agios-nikolaos.json instantiates all 254 canonical registry rows with 254 unique keys, 231 cited or reference-backed rows, 23 completed-gap rows, 0 source_search_required rows, 0 high-liability freshness blockers, 107 town-level values that differ from Crete, and 106 local daily-life values. Data Desk reviewed the completed gaps on 2026-06-29 and follow-up passes have now closed fuel_price, cannabis_status, childcare_cost, childcare_net_cost, top_university_qs, scenery_tags, citizenship_years, dual_citizenship, ltc_quality, municipal_income_tax, blue_flag_beaches, accessible_beach_count, uv_index_monthly, pollen_severity, water_stress_baseline, surface_water_density, forest_cover_pct, tree_canopy_pct, citizen_service_centre_distance, exit_tax, crypto_tax, tax_office_distance, residence_permit_office_distance, international_school_distance, after_hours_pharmacy_proxy, municipal_digital_services, water_restriction_history, bus_frequency_proxy, intl_school_tuition, car_dependency_proxy, land_registry_office_distance, cruise_passenger_pressure, seasonal_service_dropoff_proxy, emergency_vet_proxy, drought_frequency_proxy, wildfire_egress_proxy, light_pollution from cited or reference-backed sources where defensible. Light_pollution now cites the Zenodo/OpenGeoHub 2024 VIIRS nighttime-lights COG derived from NOAA/EOG Annual VNL V2.2 as a medium-confidence 2 km representative-town circle radiance proxy, with source version, checksum, sample radius, sample counts, units, and source-scale conversion recorded in each row. It is not Bortle class, a stargazing guarantee, a streetlight inventory, safety advice, health advice, property advice, a parcel measure, or a neighborhood measure. Wildfire_egress_proxy cites OpenStreetMap contributors via Overpass API as a low-confidence connected motor-road component, dead-end share, and car-dependency proxy under cited ThinkHazard national wildfire context, plus a priority-town regional summary for Crete. It is not an EFFIS/GWIS fire-behaviour grid, evacuation route, emergency plan, road-capacity model, live traffic or closure source, response-time evidence, insurance claim, parcel or property risk score, safety advice, legal advice, health advice, or personal advice. Forest_cover_pct, tree_canopy_pct, surface_water_density, water_stress_baseline, drought_frequency_proxy, pollen_severity, emergency_vet_proxy, seasonal_service_dropoff_proxy, wildfire_egress_proxy, and light_pollution remain bounded proxy rows with their row-level caveats. Chania airport_summer_direct_destinations is closed only for Chania; other selected airport or regional parent rows still need their own official timetable read where the same row remains blocked. Accepted visible gaps before transport-row completion remain: 3 no_public_source_found rows, 3 relational out_of_slice rows, 4 source_exists_but_paywalled Numbeo rows, and 8 source_terms_block_reuse rows. The terms-limited rows include vegan-friendly plus seven property/rental portal rows; do not scrape or republish unlicensed portal counts. Fill those only from a licensed provider feed or written permission. Completed visible transport source gaps: 5 source_bot_blocked_manual_needed rows (airport_winter_direct_destinations, airport_summer_direct_destinations, airport_winter_route_ratio, ferry_routes_winter, ferry_routes_summer). 2026-06-30 transport source-family pass completed source discovery: CHQ winter has no public official countable NW26/27 destination set after the official CHQ/Fraport public period ends on 2026-10-24; HER official HCAA/HSCA/HASP sources confirm airport context but do not expose seasonal destination counts; ferry HCG/YNANP declarations, modification PDFs, port authorities, and operator pages do not provide a current extractable winter/summer unique route-pair count by selected port without manual reconciliation or licensed feeds. scripts/report-city-bundle-readiness.ts --json now exposes sourceGapRows for visible completed gaps and openSourceGapRows for true unresolved blockers; openSourceGapRows is 0 for this bundle. Future fill source families remain dated official airport destination/timetable pages, official port or national ferry publications, manual browser or booking exports, or licensed schedule feeds such as OAG/Cirium for airports and an approved ferry timetable feed for ferries. There are no remaining requires_geospatial_build rows after light_pollution closure. Page Factory may use this as evidence-bundle fuel only if visible source gaps render as gaps, not zeros or inferred transport service counts, and the first public Chania page still passes DEFINITION_OF_DONE.md.",
       "contentOutputs": []
     },
     {
@@ -481,5 +490,6 @@
       "sourceGapReason": null,
       "contentOutputs": []
     }
-  ]
+  ],
+  "canonicalMatrixRows": 254
 }
